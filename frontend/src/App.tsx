@@ -1,11 +1,12 @@
 import React from 'react';
+import Dashboard from './container/Dashboard';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
-      Hello world!
+      <Dashboard />
     </div>
   );
-}
+};
 
 export default App;
