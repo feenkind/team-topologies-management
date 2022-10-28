@@ -32,7 +32,20 @@ const MenuItem = ({
 }) => {
   return (
     <ListItem disablePadding>
-      <ListItemButton selected={selected}>
+      <ListItemButton
+        selected={selected}
+        sx={{
+          '&&.Mui-selected': {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          },
+          '&&.Mui-selected:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          },
+          '&&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+          },
+        }}
+      >
         <ListItemIcon sx={{ color: 'primary.contrastText' }}>
           {icon}
         </ListItemIcon>
@@ -48,7 +61,6 @@ const Sidebar: React.FC<ISidebarProps> = ({
   return (
     <>
       <Toolbar />
-      <Divider sx={{ backgroundColor: 'primary.contrastText' }} />
       <List>
         <MenuItem
           icon={<WysiwygSharpIcon />}

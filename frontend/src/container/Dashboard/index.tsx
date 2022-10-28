@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
       activeHeaderMenuItem={sidebarMenuItems.OVERVIEW}
     >
       <Typography variant="body2" component="div">
-        test
+        Hello there :)
       </Typography>
     </Layout>
   );

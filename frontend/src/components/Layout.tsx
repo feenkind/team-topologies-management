@@ -32,7 +32,7 @@ const Layout: React.FC<ILayoutProps> = ({
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ backgroundColor: 'background.paper' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
