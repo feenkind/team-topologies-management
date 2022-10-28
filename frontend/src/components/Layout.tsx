@@ -3,10 +3,11 @@ import { AppBar, Box, Drawer, IconButton, Toolbar } from '@mui/material';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import MenuIcon from '@mui/icons-material/Menu';
+import { sidebarMenuItems } from '../constants/navItems';
 
 interface ILayoutProps {
   activeHeaderMenuItem?: string;
-  activeSidebarMenuItem?: string;
+  activeSidebarMenuItem?: sidebarMenuItems;
   children: React.ReactNode;
 }
 
@@ -15,7 +16,7 @@ const Layout: React.FC<ILayoutProps> = ({
   activeSidebarMenuItem,
   children,
 }: ILayoutProps) => {
-  const drawerWidth = '250';
+  const drawerWidth = '230';
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -71,7 +72,7 @@ const Layout: React.FC<ILayoutProps> = ({
             },
           }}
         >
-          <Sidebar />
+          <Sidebar activeMenuItem={activeSidebarMenuItem} />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -90,7 +91,7 @@ const Layout: React.FC<ILayoutProps> = ({
             },
           }}
         >
-          <Sidebar />
+          <Sidebar activeMenuItem={activeSidebarMenuItem} />
         </Drawer>
       </Box>
 
