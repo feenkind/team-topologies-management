@@ -1,11 +1,67 @@
 import * as React from 'react';
-import { Typography } from '@mui/material';
+import { Avatar, Badge, Box, IconButton, Menu, MenuItem } from '@mui/material';
+import Face4SharpIcon from '@mui/icons-material/Face4Sharp';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { yellow } from '@mui/material/colors';
 
 const Header: React.FC = () => {
+  const [anchorElement, setAnchorElement] = React.useState<null | HTMLElement>(
+    null,
+  );
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElement(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorElement(null);
+  };
+
   return (
-    <Typography variant="h6" noWrap component="div">
-      Header
-    </Typography>
+    <>
+      <Box sx={{ display: 'flex' }}>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+          sx={{ mr: 2, borderRadius: 0 }}
+        >
+          <Badge badgeContent={17} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          color="inherit"
+          sx={{ borderRadius: 0 }}
+        >
+          <Avatar sx={{ bgcolor: yellow[900] }}>
+            <Face4SharpIcon />
+          </Avatar>
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorElement}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorElement)}
+          onClose={handleClose}
+          sx={{ mt: '40px' }}
+        >
+          <MenuItem onClick={handleClose}>This is a dummy account.</MenuItem>
+        </Menu>
+      </Box>
+    </>
   );
 };
 

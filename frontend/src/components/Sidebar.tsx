@@ -60,7 +60,9 @@ const Sidebar: React.FC<ISidebarProps> = ({
 }: ISidebarProps) => {
   return (
     <>
-      <Toolbar />
+      <Toolbar sx={{ alignSelf: 'center' }}>
+        <Typography variant="h5">TMwTT</Typography>
+      </Toolbar>
       <List>
         <MenuItem
           icon={<WysiwygSharpIcon />}
@@ -73,7 +75,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
           selected={activeMenuItem === sidebarMenuItems.VISUALIZATION}
         />
       </List>
-      <Divider sx={{ backgroundColor: 'primary.contrastText' }} />
+      <Divider sx={{ backgroundColor: 'background.paper' }} />
       <List>
         <ListItemButton disabled={true}>
           <ListItemText>
@@ -92,7 +94,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
           selected={activeMenuItem === sidebarMenuItems.ADD_TEAM}
         />
       </List>
-      <Divider sx={{ backgroundColor: 'primary.contrastText' }} />
+      <Divider sx={{ backgroundColor: 'background.paper' }} />
       <List>
         <ListItemButton disabled={true}>
           <ListItemText>

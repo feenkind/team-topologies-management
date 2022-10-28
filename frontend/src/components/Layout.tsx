@@ -1,18 +1,23 @@
 import * as React from 'react';
-import { AppBar, Box, Drawer, IconButton, Toolbar } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Drawer,
+  IconButton,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import MenuIcon from '@mui/icons-material/Menu';
 import { sidebarMenuItems } from '../constants/navItems';
 
 interface ILayoutProps {
-  activeHeaderMenuItem?: string;
   activeSidebarMenuItem?: sidebarMenuItems;
   children: React.ReactNode;
 }
 
 const Layout: React.FC<ILayoutProps> = ({
-  activeHeaderMenuItem,
   activeSidebarMenuItem,
   children,
 }: ILayoutProps) => {
@@ -30,9 +35,15 @@ const Layout: React.FC<ILayoutProps> = ({
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          boxShadow: 1,
         }}
       >
-        <Toolbar sx={{ backgroundColor: 'background.paper' }}>
+        <Toolbar
+          sx={{
+            backgroundColor: 'background.paper',
+            color: 'primary.dark',
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -42,6 +53,14 @@ const Layout: React.FC<ILayoutProps> = ({
           >
             <MenuIcon />
           </IconButton>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography
+              sx={{ display: { xs: 'block', sm: 'none' } }}
+              variant="h4"
+            >
+              TMwTT
+            </Typography>
+          </Box>
           <Header />
         </Toolbar>
       </AppBar>

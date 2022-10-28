@@ -5,10 +5,7 @@ import { sidebarMenuItems } from '../../constants/navItems';
 
 const Dashboard: React.FC = () => {
   return (
-    <Layout
-      activeSidebarMenuItem={sidebarMenuItems.OVERVIEW}
-      activeHeaderMenuItem={sidebarMenuItems.OVERVIEW}
-    >
+    <Layout activeSidebarMenuItem={sidebarMenuItems.OVERVIEW}>
       <Typography variant="body2" component="div">
         Hello there :)
       </Typography>
