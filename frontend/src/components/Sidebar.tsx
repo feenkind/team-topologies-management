@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  Typography,
 } from '@mui/material';
 import WysiwygSharpIcon from '@mui/icons-material/WysiwygSharp';
 import BubbleChartSharpIcon from '@mui/icons-material/BubbleChartSharp';
@@ -62,6 +63,12 @@ const Sidebar: React.FC<ISidebarProps> = ({
       </List>
       <Divider sx={{ backgroundColor: 'primary.contrastText' }} />
       <List>
+        <ListItemButton disabled={true}>
+          <ListItemText>
+            <Typography variant="button">Teams</Typography>
+          </ListItemText>
+        </ListItemButton>
+
         <MenuItem
           icon={<GroupsSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.VIEW_TEAMS]}
@@ -75,6 +82,12 @@ const Sidebar: React.FC<ISidebarProps> = ({
       </List>
       <Divider sx={{ backgroundColor: 'primary.contrastText' }} />
       <List>
+        <ListItemButton disabled={true}>
+          <ListItemText>
+            <Typography variant="button">Domains</Typography>
+          </ListItemText>
+        </ListItemButton>
+
         <MenuItem
           icon={<DomainSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.VIEW_DOMAINS]}
