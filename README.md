@@ -30,6 +30,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+For basic authentication, copy the `.env.example` and rename it to `.env`.
+Add a user and a password.
+
 ## Test
 
 ```bash
