@@ -61,7 +61,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
   return (
     <>
       <Toolbar sx={{ alignSelf: 'center' }}>
-        <Typography variant="h5">TMwTT</Typography>
+        <Typography variant="h5">TmwTT</Typography>
       </Toolbar>
       <List>
         <MenuItem

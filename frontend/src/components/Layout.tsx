@@ -58,7 +58,7 @@ const Layout: React.FC<ILayoutProps> = ({
               sx={{ display: { xs: 'block', sm: 'none' } }}
               variant="h4"
             >
-              TMwTT
+              TmwTT
             </Typography>
           </Box>
           <Header />
