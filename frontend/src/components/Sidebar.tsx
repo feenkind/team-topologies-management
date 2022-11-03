@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   Divider,
+  Link,
   List,
   ListItem,
   ListItemButton,
@@ -24,14 +25,21 @@ interface ISidebarProps {
 const MenuItem = ({
   icon,
   label,
+  url,
   selected,
 }: {
   icon: React.ReactNode;
   label: string;
+  url: string;
   selected: boolean;
 }) => {
   return (
-    <ListItem disablePadding>
+    <ListItem
+      component={Link}
+      href={url}
+      color="primary.contrastText"
+      disablePadding
+    >
       <ListItemButton
         selected={selected}
         sx={{
@@ -67,11 +75,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
         <MenuItem
           icon={<WysiwygSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.OVERVIEW]}
+          url="/"
           selected={activeMenuItem === sidebarMenuItems.OVERVIEW}
         />
         <MenuItem
           icon={<BubbleChartSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.VISUALIZATION]}
+          url="/"
           selected={activeMenuItem === sidebarMenuItems.VISUALIZATION}
         />
       </List>
@@ -86,11 +96,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
         <MenuItem
           icon={<GroupsSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.VIEW_TEAMS]}
+          url="/"
           selected={activeMenuItem === sidebarMenuItems.VIEW_TEAMS}
         />
         <MenuItem
           icon={<GroupAddSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.ADD_TEAM]}
+          url="/"
           selected={activeMenuItem === sidebarMenuItems.ADD_TEAM}
         />
       </List>
@@ -105,11 +117,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
         <MenuItem
           icon={<DomainSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.VIEW_DOMAINS]}
+          url="/"
           selected={activeMenuItem === sidebarMenuItems.VIEW_DOMAINS}
         />
         <MenuItem
           icon={<DomainAddSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.ADD_DOMAIN]}
+          url="/"
           selected={activeMenuItem === sidebarMenuItems.ADD_DOMAIN}
         />
       </List>
