@@ -23,6 +23,11 @@ const UserMenu: React.FC = () => {
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"
+        sx={{
+          '&:hover': {
+            backgroundColor: 'rgba(0, 96, 100, 0.04)',
+          },
+        }}
       >
         <Avatar sx={{ bgcolor: yellow[900] }}>
           <Face4SharpIcon />

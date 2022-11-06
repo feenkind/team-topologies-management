@@ -11,6 +11,9 @@ const Notifications: React.FC = () => {
       sx={{
         mr: 2,
         borderRadius: 0,
+        '&:hover': {
+          backgroundColor: 'rgba(0, 96, 100, 0.04)',
+        },
       }}
     >
       <Badge badgeContent={1} color="error">
