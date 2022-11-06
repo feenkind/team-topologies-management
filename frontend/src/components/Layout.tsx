@@ -8,17 +8,18 @@ import {
   Typography,
 } from '@mui/material';
 import Sidebar from './Sidebar';
-import Header from './Header';
 import MenuIcon from '@mui/icons-material/Menu';
 import { sidebarMenuItems } from '../constants/navItems';
 import { Outlet } from 'react-router-dom';
 
 interface ILayoutProps {
   activeSidebarMenuItem?: sidebarMenuItems;
+  header: React.ReactNode;
 }
 
 const Layout: React.FC<ILayoutProps> = ({
   activeSidebarMenuItem,
+  header,
 }: ILayoutProps) => {
   const drawerWidth = '230';
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -60,7 +61,7 @@ const Layout: React.FC<ILayoutProps> = ({
               TmwTT
             </Typography>
           </Box>
-          <Header />
+          {header}
         </Toolbar>
       </AppBar>
 

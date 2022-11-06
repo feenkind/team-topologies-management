@@ -15,3 +15,15 @@ export const sidebarMenuItemLabels = {
   [sidebarMenuItems.VIEW_DOMAINS]: 'View all domains',
   [sidebarMenuItems.ADD_DOMAIN]: 'Add new domain',
 };
+
+export enum headerMenuItems {
+  TEAMS = 'teams',
+  PROJECTS = 'projects',
+  DASHBOARD = 'dashboard',
+}
+
+export const headerMenuItemLabels = {
+  [headerMenuItems.TEAMS]: 'Teams',
+  [headerMenuItems.PROJECTS]: 'Projects',
+  [headerMenuItems.DASHBOARD]: 'Dashboard',
+};
