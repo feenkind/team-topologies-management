@@ -4,6 +4,7 @@ import ProjectList from './container/ProjectList';
 import Layout from './components/Layout';
 import ProjectOverview from './container/Project/ProjectOverview';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import TeamList from './container/TeamList';
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
         <Route element={<Layout />}>
           <Route path="project/:id" element={<ProjectOverview />} />
           <Route path="projects" element={<ProjectList />} />
+          <Route path="teams" element={<TeamList />} />
           <Route path="" element={<Dashboard />} />
         </Route>
       </Routes>

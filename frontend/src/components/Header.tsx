@@ -1,8 +1,17 @@
 import * as React from 'react';
-import { Avatar, Badge, Box, IconButton, Menu, MenuItem } from '@mui/material';
+import {
+  Avatar,
+  Badge,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from '@mui/material';
 import Face4SharpIcon from '@mui/icons-material/Face4Sharp';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { yellow } from '@mui/material/colors';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [anchorElement, setAnchorElement] = React.useState<null | HTMLElement>(
@@ -16,9 +25,40 @@ const Header: React.FC = () => {
     setAnchorElement(null);
   };
 
+  const NavItem = ({ label, url }: { label: string; url: string }) => (
+    <Typography
+      component={Link}
+      to={url}
+      variant="button"
+      sx={{
+        color: 'primary.dark',
+        '&:hover': {
+          color: 'primary.light',
+        },
+        textDecoration: 'none',
+        px: 3,
+      }}
+    >
+      {label}
+    </Typography>
+  );
+
   return (
     <>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            textAlign: 'center',
+
+            px: 3,
+          }}
+        >
+          <NavItem label="Dashboard" url="/" />
+          <NavItem label="Projects" url="/projects" />
+          <NavItem label="Teams" url="/teams" />
+        </Box>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
