@@ -6,10 +6,18 @@ import {
   TableHead,
   TableRow,
   Table as MuiTable,
+  IconButton,
 } from '@mui/material';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import { Link } from 'react-router-dom';
 
 interface ITableProps {
-  actions: boolean;
+  actions?: {
+    id: string;
+    view: boolean;
+    edit: boolean;
+    delete: boolean;
+  }[];
   contentItems: string[][] | React.ReactNode[][];
   headerItems: string[];
 }
@@ -50,8 +58,17 @@ const Table: React.FC<ITableProps> = ({
                     {item}
                   </TableCell>
                 ))}
-              {actions && (
-                <TableCell align="right">some actions (later)</TableCell>
+              {actions && actions[rowIndex].id && (
+                <TableCell align="right">
+                  {actions[rowIndex].view && (
+                    <IconButton
+                      component={Link}
+                      to={`/project/${actions[rowIndex].id}`}
+                    >
+                      <ManageSearchIcon />
+                    </IconButton>
+                  )}
+                </TableCell>
               )}
             </TableRow>
           ))}

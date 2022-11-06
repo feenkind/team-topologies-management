@@ -13,9 +13,15 @@ const ProjectList: React.FC = () => {
       label={project.name}
       url={`/project/${project.id}`}
     />,
-    'not' + ' implemented yet',
+    'not implemented yet',
     'not implemented yet',
   ]);
+  const actions = projects.map((project) => ({
+    id: project.id,
+    view: true,
+    edit: false,
+    delete: false,
+  }));
 
   return (
     <>
@@ -23,7 +29,7 @@ const ProjectList: React.FC = () => {
       <Table
         headerItems={tableHeaderItems}
         contentItems={tableContentItems}
-        actions={true}
+        actions={actions}
       />
     </>
   );
