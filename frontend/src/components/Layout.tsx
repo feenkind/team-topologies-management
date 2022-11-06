@@ -11,15 +11,14 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import MenuIcon from '@mui/icons-material/Menu';
 import { sidebarMenuItems } from '../constants/navItems';
+import { Outlet } from 'react-router-dom';
 
 interface ILayoutProps {
   activeSidebarMenuItem?: sidebarMenuItems;
-  children: React.ReactNode;
 }
 
 const Layout: React.FC<ILayoutProps> = ({
   activeSidebarMenuItem,
-  children,
 }: ILayoutProps) => {
   const drawerWidth = '230';
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -124,7 +123,7 @@ const Layout: React.FC<ILayoutProps> = ({
         }}
       >
         <Toolbar />
-        {children}
+        <Outlet />
       </Box>
     </Box>
   );

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import Layout from '../../components/Layout';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector } from '../hooks';
 import {
   Table,
   TableBody,
@@ -13,8 +12,9 @@ import {
 const ProjectList: React.FC = () => {
   const projects = useAppSelector((state) => state.project.projects);
 
+  // TODO: mark selected project
   return (
-    <Layout>
+    <>
       <TableContainer sx={{ minWidth: 750 }}>
         <Table>
           <TableHead>
@@ -41,7 +41,7 @@ const ProjectList: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Layout>
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   Divider,
-  Link,
   List,
   ListItem,
   ListItemButton,
@@ -17,6 +16,7 @@ import GroupAddSharpIcon from '@mui/icons-material/GroupAddSharp';
 import DomainSharpIcon from '@mui/icons-material/DomainSharp';
 import DomainAddSharpIcon from '@mui/icons-material/DomainAddSharp';
 import { sidebarMenuItemLabels, sidebarMenuItems } from '../constants/navItems';
+import { Link } from 'react-router-dom';
 
 interface ISidebarProps {
   activeMenuItem?: sidebarMenuItems;
@@ -36,8 +36,8 @@ const MenuItem = ({
   return (
     <ListItem
       component={Link}
-      href={url}
-      color="primary.contrastText"
+      to={url}
+      sx={{ color: 'primary.contrastText' }}
       disablePadding
     >
       <ListItemButton
@@ -75,7 +75,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
         <MenuItem
           icon={<WysiwygSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.OVERVIEW]}
-          url="/"
+          url="/project/someid"
           selected={activeMenuItem === sidebarMenuItems.OVERVIEW}
         />
         <MenuItem
