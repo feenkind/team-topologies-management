@@ -7,6 +7,7 @@ import {
   TableRow,
   Table as MuiTable,
   IconButton,
+  Tooltip,
 } from '@mui/material';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import { Link } from 'react-router-dom';
@@ -28,7 +29,7 @@ const Table: React.FC<ITableProps> = ({
   headerItems,
 }: ITableProps) => {
   return (
-    <TableContainer sx={{ minWidth: 750 }}>
+    <TableContainer sx={{ width: '100%' }}>
       <MuiTable>
         <TableHead>
           <TableRow
@@ -61,12 +62,14 @@ const Table: React.FC<ITableProps> = ({
               {actions && actions[rowIndex].basePath && (
                 <TableCell align="right">
                   {actions[rowIndex].view && (
-                    <IconButton
-                      component={Link}
-                      to={`${actions[rowIndex].basePath}`}
-                    >
-                      <ManageSearchIcon />
-                    </IconButton>
+                    <Tooltip title="View">
+                      <IconButton
+                        component={Link}
+                        to={`${actions[rowIndex].basePath}`}
+                      >
+                        <ManageSearchIcon />
+                      </IconButton>
+                    </Tooltip>
                   )}
                 </TableCell>
               )}
