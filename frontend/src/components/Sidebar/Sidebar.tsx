@@ -9,7 +9,7 @@ import DomainAddSharpIcon from '@mui/icons-material/DomainAddSharp';
 import {
   sidebarMenuItemLabels,
   sidebarMenuItems,
-} from '../../constants/navigationTypes';
+} from '../../constants/navigation';
 import SidebarNavItem from './SidebarNavItem';
 import SidebarNavHeadline from './SidebarNavHeadline';
 import Logo from '../Header/Logo';

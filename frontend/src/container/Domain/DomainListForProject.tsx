@@ -6,6 +6,7 @@ import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import TableLinkText from '../../components/Table/TableLinkText';
 import ContentWithHints from '../../components/ContentWithHints';
+import { domainHints } from '../../constants/hints';
 
 const DomainListForProject: React.FC = () => {
   const currentProject = useAppSelector(
@@ -58,7 +59,9 @@ const DomainListForProject: React.FC = () => {
   return (
     <>
       <PageHeadline text={`All domains in ${currentProject.name}`} />
-      <ContentWithHints>
+      <ContentWithHints
+        hints={[domainHints['eventStorming'], domainHints['coreDomainChart']]}
+      >
         <Table
           headerItems={tableHeaderItems}
           contentItems={tableContentItems}

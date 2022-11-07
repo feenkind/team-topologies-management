@@ -5,7 +5,7 @@ import CurrentProjectSelect from './Project/CurrentProjectSelect';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { setCurrentProject } from '../store/slices/projectSlice';
-import { sidebarMenuItems } from '../constants/navigationTypes';
+import { sidebarMenuItems } from '../constants/navigation';
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
