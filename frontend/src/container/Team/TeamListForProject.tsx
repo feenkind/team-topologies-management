@@ -1,0 +1,21 @@
+import * as React from 'react';
+import PageHeadline from '../../components/PageHeadline';
+import Table from '../../components/Table/Table';
+import { useAppSelector } from '../../hooks';
+
+const TeamListForProject: React.FC = () => {
+  const currentProject = useAppSelector(
+    (state) => state.project.currentProject,
+  );
+  const tableHeaderItems = ['Name', 'Type', 'Domains', 'FTE', 'Cognitive Load'];
+  const tableContentItems: string[][] = [];
+
+  return (
+    <>
+      <PageHeadline text={`All teams in ${currentProject.name}`} />
+      <Table headerItems={tableHeaderItems} contentItems={tableContentItems} />
+    </>
+  );
+};
+
+export default TeamListForProject;

@@ -7,12 +7,18 @@ interface IProject {
 }
 
 interface IInitialState {
-  currentProjectId: string;
+  currentProject: {
+    id: string;
+    name: string;
+  };
   projects: IProject[];
 }
 
 export const initialState: IInitialState = {
-  currentProjectId: '',
+  currentProject: {
+    id: '',
+    name: '',
+  },
   projects: [
     {
       id: '1',
@@ -40,11 +46,15 @@ const projectSlice = createSlice({
   name: 'project',
   initialState: initialState,
   reducers: {
-    setCurrentProjectId: (state, { payload }: PayloadAction<string>) => {
-      state.currentProjectId = payload;
+    setCurrentProject: (state, { payload }: PayloadAction<string>) => {
+      state.currentProject.id = payload;
+      const currentProject = state.projects.find(
+        (project) => project.id === payload,
+      );
+      state.currentProject.name = currentProject ? currentProject.name : '';
     },
   },
 });
 
 export const projectReducer = projectSlice.reducer;
-export const { setCurrentProjectId } = projectSlice.actions;
+export const { setCurrentProject } = projectSlice.actions;

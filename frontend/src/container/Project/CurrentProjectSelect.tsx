@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks';
 const CurrentProjectSelect: React.FC = () => {
   const navigate = useNavigate();
   const currentProjectId = useAppSelector(
-    (state) => state.project.currentProjectId,
+    (state) => state.project.currentProject.id,
   );
   const projects = useAppSelector((state) => state.project.projects);
 

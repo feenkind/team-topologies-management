@@ -51,13 +51,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
         <SidebarNavItem
           icon={<GroupsSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.VIEW_TEAMS]}
-          url="/"
+          url={`/project/${currentProjectId}/teams`}
           active={activeMenuItem === sidebarMenuItems.VIEW_TEAMS}
         />
         <SidebarNavItem
           icon={<GroupAddSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.ADD_TEAM]}
-          url="/"
+          url={`/project/${currentProjectId}/teams/add`}
           active={activeMenuItem === sidebarMenuItems.ADD_TEAM}
         />
       </List>
@@ -69,13 +69,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
         <SidebarNavItem
           icon={<DomainSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.VIEW_DOMAINS]}
-          url="/"
+          url={`/project/${currentProjectId}/domains`}
           active={activeMenuItem === sidebarMenuItems.VIEW_DOMAINS}
         />
         <SidebarNavItem
           icon={<DomainAddSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.ADD_DOMAIN]}
-          url="/"
+          url={`/project/${currentProjectId}/domains/add`}
           active={activeMenuItem === sidebarMenuItems.ADD_DOMAIN}
         />
       </List>

@@ -4,14 +4,14 @@ import { useLocation, useParams } from 'react-router-dom';
 import CurrentProjectSelect from './Project/CurrentProjectSelect';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { setCurrentProjectId } from '../store/slices/projectSlice';
+import { setCurrentProject } from '../store/slices/projectSlice';
 import { sidebarMenuItems } from '../constants/navigationTypes';
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { projectId } = useParams<{ projectId: string }>();
   const currentProjectId = useAppSelector(
-    (state) => state.project.currentProjectId,
+    (state) => state.project.currentProject.id,
   );
 
   const location = useLocation();
@@ -22,10 +22,22 @@ const Sidebar: React.FC = () => {
   if (location.pathname.endsWith(`project/${projectId}/visualization`)) {
     activeMenuItem = sidebarMenuItems.VISUALIZATION;
   }
+  if (location.pathname.endsWith(`project/${projectId}/domains`)) {
+    activeMenuItem = sidebarMenuItems.VIEW_DOMAINS;
+  }
+  if (location.pathname.endsWith(`project/${projectId}/domains/add`)) {
+    activeMenuItem = sidebarMenuItems.ADD_DOMAIN;
+  }
+  if (location.pathname.endsWith(`project/${projectId}/teams`)) {
+    activeMenuItem = sidebarMenuItems.VIEW_TEAMS;
+  }
+  if (location.pathname.endsWith(`project/${projectId}/teams/add`)) {
+    activeMenuItem = sidebarMenuItems.ADD_TEAM;
+  }
 
   useEffect(() => {
     if (projectId && projectId !== currentProjectId) {
-      dispatch(setCurrentProjectId(projectId));
+      dispatch(setCurrentProject(projectId));
     }
   }, [dispatch, projectId, currentProjectId]);
 

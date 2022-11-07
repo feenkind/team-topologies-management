@@ -5,7 +5,7 @@ import PageHeadline from '../../components/PageHeadline';
 
 const ProjectOverview: React.FC = () => {
   const currentProjectId = useAppSelector(
-    (state) => state.project.currentProjectId,
+    (state) => state.project.currentProject.id,
   );
   const projects = useAppSelector((state) => state.project.projects);
   const currentProject = projects.find(
