@@ -17,7 +17,7 @@ const ProjectList: React.FC = () => {
     'not implemented yet',
   ]);
   const actions = projects.map((project) => ({
-    id: project.id,
+    basePath: `/project/${project.id}`,
     view: true,
     edit: false,
     delete: false,

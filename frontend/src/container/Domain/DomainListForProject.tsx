@@ -4,6 +4,7 @@ import Table from '../../components/Table/Table';
 import { useAppSelector } from '../../hooks';
 import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import TableLinkText from '../../components/Table/TableLinkText';
 
 const DomainListForProject: React.FC = () => {
   const currentProject = useAppSelector(
@@ -36,17 +37,31 @@ const DomainListForProject: React.FC = () => {
 
   const tableHeaderItems = ['Name', 'Team(s)', 'Priority', 'Complexity', 'FTE'];
   const tableContentItems = projectDomains.map((domain) => [
-    domain.name,
+    <TableLinkText
+      key={domain.id}
+      label={domain.name}
+      url={`/project/${currentProject.id}/domain/${domain.id}`}
+    />,
     'not implemented yet',
     domain.priority,
     domain.complexity,
     'not implemented yet',
   ]);
+  const actions = projectDomains.map((domain) => ({
+    basePath: `/project/${currentProject.id}/domain/${domain.id}`,
+    view: true,
+    edit: false,
+    delete: false,
+  }));
 
   return (
     <>
       <PageHeadline text={`All domains in ${currentProject.name}`} />
-      <Table headerItems={tableHeaderItems} contentItems={tableContentItems} />
+      <Table
+        headerItems={tableHeaderItems}
+        contentItems={tableContentItems}
+        actions={actions}
+      />
     </>
   );
 };

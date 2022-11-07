@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks';
 import PageHeadline from '../../components/PageHeadline';
+import Page404 from '../../components/Page404';
 
 const ProjectOverview: React.FC = () => {
   const currentProjectId = useAppSelector(
@@ -13,14 +14,7 @@ const ProjectOverview: React.FC = () => {
   );
 
   if (!currentProject) {
-    return (
-      <>
-        <PageHeadline text="Project not found" />
-        <Typography variant="body1" component="div">
-          The project could not be loaded.
-        </Typography>
-      </>
-    );
+    return <Page404 />;
   }
 
   return (

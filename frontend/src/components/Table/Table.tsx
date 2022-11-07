@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 interface ITableProps {
   actions?: {
-    id: string;
+    basePath: string;
     view: boolean;
     edit: boolean;
     delete: boolean;
@@ -58,12 +58,12 @@ const Table: React.FC<ITableProps> = ({
                     {item}
                   </TableCell>
                 ))}
-              {actions && actions[rowIndex].id && (
+              {actions && actions[rowIndex].basePath && (
                 <TableCell align="right">
                   {actions[rowIndex].view && (
                     <IconButton
                       component={Link}
-                      to={`/project/${actions[rowIndex].id}`}
+                      to={`${actions[rowIndex].basePath}`}
                     >
                       <ManageSearchIcon />
                     </IconButton>

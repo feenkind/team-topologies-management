@@ -12,6 +12,8 @@ import DomainListForProject from './container/Domain/DomainListForProject';
 import TeamListForProject from './container/Team/TeamListForProject';
 import DomainAddForm from './container/Domain/DomainAddForm';
 import TeamAddToProject from './container/Team/TeamAddToProject';
+import DomainView from './container/Domain/DomainView';
+import Page404 from './components/Page404';
 
 const App: React.FC = () => {
   return (
@@ -25,6 +27,10 @@ const App: React.FC = () => {
           <Route
             path="project/:projectId/teams"
             element={<TeamListForProject />}
+          />
+          <Route
+            path="project/:projectId/domain/:domainId"
+            element={<DomainView />}
           />
           <Route
             path="project/:projectId/domain/add"
@@ -42,6 +48,7 @@ const App: React.FC = () => {
           <Route path="projects" element={<ProjectList />} />
           <Route path="teams" element={<TeamList />} />
           <Route path="/" element={<Dashboard />} />
+          <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>
     </BrowserRouter>
