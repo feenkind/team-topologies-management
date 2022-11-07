@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Divider, List, Toolbar, Typography } from '@mui/material';
+import { Divider, List } from '@mui/material';
 import WysiwygSharpIcon from '@mui/icons-material/WysiwygSharp';
 import BubbleChartSharpIcon from '@mui/icons-material/BubbleChartSharp';
 import GroupsSharpIcon from '@mui/icons-material/GroupsSharp';
@@ -12,6 +12,7 @@ import {
 } from '../../constants/navigationTypes';
 import SidebarNavItem from './SidebarNavItem';
 import SidebarNavHeadline from './SidebarNavHeadline';
+import Logo from '../Header/Logo';
 
 interface ISidebarProps {
   activeMenuItem?: sidebarMenuItems;
@@ -24,15 +25,9 @@ const Sidebar: React.FC<ISidebarProps> = ({
   currentProjectId,
   projectSelect,
 }: ISidebarProps) => {
-  const logo = (
-    <Toolbar sx={{ alignSelf: 'center' }}>
-      <Typography variant="h5">TmwTT</Typography>
-    </Toolbar>
-  );
-
   return (
     <>
-      {logo}
+      <Logo />
       {projectSelect}
       <List>
         <SidebarNavItem
