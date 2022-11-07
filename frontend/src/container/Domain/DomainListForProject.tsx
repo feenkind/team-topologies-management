@@ -1,11 +1,11 @@
 import * as React from 'react';
-import PageHeadline from '../../components/PageHeadline';
+import PageHeadline from '../../components/Layout/PageHeadline';
 import Table from '../../components/Table/Table';
 import { useAppSelector } from '../../hooks';
 import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import TableLinkText from '../../components/Table/TableLinkText';
-import ContentWithHints from '../../components/ContentWithHints';
+import ContentWithHints from '../../components/Layout/ContentWithHints';
 import { domainHints } from '../../constants/hints';
 
 const DomainListForProject: React.FC = () => {
@@ -26,7 +26,7 @@ const DomainListForProject: React.FC = () => {
         <Button
           variant="contained"
           component={Link}
-          to={`/project/${currentProject.id}/domains/add`}
+          to={`/project/${currentProject.id}/domain/add`}
           sx={{
             marginTop: 3,
           }}

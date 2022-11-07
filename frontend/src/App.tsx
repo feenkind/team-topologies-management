@@ -1,7 +1,7 @@
 import React from 'react';
 import Dashboard from './container/Dashboard';
 import ProjectList from './container/Project/ProjectList';
-import Layout from './components/Layout';
+import Layout from './components/Layout/Layout';
 import ProjectOverview from './container/Project/ProjectOverview';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TeamList from './container/Team/TeamList';

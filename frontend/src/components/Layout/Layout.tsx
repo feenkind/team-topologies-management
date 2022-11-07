@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AppBar, Box, Drawer, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Outlet } from 'react-router-dom';
-import Logo from './Header/Logo';
+import Logo from '../Header/Logo';
 
 interface ILayoutProps {
   header: React.ReactNode;

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import PageHeadline from '../../components/PageHeadline';
+import PageHeadline from '../../components/Layout/PageHeadline';
 import Table from '../../components/Table/Table';
 import { useAppSelector } from '../../hooks';
-import ContentWithHints from '../../components/ContentWithHints';
+import ContentWithHints from '../../components/Layout/ContentWithHints';
 
 const TeamListForProject: React.FC = () => {
   const currentProject = useAppSelector(

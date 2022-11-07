@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IHint } from '../constants/hints';
+import { IHint } from '../../constants/hints';
 
 interface IContentWithHintsProps {
   children: React.ReactNode | React.ReactNode[];

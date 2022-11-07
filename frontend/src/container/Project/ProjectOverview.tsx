@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useAppSelector } from '../../hooks';
-import PageHeadline from '../../components/PageHeadline';
+import PageHeadline from '../../components/Layout/PageHeadline';
 import Page404 from '../../components/Page404';
 import { Link, useParams } from 'react-router-dom';
 import ButtonLink from '../../components/Buttons/ButtonLink';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Typography } from '@mui/material';
-import PageHeadline from './PageHeadline';
+import PageHeadline from './Layout/PageHeadline';
 
 const Page404: React.FC = () => {
   return (
