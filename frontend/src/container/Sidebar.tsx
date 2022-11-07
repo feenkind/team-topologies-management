@@ -25,13 +25,13 @@ const Sidebar: React.FC = () => {
   if (location.pathname.endsWith(`project/${projectId}/domains`)) {
     activeMenuItem = sidebarMenuItems.VIEW_DOMAINS;
   }
-  if (location.pathname.endsWith(`project/${projectId}/domains/add`)) {
+  if (location.pathname.endsWith(`project/${projectId}/domain/add`)) {
     activeMenuItem = sidebarMenuItems.ADD_DOMAIN;
   }
   if (location.pathname.endsWith(`project/${projectId}/teams`)) {
     activeMenuItem = sidebarMenuItems.VIEW_TEAMS;
   }
-  if (location.pathname.endsWith(`project/${projectId}/teams/add`)) {
+  if (location.pathname.endsWith(`project/${projectId}/team/add`)) {
     activeMenuItem = sidebarMenuItems.ADD_TEAM;
   }
 

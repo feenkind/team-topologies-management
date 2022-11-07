@@ -19,7 +19,7 @@ const App: React.FC = () => {
       <Routes>
         <Route element={<Layout header={<Header />} sidebar={<Sidebar />} />}>
           <Route
-            path="project/:projectId/teams/add"
+            path="project/:projectId/team/add"
             element={<TeamAddToProject />}
           />
           <Route
@@ -27,7 +27,7 @@ const App: React.FC = () => {
             element={<TeamListForProject />}
           />
           <Route
-            path="project/:projectId/domains/add"
+            path="project/:projectId/domain/add"
             element={<DomainAddForm />}
           />
           <Route

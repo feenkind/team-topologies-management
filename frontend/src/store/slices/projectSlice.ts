@@ -22,7 +22,7 @@ export const initialState: IInitialState = {
   projects: [
     {
       id: '1',
-      name: 'Test Project',
+      name: 'A Shopping Platform',
       description: 'Some context for test project.',
     },
     {
