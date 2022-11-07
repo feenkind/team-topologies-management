@@ -19,6 +19,9 @@ const Sidebar: React.FC = () => {
   if (location.pathname.endsWith(`project/${projectId}`)) {
     activeMenuItem = sidebarMenuItems.OVERVIEW;
   }
+  if (location.pathname.endsWith(`project/${projectId}/visualization`)) {
+    activeMenuItem = sidebarMenuItems.VISUALIZATION;
+  }
 
   useEffect(() => {
     if (projectId && projectId !== currentProjectId) {

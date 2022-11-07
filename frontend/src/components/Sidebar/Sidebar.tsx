@@ -39,7 +39,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
         <SidebarNavItem
           icon={<BubbleChartSharpIcon />}
           label={sidebarMenuItemLabels[sidebarMenuItems.VISUALIZATION]}
-          url="/"
+          url={`/project/${currentProjectId}/visualization`}
           active={activeMenuItem === sidebarMenuItems.VISUALIZATION}
         />
       </List>

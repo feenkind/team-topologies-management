@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useAppSelector } from '../hooks';
-import PageHeadline from '../components/PageHeadline';
-import Table from '../components/Table/Table';
-import TableLinkText from '../components/Table/TableLinkText';
+import { useAppSelector } from '../../hooks';
+import PageHeadline from '../../components/PageHeadline';
+import Table from '../../components/Table/Table';
+import TableLinkText from '../../components/Table/TableLinkText';
 
 const ProjectList: React.FC = () => {
   const projects = useAppSelector((state) => state.project.projects);
