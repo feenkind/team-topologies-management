@@ -1,11 +1,18 @@
 export enum complexity {
-  SIMPLE = 'simple',
-  COMPLICATED = 'complicated',
-  COMPLEX = 'complex',
+  SIMPLE = 'Simple',
+  COMPLICATED = 'Complicated',
+  COMPLEX = 'Complex',
 }
 
 export enum priority {
-  GENERIC = 'generic',
-  SUPPORTING = 'supporting',
-  CORE = 'core',
+  GENERIC = 'Generic',
+  SUPPORTING = 'Supporting',
+  CORE = 'Core',
+}
+
+export enum teamTopology {
+  STREAM_ALIGNED = 'Stream Aligned',
+  ENABLING = 'Enabling',
+  COMPLICATED_SUBSYSTEM = 'Complicated Subsystem',
+  PLATFORM = 'Platform',
 }
