@@ -15,11 +15,15 @@ import GroupsSharpIcon from '@mui/icons-material/GroupsSharp';
 import GroupAddSharpIcon from '@mui/icons-material/GroupAddSharp';
 import DomainSharpIcon from '@mui/icons-material/DomainSharp';
 import DomainAddSharpIcon from '@mui/icons-material/DomainAddSharp';
-import { sidebarMenuItemLabels, sidebarMenuItems } from '../constants/navItems';
+import {
+  sidebarMenuItemLabels,
+  sidebarMenuItems,
+} from '../constants/navigationTypes';
 import { Link } from 'react-router-dom';
 
 interface ISidebarProps {
   activeMenuItem?: sidebarMenuItems;
+  projectSelect: React.ReactNode;
 }
 
 const MenuItem = ({
@@ -65,12 +69,14 @@ const MenuItem = ({
 
 const Sidebar: React.FC<ISidebarProps> = ({
   activeMenuItem,
+  projectSelect,
 }: ISidebarProps) => {
   return (
     <>
       <Toolbar sx={{ alignSelf: 'center' }}>
         <Typography variant="h5">TmwTT</Typography>
       </Toolbar>
+      {projectSelect}
       <List>
         <MenuItem
           icon={<WysiwygSharpIcon />}

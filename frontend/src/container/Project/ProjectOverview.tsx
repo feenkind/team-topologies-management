@@ -1,19 +1,29 @@
 import * as React from 'react';
 import { Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks';
-import { Link } from 'react-router-dom';
 
 const ProjectOverview: React.FC = () => {
-  const currentProject = useAppSelector(
-    (state) => state.project.currentProject,
+  const currentProjectId = useAppSelector(
+    (state) => state.project.currentProjectId,
   );
+  const projects = useAppSelector((state) => state.project.projects);
+  const currentProject = projects.find(
+    (project) => project.id === currentProjectId,
+  );
+
+  if (!currentProject) {
+    return (
+      <Typography variant="body1" component="div">
+        The project could not be loaded.
+      </Typography>
+    );
+  }
 
   return (
     <>
-      <Typography variant="body2" component="div">
-        Hello, welcome to your project: {currentProject}
+      <Typography variant="body1" component="div">
+        Hello, welcome to your project: {currentProject.name}
       </Typography>
-      <Link to="/projects">View all projects</Link>
     </>
   );
 };

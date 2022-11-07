@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import {
   headerMenuItemLabels,
   headerMenuItems,
-} from '../../constants/navItems';
+} from '../../constants/navigationTypes';
 import UserMenu from './UserMenu';
 import Notifications from './Notifications';
 import NavItem from './NavItem';
