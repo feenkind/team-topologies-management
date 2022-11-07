@@ -35,7 +35,7 @@ const ContentWithHints: React.FC<IContentWithHintsProps> = ({
       <Divider variant="middle" sx={{ my: 2 }} />
       {!hints && (
         <Typography align="center" variant="body2" paragraph>
-          There is no hint to display :(
+          There is no information to display :(
         </Typography>
       )}
       {hints &&

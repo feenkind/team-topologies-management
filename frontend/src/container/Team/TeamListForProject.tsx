@@ -2,6 +2,7 @@ import * as React from 'react';
 import PageHeadline from '../../components/PageHeadline';
 import Table from '../../components/Table/Table';
 import { useAppSelector } from '../../hooks';
+import ContentWithHints from '../../components/ContentWithHints';
 
 const TeamListForProject: React.FC = () => {
   const currentProject = useAppSelector(
@@ -13,7 +14,12 @@ const TeamListForProject: React.FC = () => {
   return (
     <>
       <PageHeadline text={`All teams in ${currentProject.name}`} />
-      <Table headerItems={tableHeaderItems} contentItems={tableContentItems} />
+      <ContentWithHints>
+        <Table
+          headerItems={tableHeaderItems}
+          contentItems={tableContentItems}
+        />
+      </ContentWithHints>
     </>
   );
 };
