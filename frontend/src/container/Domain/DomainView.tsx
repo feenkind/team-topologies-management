@@ -6,6 +6,7 @@ import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import Tabs from '../../components/Layout/Tabs';
 import { Typography } from '@mui/material';
+import InformationGrid from '../../components/Layout/InformationGrid';
 
 const DomainView: React.FC = () => {
   const { projectId, domainId } = useParams<{
@@ -31,7 +32,30 @@ const DomainView: React.FC = () => {
             {
               tabName: 'Information',
               content: (
-                <Typography>Some information about the domain</Typography>
+                <InformationGrid
+                  informationItems={[
+                    {
+                      label: 'Name',
+                      content: domain.name,
+                    },
+                    {
+                      label: 'Priority',
+                      content: domain.priority,
+                    },
+                    {
+                      label: 'Complexity',
+                      content: domain.complexity,
+                    },
+                    {
+                      label: 'Responsible team(s)',
+                      content: 'Not implemented yet',
+                    },
+                    {
+                      label: 'Description',
+                      content: domain.description,
+                    },
+                  ]}
+                />
               ),
             },
             {

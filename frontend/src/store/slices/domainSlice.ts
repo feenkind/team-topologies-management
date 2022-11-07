@@ -29,7 +29,13 @@ export const initialState: IInitialState = {
         name: 'Checkout',
         description:
           'Description for the domain "Checkout" with some more' +
-          ' information...',
+          ' information... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n' +
+          '        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim\n' +
+          '        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea\n' +
+          '        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate\n' +
+          '        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint\n' +
+          '        occaecat cupidatat non proident, sunt in culpa qui officia deserunt\n' +
+          '        mollit anim id est laborum.',
         priority: 'core',
         complexity: 'complex',
       },
