@@ -17,7 +17,7 @@ const ButtonLink: React.FC<ITableLinkButtonProps> = ({
       to={url}
       size="small"
       variant="outlined"
-      sx={{ m: 0.5, backgroundColor: 'secondary.main' }}
+      sx={{ m: 0.5, backgroundColor: 'grey.200' }}
     >
       {label}
     </Button>
