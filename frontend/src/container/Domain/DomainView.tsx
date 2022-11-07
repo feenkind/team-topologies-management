@@ -5,6 +5,7 @@ import Page404 from '../../components/Page404';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import Tabs from '../../components/Layout/Tabs';
+import { Typography } from '@mui/material';
 
 const DomainView: React.FC = () => {
   const { projectId, domainId } = useParams<{
@@ -25,7 +26,20 @@ const DomainView: React.FC = () => {
     <>
       <PageHeadline text={`Domain ${domain.name}`} />
       <ContentWithHints>
-        <Tabs />
+        <Tabs
+          tabContent={[
+            {
+              tabName: 'Information',
+              content: (
+                <Typography>Some information about the domain</Typography>
+              ),
+            },
+            {
+              tabName: 'History',
+              content: <Typography>Not implemented yet</Typography>,
+            },
+          ]}
+        />
       </ContentWithHints>
     </>
   );

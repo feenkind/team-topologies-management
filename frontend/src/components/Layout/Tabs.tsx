@@ -1,31 +1,16 @@
 import * as React from 'react';
 import { Box, Tab, Tabs as TabsComponent } from '@mui/material';
 import { useState } from 'react';
+import TabPanel from './TabPanel';
 
-interface ITabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
+interface ITabProps {
+  tabContent: {
+    tabName: string;
+    content: React.ReactNode | React.ReactNode[];
+  }[];
 }
 
-const TabPanel: React.FC<ITabPanelProps> = ({
-  children,
-  value,
-  index,
-}: ITabPanelProps) => {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`content-tabpanel-${index}`}
-      aria-labelledby={`content-tab-${index}`}
-    >
-      {value === index && <Box sx={{ py: 3, px: 1 }}>{children}</Box>}
-    </div>
-  );
-};
-
-const Tabs: React.FC = () => {
+const Tabs: React.FC<ITabProps> = ({ tabContent }: ITabProps) => {
   const [tabValue, setTabValue] = useState(0);
 
   return (
@@ -37,24 +22,25 @@ const Tabs: React.FC = () => {
             setTabValue(value);
           }}
         >
-          <Tab
-            label="Dummy Tab 1"
-            id="simple-tab-0"
-            aria-controls="simple-tabpanel-0"
-          />
-          <Tab
-            label="Dummy Tab 2"
-            id="simple-tab-1"
-            aria-controls="simple-tabpanel-1"
-          />
+          {tabContent.map((tab, index) => (
+            <Tab
+              key={`content-tab-${index}`}
+              label={tab.tabName}
+              id={`content-tab-${index}`}
+              aria-controls={`content-tabpanel-${index}`}
+            />
+          ))}
         </TabsComponent>
       </Box>
-      <TabPanel value={tabValue} index={0}>
-        Dummy Data for Tab 1
-      </TabPanel>
-      <TabPanel value={tabValue} index={1}>
-        Dummy Data for Tab 2
-      </TabPanel>
+      {tabContent.map((tab, index) => (
+        <TabPanel
+          key={`content-tabpanel-${index}`}
+          value={tabValue}
+          index={index}
+        >
+          {tab.content}
+        </TabPanel>
+      ))}
     </>
   );
 };
