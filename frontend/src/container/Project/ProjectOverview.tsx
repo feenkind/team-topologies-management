@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Typography } from '@mui/material';
+import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks';
+import PageHeadline from '../../components/PageHeadline';
 
 const ProjectOverview: React.FC = () => {
   const currentProjectId = useAppSelector(
@@ -13,17 +14,35 @@ const ProjectOverview: React.FC = () => {
 
   if (!currentProject) {
     return (
-      <Typography variant="body1" component="div">
-        The project could not be loaded.
-      </Typography>
+      <>
+        <PageHeadline text="Project not found" />
+        <Typography variant="body1" component="div">
+          The project could not be loaded.
+        </Typography>
+      </>
     );
   }
 
   return (
     <>
-      <Typography variant="body1" component="div">
-        Hello, welcome to your project: {currentProject.name}
-      </Typography>
+      <PageHeadline text="Project overview" />
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <Card sx={{ minWidth: 275, backgroundColor: 'secondary.main' }}>
+            <CardContent>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                Project Information
+              </Typography>
+              <Typography variant="h5" gutterBottom>
+                {currentProject.name}
+              </Typography>
+              <Typography variant="body2">
+                {currentProject.description}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </>
   );
 };

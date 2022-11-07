@@ -16,7 +16,7 @@ const CurrentProjectSelect: React.FC = () => {
         <InputLabel
           id="projectSelectInput"
           sx={{
-            color: 'primary.light',
+            color: 'primary.main',
             '& div': {
               borderColor: 'background.paper',
             },
@@ -28,13 +28,13 @@ const CurrentProjectSelect: React.FC = () => {
           sx={{
             color: 'background.paper',
             '& svg': {
-              color: 'primary.light',
+              color: 'primary.main',
             },
             '.MuiOutlinedInput-notchedOutline': {
-              borderColor: 'primary.light',
+              borderColor: 'primary.main',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
-              borderColor: 'primary.light',
+              borderColor: 'primary.main',
             },
           }}
           labelId="projectSelectLabel"
