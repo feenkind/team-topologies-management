@@ -6,7 +6,7 @@ import {
 } from '../../constants/navigationTypes';
 import UserMenu from './UserMenu';
 import Notifications from './Notifications';
-import NavItem from './NavItem';
+import HeaderNavItem from './HeaderNavItem';
 
 interface IHeaderProps {
   activeMenuItem?: headerMenuItems;
@@ -22,17 +22,17 @@ const Header: React.FC<IHeaderProps> = ({ activeMenuItem }: IHeaderProps) => {
         px: 3,
       }}
     >
-      <NavItem
+      <HeaderNavItem
         label={headerMenuItemLabels[headerMenuItems.DASHBOARD]}
         url="/"
         active={activeMenuItem === headerMenuItems.DASHBOARD}
       />
-      <NavItem
+      <HeaderNavItem
         label={headerMenuItemLabels[headerMenuItems.PROJECTS]}
         url="/projects"
         active={activeMenuItem === headerMenuItems.PROJECTS}
       />
-      <NavItem
+      <HeaderNavItem
         label={headerMenuItemLabels[headerMenuItems.TEAMS]}
         url="/teams"
         active={activeMenuItem === headerMenuItems.TEAMS}

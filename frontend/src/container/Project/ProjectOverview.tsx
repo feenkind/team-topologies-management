@@ -31,7 +31,7 @@ const ProjectOverview: React.FC = () => {
           <Card sx={{ minWidth: 275, backgroundColor: 'secondary.main' }}>
             <CardContent>
               <Typography variant="body2" color="text.secondary" gutterBottom>
-                Project Information
+                Project information for
               </Typography>
               <Typography variant="h5" gutterBottom>
                 {currentProject.name}

@@ -8,7 +8,7 @@ interface INavItemProps {
   active: boolean;
 }
 
-const NavItem: React.FC<INavItemProps> = ({
+const HeaderNavItem: React.FC<INavItemProps> = ({
   label,
   url,
   active,
@@ -31,4 +31,4 @@ const NavItem: React.FC<INavItemProps> = ({
   );
 };
 
-export default NavItem;
+export default HeaderNavItem;
