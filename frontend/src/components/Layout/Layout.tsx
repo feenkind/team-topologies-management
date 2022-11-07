@@ -3,6 +3,7 @@ import { AppBar, Box, Drawer, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Outlet } from 'react-router-dom';
 import Logo from '../Header/Logo';
+import { useState } from 'react';
 
 interface ILayoutProps {
   header: React.ReactNode;
@@ -11,7 +12,7 @@ interface ILayoutProps {
 
 const Layout: React.FC<ILayoutProps> = ({ header, sidebar }: ILayoutProps) => {
   const drawerWidth = '230';
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };

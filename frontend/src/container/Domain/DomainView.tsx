@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Page404 from '../../components/Page404';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
+import Tabs from '../../components/Layout/Tabs';
 
 const DomainView: React.FC = () => {
   const { projectId, domainId } = useParams<{
@@ -23,7 +24,9 @@ const DomainView: React.FC = () => {
   return (
     <>
       <PageHeadline text={`Domain ${domain.name}`} />
-      <ContentWithHints>There will be more information soon!</ContentWithHints>
+      <ContentWithHints>
+        <Tabs />
+      </ContentWithHints>
     </>
   );
 };
