@@ -6,13 +6,13 @@ import { headerMenuItems } from '../constants/navigationTypes';
 const Header: React.FC = () => {
   const location = useLocation();
   let activeMenuItem;
-  if (location.pathname.endsWith('/teams')) {
+  if (location.pathname === '/teams') {
     activeMenuItem = headerMenuItems.TEAMS;
   }
-  if (location.pathname.endsWith('/projects')) {
+  if (location.pathname === '/projects') {
     activeMenuItem = headerMenuItems.PROJECTS;
   }
-  if (location.pathname.endsWith('/')) {
+  if (location.pathname === '/') {
     activeMenuItem = headerMenuItems.DASHBOARD;
   }
 
