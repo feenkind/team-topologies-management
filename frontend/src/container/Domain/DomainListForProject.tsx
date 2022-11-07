@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import TableLinkText from '../../components/Table/TableLinkText';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import { domainHints } from '../../constants/hints';
+import ComplexityCategory from '../../components/Categories/ComplexityCategory';
+import PriorityCategory from '../../components/Categories/PriorityCategory';
 
 const DomainListForProject: React.FC = () => {
   const currentProject = useAppSelector(
@@ -45,8 +47,8 @@ const DomainListForProject: React.FC = () => {
       url={`/project/${currentProject.id}/domain/${domain.id}`}
     />,
     'not implemented yet',
-    domain.priority,
-    domain.complexity,
+    <PriorityCategory key={domain.id} priority={domain.priority} />,
+    <ComplexityCategory key={domain.id} complexity={domain.complexity} />,
     'not implemented yet',
   ]);
   const actions = projectDomains.map((domain) => ({

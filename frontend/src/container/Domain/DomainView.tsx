@@ -7,6 +7,8 @@ import ContentWithHints from '../../components/Layout/ContentWithHints';
 import Tabs from '../../components/Layout/Tabs';
 import { Typography } from '@mui/material';
 import InformationGrid from '../../components/Layout/InformationGrid';
+import ComplexityCategory from '../../components/Categories/ComplexityCategory';
+import PriorityCategory from '../../components/Categories/PriorityCategory';
 
 const DomainView: React.FC = () => {
   const { projectId, domainId } = useParams<{
@@ -40,11 +42,13 @@ const DomainView: React.FC = () => {
                     },
                     {
                       label: 'Priority',
-                      content: domain.priority,
+                      content: <PriorityCategory priority={domain.priority} />,
                     },
                     {
                       label: 'Complexity',
-                      content: domain.complexity,
+                      content: (
+                        <ComplexityCategory complexity={domain.complexity} />
+                      ),
                     },
                     {
                       label: 'Responsible team(s)',

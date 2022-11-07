@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { complexity, priority } from '../../constants/categories';
 
 interface IDomain {
   id: string;
   name: string;
   description: string;
-  priority: 'core' | 'supporting' | 'generic';
-  complexity: 'simple' | 'complicated' | 'complex';
+  priority: priority;
+  complexity: complexity;
 }
 
 interface IInitialState {
@@ -21,8 +22,8 @@ export const initialState: IInitialState = {
         id: '1',
         name: 'Shopping Cart',
         description: 'Description for the domain "Shopping Cart"',
-        priority: 'supporting',
-        complexity: 'complicated',
+        priority: priority.SUPPORTING,
+        complexity: complexity.COMPLICATED,
       },
       {
         id: '2',
@@ -36,22 +37,22 @@ export const initialState: IInitialState = {
           '        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint\n' +
           '        occaecat cupidatat non proident, sunt in culpa qui officia deserunt\n' +
           '        mollit anim id est laborum.',
-        priority: 'core',
-        complexity: 'complex',
+        priority: priority.CORE,
+        complexity: complexity.COMPLEX,
       },
       {
         id: '3',
         name: 'Products',
         description: 'Some product domain description',
-        priority: 'generic',
-        complexity: 'simple',
+        priority: priority.SUPPORTING,
+        complexity: complexity.SIMPLE,
       },
       {
         id: '4',
         name: 'Registration',
         description: 'Registration is super easy.',
-        priority: 'generic',
-        complexity: 'simple',
+        priority: priority.GENERIC,
+        complexity: complexity.SIMPLE,
       },
     ],
     '2': [
@@ -59,15 +60,15 @@ export const initialState: IInitialState = {
         id: '1',
         name: 'Domain A',
         description: 'More information for a domain should be provided...',
-        priority: 'supporting',
-        complexity: 'complicated',
+        priority: priority.SUPPORTING,
+        complexity: complexity.COMPLICATED,
       },
       {
         id: '2',
         name: 'Domain B',
         description: 'Domain B information',
-        priority: 'generic',
-        complexity: 'simple',
+        priority: priority.GENERIC,
+        complexity: complexity.SIMPLE,
       },
     ],
   },
