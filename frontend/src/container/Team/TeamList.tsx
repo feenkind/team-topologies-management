@@ -42,10 +42,21 @@ const TeamList: React.FC = () => {
     ];
   });
 
+  const actions = teams.map((team) => ({
+    basePath: `/team/${team.id}`,
+    view: true,
+    edit: false,
+    delete: false,
+  }));
+
   return (
     <>
       <PageHeadline text="All teams" />
-      <Table headerItems={tableHeaderItems} contentItems={tableContentItems} />
+      <Table
+        headerItems={tableHeaderItems}
+        contentItems={tableContentItems}
+        actions={actions}
+      />
     </>
   );
 };

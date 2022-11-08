@@ -68,6 +68,13 @@ const TeamListForProject: React.FC = () => {
     team.cognitiveLoad,
   ]);
 
+  const actions = projectTeams.map((team) => ({
+    basePath: `/team/${team.id}`,
+    view: true,
+    edit: false,
+    delete: false,
+  }));
+
   return (
     <>
       <PageHeadline text={`All teams in ${currentProject.name}`} />
@@ -75,6 +82,7 @@ const TeamListForProject: React.FC = () => {
         <Table
           headerItems={tableHeaderItems}
           contentItems={tableContentItems}
+          actions={actions}
         />
       </ContentWithHints>
     </>
