@@ -13,6 +13,7 @@ import PageHeadline from '../../components/Layout/PageHeadline';
 import Page404 from '../../components/Page404';
 import { Link, useParams } from 'react-router-dom';
 import ButtonLink from '../../components/Buttons/ButtonLink';
+import TeamLink from '../../components/Buttons/TeamLink';
 
 const ProjectOverview: React.FC = () => {
   const { projectId } = useParams<{
@@ -24,6 +25,11 @@ const ProjectOverview: React.FC = () => {
   const projectDomains = useAppSelector(
     (state) => state.domain.domains[projectId || ''],
   );
+  const projectTeams = useAppSelector((state) =>
+    state.team.teams.filter(
+      (team) => projectId && team.projects?.includes(projectId),
+    ),
+  );
 
   if (!currentProject) {
     return <Page404 />;
@@ -34,7 +40,7 @@ const ProjectOverview: React.FC = () => {
       <PageHeadline text="Project overview" />
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ minWidth: 275, backgroundColor: 'secondary.main' }}>
+          <Card sx={{ backgroundColor: 'secondary.main' }}>
             <CardContent>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 Project information for
@@ -50,7 +56,7 @@ const ProjectOverview: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Card sx={{ minWidth: 275, backgroundColor: 'secondary.light' }}>
+          <Card sx={{ backgroundColor: 'secondary.light' }}>
             <CardContent>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 Domains
@@ -84,7 +90,50 @@ const ProjectOverview: React.FC = () => {
                 variant="contained"
                 fullWidth
               >
-                See domain list
+                See domain list for this project
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Card sx={{ backgroundColor: 'primary.light' }}>
+            <CardContent>
+              <Typography variant="body2" color="white" gutterBottom>
+                Teams
+              </Typography>
+              {projectTeams.length === 0 && (
+                <Typography variant="h5" gutterBottom color="white">
+                  {currentProject.name} has no teams
+                </Typography>
+              )}
+              {projectTeams.length > 0 && (
+                <>
+                  <Typography variant="h5" gutterBottom color="white">
+                    {projectTeams.length} teams are working on{' '}
+                    {currentProject.name}
+                  </Typography>
+                  <Box sx={{ my: 2 }}>
+                    {projectTeams.map((team) => (
+                      <TeamLink
+                        key={team.id}
+                        label={team.name}
+                        teamTopology={team.topology}
+                        url={`/team/${team.id}`}
+                      />
+                    ))}
+                  </Box>
+                </>
+              )}
+            </CardContent>
+            <CardActions sx={{ alignItems: 'center' }}>
+              <Button
+                component={Link}
+                to={`/project/${projectId}/teams`}
+                variant="contained"
+                fullWidth
+              >
+                See team list for this project
               </Button>
             </CardActions>
           </Card>

@@ -39,6 +39,11 @@ export const initialState: IInitialState = {
         ' more context. Some more context. Some more context. Some more' +
         ' context. Some more context. Some more context.',
     },
+    {
+      id: '4',
+      name: 'Brand new project',
+      description: 'We do not know anything yet.',
+    },
   ],
 };
 

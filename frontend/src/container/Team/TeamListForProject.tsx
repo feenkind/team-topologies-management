@@ -6,6 +6,8 @@ import ContentWithHints from '../../components/Layout/ContentWithHints';
 import TableLinkText from '../../components/Table/TableLinkText';
 import TeamTopologyCategory from '../../components/Categories/TeamTopologyCategory';
 import ButtonLink from '../../components/Buttons/ButtonLink';
+import { Button, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const TeamListForProject: React.FC = () => {
   const currentProject = useAppSelector(
@@ -18,6 +20,27 @@ const TeamListForProject: React.FC = () => {
   const projectTeams = teams.filter((team) =>
     team.projects?.includes(currentProject.id),
   );
+
+  if (projectTeams.length === 0) {
+    return (
+      <>
+        <PageHeadline text={`No teams in ${currentProject.name}`} />
+        <Typography variant="body1">
+          No teams are working on this project so far.
+        </Typography>
+        <Button
+          variant="contained"
+          component={Link}
+          to={`/project/${currentProject.id}/team/add`}
+          sx={{
+            marginTop: 3,
+          }}
+        >
+          Add a team to this project
+        </Button>
+      </>
+    );
+  }
 
   const tableHeaderItems = [
     'Name',
