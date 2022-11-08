@@ -16,8 +16,8 @@ interface IInitialState {
 
 export const initialState: IInitialState = {
   currentProject: {
-    id: '',
-    name: '',
+    id: '1',
+    name: 'A Shopping Platform',
   },
   projects: [
     {
