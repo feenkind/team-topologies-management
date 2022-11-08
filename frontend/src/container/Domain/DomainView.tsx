@@ -9,6 +9,7 @@ import { Typography } from '@mui/material';
 import InformationGrid from '../../components/Layout/InformationGrid';
 import ComplexityCategory from '../../components/Categories/ComplexityCategory';
 import PriorityCategory from '../../components/Categories/PriorityCategory';
+import TeamLink from '../../components/Buttons/TeamLink';
 
 const DomainView: React.FC = () => {
   const { projectId, domainId } = useParams<{
@@ -16,7 +17,8 @@ const DomainView: React.FC = () => {
     domainId: string;
   }>();
   const domains = useAppSelector((state) => state.domain.domains);
-  if (!projectId) {
+  const teams = useAppSelector((state) => state.team.teams);
+  if (!projectId || !domainId) {
     return <Page404 />;
   }
 
@@ -24,6 +26,26 @@ const DomainView: React.FC = () => {
   if (!domain) {
     return <Page404 />;
   }
+
+  const domainTeams = teams.filter(
+    (team) =>
+      team.projects?.includes(projectId) && team.domains?.includes(domainId),
+  );
+
+  const domainTeamDisplay = domainTeams ? (
+    <>
+      {domainTeams.map((team) => (
+        <TeamLink
+          key={team.id}
+          teamTopology={team.topology}
+          url={`/team/${team.id}`}
+          label={team.name}
+        />
+      ))}
+    </>
+  ) : (
+    'No' + ' team(s)' + ' in this' + ' domain'
+  );
 
   return (
     <>
@@ -52,7 +74,7 @@ const DomainView: React.FC = () => {
                     },
                     {
                       label: 'Responsible team(s)',
-                      content: 'Not implemented yet',
+                      content: domainTeamDisplay,
                     },
                     {
                       label: 'Description',
