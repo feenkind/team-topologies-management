@@ -61,6 +61,13 @@ export const initialState: IInitialState = {
       fte: 1,
       cognitiveLoad: 0,
     },
+    {
+      id: '6',
+      name: 'Unwanted Team',
+      topology: teamTopology.ENABLING,
+      fte: 2,
+      cognitiveLoad: 0,
+    },
   ],
 };
 

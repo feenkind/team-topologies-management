@@ -25,22 +25,18 @@ const TeamList: React.FC = () => {
         url={`/team/${team.id}`}
       />,
       <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
-      team.projects
-        ? team.projects.map((teamProject) => {
-            const project = projects.find(
-              (project) => project.id === teamProject,
-            );
-            return (
-              project && (
-                <ButtonLink
-                  key={teamProject}
-                  label={project.name}
-                  url={`/project/${teamProject}`}
-                />
-              )
-            );
-          })
-        : 'No projects',
+      team.projects?.map((teamProject) => {
+        const project = projects.find((project) => project.id === teamProject);
+        return (
+          project && (
+            <ButtonLink
+              key={teamProject}
+              label={project.name}
+              url={`/project/${teamProject}`}
+            />
+          )
+        );
+      }),
       team.fte,
       team.cognitiveLoad,
     ];
