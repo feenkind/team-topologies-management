@@ -3,13 +3,16 @@ import { useAppSelector } from '../../hooks';
 import TableLinkText from '../../components/Table/TableLinkText';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import Table from '../../components/Table/Table';
+import ButtonLink from '../../components/Buttons/ButtonLink';
+import TeamTopologyCategory from '../../components/Categories/TeamTopologyCategory';
 
 const TeamList: React.FC = () => {
   const teams = useAppSelector((state) => state.team.teams);
+  const projects = useAppSelector((state) => state.project.projects);
   const tableHeaderItems = [
     'Name',
     'Type',
-    'Domain(s)',
+    'Project(s)',
     'FTE',
     'Cognitive' + ' Load',
   ];
@@ -21,8 +24,23 @@ const TeamList: React.FC = () => {
         label={team.name}
         url={`/team/${team.id}`}
       />,
-      team.topology,
-      'will be displayed soon',
+      <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
+      team.projects
+        ? team.projects.map((teamProject) => {
+            const project = projects.find(
+              (project) => project.id === teamProject,
+            );
+            return (
+              project && (
+                <ButtonLink
+                  key={teamProject}
+                  label={project.name}
+                  url={`/project/${teamProject}`}
+                />
+              )
+            );
+          })
+        : 'No projects',
       team.fte,
       team.cognitiveLoad,
     ];

@@ -15,4 +15,5 @@ export enum teamTopology {
   ENABLING = 'Enabling',
   COMPLICATED_SUBSYSTEM = 'Complicated Subsystem',
   PLATFORM = 'Platform',
+  UNDEFINED = 'Undefined Type',
 }

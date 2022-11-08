@@ -6,6 +6,7 @@ interface ITeam {
   name: string;
   topology: teamTopology;
   domains?: string[];
+  projects?: string[];
   fte: number;
   cognitiveLoad: number;
 }
@@ -21,6 +22,7 @@ export const initialState: IInitialState = {
       name: 'Awesome Team',
       topology: teamTopology.STREAM_ALIGNED,
       domains: ['1', '2'],
+      projects: ['1'],
       fte: 4,
       cognitiveLoad: 13,
     },
@@ -29,6 +31,7 @@ export const initialState: IInitialState = {
       name: 'Perfect Team',
       topology: teamTopology.PLATFORM,
       domains: ['3'],
+      projects: ['1'],
       fte: 5,
       cognitiveLoad: 19,
     },
@@ -36,9 +39,27 @@ export const initialState: IInitialState = {
       id: '3',
       name: 'Random Team',
       topology: teamTopology.ENABLING,
-      domains: ['1', '3'],
-      fte: 3,
-      cognitiveLoad: 10,
+      domains: ['1', '6'],
+      projects: ['1', '2'],
+      fte: 5,
+      cognitiveLoad: 18,
+    },
+    {
+      id: '4',
+      name: 'Party Team',
+      topology: teamTopology.COMPLICATED_SUBSYSTEM,
+      domains: ['1'],
+      projects: ['1'],
+      fte: 2,
+      cognitiveLoad: 12,
+    },
+    {
+      id: '5',
+      name: 'Undecided Team',
+      topology: teamTopology.UNDEFINED,
+      projects: ['3'],
+      fte: 1,
+      cognitiveLoad: 0,
     },
   ],
 };

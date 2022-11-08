@@ -57,14 +57,14 @@ export const initialState: IInitialState = {
     ],
     '2': [
       {
-        id: '1',
+        id: '5',
         name: 'Domain A',
         description: 'More information for a domain should be provided...',
         priority: priority.SUPPORTING,
         complexity: complexity.COMPLICATED,
       },
       {
-        id: '2',
+        id: '6',
         name: 'Domain B',
         description: 'Domain B information',
         priority: priority.GENERIC,
