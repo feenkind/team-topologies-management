@@ -1,11 +1,19 @@
 import * as React from 'react';
-import { Typography } from '@mui/material';
+import Tabs from '../../components/Layout/Tabs';
+import DependencyVisualization from './DependencyVisualization';
 
 const Visualization: React.FC = () => {
   return (
-    <Typography component="div" variant="body1">
-      Visualization is not implemented yet.
-    </Typography>
+    <Tabs
+      tabContent={[
+        { tabName: 'Team Interactions', content: 'Not' + ' implemented yet' },
+        {
+          tabName: 'Dependencies',
+          content: <DependencyVisualization />,
+        },
+        { tabName: 'Core Domain Chart', content: 'Not' + ' implemented yet' },
+      ]}
+    />
   );
 };
 
