@@ -40,22 +40,6 @@ const ProjectOverview: React.FC = () => {
       <PageHeadline text="Project overview" />
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ backgroundColor: 'secondary.main' }}>
-            <CardContent>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                Project information for
-              </Typography>
-              <Typography variant="h5" gutterBottom>
-                {currentProject.name}
-              </Typography>
-              <Typography variant="body2">
-                {currentProject.description}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={6}>
           <Card sx={{ backgroundColor: 'secondary.light' }}>
             <CardContent>
               <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -93,6 +77,22 @@ const ProjectOverview: React.FC = () => {
                 See domain list for this project
               </Button>
             </CardActions>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Card sx={{ backgroundColor: 'secondary.main' }}>
+            <CardContent>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                Project information for
+              </Typography>
+              <Typography variant="h5" gutterBottom>
+                {currentProject.name}
+              </Typography>
+              <Typography variant="body2">
+                {currentProject.description}
+              </Typography>
+            </CardContent>
           </Card>
         </Grid>
 

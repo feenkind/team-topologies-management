@@ -11,7 +11,7 @@ interface ILayoutProps {
 }
 
 const Layout: React.FC<ILayoutProps> = ({ header, sidebar }: ILayoutProps) => {
-  const drawerWidth = '230';
+  const drawerWidth = '280';
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

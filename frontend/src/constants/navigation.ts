@@ -10,8 +10,8 @@ export enum sidebarMenuItems {
 export const sidebarMenuItemLabels = {
   [sidebarMenuItems.OVERVIEW]: 'Project Overview',
   [sidebarMenuItems.VISUALIZATION]: 'Visualization',
-  [sidebarMenuItems.VIEW_TEAMS]: 'View all teams',
-  [sidebarMenuItems.ADD_TEAM]: 'Add new team',
+  [sidebarMenuItems.VIEW_TEAMS]: 'View all project teams',
+  [sidebarMenuItems.ADD_TEAM]: 'Add new team to project',
   [sidebarMenuItems.VIEW_DOMAINS]: 'View all domains',
   [sidebarMenuItems.ADD_DOMAIN]: 'Add new domain',
 };

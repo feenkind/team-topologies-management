@@ -9,6 +9,7 @@ import ContentWithHints from '../../components/Layout/ContentWithHints';
 import { domainHints } from '../../constants/hints';
 import ComplexityCategory from '../../components/Categories/ComplexityCategory';
 import PriorityCategory from '../../components/Categories/PriorityCategory';
+import TeamLink from '../../components/Buttons/TeamLink';
 
 const DomainListForProject: React.FC = () => {
   const currentProject = useAppSelector(
@@ -17,6 +18,7 @@ const DomainListForProject: React.FC = () => {
   const projectDomains = useAppSelector(
     (state) => state.domain.domains[currentProject.id],
   );
+  const teams = useAppSelector((state) => state.team.teams);
 
   if (!projectDomains) {
     return (
@@ -40,17 +42,34 @@ const DomainListForProject: React.FC = () => {
   }
 
   const tableHeaderItems = ['Name', 'Team(s)', 'Priority', 'Complexity', 'FTE'];
-  const tableContentItems = projectDomains.map((domain) => [
-    <TableLinkText
-      key={domain.id}
-      label={domain.name}
-      url={`/project/${currentProject.id}/domain/${domain.id}`}
-    />,
-    'not implemented yet',
-    <PriorityCategory key={domain.id} priority={domain.priority} />,
-    <ComplexityCategory key={domain.id} complexity={domain.complexity} />,
-    'not implemented yet',
-  ]);
+  const tableContentItems = projectDomains.map((domain) => {
+    const domainTeams = teams.filter((team) =>
+      team.domains?.includes(domain.id),
+    );
+    const fte = domainTeams.reduce(
+      (fteSum, domainTeam) => fteSum + domainTeam.fte,
+      0,
+    );
+
+    return [
+      <TableLinkText
+        key={domain.id}
+        label={domain.name}
+        url={`/project/${currentProject.id}/domain/${domain.id}`}
+      />,
+      domainTeams.map((domainTeam) => (
+        <TeamLink
+          key={domainTeam.id}
+          teamTopology={domainTeam.topology}
+          url={`/team/${domainTeam.id}`}
+          label={domainTeam.name}
+        />
+      )),
+      <PriorityCategory key={domain.id} priority={domain.priority} />,
+      <ComplexityCategory key={domain.id} complexity={domain.complexity} />,
+      fte,
+    ];
+  });
   const actions = projectDomains.map((domain) => ({
     basePath: `/project/${currentProject.id}/domain/${domain.id}`,
     view: true,
