@@ -4,6 +4,7 @@ import { Typography } from '@mui/material';
 import { IDependency, ITeam } from '../../store/slices/teamSlice';
 import { useAppSelector } from '../../hooks';
 import DependencyCategory from '../../components/Categories/DependencyCategory';
+import TeamLink from '../../components/Buttons/TeamLink';
 
 interface ITeamViewDependenciesProps {
   team: ITeam;
@@ -41,7 +42,12 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
 
       return otherTeam
         ? [
-            otherTeam.name,
+            <TeamLink
+              key={otherTeam.id}
+              label={otherTeam.name}
+              url={`/team/${otherTeam.id}`}
+              teamTopology={otherTeam.topology}
+            />,
             <DependencyCategory
               key={`dependency${dependency.fromTeamId}${dependency.toTeamId}`}
               dependencyType={dependency.dependencyType}

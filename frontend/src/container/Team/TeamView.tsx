@@ -2,11 +2,11 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import Page404 from '../../components/Page404';
 import { useAppSelector } from '../../hooks';
-import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import Tabs from '../../components/Layout/Tabs';
 import TeamViewDependencies from './TeamViewDependencies';
 import TeamViewInformation from './TeamViewInformation';
+import TeamPageHeadline from '../../components/Layout/TeamPageHeadline';
 
 const TeamView: React.FC = () => {
   const { teamId } = useParams<{
@@ -22,7 +22,7 @@ const TeamView: React.FC = () => {
 
   return (
     <>
-      <PageHeadline text={`Team ${team.name}`} />
+      <TeamPageHeadline teamName={team.name} teamTopology={team.topology} />
       <ContentWithHints>
         <Tabs
           tabContent={[
