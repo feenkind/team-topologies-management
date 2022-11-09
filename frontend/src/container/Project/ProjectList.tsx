@@ -4,10 +4,12 @@ import PageHeadline from '../../components/Layout/PageHeadline';
 import Table from '../../components/Table/Table';
 import TableLinkText from '../../components/Table/TableLinkText';
 import ButtonLink from '../../components/Buttons/ButtonLink';
+import TeamLink from '../../components/Buttons/TeamLink';
 
 const ProjectList: React.FC = () => {
   const projects = useAppSelector((state) => state.project.projects);
   const domains = useAppSelector((state) => state.domain.domains);
+  const teams = useAppSelector((state) => state.team.teams);
 
   const tableHeaderItems = ['Name', 'Domains', 'Teams'];
   const tableContentItems = projects.map((project) => {
@@ -28,7 +30,16 @@ const ProjectList: React.FC = () => {
         url={`/project/${project.id}`}
       />,
       <>{domainLinks}</>,
-      'not implemented yet',
+      teams
+        .filter((team) => team.projects?.includes(project.id))
+        .map((projectTeam) => (
+          <TeamLink
+            key={projectTeam.id}
+            label={projectTeam.name}
+            url={`/team/${projectTeam.id}`}
+            teamTopology={projectTeam.topology}
+          />
+        )),
     ];
   });
   const actions = projects.map((project) => ({
