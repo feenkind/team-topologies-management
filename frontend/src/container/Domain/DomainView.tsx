@@ -32,21 +32,6 @@ const DomainView: React.FC = () => {
       team.projects?.includes(projectId) && team.domains?.includes(domainId),
   );
 
-  const domainTeamDisplay = domainTeams ? (
-    <>
-      {domainTeams.map((team) => (
-        <TeamLink
-          key={team.id}
-          teamTopology={team.topology}
-          url={`/team/${team.id}`}
-          label={team.name}
-        />
-      ))}
-    </>
-  ) : (
-    'No' + ' team(s)' + ' in this' + ' domain'
-  );
-
   return (
     <>
       <PageHeadline text={`Domain ${domain.name}`} />
@@ -73,8 +58,22 @@ const DomainView: React.FC = () => {
                       ),
                     },
                     {
+                      label: 'FTE sum of all teams',
+                      content: domainTeams.reduce(
+                        (fteSum, team) => fteSum + team.fte,
+                        0,
+                      ),
+                    },
+                    {
                       label: 'Responsible team(s)',
-                      content: domainTeamDisplay,
+                      content: domainTeams.map((team) => (
+                        <TeamLink
+                          key={team.id}
+                          teamTopology={team.topology}
+                          url={`/team/${team.id}`}
+                          label={team.name}
+                        />
+                      )),
                     },
                     {
                       label: 'Description',
