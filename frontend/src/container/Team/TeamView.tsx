@@ -8,6 +8,7 @@ import Tabs from '../../components/Layout/Tabs';
 import InformationGrid from '../../components/Layout/InformationGrid';
 import TeamTopologyCategory from '../../components/Categories/TeamTopologyCategory';
 import ButtonLink from '../../components/Buttons/ButtonLink';
+import TeamViewDependencies from './TeamViewDependencies';
 
 const TeamView: React.FC = () => {
   const { teamId } = useParams<{
@@ -31,6 +32,7 @@ const TeamView: React.FC = () => {
             {
               tabName: 'Information',
               content: (
+                // TODO: extract
                 <InformationGrid
                   informationItems={[
                     {
@@ -68,7 +70,10 @@ const TeamView: React.FC = () => {
             },
             { tabName: 'Work', content: 'coming soon' },
             { tabName: 'Interactions', content: 'coming soon' },
-            { tabName: 'Dependencies', content: 'coming soon' },
+            {
+              tabName: 'Dependencies',
+              content: <TeamViewDependencies team={team} />,
+            },
             { tabName: 'Cognitive Load', content: 'coming soon' },
             { tabName: 'History', content: 'coming later' },
           ]}

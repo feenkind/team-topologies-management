@@ -40,3 +40,9 @@ export const teamTopologyColors = {
     backgroundColor: '#EBEBEF',
   },
 };
+
+export enum dependencyType {
+  OK = 'ok',
+  SLOWING = 'slowing',
+  BLOCKING = 'blocking',
+}

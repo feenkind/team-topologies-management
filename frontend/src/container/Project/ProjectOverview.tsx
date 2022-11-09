@@ -53,7 +53,7 @@ const ProjectOverview: React.FC = () => {
               {projectDomains && (
                 <>
                   <Typography variant="h5" gutterBottom>
-                    {currentProject.name} has {projectDomains.length} domains
+                    {currentProject.name} has {projectDomains.length} domain(s)
                   </Typography>
                   <Box sx={{ my: 2 }}>
                     {projectDomains.map((domain) => (
@@ -110,7 +110,7 @@ const ProjectOverview: React.FC = () => {
               {projectTeams.length > 0 && (
                 <>
                   <Typography variant="h5" gutterBottom color="white">
-                    {projectTeams.length} teams are working on{' '}
+                    {projectTeams.length} team(s) work(s) on{' '}
                     {currentProject.name}
                   </Typography>
                   <Box sx={{ my: 2 }}>

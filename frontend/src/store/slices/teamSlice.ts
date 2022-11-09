@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { teamTopology } from '../../constants/categories';
+import { dependencyType, teamTopology } from '../../constants/categories';
 
-interface ITeam {
+export interface ITeam {
   id: string;
   name: string;
   topology: teamTopology;
@@ -11,8 +11,16 @@ interface ITeam {
   cognitiveLoad: number;
 }
 
+export interface IDependency {
+  fromTeamId: string;
+  toTeamId: string;
+  dependencyType: dependencyType;
+  description?: string;
+}
+
 interface IInitialState {
   teams: ITeam[];
+  dependencies: IDependency[];
 }
 
 export const initialState: IInitialState = {
@@ -67,6 +75,26 @@ export const initialState: IInitialState = {
       topology: teamTopology.ENABLING,
       fte: 2,
       cognitiveLoad: 0,
+    },
+  ],
+  dependencies: [
+    {
+      fromTeamId: '1',
+      toTeamId: '2',
+      dependencyType: dependencyType.BLOCKING,
+      description: 'We urgently need the implementation from this team.',
+    },
+    {
+      fromTeamId: '1',
+      toTeamId: '3',
+      dependencyType: dependencyType.OK,
+      description: 'Nothing that needs to happen soon.',
+    },
+    {
+      fromTeamId: '4',
+      toTeamId: '2',
+      dependencyType: dependencyType.SLOWING,
+      description: 'Something should happen there, soon...',
     },
   ],
 };
