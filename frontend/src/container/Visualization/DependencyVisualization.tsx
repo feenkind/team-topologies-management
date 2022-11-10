@@ -1,23 +1,28 @@
 import * as React from 'react';
+import { useRef } from 'react';
 import ForceGraph2D, {
   ForceGraphMethods,
-  NodeObject,
   LinkObject,
+  NodeObject,
 } from 'react-force-graph-2d';
 import { useAppSelector } from '../../hooks';
 import ContentVisualization from '../../components/Layout/ContentVisualization';
-import { useRef } from 'react';
 import {
   dependencyColors,
   dependencyType as dependencyTypEnum,
+  teamTopology,
+  teamTopology as teamTopologyEnum,
+  teamTopologyColors,
 } from '../../constants/categories';
 
 interface INode extends NodeObject {
   name?: string;
+  teamTopology?: teamTopologyEnum;
 }
 
 interface ILink extends LinkObject {
   dependencyType?: dependencyTypEnum;
+  description?: string;
 }
 
 const DependencyVisualization: React.FC = () => {
@@ -47,6 +52,7 @@ const DependencyVisualization: React.FC = () => {
       source: dependency.fromTeamId,
       target: dependency.toTeamId,
       dependencyType: dependency.dependencyType,
+      description: dependency.description,
     });
   });
   // remove duplicates from nodes and add more data
@@ -56,34 +62,68 @@ const DependencyVisualization: React.FC = () => {
       return {
         id: teamId,
         name: teamData ? teamData.name : '',
+        teamTopology: teamData ? teamData.topology : teamTopology.UNDEFINED,
       };
     },
   );
+
+  const nodeRelSize = 2;
 
   return (
     <ContentVisualization>
       <ForceGraph2D
         ref={forceGraphRef}
         graphData={{ nodes, links }}
+        nodeRelSize={nodeRelSize}
         enableNodeDrag={false}
         enablePanInteraction={false}
         enableZoomInteraction={false}
         width={500}
         height={500}
+        linkDirectionalArrowLength={3}
+        linkDirectionalArrowRelPos={1}
+        nodeColor={(node: INode) =>
+          node.teamTopology
+            ? teamTopologyColors[node.teamTopology].backgroundColor
+            : 'grey'
+        }
         nodeLabel={''}
         nodeCanvasObjectMode={() => 'after'}
-        nodeCanvasObject={(node: INode, context, globalScale) => {
-          context.font = '5px Roboto';
-          context.textAlign = 'center';
-          context.textBaseline = 'middle';
-          context.fillStyle = 'black';
-          if (node.name && node.x && node.y) {
-            context.fillText(node.name, node.x, node.y + 10);
+        nodeCanvasObject={(node: INode, ctx, globalScale) => {
+          if (!node.name || !node.x || !node.y) {
+            return;
           }
+          // border for nodes
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
+          ctx.lineWidth = 2 / globalScale;
+          ctx.strokeStyle = node.teamTopology
+            ? teamTopologyColors[node.teamTopology].color
+            : 'grey';
+          ctx.stroke();
+
+          ctx.font = `${15 / globalScale}px Roboto`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = 'black';
+          ctx.fillText(
+            node.name,
+            node.x,
+            node.y + nodeRelSize + 10 / globalScale,
+          );
         }}
         linkColor={(link: ILink) =>
           link.dependencyType ? dependencyColors[link.dependencyType] : 'grey'
         }
+        linkWidth={(link: ILink) =>
+          link.dependencyType &&
+          link.dependencyType === dependencyTypEnum.BLOCKING
+            ? 3
+            : 1
+        }
+        onRenderFramePost={(ctx) => {
+          forceGraphRef.current?.zoomToFit(0, 20);
+        }}
       />
     </ContentVisualization>
   );

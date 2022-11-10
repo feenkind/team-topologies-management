@@ -108,6 +108,12 @@ export const initialState: IInitialState = {
         dependencyType: dependencyType.SLOWING,
         description: 'Something should happen there, soon...',
       },
+      {
+        fromTeamId: '4',
+        toTeamId: '3',
+        dependencyType: dependencyType.SLOWING,
+        description: 'Another blocking dependency.',
+      },
     ],
   },
 };
