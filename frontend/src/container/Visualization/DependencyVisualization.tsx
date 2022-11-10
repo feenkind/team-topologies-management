@@ -6,11 +6,12 @@ const DependencyVisualization: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const dependencies = useAppSelector((state) => state.team.dependencies);
+  const dependencies = useAppSelector(
+    (state) => state.team.dependencies[currentProject.id],
+  );
   const teams = useAppSelector((state) => state.team.teams);
 
-  // TODO: filter for project dependencies
-  if (dependencies.length === 0) {
+  if (!dependencies || dependencies.length === 0) {
     return (
       <ContentVisualization>
         Yay! {currentProject.name} has no team dependencies.

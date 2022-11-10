@@ -22,6 +22,10 @@ const App: React.FC = () => {
       <Routes>
         <Route element={<Layout header={<Header />} sidebar={<Sidebar />} />}>
           <Route
+            path="project/:projectId/team/:teamId"
+            element={<TeamView />}
+          />
+          <Route
             path="project/:projectId/team/add"
             element={<TeamAddToProject />}
           />
@@ -46,7 +50,6 @@ const App: React.FC = () => {
             element={<Visualization />}
           />
           <Route path="project/:projectId" element={<ProjectOverview />} />
-          <Route path="/team/:teamId" element={<TeamView />} />
           <Route path="projects" element={<ProjectList />} />
           <Route path="teams" element={<TeamList />} />
           <Route path="/" element={<Dashboard />} />

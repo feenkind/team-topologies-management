@@ -12,14 +12,16 @@ import {
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import { Link } from 'react-router-dom';
 
+export interface ITableAction {
+  basePath: string;
+  view: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
 interface ITableProps {
-  actions?: {
-    basePath: string;
-    view: boolean;
-    edit: boolean;
-    delete: boolean;
-  }[];
-  contentItems: string[][] | React.ReactNode[][];
+  actions?: ITableAction[];
+  contentItems: (string | React.ReactNode)[][];
   headerItems: string[];
 }
 

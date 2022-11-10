@@ -9,14 +9,18 @@ import TeamViewInformation from './TeamViewInformation';
 import TeamPageHeadline from '../../components/Layout/TeamPageHeadline';
 
 const TeamView: React.FC = () => {
-  const { teamId } = useParams<{
+  const { projectId, teamId } = useParams<{
+    projectId: string;
     teamId: string;
   }>();
-  const team = useAppSelector((state) =>
-    state.team.teams.find((team) => teamId && team.id === teamId),
+  const team = useAppSelector(
+    (state) =>
+      projectId &&
+      teamId &&
+      state.team.teams[projectId].find((team) => team.id === teamId),
   );
 
-  if (!teamId || !team) {
+  if (!team) {
     return <Page404 />;
   }
 

@@ -10,6 +10,7 @@ interface IDomain {
 }
 
 interface IInitialState {
+  // domains ordered by project
   domains: {
     [keys: string]: IDomain[];
   };

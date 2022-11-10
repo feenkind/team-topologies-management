@@ -12,25 +12,27 @@ import PriorityCategory from '../../components/Categories/PriorityCategory';
 import TeamLink from '../../components/Buttons/TeamLink';
 
 const DomainView: React.FC = () => {
-  const { projectId, domainId } = useParams<{
-    projectId: string;
+  const { domainId } = useParams<{
     domainId: string;
   }>();
-  const domains = useAppSelector((state) => state.domain.domains);
-  const teams = useAppSelector((state) => state.team.teams);
-  if (!projectId || !domainId) {
+  const currentProject = useAppSelector(
+    (state) => state.project.currentProject,
+  );
+  const domains = useAppSelector(
+    (state) => state.domain.domains[currentProject.id],
+  );
+  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  if (!domains) {
     return <Page404 />;
   }
 
-  const domain = domains[projectId].find((domain) => domain.id === domainId);
+  const domain = domains.find((domain) => domain.id === domainId);
   if (!domain) {
     return <Page404 />;
   }
 
-  const domainTeams = teams.filter(
-    (team) =>
-      team.projects?.includes(projectId) && team.domains?.includes(domainId),
-  );
+  const domainTeams =
+    teams && teams.filter((team) => team.domains?.includes(domain.id));
 
   return (
     <>
@@ -59,21 +61,25 @@ const DomainView: React.FC = () => {
                     },
                     {
                       label: 'FTE sum of all teams',
-                      content: domainTeams.reduce(
-                        (fteSum, team) => fteSum + team.fte,
-                        0,
-                      ),
+                      content: domainTeams
+                        ? domainTeams.reduce(
+                            (fteSum, team) => fteSum + team.fte,
+                            0,
+                          )
+                        : 0,
                     },
                     {
                       label: 'Responsible team(s)',
-                      content: domainTeams.map((team) => (
-                        <TeamLink
-                          key={team.id}
-                          teamTopology={team.topology}
-                          url={`/team/${team.id}`}
-                          label={team.name}
-                        />
-                      )),
+                      content:
+                        domainTeams &&
+                        domainTeams.map((team) => (
+                          <TeamLink
+                            key={team.id}
+                            teamTopology={team.topology}
+                            url={`/project/${currentProject.id}/team/${team.id}`}
+                            label={team.name}
+                          />
+                        )),
                     },
                     {
                       label: 'Description',

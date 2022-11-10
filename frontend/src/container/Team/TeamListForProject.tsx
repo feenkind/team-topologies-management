@@ -13,15 +13,12 @@ const TeamListForProject: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const teams = useAppSelector((state) => state.team.teams);
+  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
   const projectDomains = useAppSelector(
     (state) => state.domain.domains[currentProject.id],
   );
-  const projectTeams = teams.filter((team) =>
-    team.projects?.includes(currentProject.id),
-  );
 
-  if (projectTeams.length === 0) {
+  if (teams.length === 0) {
     return (
       <>
         <PageHeadline text={`No teams in ${currentProject.name}`} />
@@ -49,8 +46,12 @@ const TeamListForProject: React.FC = () => {
     'FTE',
     'Cognitive Load',
   ];
-  const tableContentItems = projectTeams.map((team) => [
-    <TableLinkText key={team.id} label={team.name} url={`/team/${team.id}`} />,
+  const tableContentItems = teams.map((team) => [
+    <TableLinkText
+      key={team.id}
+      label={team.name}
+      url={`/project/${currentProject.id}/team/${team.id}`}
+    />,
     <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
     team.domains?.map((teamDomain) => {
       const domain = projectDomains.find((domain) => domain.id === teamDomain);
@@ -68,8 +69,8 @@ const TeamListForProject: React.FC = () => {
     team.cognitiveLoad,
   ]);
 
-  const actions = projectTeams.map((team) => ({
-    basePath: `/team/${team.id}`,
+  const actions = teams.map((team) => ({
+    basePath: `/project/${currentProject.id}/team/${team.id}`,
     view: true,
     edit: false,
     delete: false,

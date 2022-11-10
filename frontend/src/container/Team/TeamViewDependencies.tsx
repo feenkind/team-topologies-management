@@ -13,14 +13,19 @@ interface ITeamViewDependenciesProps {
 const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
   team,
 }: ITeamViewDependenciesProps) => {
-  const teams = useAppSelector((state) => state.team.teams);
-  const dependencies = useAppSelector((state) => state.team.dependencies);
-  const teamsDependingOn = dependencies.filter(
-    (dependency) => dependency.fromTeamId === team.id,
+  const currentProject = useAppSelector(
+    (state) => state.project.currentProject,
   );
-  const dependingTeams = dependencies.filter(
-    (dependency) => dependency.toTeamId === team.id,
+  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const dependencies = useAppSelector(
+    (state) => state.team.dependencies[currentProject.id],
   );
+  const teamsDependingOn =
+    dependencies &&
+    dependencies.filter((dependency) => dependency.fromTeamId === team.id);
+  const dependingTeams =
+    dependencies &&
+    dependencies.filter((dependency) => dependency.toTeamId === team.id);
 
   const mapDependenciesToTableContent = (
     dependencies: IDependency[],
@@ -45,7 +50,7 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
             <TeamLink
               key={otherTeam.id}
               label={otherTeam.name}
-              url={`/team/${otherTeam.id}`}
+              url={`/project/${currentProject.id}/team/${otherTeam.id}`}
               teamTopology={otherTeam.topology}
             />,
             <DependencyCategory
@@ -69,7 +74,7 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
       <Typography variant="button" component="h3" marginBottom={4}>
         Team {team.name} is depending on
       </Typography>
-      {teamsDependingOn.length > 0 ? (
+      {teamsDependingOn && teamsDependingOn.length > 0 ? (
         <Table
           contentItems={mapDependenciesToTableContent(teamsDependingOn, true)}
           headerItems={headerItems}
@@ -85,7 +90,7 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
       >
         Following teams depend on team {team.name}
       </Typography>
-      {dependingTeams.length > 0 ? (
+      {dependingTeams && dependingTeams.length > 0 ? (
         <Table
           contentItems={mapDependenciesToTableContent(dependingTeams, false)}
           headerItems={headerItems}

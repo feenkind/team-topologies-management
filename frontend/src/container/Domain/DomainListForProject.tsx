@@ -15,12 +15,12 @@ const DomainListForProject: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const projectDomains = useAppSelector(
+  const domains = useAppSelector(
     (state) => state.domain.domains[currentProject.id],
   );
-  const teams = useAppSelector((state) => state.team.teams);
+  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
 
-  if (!projectDomains) {
+  if (!domains) {
     return (
       <>
         <PageHeadline text={`No domains in ${currentProject.name}`} />
@@ -42,7 +42,7 @@ const DomainListForProject: React.FC = () => {
   }
 
   const tableHeaderItems = ['Name', 'Team(s)', 'Priority', 'Complexity', 'FTE'];
-  const tableContentItems = projectDomains.map((domain) => {
+  const tableContentItems = domains.map((domain) => {
     const domainTeams = teams.filter((team) =>
       team.domains?.includes(domain.id),
     );
@@ -61,7 +61,7 @@ const DomainListForProject: React.FC = () => {
         <TeamLink
           key={domainTeam.id}
           teamTopology={domainTeam.topology}
-          url={`/team/${domainTeam.id}`}
+          url={`/project/${currentProject.id}/team/${domainTeam.id}`}
           label={domainTeam.name}
         />
       )),
@@ -70,7 +70,7 @@ const DomainListForProject: React.FC = () => {
       fte,
     ];
   });
-  const actions = projectDomains.map((domain) => ({
+  const actions = domains.map((domain) => ({
     basePath: `/project/${currentProject.id}/domain/${domain.id}`,
     view: true,
     edit: false,

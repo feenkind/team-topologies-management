@@ -30,16 +30,14 @@ const ProjectList: React.FC = () => {
         url={`/project/${project.id}`}
       />,
       <>{domainLinks}</>,
-      teams
-        .filter((team) => team.projects?.includes(project.id))
-        .map((projectTeam) => (
-          <TeamLink
-            key={projectTeam.id}
-            label={projectTeam.name}
-            url={`/team/${projectTeam.id}`}
-            teamTopology={projectTeam.topology}
-          />
-        )),
+      teams[project.id].map((projectTeam) => (
+        <TeamLink
+          key={projectTeam.id}
+          label={projectTeam.name}
+          url={`/project/${project.id}/team/${projectTeam.id}`}
+          teamTopology={projectTeam.topology}
+        />
+      )),
     ];
   });
   const actions = projects.map((project) => ({

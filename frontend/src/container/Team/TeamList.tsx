@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useAppSelector } from '../../hooks';
 import TableLinkText from '../../components/Table/TableLinkText';
 import PageHeadline from '../../components/Layout/PageHeadline';
-import Table from '../../components/Table/Table';
+import Table, { ITableAction } from '../../components/Table/Table';
 import ButtonLink from '../../components/Buttons/ButtonLink';
 import TeamTopologyCategory from '../../components/Categories/TeamTopologyCategory';
 
@@ -17,37 +17,42 @@ const TeamList: React.FC = () => {
     'Cognitive' + ' Load',
   ];
 
-  const tableContentItems = teams.map((team) => {
-    return [
-      <TableLinkText
-        key={team.id}
-        label={team.name}
-        url={`/team/${team.id}`}
-      />,
-      <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
-      team.projects?.map((teamProject) => {
-        const project = projects.find((project) => project.id === teamProject);
-        return (
-          project && (
-            <ButtonLink
-              key={teamProject}
-              label={project.name}
-              url={`/project/${teamProject}`}
-            />
-          )
-        );
-      }),
-      team.fte,
-      team.cognitiveLoad,
-    ];
-  });
+  const tableContentItems: (string | React.ReactNode)[][] = [];
+  const actions: ITableAction[] = [];
 
-  const actions = teams.map((team) => ({
-    basePath: `/team/${team.id}`,
-    view: true,
-    edit: false,
-    delete: false,
-  }));
+  teams.values.forEach((team) => {
+    const teamProjectId = Object.keys(teams).find((projectId) =>
+      teams[projectId].includes(team),
+    );
+    const teamProject = projects.find(
+      (project) => project.id === teamProjectId,
+    );
+
+    if (teamProject) {
+      tableContentItems.push([
+        <TableLinkText
+          key={team.id}
+          label={team.name}
+          url={`project/${teamProject.id}/team/${team.id}`}
+        />,
+        <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
+        <ButtonLink
+          key={teamProject.id}
+          label={teamProject.name}
+          url={`/project/${teamProject}`}
+        />,
+        team.fte,
+        team.cognitiveLoad,
+      ]);
+
+      actions.push({
+        basePath: `project/${teamProject.id}/team/${team.id}`,
+        view: true,
+        edit: false,
+        delete: false,
+      });
+    }
+  });
 
   return (
     <>

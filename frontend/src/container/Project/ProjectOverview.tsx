@@ -11,27 +11,24 @@ import {
 import { useAppSelector } from '../../hooks';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import Page404 from '../../components/Page404';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ButtonLink from '../../components/Buttons/ButtonLink';
 import TeamLink from '../../components/Buttons/TeamLink';
 
 const ProjectOverview: React.FC = () => {
-  const { projectId } = useParams<{
-    projectId: string;
-  }>();
-
+  const currentProject = useAppSelector(
+    (state) => state.project.currentProject,
+  );
   const projects = useAppSelector((state) => state.project.projects);
-  const currentProject = projects.find((project) => project.id === projectId);
-  const projectDomains = useAppSelector(
-    (state) => state.domain.domains[projectId || ''],
+  const currentProjectData = projects.find(
+    (project) => project.id === currentProject.id,
   );
-  const projectTeams = useAppSelector((state) =>
-    state.team.teams.filter(
-      (team) => projectId && team.projects?.includes(projectId),
-    ),
+  const domains = useAppSelector(
+    (state) => state.domain.domains[currentProject.id],
   );
+  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
 
-  if (!currentProject) {
+  if (!currentProjectData) {
     return <Page404 />;
   }
 
@@ -45,22 +42,22 @@ const ProjectOverview: React.FC = () => {
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 Domains
               </Typography>
-              {!projectDomains && (
+              {!domains && (
                 <Typography variant="h5" gutterBottom>
                   {currentProject.name} has no domains
                 </Typography>
               )}
-              {projectDomains && (
+              {domains && (
                 <>
                   <Typography variant="h5" gutterBottom>
-                    {currentProject.name} has {projectDomains.length} domain(s)
+                    {currentProject.name} has {domains.length} domain(s)
                   </Typography>
                   <Box sx={{ my: 2 }}>
-                    {projectDomains.map((domain) => (
+                    {domains.map((domain) => (
                       <ButtonLink
                         key={domain.id}
                         label={domain.name}
-                        url={`/project/${projectId}/domain/${domain.id}`}
+                        url={`/project/${currentProject.id}/domain/${domain.id}`}
                       />
                     ))}
                   </Box>
@@ -70,7 +67,7 @@ const ProjectOverview: React.FC = () => {
             <CardActions sx={{ alignItems: 'center' }}>
               <Button
                 component={Link}
-                to={`/project/${projectId}/domains`}
+                to={`/project/${currentProject.id}/domains`}
                 variant="contained"
                 fullWidth
               >
@@ -90,7 +87,7 @@ const ProjectOverview: React.FC = () => {
                 {currentProject.name}
               </Typography>
               <Typography variant="body2">
-                {currentProject.description}
+                {currentProjectData.description}
               </Typography>
             </CardContent>
           </Card>
@@ -102,24 +99,23 @@ const ProjectOverview: React.FC = () => {
               <Typography variant="body2" color="white" gutterBottom>
                 Teams
               </Typography>
-              {projectTeams.length === 0 && (
+              {teams.length === 0 && (
                 <Typography variant="h5" gutterBottom color="white">
                   {currentProject.name} has no teams
                 </Typography>
               )}
-              {projectTeams.length > 0 && (
+              {teams.length > 0 && (
                 <>
                   <Typography variant="h5" gutterBottom color="white">
-                    {projectTeams.length} team(s) work(s) on{' '}
-                    {currentProject.name}
+                    {teams.length} team(s) work(s) on {currentProject.name}
                   </Typography>
                   <Box sx={{ my: 2 }}>
-                    {projectTeams.map((team) => (
+                    {teams.map((team) => (
                       <TeamLink
                         key={team.id}
                         label={team.name}
                         teamTopology={team.topology}
-                        url={`/team/${team.id}`}
+                        url={`/project/${currentProject.id}/team/${team.id}`}
                       />
                     ))}
                   </Box>
@@ -129,7 +125,7 @@ const ProjectOverview: React.FC = () => {
             <CardActions sx={{ alignItems: 'center' }}>
               <Button
                 component={Link}
-                to={`/project/${projectId}/teams`}
+                to={`/project/${currentProject.id}/teams`}
                 variant="contained"
                 fullWidth
               >
