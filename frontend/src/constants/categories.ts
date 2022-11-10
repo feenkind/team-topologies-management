@@ -1,3 +1,5 @@
+import { amber, deepOrange, teal } from '@mui/material/colors';
+
 export enum complexity {
   SIMPLE = 'Simple',
   COMPLICATED = 'Complicated',
@@ -46,3 +48,9 @@ export enum dependencyType {
   SLOWING = 'slowing',
   BLOCKING = 'blocking',
 }
+
+export const dependencyColors = {
+  [dependencyType.OK]: teal[400],
+  [dependencyType.SLOWING]: amber[600],
+  [dependencyType.BLOCKING]: deepOrange[900],
+};

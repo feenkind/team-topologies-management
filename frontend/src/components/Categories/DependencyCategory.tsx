@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Typography } from '@mui/material';
-import { dependencyType as dependencyTypeEnum } from '../../constants/categories';
-import { amber, deepOrange, teal } from '@mui/material/colors';
+import {
+  dependencyColors,
+  dependencyType as dependencyTypeEnum,
+} from '../../constants/categories';
 
 interface IDependencyCategoryProps {
   dependencyType: dependencyTypeEnum;
@@ -10,18 +12,12 @@ interface IDependencyCategoryProps {
 const DependencyCategory: React.FC<IDependencyCategoryProps> = ({
   dependencyType,
 }: IDependencyCategoryProps) => {
-  let color: string = teal[400];
-  let fontWeight = 400;
-  if (dependencyType === dependencyTypeEnum.SLOWING) {
-    color = amber[600];
-  }
-  if (dependencyType === dependencyTypeEnum.BLOCKING) {
-    color = deepOrange[900];
-    fontWeight = 600;
-  }
-
   return (
-    <Typography color={color} variant="body2" fontWeight={fontWeight}>
+    <Typography
+      color={dependencyColors[dependencyType]}
+      variant="body2"
+      fontWeight={dependencyType === dependencyTypeEnum.BLOCKING ? 600 : 400}
+    >
       {dependencyType}
     </Typography>
   );

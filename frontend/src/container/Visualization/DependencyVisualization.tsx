@@ -7,7 +7,10 @@ import ForceGraph2D, {
 import { useAppSelector } from '../../hooks';
 import ContentVisualization from '../../components/Layout/ContentVisualization';
 import { useRef } from 'react';
-import { dependencyType as dependencyTypEnum } from '../../constants/categories';
+import {
+  dependencyColors,
+  dependencyType as dependencyTypEnum,
+} from '../../constants/categories';
 
 interface INode extends NodeObject {
   name?: string;
@@ -79,7 +82,7 @@ const DependencyVisualization: React.FC = () => {
           }
         }}
         linkColor={(link: ILink) =>
-          link.dependencyType === dependencyTypEnum.BLOCKING ? 'red' : 'grey'
+          link.dependencyType ? dependencyColors[link.dependencyType] : 'grey'
         }
       />
     </ContentVisualization>
