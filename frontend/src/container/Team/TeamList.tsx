@@ -12,7 +12,7 @@ const TeamList: React.FC = () => {
   const tableHeaderItems = [
     'Name',
     'Type',
-    'Project(s)',
+    'Project',
     'FTE',
     'Cognitive' + ' Load',
   ];
@@ -20,39 +20,41 @@ const TeamList: React.FC = () => {
   const tableContentItems: (string | React.ReactNode)[][] = [];
   const actions: ITableAction[] = [];
 
-  teams.values.forEach((team) => {
-    const teamProjectId = Object.keys(teams).find((projectId) =>
-      teams[projectId].includes(team),
-    );
-    const teamProject = projects.find(
-      (project) => project.id === teamProjectId,
-    );
+  Object.values(teams).forEach((projectTeams) =>
+    projectTeams.forEach((team) => {
+      const teamProjectId = Object.keys(teams).find((projectId) =>
+        teams[projectId].includes(team),
+      );
+      const teamProject = projects.find(
+        (project) => project.id === teamProjectId,
+      );
 
-    if (teamProject) {
-      tableContentItems.push([
-        <TableLinkText
-          key={team.id}
-          label={team.name}
-          url={`project/${teamProject.id}/team/${team.id}`}
-        />,
-        <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
-        <ButtonLink
-          key={teamProject.id}
-          label={teamProject.name}
-          url={`/project/${teamProject}`}
-        />,
-        team.fte,
-        team.cognitiveLoad,
-      ]);
+      if (teamProject) {
+        tableContentItems.push([
+          <TableLinkText
+            key={team.id}
+            label={team.name}
+            url={`project/${teamProject.id}/team/${team.id}`}
+          />,
+          <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
+          <ButtonLink
+            key={teamProject.id}
+            label={teamProject.name}
+            url={`/project/${teamProject.id}`}
+          />,
+          team.fte,
+          team.cognitiveLoad,
+        ]);
 
-      actions.push({
-        basePath: `project/${teamProject.id}/team/${team.id}`,
-        view: true,
-        edit: false,
-        delete: false,
-      });
-    }
-  });
+        actions.push({
+          basePath: `project/${teamProject.id}/team/${team.id}`,
+          view: true,
+          edit: false,
+          delete: false,
+        });
+      }
+    }),
+  );
 
   return (
     <>
