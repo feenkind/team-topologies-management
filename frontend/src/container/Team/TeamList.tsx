@@ -47,7 +47,7 @@ const TeamList: React.FC = () => {
         ]);
 
         actions.push({
-          basePath: `project/${teamProject.id}/team/${team.id}`,
+          basePath: `/project/${teamProject.id}/team/${team.id}`,
           view: true,
           edit: false,
           delete: false,
