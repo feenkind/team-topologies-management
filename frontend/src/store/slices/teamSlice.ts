@@ -97,6 +97,12 @@ export const initialState: IInitialState = {
         description: 'Nothing that needs to happen soon. We are just talking.',
       },
       {
+        fromTeamId: '1',
+        toTeamId: '4',
+        dependencyType: dependencyType.OK,
+        description: 'Just random stuff.',
+      },
+      {
         fromTeamId: '4',
         toTeamId: '2',
         dependencyType: dependencyType.SLOWING,
