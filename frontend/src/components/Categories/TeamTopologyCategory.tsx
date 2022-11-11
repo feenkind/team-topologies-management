@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Chip } from '@mui/material';
 import {
   teamTopology as teamTopologyEnum,
-  teamTopologyColors,
+  teamTopologyColor,
 } from '../../constants/categories';
 
 interface ITeamTopologyCategoryProps {
@@ -17,8 +17,8 @@ const TeamTopologyCategory: React.FC<ITeamTopologyCategoryProps> = ({
       label={teamTopology}
       sx={{
         color: 'black',
-        borderColor: teamTopologyColors[teamTopology].color,
-        backgroundColor: teamTopologyColors[teamTopology].backgroundColor,
+        borderColor: teamTopologyColor[teamTopology].color,
+        backgroundColor: teamTopologyColor[teamTopology].backgroundColor,
       }}
       variant="outlined"
     />

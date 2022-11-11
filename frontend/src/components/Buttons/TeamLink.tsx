@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import {
   teamTopology as teamTopologyEnum,
-  teamTopologyColors,
+  teamTopologyColor,
 } from '../../constants/categories';
 
 interface ITeamLinkButtonProps {
@@ -25,8 +25,8 @@ const TeamLink: React.FC<ITeamLinkButtonProps> = ({
       variant="outlined"
       sx={{
         m: 0.5,
-        backgroundColor: teamTopologyColors[teamTopology].backgroundColor,
-        borderColor: teamTopologyColors[teamTopology].color,
+        backgroundColor: teamTopologyColor[teamTopology].backgroundColor,
+        borderColor: teamTopologyColor[teamTopology].color,
         color: 'black',
       }}
     >

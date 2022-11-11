@@ -53,9 +53,11 @@ const TeamViewWork: React.FC<ITeamViewWorkProps> = ({
             headerItemWidthsInPercentage={[50, 50]}
             contentItems={team.workInProgress.map((work, index) => [
               work.summary,
-              <Link key={`wipUrl${index}`} href={work.repository}>
-                See the repository
-              </Link>,
+              work.repository && (
+                <Link key={`wipUrl${index}`} href={work.repository}>
+                  See the repository
+                </Link>
+              ),
             ])}
           />
         ) : (
@@ -80,9 +82,11 @@ const TeamViewWork: React.FC<ITeamViewWorkProps> = ({
             headerItemWidthsInPercentage={[50, 50]}
             contentItems={team.waysOfWorking.map((way, index) => [
               way.name,
-              <Link key={`wayOfWorkingUrl${index}`} href={way.url}>
-                {way.url}
-              </Link>,
+              way.url && (
+                <Link key={`wayOfWorkingUrl${index}`} href={way.url}>
+                  {way.url}
+                </Link>
+              ),
             ])}
           />
         ) : (

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Typography } from '@mui/material';
 import {
-  dependencyColors,
+  dependencyColor,
   dependencyType as dependencyTypeEnum,
 } from '../../constants/categories';
 
@@ -14,7 +14,7 @@ const DependencyCategory: React.FC<IDependencyCategoryProps> = ({
 }: IDependencyCategoryProps) => {
   return (
     <Typography
-      color={dependencyColors[dependencyType]}
+      color={dependencyColor[dependencyType]}
       variant="body2"
       fontWeight={dependencyType === dependencyTypeEnum.BLOCKING ? 600 : 400}
     >

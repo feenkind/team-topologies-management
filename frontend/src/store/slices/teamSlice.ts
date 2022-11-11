@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { dependencyType, teamTopology } from '../../constants/categories';
+import {
+  dependencyType,
+  interactionMode,
+  teamTopology,
+} from '../../constants/categories';
 import {
   channelTypes,
   meetingsDay,
@@ -27,12 +31,12 @@ interface IService {
 
 interface IWorkInProgress {
   summary: string;
-  repository: string;
+  repository?: string;
 }
 
 interface IWaysOfWorking {
   name: string;
-  url: string;
+  url?: string;
 }
 
 export interface ITeam {
@@ -59,6 +63,16 @@ export interface IDependency {
   description?: string;
 }
 
+interface IInteraction {
+  teamIdOne: string;
+  teamIdTwo: string;
+  interactionMode: interactionMode;
+  purpose: string;
+  startDate: string;
+  expectedDuration: number;
+  additionalInformation?: string;
+}
+
 interface IInitialState {
   // teams ordered by project
   teams: {
@@ -66,6 +80,8 @@ interface IInitialState {
   };
   // dependencies ordered by project
   dependencies: { [keys: string]: IDependency[] };
+  // interactions ordered by project
+  interactions: { [keys: string]: IInteraction[] };
 }
 
 export const initialState: IInitialState = {
@@ -116,12 +132,18 @@ export const initialState: IInitialState = {
             name: 'Scrum',
             url: 'https://scrumguides.org/',
           },
+          {
+            name: 'Very custom agile way of working',
+          },
         ],
         wikiSearchTerms: ['awesome', 'team', 'great things'],
         workInProgress: [
           {
             summary: 'Internal things that need fixing',
             repository: 'https://github.com/example.com/example-service-a',
+          },
+          {
+            summary: 'Organizing some meeting stuff',
           },
         ],
       },
@@ -244,6 +266,37 @@ export const initialState: IInitialState = {
         toTeamId: '3',
         dependencyType: dependencyType.SLOWING,
         description: 'Another blocking dependency.',
+      },
+    ],
+  },
+  interactions: {
+    '1': [
+      {
+        teamIdOne: '1',
+        teamIdTwo: '2',
+        interactionMode: interactionMode.X_AS_A_SERVICE,
+        purpose: 'Use the services from this perfect team',
+        startDate: '2022/09/10',
+        expectedDuration: 12,
+        additionalInformation: 'We love working with this team',
+      },
+      {
+        teamIdOne: '1',
+        teamIdTwo: '3',
+        interactionMode: interactionMode.FACILITATING,
+        purpose: 'Learn a lot from this team',
+        startDate: '2022/09/10',
+        expectedDuration: 4,
+        additionalInformation: 'All going according to plan',
+      },
+      {
+        teamIdOne: '1',
+        teamIdTwo: '4',
+        interactionMode: interactionMode.COLLABORATION,
+        purpose: 'We need to find a good solution for a complicated problem.',
+        startDate: '2022/09/10',
+        expectedDuration: 8,
+        additionalInformation: 'A lot of work to be done...',
       },
     ],
   },

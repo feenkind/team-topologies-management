@@ -10,11 +10,11 @@ import ContentVisualization, {
   ILegend,
 } from '../../components/Layout/ContentVisualization';
 import {
-  dependencyColors,
+  dependencyColor,
   dependencyType as dependencyTypEnum,
   teamTopology,
   teamTopology as teamTopologyEnum,
-  teamTopologyColors,
+  teamTopologyColor,
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
@@ -78,7 +78,7 @@ const DependencyVisualization: React.FC = () => {
       element: (
         <Box
           sx={{
-            backgroundColor: dependencyColors[dependencyTypEnum.BLOCKING],
+            backgroundColor: dependencyColor[dependencyTypEnum.BLOCKING],
             height: '3px',
             width: '100%',
           }}
@@ -90,7 +90,7 @@ const DependencyVisualization: React.FC = () => {
       element: (
         <Box
           sx={{
-            backgroundColor: dependencyColors[dependencyTypEnum.SLOWING],
+            backgroundColor: dependencyColor[dependencyTypEnum.SLOWING],
             height: '3px',
             width: '100%',
           }}
@@ -102,7 +102,7 @@ const DependencyVisualization: React.FC = () => {
       element: (
         <Box
           sx={{
-            backgroundColor: dependencyColors[dependencyTypEnum.OK],
+            backgroundColor: dependencyColor[dependencyTypEnum.OK],
             height: '3px',
             width: '100%',
           }}
@@ -164,7 +164,7 @@ const DependencyVisualization: React.FC = () => {
           linkDirectionalArrowRelPos={1}
           nodeColor={(node: INode) =>
             node.teamTopology
-              ? teamTopologyColors[node.teamTopology].backgroundColor
+              ? teamTopologyColor[node.teamTopology].backgroundColor
               : 'grey'
           }
           nodeLabel={''}
@@ -178,7 +178,7 @@ const DependencyVisualization: React.FC = () => {
             ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
             ctx.lineWidth = 2 / globalScale;
             ctx.strokeStyle = node.teamTopology
-              ? teamTopologyColors[node.teamTopology].color
+              ? teamTopologyColor[node.teamTopology].color
               : 'grey';
             ctx.stroke();
 
@@ -194,7 +194,7 @@ const DependencyVisualization: React.FC = () => {
             );
           }}
           linkColor={(link: ILink) =>
-            link.dependencyType ? dependencyColors[link.dependencyType] : 'grey'
+            link.dependencyType ? dependencyColor[link.dependencyType] : 'grey'
           }
           linkWidth={(link: ILink) =>
             link.dependencyType &&
