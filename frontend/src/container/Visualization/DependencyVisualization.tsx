@@ -109,7 +109,7 @@ const DependencyVisualization: React.FC = () => {
           enableZoomInteraction={false}
           width={graphWidth}
           height={graphHeight}
-          linkDirectionalArrowLength={3}
+          linkDirectionalArrowLength={1}
           linkDirectionalArrowRelPos={1}
           nodeColor={(node: INode) =>
             node.teamTopology
@@ -149,7 +149,7 @@ const DependencyVisualization: React.FC = () => {
             link.dependencyType &&
             link.dependencyType === dependencyTypEnum.BLOCKING
               ? 3
-              : 1
+              : 0.5
           }
           linkHoverPrecision={1}
           onNodeClick={(node: INode) => {
