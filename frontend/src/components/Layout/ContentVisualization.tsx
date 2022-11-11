@@ -1,16 +1,20 @@
 import * as React from 'react';
-import { Divider, Grid, Paper, Typography } from '@mui/material';
+import { Box, Divider, Grid, Paper, Typography } from '@mui/material';
 
+export interface ILegend {
+  element: React.ReactNode;
+  description: string;
+}
 interface IContentVisualizationProps {
   children: React.ReactNode | React.ReactNode[];
-  keys?: [];
+  legend?: ILegend[];
 }
 
 const ContentVisualization: React.FC<IContentVisualizationProps> = ({
   children,
-  keys,
+  legend,
 }: IContentVisualizationProps) => {
-  const keyBox = (
+  const legendBox = (
     <Paper sx={{ backgroundColor: 'grey.100', py: 3, px: 2 }}>
       <Typography
         variant="subtitle1"
@@ -18,10 +22,24 @@ const ContentVisualization: React.FC<IContentVisualizationProps> = ({
         align="center"
         sx={{ textTransform: 'uppercase' }}
       >
-        Keys
+        Legend
       </Typography>
       <Divider variant="middle" sx={{ my: 2 }} />
-      Here will be keys
+      {legend?.map((legendItem, index) => (
+        <Box
+          key={`key${index}`}
+          paddingY={2}
+          textAlign="center"
+          alignItems="center"
+          display="flex"
+          flexDirection="column"
+        >
+          {legendItem.element}
+          <Typography variant="body2" paddingY={1}>
+            {legendItem.description}
+          </Typography>
+        </Box>
+      ))}
     </Paper>
   );
 
@@ -31,7 +49,7 @@ const ContentVisualization: React.FC<IContentVisualizationProps> = ({
         {children}
       </Grid>
       <Grid item xs={12} md={2}>
-        {keyBox}
+        {legendBox}
       </Grid>
     </Grid>
   );

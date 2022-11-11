@@ -6,7 +6,9 @@ import ForceGraph2D, {
   NodeObject,
 } from 'react-force-graph-2d';
 import { useAppSelector } from '../../hooks';
-import ContentVisualization from '../../components/Layout/ContentVisualization';
+import ContentVisualization, {
+  ILegend,
+} from '../../components/Layout/ContentVisualization';
 import {
   dependencyColors,
   dependencyType as dependencyTypEnum,
@@ -15,7 +17,8 @@ import {
   teamTopologyColors,
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import {
   contentPadding,
   tabsHeight,
@@ -31,7 +34,6 @@ interface ILink extends LinkObject {
   dependencyType?: dependencyTypEnum;
   description?: string;
 }
-
 const DependencyVisualization: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
@@ -70,6 +72,55 @@ const DependencyVisualization: React.FC = () => {
     );
   }
 
+  const legend: ILegend[] = [
+    {
+      description: 'Blocking dependency',
+      element: (
+        <Box
+          sx={{
+            backgroundColor: dependencyColors[dependencyTypEnum.BLOCKING],
+            height: '3px',
+            width: '100%',
+          }}
+        />
+      ),
+    },
+    {
+      description: 'Slowing dependency',
+      element: (
+        <Box
+          sx={{
+            backgroundColor: dependencyColors[dependencyTypEnum.SLOWING],
+            height: '3px',
+            width: '100%',
+          }}
+        />
+      ),
+    },
+    {
+      description: 'OK dependency',
+      element: (
+        <Box
+          sx={{
+            backgroundColor: dependencyColors[dependencyTypEnum.OK],
+            height: '3px',
+            width: '100%',
+          }}
+        />
+      ),
+    },
+    {
+      description: 'A depends on B',
+      element: (
+        <Box display="flex" alignItems="center">
+          <Typography marginRight={1}>A</Typography>
+          <TrendingFlatIcon fontSize="large" />
+          <Typography marginLeft={1}>B</Typography>
+        </Box>
+      ),
+    },
+  ];
+
   const teamIdsWithDependencies: string[] = [];
   const links: ILink[] = [];
   dependencies.forEach((dependency) => {
@@ -98,7 +149,7 @@ const DependencyVisualization: React.FC = () => {
   const nodeRelSize = 2;
 
   return (
-    <ContentVisualization>
+    <ContentVisualization legend={legend}>
       <Box ref={graphWrapper}>
         <ForceGraph2D
           ref={forceGraphRef}
