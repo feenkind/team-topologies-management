@@ -14,6 +14,7 @@ import {
   teamTopology as teamTopologyEnum,
   teamTopologyColors,
 } from '../../constants/categories';
+import { useNavigate } from 'react-router-dom';
 
 interface INode extends NodeObject {
   name?: string;
@@ -33,6 +34,7 @@ const DependencyVisualization: React.FC = () => {
     (state) => state.team.dependencies[currentProject.id],
   );
   const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const navigate = useNavigate();
   const forceGraphRef = useRef<ForceGraphMethods>();
 
   if (!dependencies || dependencies.length === 0) {
@@ -88,7 +90,7 @@ const DependencyVisualization: React.FC = () => {
             : 'grey'
         }
         nodeLabel={''}
-        nodeCanvasObjectMode={() => 'after'}
+        nodeCanvasObjectMode={() => 'before'}
         nodeCanvasObject={(node: INode, ctx, globalScale) => {
           if (!node.name || !node.x || !node.y) {
             return;
@@ -102,7 +104,8 @@ const DependencyVisualization: React.FC = () => {
             : 'grey';
           ctx.stroke();
 
-          ctx.font = `${15 / globalScale}px Roboto`;
+          // team names
+          ctx.font = `${10 / globalScale}px sans-serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillStyle = 'black';
@@ -121,6 +124,11 @@ const DependencyVisualization: React.FC = () => {
             ? 3
             : 1
         }
+        linkHoverPrecision={1}
+        onNodeClick={(node: INode) => {
+          // link nodes to the team
+          navigate(`/project/${currentProject.id}/team/${node.id}`);
+        }}
         onRenderFramePost={(ctx) => {
           forceGraphRef.current?.zoomToFit(0, 20);
         }}
