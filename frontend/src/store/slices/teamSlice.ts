@@ -1,13 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { dependencyType, teamTopology } from '../../constants/categories';
+import { channelTypes, meetingsDay } from '../../constants/teamApi';
+
+interface IChannel {
+  type: channelTypes;
+  name: string;
+}
+
+interface IMeeting {
+  purpose: string;
+  day: meetingsDay;
+  time: string;
+  durationMinutes: number;
+}
 
 export interface ITeam {
-  id: string;
-  name: string;
-  topology: teamTopology;
-  domains?: string[];
-  fte: number;
+  channels?: IChannel[];
   cognitiveLoad: number;
+  domains?: string[];
+  focus: string;
+  fte: number;
+  id: string;
+  meetings?: IMeeting[];
+  name: string;
+  platform?: string;
+  topology: teamTopology;
+  wikiSearchTerms?: string[];
 }
 
 export interface IDependency {
@@ -30,54 +48,89 @@ export const initialState: IInitialState = {
   teams: {
     '1': [
       {
+        channels: [
+          { type: channelTypes.SLACK, name: '#aweseome-team' },
+          { type: channelTypes.SLACK, name: '#all-teams' },
+        ],
+        cognitiveLoad: 13,
+        domains: ['1', '2'],
+        focus: 'Doing awesome things.',
+        fte: 4,
         id: '1',
+        meetings: [
+          {
+            purpose: 'Daily sync',
+            day: meetingsDay.DAILY,
+            time: '10:00',
+            durationMinutes: 15,
+          },
+          {
+            purpose: 'Weekly questions',
+            day: meetingsDay.THURSDAY,
+            time: '15:30',
+            durationMinutes: 45,
+          },
+        ],
         name: 'Awesome Team',
         topology: teamTopology.STREAM_ALIGNED,
-        domains: ['1', '2'],
-        fte: 4,
-        cognitiveLoad: 13,
+        wikiSearchTerms: ['awesome', 'team', 'great things'],
       },
       {
-        id: '2',
-        name: 'Perfect Team',
-        topology: teamTopology.PLATFORM,
-        domains: ['3'],
-        fte: 5,
+        channels: [{ type: channelTypes.SLACK, name: '#perfect-team' }],
         cognitiveLoad: 19,
+        domains: ['3'],
+        focus: '',
+        fte: 5,
+        id: '2',
+        meetings: [
+          {
+            purpose: 'Daily sync',
+            day: meetingsDay.DAILY,
+            time: '9:30',
+            durationMinutes: 15,
+          },
+        ],
+        name: 'Perfect Team',
+        platform: 'Perfect platform',
+        topology: teamTopology.PLATFORM,
       },
       {
+        cognitiveLoad: 18,
+        domains: ['1', '4'],
+        focus: '',
+        fte: 5,
         id: '3',
         name: 'Random Team',
         topology: teamTopology.ENABLING,
-        domains: ['1', '4'],
-        fte: 5,
-        cognitiveLoad: 18,
       },
       {
+        cognitiveLoad: 12,
+        domains: ['1'],
+        focus: '',
+        fte: 2,
         id: '4',
         name: 'Party Team',
         topology: teamTopology.COMPLICATED_SUBSYSTEM,
-        domains: ['1'],
-        fte: 2,
-        cognitiveLoad: 12,
       },
     ],
     '2': [
       {
+        cognitiveLoad: 0,
+        focus: '',
+        fte: 2,
         id: '5',
         name: 'Unwanted Team',
         topology: teamTopology.ENABLING,
-        fte: 2,
-        cognitiveLoad: 0,
       },
     ],
     '3': [
       {
+        cognitiveLoad: 0,
+        focus: '',
+        fte: 1,
         id: '6',
         name: 'Undecided Team',
         topology: teamTopology.UNDEFINED,
-        fte: 1,
-        cognitiveLoad: 0,
       },
     ],
     '4': [],

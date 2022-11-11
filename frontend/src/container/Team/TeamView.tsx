@@ -24,6 +24,11 @@ const TeamView: React.FC = () => {
     return <Page404 />;
   }
 
+  /**
+   * Domains
+   *
+   */
+
   return (
     <>
       <TeamPageHeadline teamName={team.name} teamTopology={team.topology} />
