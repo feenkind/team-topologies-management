@@ -34,7 +34,7 @@ const TeamList: React.FC = () => {
           <TableLinkText
             key={team.id}
             label={team.name}
-            url={`project/${teamProject.id}/team/${team.id}`}
+            url={`/project/${teamProject.id}/team/${team.id}`}
           />,
           <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
           <ButtonLink

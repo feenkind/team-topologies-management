@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Table from '../../components/Table/Table';
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { IDependency, ITeam } from '../../store/slices/teamSlice';
 import { useAppSelector } from '../../hooks';
 import DependencyCategory from '../../components/Categories/DependencyCategory';
@@ -74,14 +74,19 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
       <Typography variant="button" component="h3" marginBottom={4}>
         Team {team.name} is depending on
       </Typography>
-      {teamsDependingOn && teamsDependingOn.length > 0 ? (
-        <Table
-          contentItems={mapDependenciesToTableContent(teamsDependingOn, true)}
-          headerItems={headerItems}
-        />
-      ) : (
-        'This team does not depend on any other teams right now.'
-      )}
+      <Paper variant="outlined">
+        {teamsDependingOn && teamsDependingOn.length > 0 ? (
+          <Table
+            headerItems={headerItems}
+            headerItemWidthsInPercentage={[20, 15, 15, 50]}
+            contentItems={mapDependenciesToTableContent(teamsDependingOn, true)}
+          />
+        ) : (
+          <Typography p={2}>
+            This team does not depend on any other teams right now.
+          </Typography>
+        )}
+      </Paper>
       <Typography
         variant="button"
         component="h3"
@@ -90,14 +95,19 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
       >
         Following teams depend on team {team.name}
       </Typography>
-      {dependingTeams && dependingTeams.length > 0 ? (
-        <Table
-          contentItems={mapDependenciesToTableContent(dependingTeams, false)}
-          headerItems={headerItems}
-        />
-      ) : (
-        'No teams are depending on this team right now.'
-      )}
+      <Paper variant="outlined">
+        {dependingTeams && dependingTeams.length > 0 ? (
+          <Table
+            headerItems={headerItems}
+            headerItemWidthsInPercentage={[20, 15, 15, 50]}
+            contentItems={mapDependenciesToTableContent(dependingTeams, false)}
+          />
+        ) : (
+          <Typography p={2}>
+            No teams are depending on this team right now.
+          </Typography>
+        )}
+      </Paper>
     </>
   );
 };

@@ -23,12 +23,14 @@ interface ITableProps {
   actions?: ITableAction[];
   contentItems: (string | React.ReactNode)[][];
   headerItems: string[];
+  headerItemWidthsInPercentage?: number[];
 }
 
 const Table: React.FC<ITableProps> = ({
   actions,
   contentItems,
   headerItems,
+  headerItemWidthsInPercentage,
 }: ITableProps) => {
   return (
     <TableContainer sx={{ width: '100%' }}>
@@ -41,8 +43,17 @@ const Table: React.FC<ITableProps> = ({
               },
             }}
           >
-            {headerItems.map((item) => (
-              <TableCell key={item}>{item}</TableCell>
+            {headerItems.map((item, index) => (
+              <TableCell
+                width={
+                  headerItemWidthsInPercentage &&
+                  headerItemWidthsInPercentage[index] &&
+                  `${headerItemWidthsInPercentage[index]}%`
+                }
+                key={item}
+              >
+                {item}
+              </TableCell>
             ))}
             {actions && <TableCell align="right">Actions</TableCell>}
           </TableRow>

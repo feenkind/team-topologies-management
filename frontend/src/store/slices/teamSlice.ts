@@ -25,6 +25,16 @@ interface IService {
   versioningType: versioningType;
 }
 
+interface IWorkInProgress {
+  summary: string;
+  repository: string;
+}
+
+interface IWaysOfWorking {
+  name: string;
+  url: string;
+}
+
 export interface ITeam {
   channels?: IChannel[];
   cognitiveLoad: number;
@@ -38,6 +48,8 @@ export interface ITeam {
   services?: IService[];
   topology: teamTopology;
   wikiSearchTerms?: string[];
+  waysOfWorking?: IWaysOfWorking[];
+  workInProgress?: IWorkInProgress[];
 }
 
 export interface IDependency {
@@ -92,14 +104,26 @@ export const initialState: IInitialState = {
             versioningType: versioningType.SEMANTIC,
           },
           {
-            name: 'Another wesome Service',
+            name: 'Another awesome Service',
             url: 'https://anexampleservice.com',
             repository: 'https://github.com/example.com/example-service-a',
             versioningType: versioningType.SEMANTIC,
           },
         ],
         topology: teamTopology.STREAM_ALIGNED,
+        waysOfWorking: [
+          {
+            name: 'Scrum',
+            url: 'https://scrumguides.org/',
+          },
+        ],
         wikiSearchTerms: ['awesome', 'team', 'great things'],
+        workInProgress: [
+          {
+            summary: 'Internal things that need fixing',
+            repository: 'https://github.com/example.com/example-service-a',
+          },
+        ],
       },
       {
         channels: [{ type: channelTypes.SLACK, name: '#perfect-team' }],
@@ -127,6 +151,26 @@ export const initialState: IInitialState = {
           },
         ],
         topology: teamTopology.PLATFORM,
+        waysOfWorking: [
+          {
+            name: 'Scrum',
+            url: 'https://scrumguides.org/',
+          },
+          {
+            name: 'Lean',
+            url: 'https://example.internal-wiki.com/ways-of-working/lean',
+          },
+        ],
+        workInProgress: [
+          {
+            summary: 'Improving some awesome service stuff',
+            repository: 'https://github.com/example.com/example-service-a',
+          },
+          {
+            summary: 'Internal things that need fixing',
+            repository: 'https://github.com/example.com/example-service-a',
+          },
+        ],
       },
       {
         cognitiveLoad: 18,

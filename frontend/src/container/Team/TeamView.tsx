@@ -7,6 +7,7 @@ import Tabs from '../../components/Layout/Tabs';
 import TeamViewDependencies from './TeamViewDependencies';
 import TeamViewInformation from './TeamViewInformation';
 import TeamPageHeadline from '../../components/Layout/TeamPageHeadline';
+import TeamViewWork from './TeamViewWork';
 
 const TeamView: React.FC = () => {
   const { projectId, teamId } = useParams<{
@@ -39,7 +40,7 @@ const TeamView: React.FC = () => {
               tabName: 'Information',
               content: <TeamViewInformation team={team} />,
             },
-            { tabName: 'Work', content: 'coming soon' },
+            { tabName: 'Work', content: <TeamViewWork team={team} /> },
             { tabName: 'Interactions', content: 'coming soon' },
             {
               tabName: 'Dependencies',
