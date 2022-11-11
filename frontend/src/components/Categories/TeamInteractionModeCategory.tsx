@@ -22,6 +22,7 @@ const TeamInteractionModeCategory: React.FC<
         border: '1px dashed',
       }}
       variant="outlined"
+      size="small"
     />
   );
 };

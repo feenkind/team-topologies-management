@@ -38,6 +38,40 @@ const TeamViewCognitiveLoad: React.FC<ITeamViewCognitiveLoadProps> = ({
         />
       ));
 
+  const domainLinksSimple = buildDomainLinks(complexity.SIMPLE);
+  const domainLinksComplicated = buildDomainLinks(complexity.COMPLICATED);
+  const domainLinksComplex = buildDomainLinks(complexity.COMPLEX);
+
+  // only display complexity categories of domains the team is working on
+  const contentItems = [];
+  if (domainLinksSimple.length > 0) {
+    contentItems.push([
+      <ComplexityCategory
+        key={complexity.SIMPLE}
+        complexity={complexity.SIMPLE}
+      />,
+      domainLinksSimple,
+    ]);
+  }
+  if (domainLinksComplicated.length > 0) {
+    contentItems.push([
+      <ComplexityCategory
+        key={complexity.COMPLICATED}
+        complexity={complexity.COMPLICATED}
+      />,
+      domainLinksComplicated,
+    ]);
+  }
+  if (domainLinksComplex.length > 0) {
+    contentItems.push([
+      <ComplexityCategory
+        key={complexity.COMPLEX}
+        complexity={complexity.COMPLEX}
+      />,
+      domainLinksComplex,
+    ]);
+  }
+
   return (
     <>
       <InformationGrid
@@ -62,43 +96,20 @@ const TeamViewCognitiveLoad: React.FC<ITeamViewCognitiveLoadProps> = ({
           },
         ]}
       />
-
       <Typography
         variant="button"
         component="h3"
         marginBottom={4}
         marginTop={9}
       >
-        This team is responsible for
+        Domains this team is responsible for
       </Typography>
       <Paper variant="outlined">
         {team.domains && team.domains.length > 0 ? (
           <Table
             headerItems={['Complexity', 'Domains']}
             headerItemWidthsInPercentage={[30, 70]}
-            contentItems={[
-              [
-                <ComplexityCategory
-                  key={complexity.SIMPLE}
-                  complexity={complexity.SIMPLE}
-                />,
-                buildDomainLinks(complexity.SIMPLE),
-              ],
-              [
-                <ComplexityCategory
-                  key={complexity.COMPLICATED}
-                  complexity={complexity.COMPLICATED}
-                />,
-                buildDomainLinks(complexity.COMPLICATED),
-              ],
-              [
-                <ComplexityCategory
-                  key={complexity.COMPLEX}
-                  complexity={complexity.COMPLEX}
-                />,
-                buildDomainLinks(complexity.COMPLEX),
-              ],
-            ]}
+            contentItems={contentItems}
           />
         ) : (
           <Typography p={2}>
