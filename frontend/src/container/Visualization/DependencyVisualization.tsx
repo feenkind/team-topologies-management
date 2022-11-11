@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ForceGraph2D, {
   ForceGraphMethods,
   LinkObject,
@@ -15,6 +15,12 @@ import {
   teamTopologyColors,
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
+import { Box } from '@mui/material';
+import {
+  contentPadding,
+  tabsHeight,
+  toolbarHeight,
+} from '../../constants/sizes';
 
 interface INode extends NodeObject {
   name?: string;
@@ -35,7 +41,26 @@ const DependencyVisualization: React.FC = () => {
   );
   const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
   const navigate = useNavigate();
+
   const forceGraphRef = useRef<ForceGraphMethods>();
+  const graphWrapper = useRef<HTMLElement>();
+  const [graphWidth, setGraphWidth] = useState<number>(0);
+  const [graphHeight, setGraphHeight] = useState<number>(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (graphWrapper.current?.offsetWidth) {
+        setGraphWidth(graphWrapper.current?.offsetWidth);
+        setGraphHeight(
+          window.innerHeight - toolbarHeight - tabsHeight - 3 * contentPadding,
+        );
+      }
+    };
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [graphWrapper]);
 
   if (!dependencies || dependencies.length === 0) {
     return (
@@ -69,70 +94,73 @@ const DependencyVisualization: React.FC = () => {
     },
   );
 
+  // needed for drawing the border around the nodes
   const nodeRelSize = 2;
 
   return (
     <ContentVisualization>
-      <ForceGraph2D
-        ref={forceGraphRef}
-        graphData={{ nodes, links }}
-        nodeRelSize={nodeRelSize}
-        enableNodeDrag={false}
-        enablePanInteraction={false}
-        enableZoomInteraction={false}
-        width={500}
-        height={500}
-        linkDirectionalArrowLength={3}
-        linkDirectionalArrowRelPos={1}
-        nodeColor={(node: INode) =>
-          node.teamTopology
-            ? teamTopologyColors[node.teamTopology].backgroundColor
-            : 'grey'
-        }
-        nodeLabel={''}
-        nodeCanvasObjectMode={() => 'before'}
-        nodeCanvasObject={(node: INode, ctx, globalScale) => {
-          if (!node.name || !node.x || !node.y) {
-            return;
+      <Box ref={graphWrapper}>
+        <ForceGraph2D
+          ref={forceGraphRef}
+          graphData={{ nodes, links }}
+          nodeRelSize={nodeRelSize}
+          enableNodeDrag={false}
+          enablePanInteraction={false}
+          enableZoomInteraction={false}
+          width={graphWidth}
+          height={graphHeight}
+          linkDirectionalArrowLength={3}
+          linkDirectionalArrowRelPos={1}
+          nodeColor={(node: INode) =>
+            node.teamTopology
+              ? teamTopologyColors[node.teamTopology].backgroundColor
+              : 'grey'
           }
-          // border for nodes
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
-          ctx.lineWidth = 2 / globalScale;
-          ctx.strokeStyle = node.teamTopology
-            ? teamTopologyColors[node.teamTopology].color
-            : 'grey';
-          ctx.stroke();
+          nodeLabel={''}
+          nodeCanvasObjectMode={() => 'before'}
+          nodeCanvasObject={(node: INode, ctx, globalScale) => {
+            if (!node.name || !node.x || !node.y) {
+              return;
+            }
+            // border for nodes
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
+            ctx.lineWidth = 2 / globalScale;
+            ctx.strokeStyle = node.teamTopology
+              ? teamTopologyColors[node.teamTopology].color
+              : 'grey';
+            ctx.stroke();
 
-          // team names
-          ctx.font = `${10 / globalScale}px sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = 'black';
-          ctx.fillText(
-            node.name,
-            node.x,
-            node.y + nodeRelSize + 10 / globalScale,
-          );
-        }}
-        linkColor={(link: ILink) =>
-          link.dependencyType ? dependencyColors[link.dependencyType] : 'grey'
-        }
-        linkWidth={(link: ILink) =>
-          link.dependencyType &&
-          link.dependencyType === dependencyTypEnum.BLOCKING
-            ? 3
-            : 1
-        }
-        linkHoverPrecision={1}
-        onNodeClick={(node: INode) => {
-          // link nodes to the team
-          navigate(`/project/${currentProject.id}/team/${node.id}`);
-        }}
-        onRenderFramePost={(ctx) => {
-          forceGraphRef.current?.zoomToFit(0, 20);
-        }}
-      />
+            // team names
+            ctx.font = `${10 / globalScale}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = 'black';
+            ctx.fillText(
+              node.name,
+              node.x,
+              node.y + nodeRelSize + 15 / globalScale,
+            );
+          }}
+          linkColor={(link: ILink) =>
+            link.dependencyType ? dependencyColors[link.dependencyType] : 'grey'
+          }
+          linkWidth={(link: ILink) =>
+            link.dependencyType &&
+            link.dependencyType === dependencyTypEnum.BLOCKING
+              ? 3
+              : 1
+          }
+          linkHoverPrecision={1}
+          onNodeClick={(node: INode) => {
+            // link nodes to the team
+            navigate(`/project/${currentProject.id}/team/${node.id}`);
+          }}
+          onRenderFramePost={() => {
+            forceGraphRef.current?.zoomToFit(0, 100);
+          }}
+        />
+      </Box>
     </ContentVisualization>
   );
 };
