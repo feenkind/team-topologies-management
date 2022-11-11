@@ -1,10 +1,16 @@
-import { amber, deepOrange, grey } from '@mui/material/colors';
+import { amber, deepOrange, grey, teal } from '@mui/material/colors';
 
 export enum complexity {
-  SIMPLE = 'Simple',
-  COMPLICATED = 'Complicated',
-  COMPLEX = 'Complex',
+  SIMPLE = 'simple',
+  COMPLICATED = 'complicated',
+  COMPLEX = 'complex',
 }
+
+export const complexityColor = {
+  [complexity.SIMPLE]: teal[400],
+  [complexity.COMPLICATED]: amber[600],
+  [complexity.COMPLEX]: deepOrange[900],
+};
 
 export enum priority {
   GENERIC = 'Generic',
@@ -44,9 +50,9 @@ export const teamTopologyColor = {
 };
 
 export enum interactionMode {
-  COLLABORATION = 'collaboration',
-  X_AS_A_SERVICE = 'x-as-a-service',
-  FACILITATING = 'facilitating',
+  COLLABORATION = 'Collaboration',
+  X_AS_A_SERVICE = 'X-as-a-Service',
+  FACILITATING = 'Facilitating',
   UNDEFINED = 'undefined',
 }
 

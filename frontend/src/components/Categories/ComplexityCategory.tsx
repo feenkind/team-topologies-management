@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Chip } from '@mui/material';
-import { complexity as complexityEnum } from '../../constants/categories';
-import { amber, deepOrange, teal } from '@mui/material/colors';
+import {
+  complexity as complexityEnum,
+  complexityColor,
+} from '../../constants/categories';
 
 interface IComplexityCategoryProps {
   complexity: complexityEnum;
@@ -10,18 +12,13 @@ interface IComplexityCategoryProps {
 const ComplexityCategory: React.FC<IComplexityCategoryProps> = ({
   complexity,
 }: IComplexityCategoryProps) => {
-  let color: string = teal[400];
-  if (complexity === complexityEnum.COMPLICATED) {
-    color = amber[600];
-  }
-  if (complexity === complexityEnum.COMPLEX) {
-    color = deepOrange[900];
-  }
-
   return (
     <Chip
       label={complexity}
-      sx={{ color: color, borderColor: color }}
+      sx={{
+        color: complexityColor[complexity],
+        borderColor: complexityColor[complexity],
+      }}
       variant="outlined"
     />
   );

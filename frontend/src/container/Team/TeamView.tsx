@@ -9,6 +9,7 @@ import TeamViewInformation from './TeamViewInformation';
 import TeamPageHeadline from '../../components/Layout/TeamPageHeadline';
 import TeamViewWork from './TeamViewWork';
 import TeamViewInteractions from './TeamViewInteractions';
+import TeamViewCognitiveLoad from './TeamViewCognitiveLoad';
 
 const TeamView: React.FC = () => {
   const { projectId, teamId } = useParams<{
@@ -50,7 +51,10 @@ const TeamView: React.FC = () => {
               tabName: 'Dependencies',
               content: <TeamViewDependencies team={team} />,
             },
-            { tabName: 'Cognitive Load', content: 'coming soon' },
+            {
+              tabName: 'Cognitive Load',
+              content: <TeamViewCognitiveLoad team={team} />,
+            },
             { tabName: 'History', content: 'coming later' },
           ]}
         />

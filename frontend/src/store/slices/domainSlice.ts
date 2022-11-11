@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { complexity, priority } from '../../constants/categories';
 
-interface IDomain {
+export interface IDomain {
   id: string;
   name: string;
   description: string;
