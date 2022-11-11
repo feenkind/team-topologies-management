@@ -10,3 +10,8 @@ export enum meetingsDay {
   THURSDAY = 'Thursday',
   FRIDAY = 'Friday',
 }
+
+export enum versioningType {
+  SEMANTIC = 'semantic',
+  SEQUENTIAL = 'sequential',
+}

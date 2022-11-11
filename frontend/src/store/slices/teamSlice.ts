@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { dependencyType, teamTopology } from '../../constants/categories';
-import { channelTypes, meetingsDay } from '../../constants/teamApi';
+import {
+  channelTypes,
+  meetingsDay,
+  versioningType,
+} from '../../constants/teamApi';
 
 interface IChannel {
   type: channelTypes;
@@ -14,6 +18,13 @@ interface IMeeting {
   durationMinutes: number;
 }
 
+interface IService {
+  name: string;
+  url: string;
+  repository: string;
+  versioningType: versioningType;
+}
+
 export interface ITeam {
   channels?: IChannel[];
   cognitiveLoad: number;
@@ -24,6 +35,7 @@ export interface ITeam {
   meetings?: IMeeting[];
   name: string;
   platform?: string;
+  services?: IService[];
   topology: teamTopology;
   wikiSearchTerms?: string[];
 }
@@ -72,6 +84,20 @@ export const initialState: IInitialState = {
           },
         ],
         name: 'Awesome Team',
+        services: [
+          {
+            name: 'Awesome Service',
+            url: 'https://anexampleservice.com',
+            repository: 'https://github.com/example.com/example-service-a',
+            versioningType: versioningType.SEMANTIC,
+          },
+          {
+            name: 'Another wesome Service',
+            url: 'https://anexampleservice.com',
+            repository: 'https://github.com/example.com/example-service-a',
+            versioningType: versioningType.SEMANTIC,
+          },
+        ],
         topology: teamTopology.STREAM_ALIGNED,
         wikiSearchTerms: ['awesome', 'team', 'great things'],
       },
@@ -92,6 +118,14 @@ export const initialState: IInitialState = {
         ],
         name: 'Perfect Team',
         platform: 'Perfect platform',
+        services: [
+          {
+            name: 'Perfect Service',
+            url: 'https://anexampleservice.com',
+            repository: 'https://github.com/example.com/example-service-a',
+            versioningType: versioningType.SEMANTIC,
+          },
+        ],
         topology: teamTopology.PLATFORM,
       },
       {
