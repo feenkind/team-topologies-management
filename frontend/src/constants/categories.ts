@@ -53,19 +53,19 @@ export enum interactionMode {
 export const interactionModeColor = {
   [interactionMode.COLLABORATION]: {
     color: '#967EE2',
-    backgroundColor: '#C6BEDF',
+    backgroundColor: 'rgba(198,190,223,0.5)',
   },
   [interactionMode.X_AS_A_SERVICE]: {
     color: '#999696',
-    backgroundColor: '#B4B4B4',
+    backgroundColor: 'rgba(180,180,180,0.5)',
   },
   [interactionMode.FACILITATING]: {
     color: '#78996B',
-    backgroundColor: '#C9DFBE',
+    backgroundColor: 'rgba(201,223,190,0.5)',
   },
   [interactionMode.UNDEFINED]: {
     color: '#9B99AF',
-    backgroundColor: '#EBEBEF',
+    backgroundColor: 'rgba(235,235,239,0.5)',
   },
 };
 

@@ -296,7 +296,6 @@ export const initialState: IInitialState = {
         purpose: 'We need to find a good solution for a complicated problem.',
         startDate: '2022/09/10',
         expectedDuration: 8,
-        additionalInformation: 'A lot of work to be done...',
       },
     ],
   },

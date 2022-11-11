@@ -69,6 +69,7 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
     'Cross-domain',
     'Description',
   ];
+  const headerItemWidths = [20, 15, 15, 50];
   return (
     <>
       <Typography variant="button" component="h3" marginBottom={4}>
@@ -78,7 +79,7 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
         {teamsDependingOn && teamsDependingOn.length > 0 ? (
           <Table
             headerItems={headerItems}
-            headerItemWidthsInPercentage={[20, 15, 15, 50]}
+            headerItemWidthsInPercentage={headerItemWidths}
             contentItems={mapDependenciesToTableContent(teamsDependingOn, true)}
           />
         ) : (
@@ -99,7 +100,7 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
         {dependingTeams && dependingTeams.length > 0 ? (
           <Table
             headerItems={headerItems}
-            headerItemWidthsInPercentage={[20, 15, 15, 50]}
+            headerItemWidthsInPercentage={headerItemWidths}
             contentItems={mapDependenciesToTableContent(dependingTeams, false)}
           />
         ) : (
