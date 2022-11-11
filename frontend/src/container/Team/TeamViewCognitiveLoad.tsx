@@ -9,7 +9,7 @@ import ComplexityCategory from '../../components/Categories/ComplexityCategory';
 import { complexity } from '../../constants/categories';
 import { useAppSelector } from '../../hooks';
 import ButtonLink from '../../components/Buttons/ButtonLink';
-import { isCognitiveLoadTooHigh } from './cognitiveLoadFunctions';
+import { useCognitiveLoad } from './useCognitiveLoadHook';
 
 interface ITeamViewCognitiveLoadProps {
   team: ITeam;
@@ -24,6 +24,10 @@ const TeamViewCognitiveLoad: React.FC<ITeamViewCognitiveLoadProps> = ({
   const domains = useAppSelector(
     (state) => state.domain.domains[currentProject.id] || [],
   );
+  const { isLoadTooHigh } = useCognitiveLoad({
+    team,
+    projectId: currentProject.id,
+  });
 
   const buildDomainLinks = (complexity: complexity) =>
     domains
@@ -75,12 +79,7 @@ const TeamViewCognitiveLoad: React.FC<ITeamViewCognitiveLoadProps> = ({
 
   return (
     <>
-      {isCognitiveLoadTooHigh({
-        cognitiveLoadPoints: team.cognitiveLoad,
-        amountSimpleDomains: domainLinksSimple.length,
-        amountComplicatedDomains: domainLinksComplicated.length,
-        amountComplexDomains: domainLinksComplex.length,
-      }) && (
+      {isLoadTooHigh && (
         <Alert severity="error" sx={{ mb: 3 }}>
           Team {team.name} has a high cognitive load. The reasons can be either
           a very high subjective cognitive load or the responsibility for too

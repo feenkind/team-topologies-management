@@ -10,6 +10,8 @@ import TeamPageHeadline from '../../components/Layout/TeamPageHeadline';
 import TeamViewWork from './TeamViewWork';
 import TeamViewInteractions from './TeamViewInteractions';
 import TeamViewCognitiveLoad from './TeamViewCognitiveLoad';
+import { useCognitiveLoad } from './useCognitiveLoadHook';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 const TeamView: React.FC = () => {
   const { projectId, teamId } = useParams<{
@@ -18,19 +20,19 @@ const TeamView: React.FC = () => {
   }>();
   const team = useAppSelector(
     (state) =>
-      projectId &&
-      teamId &&
-      state.team.teams[projectId].find((team) => team.id === teamId),
+      (projectId &&
+        teamId &&
+        state.team.teams[projectId].find((team) => team.id === teamId)) ||
+      undefined,
   );
+  const { isLoadTooHigh } = useCognitiveLoad({
+    team: team,
+    projectId: projectId,
+  });
 
   if (!team) {
     return <Page404 />;
   }
-
-  /**
-   * Domains
-   *
-   */
 
   return (
     <>
@@ -54,6 +56,9 @@ const TeamView: React.FC = () => {
             {
               tabName: 'Cognitive Load',
               content: <TeamViewCognitiveLoad team={team} />,
+              tabIcon: isLoadTooHigh ? (
+                <ErrorOutlineIcon color="error" />
+              ) : undefined,
             },
             { tabName: 'History', content: 'coming later' },
           ]}

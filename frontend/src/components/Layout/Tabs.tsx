@@ -6,6 +6,7 @@ import TabPanel from './TabPanel';
 interface ITabProps {
   tabContent: {
     tabName: string;
+    tabIcon?: React.ReactElement;
     content: React.ReactNode | React.ReactNode[];
   }[];
 }
@@ -28,6 +29,8 @@ const Tabs: React.FC<ITabProps> = ({ tabContent }: ITabProps) => {
               label={tab.tabName}
               id={`content-tab-${index}`}
               aria-controls={`content-tabpanel-${index}`}
+              icon={tab.tabIcon}
+              iconPosition={tab.tabIcon ? 'end' : undefined}
             />
           ))}
         </TabsComponent>
