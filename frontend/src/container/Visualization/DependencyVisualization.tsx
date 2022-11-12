@@ -12,7 +12,7 @@ import {
   teamTopologyColor,
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { Alert, Box, Typography } from '@mui/material';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import VisualizationGraph from './VisualizationGraph';
 
@@ -38,7 +38,9 @@ const DependencyVisualization: React.FC = () => {
   if (!dependencies || dependencies.length === 0) {
     return (
       <ContentVisualization>
-        Yay! {currentProject.name} has no team dependencies.
+        <Alert severity="info">
+          Yay! {currentProject.name} has no team dependencies.{' '}
+        </Alert>
       </ContentVisualization>
     );
   }
@@ -119,54 +121,56 @@ const DependencyVisualization: React.FC = () => {
   // needed for drawing the border around the nodes
   const nodeRelSize = 2;
   return (
-    <VisualizationGraph
-      legend={legend}
-      links={links}
-      linkColorCallback={(link: ILink) =>
-        link.dependencyType ? dependencyColor[link.dependencyType] : 'grey'
-      }
-      linkWidthCallback={(link: ILink) =>
-        link.dependencyType &&
-        link.dependencyType === dependencyTypEnum.BLOCKING
-          ? 3
-          : 0.5
-      }
-      nodeSize={nodeRelSize}
-      nodes={nodes}
-      nodeCanvasObjectCallback={(node: INode, ctx, globalScale) => {
-        if (!node.name || !node.x || !node.y) {
-          return;
+    <ContentVisualization legend={legend}>
+      <VisualizationGraph
+        links={links}
+        linkColorCallback={(link: ILink) =>
+          link.dependencyType ? dependencyColor[link.dependencyType] : 'grey'
         }
-        // border for nodes
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
-        ctx.lineWidth = 2 / globalScale;
-        ctx.strokeStyle = node.teamTopology
-          ? teamTopologyColor[node.teamTopology].color
-          : 'grey';
-        ctx.stroke();
+        linkWidthCallback={(link: ILink) =>
+          link.dependencyType &&
+          link.dependencyType === dependencyTypEnum.BLOCKING
+            ? 3
+            : 0.5
+        }
+        nodeSize={nodeRelSize}
+        nodes={nodes}
+        nodeCanvasObjectCallback={(node: INode, ctx, globalScale) => {
+          if (!node.name || !node.x || !node.y) {
+            return;
+          }
+          // border for nodes
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
+          ctx.lineWidth = 2 / globalScale;
+          ctx.strokeStyle = node.teamTopology
+            ? teamTopologyColor[node.teamTopology].color
+            : 'grey';
+          ctx.stroke();
 
-        // team names
-        ctx.font = `${10 / globalScale}px sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = 'black';
-        ctx.fillText(
-          node.name,
-          node.x,
-          node.y + nodeRelSize + 15 / globalScale,
-        );
-      }}
-      nodeColorCallback={(node: INode) =>
-        node.teamTopology
-          ? teamTopologyColor[node.teamTopology].backgroundColor
-          : 'grey'
-      }
-      onNodeClickCallback={(node: INode) => {
-        // link nodes to the team
-        navigate(`/project/${currentProject.id}/team/${node.id}`);
-      }}
-    />
+          // team names
+          ctx.font = `${10 / globalScale}px sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = 'black';
+          ctx.fillText(
+            node.name,
+            node.x,
+            node.y + nodeRelSize + 15 / globalScale,
+          );
+        }}
+        nodeColorCallback={(node: INode) =>
+          node.teamTopology
+            ? teamTopologyColor[node.teamTopology].backgroundColor
+            : 'grey'
+        }
+        onNodeClickCallback={(node: INode) => {
+          // link nodes to the team
+          navigate(`/project/${currentProject.id}/team/${node.id}`);
+        }}
+        showDirection={true}
+      />
+    </ContentVisualization>
   );
 };
 

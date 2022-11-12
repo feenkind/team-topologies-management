@@ -212,6 +212,15 @@ export const initialState: IInitialState = {
         name: 'Party Team',
         topology: teamTopology.COMPLICATED_SUBSYSTEM,
       },
+      {
+        cognitiveLoad: 12,
+        domains: ['1'],
+        focus: '',
+        fte: 2,
+        id: '7',
+        name: 'New Team',
+        topology: teamTopology.UNDEFINED,
+      },
     ],
     '2': [
       {

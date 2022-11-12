@@ -5,9 +5,6 @@ import ForceGraph2D, {
   LinkObject,
   NodeObject,
 } from 'react-force-graph-2d';
-import ContentVisualization, {
-  ILegend,
-} from '../../components/Layout/ContentVisualization';
 import { Box } from '@mui/material';
 import {
   contentPadding,
@@ -16,7 +13,6 @@ import {
 } from '../../constants/sizes';
 
 interface IVisualizationGraphProperties {
-  legend: ILegend[];
   links: LinkObject[];
   linkColorCallback: (link: LinkObject) => string;
   linkWidthCallback: (link: LinkObject) => number;
@@ -29,10 +25,11 @@ interface IVisualizationGraphProperties {
   ) => void;
   nodeColorCallback: (node: NodeObject) => string;
   onNodeClickCallback: (node: NodeObject) => void;
+  showDirection?: boolean;
+  showDashedLinks?: boolean;
 }
 
 const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
-  legend,
   links,
   linkColorCallback,
   linkWidthCallback,
@@ -41,6 +38,8 @@ const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
   nodeCanvasObjectCallback,
   nodeColorCallback,
   onNodeClickCallback,
+  showDirection,
+  showDashedLinks,
 }: IVisualizationGraphProperties) => {
   const forceGraphRef = useRef<ForceGraphMethods>();
   const graphWrapper = useRef<HTMLElement>();
@@ -52,7 +51,7 @@ const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
       if (graphWrapper.current?.offsetWidth) {
         setGraphWidth(graphWrapper.current?.offsetWidth);
         setGraphHeight(
-          window.innerHeight - toolbarHeight - tabsHeight - 3 * contentPadding,
+          window.innerHeight - toolbarHeight - tabsHeight - 5 * contentPadding,
         );
       }
     };
@@ -63,33 +62,32 @@ const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
   }, [graphWrapper]);
 
   return (
-    <ContentVisualization legend={legend}>
-      <Box ref={graphWrapper}>
-        <ForceGraph2D
-          ref={forceGraphRef}
-          graphData={{ nodes, links }}
-          nodeRelSize={nodeSize}
-          enableNodeDrag={false}
-          enablePanInteraction={false}
-          enableZoomInteraction={false}
-          width={graphWidth}
-          height={graphHeight}
-          linkDirectionalArrowLength={1}
-          linkDirectionalArrowRelPos={1}
-          nodeColor={nodeColorCallback}
-          nodeLabel={''}
-          nodeCanvasObjectMode={() => 'before'}
-          nodeCanvasObject={nodeCanvasObjectCallback}
-          linkColor={linkColorCallback}
-          linkWidth={linkWidthCallback}
-          linkHoverPrecision={1}
-          onNodeClick={onNodeClickCallback}
-          onRenderFramePost={() => {
-            forceGraphRef.current?.zoomToFit(0, 100);
-          }}
-        />
-      </Box>
-    </ContentVisualization>
+    <Box ref={graphWrapper}>
+      <ForceGraph2D
+        ref={forceGraphRef}
+        graphData={{ nodes, links }}
+        enableNodeDrag={false}
+        enablePanInteraction={false}
+        enableZoomInteraction={false}
+        width={graphWidth}
+        height={graphHeight}
+        linkDirectionalArrowLength={showDirection ? 1 : undefined}
+        linkDirectionalArrowRelPos={showDirection ? 1 : undefined}
+        linkColor={linkColorCallback}
+        linkWidth={linkWidthCallback}
+        linkLineDash={showDashedLinks ? [1, 1] : null}
+        linkHoverPrecision={1}
+        nodeRelSize={nodeSize}
+        nodeColor={nodeColorCallback}
+        nodeLabel={''}
+        nodeCanvasObjectMode={() => 'before'}
+        nodeCanvasObject={nodeCanvasObjectCallback}
+        onNodeClick={onNodeClickCallback}
+        onRenderFramePost={() => {
+          forceGraphRef.current?.zoomToFit(0, 100);
+        }}
+      />
+    </Box>
   );
 };
 
