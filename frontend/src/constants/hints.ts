@@ -9,8 +9,21 @@ interface IHintMapping {
   [keys: string]: IHint;
 }
 
-export const teamHints = {
-  teamSize: 'The perfect team consists of 7 to 9 members.',
+export const teamHints: IHintMapping = {
+  teamSize: {
+    summary: 'Team Size',
+    description: 'The perfect team consists of 7 to 9 members.',
+    linkUrl: '',
+    linkLabel: '',
+  },
+  cognitiveLoad: {
+    summary: 'Cognitive Load',
+    description:
+      '... ideally 2-3 simple domains, not more than 1' +
+      ' complicated and if one complex, no other...',
+    linkUrl: '',
+    linkLabel: 'Lern more about team topologies',
+  },
 };
 
 export const domainHints: IHintMapping = {

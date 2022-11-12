@@ -150,7 +150,7 @@ export const initialState: IInitialState = {
       {
         channels: [{ type: channelTypes.SLACK, name: '#perfect-team' }],
         cognitiveLoad: 19,
-        domains: ['3'],
+        domains: ['3', '4'],
         focus: '',
         fte: 5,
         id: '2',
