@@ -4,7 +4,7 @@ import Table from '../../components/Table/Table';
 import { useAppSelector } from '../../hooks';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import TableLinkText from '../../components/Table/TableLinkText';
-import TeamTopologyCategory from '../../components/Categories/TeamTopologyCategory';
+import TeamTypeCategory from '../../components/Categories/TeamTypeCategory';
 import ButtonLink from '../../components/Buttons/ButtonLink';
 import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -52,7 +52,7 @@ const TeamListForProject: React.FC = () => {
       label={team.name}
       url={`/project/${currentProject.id}/team/${team.id}`}
     />,
-    <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
+    <TeamTypeCategory key={team.id} teamType={team.topology} />,
     team.domains?.map((teamDomain) => {
       const domain = projectDomains.find((domain) => domain.id === teamDomain);
       return (

@@ -5,16 +5,16 @@ import TeamShape from '../TeamShape';
 
 interface ITeamPageHeadlineProps {
   teamName: string;
-  teamTopology: teamTopologyEnum;
+  teamType: teamTopologyEnum;
 }
 
 const TeamPageHeadline: React.FC<ITeamPageHeadlineProps> = ({
   teamName,
-  teamTopology,
+  teamType,
 }: ITeamPageHeadlineProps) => {
   return (
     <Typography component="h1" variant="h6" display="inline-block">
-      <TeamShape label={teamName} teamTopology={teamTopology} />
+      <TeamShape label={teamName} teamType={teamType} />
     </Typography>
   );
 };

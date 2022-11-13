@@ -4,7 +4,7 @@ import TableLinkText from '../../components/Table/TableLinkText';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import Table, { ITableAction } from '../../components/Table/Table';
 import ButtonLink from '../../components/Buttons/ButtonLink';
-import TeamTopologyCategory from '../../components/Categories/TeamTopologyCategory';
+import TeamTypeCategory from '../../components/Categories/TeamTypeCategory';
 
 const TeamList: React.FC = () => {
   const teams = useAppSelector((state) => state.team.teams);
@@ -36,7 +36,7 @@ const TeamList: React.FC = () => {
             label={team.name}
             url={`/project/${teamProject.id}/team/${team.id}`}
           />,
-          <TeamTopologyCategory key={team.id} teamTopology={team.topology} />,
+          <TeamTypeCategory key={team.id} teamType={team.topology} />,
           <ButtonLink
             key={teamProject.id}
             label={teamProject.name}

@@ -27,7 +27,7 @@ interface ILink extends LinkObject {
 const getTeamTypeSymbol = (teamTopology: teamType, label: string) => {
   return (
     <Box fontSize={10}>
-      <TeamShape label={label} teamTopology={teamTopology} />
+      <TeamShape label={label} teamType={teamTopology} />
     </Box>
   );
 };

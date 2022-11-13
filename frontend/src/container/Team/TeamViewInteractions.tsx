@@ -56,7 +56,7 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
                       key={otherTeamId}
                       label={otherTeam.name}
                       url={`/project/${currentProject.id}/team/${otherTeamId}`}
-                      teamTopology={otherTeam.topology}
+                      teamType={otherTeam.topology}
                     />,
                     <TeamInteractionModeCategory
                       key={`interactionModeTo${otherTeamId}`}

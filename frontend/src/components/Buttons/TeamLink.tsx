@@ -7,13 +7,13 @@ import TeamShape from '../TeamShape';
 interface ITeamLinkButtonProps {
   label: string;
   url: string;
-  teamTopology: teamTopologyEnum;
+  teamType: teamTopologyEnum;
 }
 
 const TeamLink: React.FC<ITeamLinkButtonProps> = ({
   label,
   url,
-  teamTopology,
+  teamType,
 }: ITeamLinkButtonProps) => {
   return (
     <Button
@@ -22,7 +22,7 @@ const TeamLink: React.FC<ITeamLinkButtonProps> = ({
       size="small"
       // variant="outlined"
     >
-      <TeamShape label={label} teamTopology={teamTopology} />
+      <TeamShape label={label} teamType={teamType} />
     </Button>
   );
 };

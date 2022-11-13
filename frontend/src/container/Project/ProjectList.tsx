@@ -35,7 +35,7 @@ const ProjectList: React.FC = () => {
           key={projectTeam.id}
           label={projectTeam.name}
           url={`/project/${project.id}/team/${projectTeam.id}`}
-          teamTopology={projectTeam.topology}
+          teamType={projectTeam.topology}
         />
       )),
     ];

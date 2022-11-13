@@ -51,7 +51,7 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
               key={otherTeam.id}
               label={otherTeam.name}
               url={`/project/${currentProject.id}/team/${otherTeam.id}`}
-              teamTopology={otherTeam.topology}
+              teamType={otherTeam.topology}
             />,
             <DependencyCategory
               key={`dependency${dependency.fromTeamId}${dependency.toTeamId}`}

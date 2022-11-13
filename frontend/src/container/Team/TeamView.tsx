@@ -36,7 +36,7 @@ const TeamView: React.FC = () => {
 
   return (
     <>
-      <TeamPageHeadline teamName={team.name} teamTopology={team.topology} />
+      <TeamPageHeadline teamName={team.name} teamType={team.topology} />
       <ContentWithHints>
         <Tabs
           tabContent={[

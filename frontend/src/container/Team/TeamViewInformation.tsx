@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TeamTopologyCategory from '../../components/Categories/TeamTopologyCategory';
+import TeamTypeCategory from '../../components/Categories/TeamTypeCategory';
 import InformationGrid from '../../components/Layout/InformationGrid';
 import { ITeam } from '../../store/slices/teamSlice';
 import { Box, Typography } from '@mui/material';
@@ -24,7 +24,7 @@ const TeamViewInformation: React.FC<ITeamViewInformationProps> = ({
         },
         {
           label: 'Team Topology',
-          content: <TeamTopologyCategory teamTopology={team.topology} />,
+          content: <TeamTypeCategory teamType={team.topology} />,
         },
         {
           label: 'Part of a platform',
