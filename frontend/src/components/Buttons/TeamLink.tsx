@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { teamTopology as teamTopologyEnum } from '../../constants/categories';
+import { teamType as teamTopologyEnum } from '../../constants/categories';
 import TeamShape from '../TeamShape';
 
 interface ITeamLinkButtonProps {

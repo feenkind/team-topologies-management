@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   dependencyType,
   interactionMode,
-  teamTopology,
+  teamType,
 } from '../../constants/categories';
 import {
   channelTypes,
@@ -50,7 +50,7 @@ export interface ITeam {
   name: string;
   platform?: string;
   services?: IService[];
-  topology: teamTopology;
+  topology: teamType;
   wikiSearchTerms?: string[];
   waysOfWorking?: IWaysOfWorking[];
   workInProgress?: IWorkInProgress[];
@@ -126,7 +126,7 @@ export const initialState: IInitialState = {
             versioningType: versioningType.SEMANTIC,
           },
         ],
-        topology: teamTopology.STREAM_ALIGNED,
+        topology: teamType.STREAM_ALIGNED,
         waysOfWorking: [
           {
             name: 'Scrum',
@@ -172,7 +172,7 @@ export const initialState: IInitialState = {
             versioningType: versioningType.SEMANTIC,
           },
         ],
-        topology: teamTopology.PLATFORM,
+        topology: teamType.PLATFORM,
         waysOfWorking: [
           {
             name: 'Scrum',
@@ -201,7 +201,7 @@ export const initialState: IInitialState = {
         fte: 5,
         id: '3',
         name: 'Random Team',
-        topology: teamTopology.ENABLING,
+        topology: teamType.ENABLING,
       },
       {
         cognitiveLoad: 12,
@@ -210,7 +210,7 @@ export const initialState: IInitialState = {
         fte: 2,
         id: '4',
         name: 'Party Team',
-        topology: teamTopology.COMPLICATED_SUBSYSTEM,
+        topology: teamType.COMPLICATED_SUBSYSTEM,
       },
       {
         cognitiveLoad: 12,
@@ -219,7 +219,7 @@ export const initialState: IInitialState = {
         fte: 2,
         id: '7',
         name: 'New Team',
-        topology: teamTopology.UNDEFINED,
+        topology: teamType.UNDEFINED,
       },
     ],
     '2': [
@@ -229,7 +229,7 @@ export const initialState: IInitialState = {
         fte: 2,
         id: '5',
         name: 'Unwanted Team',
-        topology: teamTopology.ENABLING,
+        topology: teamType.ENABLING,
       },
     ],
     '3': [
@@ -239,7 +239,7 @@ export const initialState: IInitialState = {
         fte: 1,
         id: '6',
         name: 'Undecided Team',
-        topology: teamTopology.UNDEFINED,
+        topology: teamType.UNDEFINED,
       },
     ],
     '4': [],

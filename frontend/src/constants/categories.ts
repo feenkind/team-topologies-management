@@ -18,7 +18,7 @@ export enum priority {
   CORE = 'Core',
 }
 
-export enum teamTopology {
+export enum teamType {
   STREAM_ALIGNED = 'Stream Aligned',
   ENABLING = 'Enabling',
   COMPLICATED_SUBSYSTEM = 'Complicated Subsystem',
@@ -26,24 +26,24 @@ export enum teamTopology {
   UNDEFINED = 'Undefined Type',
 }
 
-export const teamTopologyColor = {
-  [teamTopology.STREAM_ALIGNED]: {
+export const teamTypeColor = {
+  [teamType.STREAM_ALIGNED]: {
     color: '#FFD966',
     backgroundColor: '#FFEDB8',
   },
-  [teamTopology.ENABLING]: {
+  [teamType.ENABLING]: {
     color: '#D09CB7',
     backgroundColor: '#DFBDCF',
   },
-  [teamTopology.COMPLICATED_SUBSYSTEM]: {
+  [teamType.COMPLICATED_SUBSYSTEM]: {
     color: '#E88814',
     backgroundColor: '#FFC08B',
   },
-  [teamTopology.PLATFORM]: {
+  [teamType.PLATFORM]: {
     color: '#6D9EEB',
     backgroundColor: '#B7CDF1',
   },
-  [teamTopology.UNDEFINED]: {
+  [teamType.UNDEFINED]: {
     color: '#9B99AF',
     backgroundColor: '#EBEBEF',
   },

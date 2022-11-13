@@ -7,9 +7,8 @@ import ContentVisualization, {
 import {
   dependencyColor,
   dependencyType,
-  teamTopology,
-  teamTopology as teamTopologyEnum,
-  teamTopologyColor,
+  teamType,
+  teamTypeColor,
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
 import { Alert, Box, Typography } from '@mui/material';
@@ -18,7 +17,7 @@ import VisualizationGraph from './VisualizationGraph';
 
 interface INode extends NodeObject {
   name?: string;
-  teamTopology?: teamTopologyEnum;
+  teamTopology?: teamType;
 }
 
 interface ILink extends LinkObject {
@@ -102,7 +101,7 @@ const DependencyVisualization: React.FC = () => {
       return {
         id: teamId,
         name: teamData ? teamData.name : '',
-        teamTopology: teamData ? teamData.topology : teamTopology.UNDEFINED,
+        teamTopology: teamData ? teamData.topology : teamType.UNDEFINED,
       };
     },
   );
@@ -132,7 +131,7 @@ const DependencyVisualization: React.FC = () => {
           ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
           ctx.lineWidth = 2 / globalScale;
           ctx.strokeStyle = node.teamTopology
-            ? teamTopologyColor[node.teamTopology].color
+            ? teamTypeColor[node.teamTopology].color
             : 'grey';
           ctx.stroke();
 
@@ -149,7 +148,7 @@ const DependencyVisualization: React.FC = () => {
         }}
         nodeColorCallback={(node: INode) =>
           node.teamTopology
-            ? teamTopologyColor[node.teamTopology].backgroundColor
+            ? teamTypeColor[node.teamTopology].backgroundColor
             : 'grey'
         }
         onNodeClickCallback={(node: INode) => {

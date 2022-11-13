@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Box } from '@mui/material';
 import {
-  teamTopology as teamTopologyEnum,
-  teamTopologyColor,
+  teamType as teamTopologyEnum,
+  teamTypeColor,
 } from '../constants/categories';
 
 interface ITeamShapeProps {
@@ -47,8 +47,8 @@ const TeamShape: React.FC<ITeamShapeProps> = ({
         py: paddingY,
         px: teamTopologyEnum.COMPLICATED_SUBSYSTEM ? 1.5 : 1,
         m: 0.5,
-        backgroundColor: teamTopologyColor[teamTopology].backgroundColor,
-        border: `1px ${lineStyle} ${teamTopologyColor[teamTopology].color}`,
+        backgroundColor: teamTypeColor[teamTopology].backgroundColor,
+        border: `1px ${lineStyle} ${teamTypeColor[teamTopology].color}`,
         borderRadius: teamTopology === teamTopologyEnum.PLATFORM ? 0 : 2,
         color: 'black',
         fontWeight: 400,
@@ -60,7 +60,7 @@ const TeamShape: React.FC<ITeamShapeProps> = ({
                 content: '""',
                 position: 'absolute',
                 inset: 0,
-                background: teamTopologyColor[teamTopology].color,
+                background: teamTypeColor[teamTopology].color,
                 clipPath: clipPathBorder,
               }
             : {},

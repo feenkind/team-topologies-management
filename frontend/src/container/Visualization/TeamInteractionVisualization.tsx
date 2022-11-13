@@ -9,22 +9,22 @@ import { LinkObject, NodeObject } from 'react-force-graph-2d';
 import {
   interactionMode,
   interactionModeColor,
-  teamTopology,
-  teamTopologyColor,
+  teamType,
+  teamTypeColor,
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
 import TeamShape from '../../components/TeamShape';
 
 interface INode extends NodeObject {
   name?: string;
-  teamTopology?: teamTopology;
+  teamTopology?: teamType;
 }
 
 interface ILink extends LinkObject {
   interactionMode?: interactionMode;
 }
 
-const getTeamTypeSymbol = (teamTopology: teamTopology, label: string) => {
+const getTeamTypeSymbol = (teamTopology: teamType, label: string) => {
   return (
     <Box fontSize={10}>
       <TeamShape label={label} teamTopology={teamTopology} />
@@ -71,23 +71,23 @@ const TeamInteractionVisualization: React.FC = () => {
   const legend: ILegend[] = [
     {
       description: 'Stream Aligned Team',
-      element: getTeamTypeSymbol(teamTopology.STREAM_ALIGNED, 'Team A'),
+      element: getTeamTypeSymbol(teamType.STREAM_ALIGNED, 'Team A'),
     },
     {
       description: 'Platform Team',
-      element: getTeamTypeSymbol(teamTopology.PLATFORM, 'Team B'),
+      element: getTeamTypeSymbol(teamType.PLATFORM, 'Team B'),
     },
     {
       description: 'Enabling Team',
-      element: getTeamTypeSymbol(teamTopology.ENABLING, 'Team C'),
+      element: getTeamTypeSymbol(teamType.ENABLING, 'Team C'),
     },
     {
       description: 'Complicated Subsystem Team',
-      element: getTeamTypeSymbol(teamTopology.COMPLICATED_SUBSYSTEM, 'Team D'),
+      element: getTeamTypeSymbol(teamType.COMPLICATED_SUBSYSTEM, 'Team D'),
     },
     {
       description: 'Undefined Team',
-      element: getTeamTypeSymbol(teamTopology.UNDEFINED, 'Team E'),
+      element: getTeamTypeSymbol(teamType.UNDEFINED, 'Team E'),
     },
     {
       description: 'Collaboration Interaction',
@@ -258,14 +258,14 @@ const TeamInteractionVisualization: React.FC = () => {
 
           const teamNameWidth = ctx.measureText(node.name).width;
           // background for shapes
-          ctx.fillStyle = teamTopologyColor[node.teamTopology].backgroundColor;
+          ctx.fillStyle = teamTypeColor[node.teamTopology].backgroundColor;
           // color and width for shape borders
           ctx.lineWidth = 2 / globalScale;
-          ctx.strokeStyle = teamTopologyColor[node.teamTopology].color;
+          ctx.strokeStyle = teamTypeColor[node.teamTopology].color;
 
           if (
-            node.teamTopology === teamTopology.STREAM_ALIGNED ||
-            node.teamTopology === teamTopology.UNDEFINED
+            node.teamTopology === teamType.STREAM_ALIGNED ||
+            node.teamTopology === teamType.UNDEFINED
           ) {
             const width = teamNameWidth + 30 / globalScale;
             const height = fontSize * 2.5;
@@ -274,11 +274,11 @@ const TeamInteractionVisualization: React.FC = () => {
               height: height,
               x: node.x - width / 2,
               y: node.y - height / 2,
-              isBorderDashed: node.teamTopology === teamTopology.UNDEFINED,
+              isBorderDashed: node.teamTopology === teamType.UNDEFINED,
             });
           }
 
-          if (node.teamTopology === teamTopology.ENABLING) {
+          if (node.teamTopology === teamType.ENABLING) {
             const width = teamNameWidth + 30 / globalScale;
             const height = fontSize * 5;
 
@@ -290,7 +290,7 @@ const TeamInteractionVisualization: React.FC = () => {
             });
           }
 
-          if (node.teamTopology === teamTopology.PLATFORM) {
+          if (node.teamTopology === teamType.PLATFORM) {
             const width = teamNameWidth + 30 / globalScale;
             const height = fontSize * 3.5;
 
@@ -309,7 +309,7 @@ const TeamInteractionVisualization: React.FC = () => {
             );
           }
 
-          if (node.teamTopology === teamTopology.COMPLICATED_SUBSYSTEM) {
+          if (node.teamTopology === teamType.COMPLICATED_SUBSYSTEM) {
             const width = teamNameWidth + 40 / globalScale;
             const height = fontSize * 3.5;
 
@@ -327,7 +327,7 @@ const TeamInteractionVisualization: React.FC = () => {
         }}
         nodeColorCallback={(node: INode) =>
           node.teamTopology
-            ? teamTopologyColor[node.teamTopology].backgroundColor
+            ? teamTypeColor[node.teamTopology].backgroundColor
             : 'grey'
         }
         onNodeClickCallback={(node: INode) => {

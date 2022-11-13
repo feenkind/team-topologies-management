@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { teamTopology as teamTopologyEnum } from '../../constants/categories';
+import { teamType as teamTopologyEnum } from '../../constants/categories';
 import { Typography } from '@mui/material';
 import TeamShape from '../TeamShape';
 
