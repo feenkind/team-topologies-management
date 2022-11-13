@@ -123,6 +123,43 @@ const TeamInteractionVisualization: React.FC = () => {
             ctx.setLineDash([0, 0]);
           };
 
+          const drawOctagon = ({
+            width,
+            height,
+            x,
+            y,
+          }: {
+            width: number;
+            height: number;
+            x: number;
+            y: number;
+          }) => {
+            const edgeLength = 2;
+
+            ctx.beginPath();
+            // top left (without corner)
+            ctx.moveTo(x + edgeLength, y);
+            // line to the right (without corner)
+            ctx.lineTo(x + width - edgeLength, y);
+            // corner top right
+            ctx.lineTo(x + width, y + edgeLength);
+            // line down (without the corner)
+            ctx.lineTo(x + width, y + height - edgeLength);
+            // corner bottom right
+            ctx.lineTo(x + width - edgeLength, y + height);
+            // // line to the left
+            ctx.lineTo(x + edgeLength, y + height);
+            // // corner bottom left
+            ctx.lineTo(x, y + height - edgeLength);
+            // // line to the top
+            ctx.lineTo(x, y + edgeLength);
+            // corner top left
+            ctx.lineTo(x + edgeLength, y);
+
+            ctx.fill();
+            ctx.stroke();
+          };
+
           // team names
           const fontSize = 10 / globalScale;
           ctx.font = `${fontSize}px sans-serif`;
@@ -178,6 +215,15 @@ const TeamInteractionVisualization: React.FC = () => {
               teamNameWidth,
               fontSize * 3,
             );
+          }
+
+          if (node.teamTopology === teamTopologyEnum.COMPLICATED_SUBSYSTEM) {
+            drawOctagon({
+              width: teamNameWidth,
+              height: fontSize * 4,
+              x: node.x - teamNameWidth / 2,
+              y: node.y - fontSize * 2,
+            });
           }
         }}
         nodeColorCallback={(node: INode) =>
