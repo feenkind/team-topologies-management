@@ -120,7 +120,7 @@ const TeamInteractionVisualization: React.FC = () => {
             ctx.stroke();
 
             // reset border dash
-            ctx.setLineDash([0, 0]);
+            ctx.setLineDash([]);
           };
 
           const drawOctagon = ({
