@@ -16,6 +16,11 @@ interface IVisualizationGraphProperties {
   links: LinkObject[];
   linkColorCallback: (link: LinkObject) => string;
   linkWidthCallback: (link: LinkObject) => number;
+  linkCanvasObjectCallback?: (
+    link: LinkObject,
+    ctx: CanvasRenderingContext2D,
+    globalScale: number,
+  ) => void;
   nodeSize: number;
   nodes: NodeObject[];
   nodeCanvasObjectCallback: (
@@ -34,6 +39,7 @@ const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
   links,
   linkColorCallback,
   linkWidthCallback,
+  linkCanvasObjectCallback,
   nodeSize,
   nodes,
   nodeCanvasObjectCallback,
@@ -79,6 +85,8 @@ const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
         linkWidth={linkWidthCallback}
         linkLineDash={showDashedLinks ? [1, 1] : null}
         linkHoverPrecision={1}
+        linkCanvasObjectMode={() => 'after'}
+        linkCanvasObject={linkCanvasObjectCallback || undefined}
         nodeRelSize={nodeSize}
         nodeColor={nodeColorCallback}
         nodeLabel={''}

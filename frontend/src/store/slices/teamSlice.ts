@@ -306,6 +306,14 @@ export const initialState: IInitialState = {
         startDate: '2022/09/10',
         expectedDuration: 8,
       },
+      {
+        teamIdOne: '1',
+        teamIdTwo: '7',
+        interactionMode: interactionMode.UNDEFINED,
+        purpose: 'We do not know yet.',
+        startDate: '2022/11/13',
+        expectedDuration: 1,
+      },
     ],
   },
 };

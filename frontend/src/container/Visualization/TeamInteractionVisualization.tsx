@@ -85,7 +85,7 @@ const TeamInteractionVisualization: React.FC = () => {
             y: number;
             isBorderDashed?: boolean;
           }) => {
-            const radius = 2;
+            const radius = 6 / globalScale;
 
             ctx.beginPath();
             // top left (without corner)
@@ -134,7 +134,7 @@ const TeamInteractionVisualization: React.FC = () => {
             x: number;
             y: number;
           }) => {
-            const edgeLength = 2;
+            const edgeLength = height / 4;
 
             ctx.beginPath();
             // top left (without corner)
@@ -161,16 +161,10 @@ const TeamInteractionVisualization: React.FC = () => {
           };
 
           // team names
-          const fontSize = 10 / globalScale;
+          const fontSize = 12 / globalScale;
           ctx.font = `${fontSize}px sans-serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillStyle = 'black';
-          ctx.fillText(
-            node.name,
-            node.x,
-            node.y + nodeRelSize + 15 / globalScale,
-          );
 
           const teamNameWidth = ctx.measureText(node.name).width;
           // background for shapes
@@ -183,48 +177,63 @@ const TeamInteractionVisualization: React.FC = () => {
             node.teamTopology === teamTopologyEnum.STREAM_ALIGNED ||
             node.teamTopology === teamTopologyEnum.UNDEFINED
           ) {
+            const width = teamNameWidth + 30 / globalScale;
+            const height = fontSize * 2.5;
             drawRectangleWithRoundedCorners({
-              width: teamNameWidth,
-              height: fontSize * 2,
-              x: node.x - teamNameWidth / 2,
-              y: node.y - fontSize,
+              width: width,
+              height: height,
+              x: node.x - width / 2,
+              y: node.y - height / 2,
               isBorderDashed: node.teamTopology === teamTopologyEnum.UNDEFINED,
             });
           }
 
           if (node.teamTopology === teamTopologyEnum.ENABLING) {
+            const width = teamNameWidth + 30 / globalScale;
+            const height = fontSize * 5;
+
             drawRectangleWithRoundedCorners({
-              width: teamNameWidth,
-              height: fontSize * 4,
-              x: node.x - teamNameWidth / 2,
-              y: node.y - fontSize * 2,
+              width: width,
+              height: height,
+              x: node.x - width / 2,
+              y: node.y - height / 2,
             });
           }
 
           if (node.teamTopology === teamTopologyEnum.PLATFORM) {
+            const width = teamNameWidth + 30 / globalScale;
+            const height = fontSize * 3.5;
+
             ctx.fillRect(
-              node.x - teamNameWidth / 2,
-              node.y - fontSize * 1.5,
-              teamNameWidth,
-              fontSize * 3,
+              node.x - width / 2,
+              node.y - height / 2,
+              width,
+              height,
             );
 
             ctx.strokeRect(
-              node.x - teamNameWidth / 2,
-              node.y - fontSize * 1.5,
-              teamNameWidth,
-              fontSize * 3,
+              node.x - width / 2,
+              node.y - height / 2,
+              width,
+              height,
             );
           }
 
           if (node.teamTopology === teamTopologyEnum.COMPLICATED_SUBSYSTEM) {
+            const width = teamNameWidth + 40 / globalScale;
+            const height = fontSize * 3.5;
+
             drawOctagon({
-              width: teamNameWidth,
-              height: fontSize * 4,
-              x: node.x - teamNameWidth / 2,
-              y: node.y - fontSize * 2,
+              width: width,
+              height: height,
+              x: node.x - width / 2,
+              y: node.y - height / 2,
             });
           }
+
+          // draw team names on top
+          ctx.fillStyle = 'black';
+          ctx.fillText(node.name, node.x, node.y);
         }}
         nodeColorCallback={(node: INode) =>
           node.teamTopology
