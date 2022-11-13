@@ -1,25 +1,54 @@
 import * as React from 'react';
 import { useAppSelector } from '../../hooks';
-import ContentVisualization from '../../components/Layout/ContentVisualization';
-import { Alert } from '@mui/material';
+import ContentVisualization, {
+  ILegend,
+} from '../../components/Layout/ContentVisualization';
+import { Alert, Box } from '@mui/material';
 import VisualizationGraph from './VisualizationGraph';
 import { LinkObject, NodeObject } from 'react-force-graph-2d';
 import {
   interactionMode,
   interactionModeColor,
-  teamTopology as teamTopologyEnum,
+  teamTopology,
   teamTopologyColor,
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
+import TeamShape from '../../components/TeamShape';
 
 interface INode extends NodeObject {
   name?: string;
-  teamTopology?: teamTopologyEnum;
+  teamTopology?: teamTopology;
 }
 
 interface ILink extends LinkObject {
   interactionMode?: interactionMode;
 }
+
+const getTeamTypeSymbol = (teamTopology: teamTopology, label: string) => {
+  return (
+    <Box fontSize={10}>
+      <TeamShape label={label} teamTopology={teamTopology} />
+    </Box>
+  );
+};
+
+const getInteractionModeSymbol = (interactionMode: interactionMode) => {
+  return (
+    <Box
+      position="relative"
+      borderTop={`6px dashed ${interactionModeColor[interactionMode].backgroundColor}`}
+      width="100%"
+    >
+      <Box
+        position="absolute"
+        top={-3}
+        left={0}
+        borderTop={`1px solid ${interactionModeColor[interactionMode].color}`}
+        width="100%"
+      />
+    </Box>
+  );
+};
 
 const TeamInteractionVisualization: React.FC = () => {
   const currentProject = useAppSelector(
@@ -39,6 +68,45 @@ const TeamInteractionVisualization: React.FC = () => {
     );
   }
 
+  const legend: ILegend[] = [
+    {
+      description: 'Stream Aligned Team',
+      element: getTeamTypeSymbol(teamTopology.STREAM_ALIGNED, 'Team A'),
+    },
+    {
+      description: 'Platform Team',
+      element: getTeamTypeSymbol(teamTopology.PLATFORM, 'Team B'),
+    },
+    {
+      description: 'Enabling Team',
+      element: getTeamTypeSymbol(teamTopology.ENABLING, 'Team C'),
+    },
+    {
+      description: 'Complicated Subsystem Team',
+      element: getTeamTypeSymbol(teamTopology.COMPLICATED_SUBSYSTEM, 'Team D'),
+    },
+    {
+      description: 'Undefined Team',
+      element: getTeamTypeSymbol(teamTopology.UNDEFINED, 'Team E'),
+    },
+    {
+      description: 'Collaboration Interaction',
+      element: getInteractionModeSymbol(interactionMode.COLLABORATION),
+    },
+    {
+      description: 'X-as-a-Service Interaction',
+      element: getInteractionModeSymbol(interactionMode.X_AS_A_SERVICE),
+    },
+    {
+      description: 'Facilitating Interaction',
+      element: getInteractionModeSymbol(interactionMode.FACILITATING),
+    },
+    {
+      description: 'Undefined Interaction',
+      element: getInteractionModeSymbol(interactionMode.UNDEFINED),
+    },
+  ];
+
   const nodes: INode[] = teams.map((team) => ({
     name: team.name,
     id: team.id,
@@ -56,7 +124,7 @@ const TeamInteractionVisualization: React.FC = () => {
 
   const nodeRelSize = 5;
   return (
-    <ContentVisualization>
+    <ContentVisualization legend={legend}>
       <VisualizationGraph
         links={links}
         linkColorCallback={(link: ILink) =>
@@ -196,8 +264,8 @@ const TeamInteractionVisualization: React.FC = () => {
           ctx.strokeStyle = teamTopologyColor[node.teamTopology].color;
 
           if (
-            node.teamTopology === teamTopologyEnum.STREAM_ALIGNED ||
-            node.teamTopology === teamTopologyEnum.UNDEFINED
+            node.teamTopology === teamTopology.STREAM_ALIGNED ||
+            node.teamTopology === teamTopology.UNDEFINED
           ) {
             const width = teamNameWidth + 30 / globalScale;
             const height = fontSize * 2.5;
@@ -206,11 +274,11 @@ const TeamInteractionVisualization: React.FC = () => {
               height: height,
               x: node.x - width / 2,
               y: node.y - height / 2,
-              isBorderDashed: node.teamTopology === teamTopologyEnum.UNDEFINED,
+              isBorderDashed: node.teamTopology === teamTopology.UNDEFINED,
             });
           }
 
-          if (node.teamTopology === teamTopologyEnum.ENABLING) {
+          if (node.teamTopology === teamTopology.ENABLING) {
             const width = teamNameWidth + 30 / globalScale;
             const height = fontSize * 5;
 
@@ -222,7 +290,7 @@ const TeamInteractionVisualization: React.FC = () => {
             });
           }
 
-          if (node.teamTopology === teamTopologyEnum.PLATFORM) {
+          if (node.teamTopology === teamTopology.PLATFORM) {
             const width = teamNameWidth + 30 / globalScale;
             const height = fontSize * 3.5;
 
@@ -241,7 +309,7 @@ const TeamInteractionVisualization: React.FC = () => {
             );
           }
 
-          if (node.teamTopology === teamTopologyEnum.COMPLICATED_SUBSYSTEM) {
+          if (node.teamTopology === teamTopology.COMPLICATED_SUBSYSTEM) {
             const width = teamNameWidth + 40 / globalScale;
             const height = fontSize * 3.5;
 

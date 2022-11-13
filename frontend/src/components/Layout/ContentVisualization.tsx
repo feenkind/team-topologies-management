@@ -35,7 +35,7 @@ const ContentVisualization: React.FC<IContentVisualizationProps> = ({
           flexDirection="column"
         >
           {legendItem.element}
-          <Typography variant="body2" paddingY={1}>
+          <Typography variant="body2" paddingTop={1}>
             {legendItem.description}
           </Typography>
         </Box>
