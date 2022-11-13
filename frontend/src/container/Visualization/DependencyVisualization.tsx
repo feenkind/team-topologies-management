@@ -169,6 +169,7 @@ const DependencyVisualization: React.FC = () => {
           navigate(`/project/${currentProject.id}/team/${node.id}`);
         }}
         showDirection={true}
+        showNodeBubbles={true}
       />
     </ContentVisualization>
   );

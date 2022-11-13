@@ -27,6 +27,7 @@ interface IVisualizationGraphProperties {
   onNodeClickCallback: (node: NodeObject) => void;
   showDirection?: boolean;
   showDashedLinks?: boolean;
+  showNodeBubbles?: boolean;
 }
 
 const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
@@ -40,6 +41,7 @@ const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
   onNodeClickCallback,
   showDirection,
   showDashedLinks,
+  showNodeBubbles,
 }: IVisualizationGraphProperties) => {
   const forceGraphRef = useRef<ForceGraphMethods>();
   const graphWrapper = useRef<HTMLElement>();
@@ -80,7 +82,7 @@ const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
         nodeRelSize={nodeSize}
         nodeColor={nodeColorCallback}
         nodeLabel={''}
-        nodeCanvasObjectMode={() => 'before'}
+        nodeCanvasObjectMode={() => (showNodeBubbles ? 'before' : 'replace')}
         nodeCanvasObject={nodeCanvasObjectCallback}
         onNodeClick={onNodeClickCallback}
         onRenderFramePost={() => {

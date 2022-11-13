@@ -68,20 +68,64 @@ const TeamInteractionVisualization: React.FC = () => {
         nodeSize={nodeRelSize}
         nodes={nodes}
         nodeCanvasObjectCallback={(node: INode, ctx, globalScale) => {
-          if (!node.name || !node.x || !node.y) {
+          if (!node.name || !node.x || !node.y || !node.teamTopology) {
             return;
           }
-          // border for nodes
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
-          ctx.lineWidth = 2 / globalScale;
-          ctx.strokeStyle = node.teamTopology
-            ? teamTopologyColor[node.teamTopology].color
-            : 'grey';
-          ctx.stroke();
+
+          const drawRectangleWithRoundedCorners = ({
+            width,
+            height,
+            x,
+            y,
+            isBorderDashed,
+          }: {
+            width: number;
+            height: number;
+            x: number;
+            y: number;
+            isBorderDashed?: boolean;
+          }) => {
+            const radius = 2;
+
+            ctx.beginPath();
+            // top left (without corner)
+            ctx.moveTo(x + radius, y);
+            // line to the right (without corner)
+            ctx.lineTo(x + width - radius, y);
+            // corner top right
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            // line down (without the corner)
+            ctx.lineTo(x + width, y + height - radius);
+            // corner bottom right
+            ctx.quadraticCurveTo(
+              x + width,
+              y + height,
+              x + width - radius,
+              y + height,
+            );
+            // // line to the left
+            ctx.lineTo(x + radius, y + height);
+            // // corner bottom left
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            // // line to the top
+            ctx.lineTo(x, y + radius);
+            // corner top left
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+
+            if (isBorderDashed) {
+              ctx.setLineDash([1, 1]);
+            }
+
+            ctx.fill();
+            ctx.stroke();
+
+            // reset border dash
+            ctx.setLineDash([0, 0]);
+          };
 
           // team names
-          ctx.font = `${10 / globalScale}px sans-serif`;
+          const fontSize = 10 / globalScale;
+          ctx.font = `${fontSize}px sans-serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillStyle = 'black';
@@ -90,6 +134,51 @@ const TeamInteractionVisualization: React.FC = () => {
             node.x,
             node.y + nodeRelSize + 15 / globalScale,
           );
+
+          const teamNameWidth = ctx.measureText(node.name).width;
+          // background for shapes
+          ctx.fillStyle = teamTopologyColor[node.teamTopology].backgroundColor;
+          // color and width for shape borders
+          ctx.lineWidth = 2 / globalScale;
+          ctx.strokeStyle = teamTopologyColor[node.teamTopology].color;
+
+          if (
+            node.teamTopology === teamTopologyEnum.STREAM_ALIGNED ||
+            node.teamTopology === teamTopologyEnum.UNDEFINED
+          ) {
+            drawRectangleWithRoundedCorners({
+              width: teamNameWidth,
+              height: fontSize * 2,
+              x: node.x - teamNameWidth / 2,
+              y: node.y - fontSize,
+              isBorderDashed: node.teamTopology === teamTopologyEnum.UNDEFINED,
+            });
+          }
+
+          if (node.teamTopology === teamTopologyEnum.ENABLING) {
+            drawRectangleWithRoundedCorners({
+              width: teamNameWidth,
+              height: fontSize * 4,
+              x: node.x - teamNameWidth / 2,
+              y: node.y - fontSize * 2,
+            });
+          }
+
+          if (node.teamTopology === teamTopologyEnum.PLATFORM) {
+            ctx.fillRect(
+              node.x - teamNameWidth / 2,
+              node.y - fontSize * 1.5,
+              teamNameWidth,
+              fontSize * 3,
+            );
+
+            ctx.strokeRect(
+              node.x - teamNameWidth / 2,
+              node.y - fontSize * 1.5,
+              teamNameWidth,
+              fontSize * 3,
+            );
+          }
         }}
         nodeColorCallback={(node: INode) =>
           node.teamTopology
