@@ -61,10 +61,32 @@ const TeamInteractionVisualization: React.FC = () => {
         links={links}
         linkColorCallback={(link: ILink) =>
           link.interactionMode
-            ? interactionModeColor[link.interactionMode].color
+            ? interactionModeColor[link.interactionMode].backgroundColor
             : 'grey'
         }
-        linkWidthCallback={() => 2}
+        linkWidthCallback={() => 10}
+        linkCanvasObjectCallback={(link: ILink, ctx, globalScale) => {
+          const start = link.source;
+          const end = link.target;
+
+          if (
+            !link.interactionMode ||
+            typeof start !== 'object' ||
+            typeof end !== 'object' ||
+            !start.x ||
+            !start.y ||
+            !end.x ||
+            !end.y
+          ) {
+            return;
+          }
+
+          ctx.lineWidth = 2 / globalScale;
+          ctx.strokeStyle = interactionModeColor[link.interactionMode].color;
+          ctx.moveTo(start.x, start.y);
+          ctx.lineTo(end.x, end.y);
+          ctx.stroke();
+        }}
         nodeSize={nodeRelSize}
         nodes={nodes}
         nodeCanvasObjectCallback={(node: INode, ctx, globalScale) => {

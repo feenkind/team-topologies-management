@@ -70,8 +70,8 @@ export const interactionModeColor = {
     backgroundColor: 'rgba(201,223,190,0.5)',
   },
   [interactionMode.UNDEFINED]: {
-    color: '#9B99AF',
-    backgroundColor: 'rgba(235,235,239,0.5)',
+    color: '#eeeeee',
+    backgroundColor: 'rgba(235,235,239,0.4)',
   },
 };
 

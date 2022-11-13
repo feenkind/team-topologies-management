@@ -85,7 +85,7 @@ const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
         linkWidth={linkWidthCallback}
         linkLineDash={showDashedLinks ? [1, 1] : null}
         linkHoverPrecision={1}
-        linkCanvasObjectMode={() => 'after'}
+        linkCanvasObjectMode={() => 'before'}
         linkCanvasObject={linkCanvasObjectCallback || undefined}
         nodeRelSize={nodeSize}
         nodeColor={nodeColorCallback}
