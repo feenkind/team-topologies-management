@@ -6,7 +6,7 @@ import ContentVisualization, {
 } from '../../components/Layout/ContentVisualization';
 import {
   dependencyColor,
-  dependencyType as dependencyTypEnum,
+  dependencyType,
   teamTopology,
   teamTopology as teamTopologyEnum,
   teamTopologyColor,
@@ -22,9 +22,22 @@ interface INode extends NodeObject {
 }
 
 interface ILink extends LinkObject {
-  dependencyType?: dependencyTypEnum;
+  dependencyType?: dependencyType;
   description?: string;
 }
+
+const getDependencyTypeSymbol = (dependencyType: dependencyType) => {
+  return (
+    <Box
+      sx={{
+        backgroundColor: dependencyColor[dependencyType],
+        height: '3px',
+        width: '100%',
+      }}
+    />
+  );
+};
+
 const DependencyVisualization: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
@@ -48,39 +61,15 @@ const DependencyVisualization: React.FC = () => {
   const legend: ILegend[] = [
     {
       description: 'Blocking dependency',
-      element: (
-        <Box
-          sx={{
-            backgroundColor: dependencyColor[dependencyTypEnum.BLOCKING],
-            height: '3px',
-            width: '100%',
-          }}
-        />
-      ),
+      element: getDependencyTypeSymbol(dependencyType.BLOCKING),
     },
     {
       description: 'Slowing dependency',
-      element: (
-        <Box
-          sx={{
-            backgroundColor: dependencyColor[dependencyTypEnum.SLOWING],
-            height: '3px',
-            width: '100%',
-          }}
-        />
-      ),
+      element: getDependencyTypeSymbol(dependencyType.SLOWING),
     },
     {
       description: 'OK dependency',
-      element: (
-        <Box
-          sx={{
-            backgroundColor: dependencyColor[dependencyTypEnum.OK],
-            height: '3px',
-            width: '100%',
-          }}
-        />
-      ),
+      element: getDependencyTypeSymbol(dependencyType.OK),
     },
     {
       description: 'A depends on B',
@@ -128,8 +117,7 @@ const DependencyVisualization: React.FC = () => {
           link.dependencyType ? dependencyColor[link.dependencyType] : 'grey'
         }
         linkWidthCallback={(link: ILink) =>
-          link.dependencyType &&
-          link.dependencyType === dependencyTypEnum.BLOCKING
+          link.dependencyType && link.dependencyType === dependencyType.BLOCKING
             ? 3
             : 0.5
         }
