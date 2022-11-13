@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import {
-  teamTopology as teamTopologyEnum,
-  teamTopologyColor,
-} from '../../constants/categories';
+import { teamTopology as teamTopologyEnum } from '../../constants/categories';
+import TeamShape from '../TeamShape';
 
 interface ITeamLinkButtonProps {
   label: string;
@@ -22,15 +20,9 @@ const TeamLink: React.FC<ITeamLinkButtonProps> = ({
       component={Link}
       to={url}
       size="small"
-      variant="outlined"
-      sx={{
-        m: 0.5,
-        backgroundColor: teamTopologyColor[teamTopology].backgroundColor,
-        borderColor: teamTopologyColor[teamTopology].color,
-        color: 'black',
-      }}
+      // variant="outlined"
     >
-      {label}
+      <TeamShape label={label} teamTopology={teamTopology} />
     </Button>
   );
 };

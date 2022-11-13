@@ -1,9 +1,7 @@
 import * as React from 'react';
-import {
-  teamTopology as teamTopologyEnum,
-  teamTopologyColor,
-} from '../../constants/categories';
+import { teamTopology as teamTopologyEnum } from '../../constants/categories';
 import { Typography } from '@mui/material';
+import TeamShape from '../TeamShape';
 
 interface ITeamPageHeadlineProps {
   teamName: string;
@@ -15,17 +13,8 @@ const TeamPageHeadline: React.FC<ITeamPageHeadlineProps> = ({
   teamTopology,
 }: ITeamPageHeadlineProps) => {
   return (
-    <Typography
-      component="h1"
-      variant="h6"
-      paddingX={2}
-      paddingY={1}
-      marginBottom={3}
-      border={`1px solid ${teamTopologyColor[teamTopology].color}`}
-      display="inline-block"
-      sx={{ backgroundColor: teamTopologyColor[teamTopology].backgroundColor }}
-    >
-      Team {teamName}
+    <Typography component="h1" variant="h6" display="inline-block">
+      <TeamShape label={teamName} teamTopology={teamTopology} />
     </Typography>
   );
 };
