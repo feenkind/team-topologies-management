@@ -50,7 +50,7 @@ export interface ITeam {
   name: string;
   platform?: string;
   services?: IService[];
-  topology: teamType;
+  type: teamType;
   wikiSearchTerms?: string[];
   waysOfWorking?: IWaysOfWorking[];
   workInProgress?: IWorkInProgress[];
@@ -126,7 +126,7 @@ export const initialState: IInitialState = {
             versioningType: versioningType.SEMANTIC,
           },
         ],
-        topology: teamType.STREAM_ALIGNED,
+        type: teamType.STREAM_ALIGNED,
         waysOfWorking: [
           {
             name: 'Scrum',
@@ -172,7 +172,7 @@ export const initialState: IInitialState = {
             versioningType: versioningType.SEMANTIC,
           },
         ],
-        topology: teamType.PLATFORM,
+        type: teamType.PLATFORM,
         waysOfWorking: [
           {
             name: 'Scrum',
@@ -201,7 +201,7 @@ export const initialState: IInitialState = {
         fte: 5,
         id: '3',
         name: 'Random Team',
-        topology: teamType.ENABLING,
+        type: teamType.ENABLING,
       },
       {
         cognitiveLoad: 12,
@@ -210,7 +210,7 @@ export const initialState: IInitialState = {
         fte: 2,
         id: '4',
         name: 'Party Team',
-        topology: teamType.COMPLICATED_SUBSYSTEM,
+        type: teamType.COMPLICATED_SUBSYSTEM,
       },
       {
         cognitiveLoad: 12,
@@ -219,7 +219,7 @@ export const initialState: IInitialState = {
         fte: 2,
         id: '7',
         name: 'New Team',
-        topology: teamType.UNDEFINED,
+        type: teamType.UNDEFINED,
       },
     ],
     '2': [
@@ -229,7 +229,7 @@ export const initialState: IInitialState = {
         fte: 2,
         id: '5',
         name: 'Unwanted Team',
-        topology: teamType.ENABLING,
+        type: teamType.ENABLING,
       },
     ],
     '3': [
@@ -239,7 +239,7 @@ export const initialState: IInitialState = {
         fte: 1,
         id: '6',
         name: 'Undecided Team',
-        topology: teamType.UNDEFINED,
+        type: teamType.UNDEFINED,
       },
     ],
     '4': [],

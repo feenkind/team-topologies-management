@@ -1,6 +1,6 @@
 # Team management with team topologies
 Under development.  
-This app supports the management of teams according to the team topology
+This app supports the management of teams according to the team type
 philosophy.
 
 # Frontend application

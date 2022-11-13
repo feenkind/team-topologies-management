@@ -60,7 +60,7 @@ const DomainListForProject: React.FC = () => {
       domainTeams.map((domainTeam) => (
         <TeamLink
           key={domainTeam.id}
-          teamType={domainTeam.topology}
+          teamType={domainTeam.type}
           url={`/project/${currentProject.id}/team/${domainTeam.id}`}
           label={domainTeam.name}
         />

@@ -52,7 +52,7 @@ const TeamListForProject: React.FC = () => {
       label={team.name}
       url={`/project/${currentProject.id}/team/${team.id}`}
     />,
-    <TeamTypeCategory key={team.id} teamType={team.topology} />,
+    <TeamTypeCategory key={team.id} teamType={team.type} />,
     team.domains?.map((teamDomain) => {
       const domain = projectDomains.find((domain) => domain.id === teamDomain);
       return (

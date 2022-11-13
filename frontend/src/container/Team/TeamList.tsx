@@ -36,7 +36,7 @@ const TeamList: React.FC = () => {
             label={team.name}
             url={`/project/${teamProject.id}/team/${team.id}`}
           />,
-          <TeamTypeCategory key={team.id} teamType={team.topology} />,
+          <TeamTypeCategory key={team.id} teamType={team.type} />,
           <ButtonLink
             key={teamProject.id}
             label={teamProject.name}

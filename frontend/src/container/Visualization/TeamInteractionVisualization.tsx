@@ -17,7 +17,7 @@ import TeamShape from '../../components/TeamShape';
 
 interface INode extends NodeObject {
   name?: string;
-  teamTopology?: teamType;
+  teamType?: teamType;
 }
 
 interface ILink extends LinkObject {
@@ -110,7 +110,7 @@ const TeamInteractionVisualization: React.FC = () => {
   const nodes: INode[] = teams.map((team) => ({
     name: team.name,
     id: team.id,
-    teamTopology: team.topology,
+    teamType: team.type,
   }));
 
   const links: ILink[] =
@@ -158,7 +158,7 @@ const TeamInteractionVisualization: React.FC = () => {
         nodeSize={nodeRelSize}
         nodes={nodes}
         nodeCanvasObjectCallback={(node: INode, ctx, globalScale) => {
-          if (!node.name || !node.x || !node.y || !node.teamTopology) {
+          if (!node.name || !node.x || !node.y || !node.teamType) {
             return;
           }
 
@@ -258,14 +258,14 @@ const TeamInteractionVisualization: React.FC = () => {
 
           const teamNameWidth = ctx.measureText(node.name).width;
           // background for shapes
-          ctx.fillStyle = teamTypeColor[node.teamTopology].backgroundColor;
+          ctx.fillStyle = teamTypeColor[node.teamType].backgroundColor;
           // color and width for shape borders
           ctx.lineWidth = 2 / globalScale;
-          ctx.strokeStyle = teamTypeColor[node.teamTopology].color;
+          ctx.strokeStyle = teamTypeColor[node.teamType].color;
 
           if (
-            node.teamTopology === teamType.STREAM_ALIGNED ||
-            node.teamTopology === teamType.UNDEFINED
+            node.teamType === teamType.STREAM_ALIGNED ||
+            node.teamType === teamType.UNDEFINED
           ) {
             const width = teamNameWidth + 30 / globalScale;
             const height = fontSize * 2.5;
@@ -274,11 +274,11 @@ const TeamInteractionVisualization: React.FC = () => {
               height: height,
               x: node.x - width / 2,
               y: node.y - height / 2,
-              isBorderDashed: node.teamTopology === teamType.UNDEFINED,
+              isBorderDashed: node.teamType === teamType.UNDEFINED,
             });
           }
 
-          if (node.teamTopology === teamType.ENABLING) {
+          if (node.teamType === teamType.ENABLING) {
             const width = teamNameWidth + 30 / globalScale;
             const height = fontSize * 5;
 
@@ -290,7 +290,7 @@ const TeamInteractionVisualization: React.FC = () => {
             });
           }
 
-          if (node.teamTopology === teamType.PLATFORM) {
+          if (node.teamType === teamType.PLATFORM) {
             const width = teamNameWidth + 30 / globalScale;
             const height = fontSize * 3.5;
 
@@ -309,7 +309,7 @@ const TeamInteractionVisualization: React.FC = () => {
             );
           }
 
-          if (node.teamTopology === teamType.COMPLICATED_SUBSYSTEM) {
+          if (node.teamType === teamType.COMPLICATED_SUBSYSTEM) {
             const width = teamNameWidth + 40 / globalScale;
             const height = fontSize * 3.5;
 
@@ -326,9 +326,7 @@ const TeamInteractionVisualization: React.FC = () => {
           ctx.fillText(node.name, node.x, node.y);
         }}
         nodeColorCallback={(node: INode) =>
-          node.teamTopology
-            ? teamTypeColor[node.teamTopology].backgroundColor
-            : 'grey'
+          node.teamType ? teamTypeColor[node.teamType].backgroundColor : 'grey'
         }
         onNodeClickCallback={(node: INode) => {
           // link nodes to the team

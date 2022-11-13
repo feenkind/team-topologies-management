@@ -24,7 +24,7 @@ const TeamViewInformation: React.FC<ITeamViewInformationProps> = ({
         },
         {
           label: 'Team Topology',
-          content: <TeamTypeCategory teamType={team.topology} />,
+          content: <TeamTypeCategory teamType={team.type} />,
         },
         {
           label: 'Part of a platform',

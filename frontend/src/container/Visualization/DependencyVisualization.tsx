@@ -17,7 +17,7 @@ import VisualizationGraph from './VisualizationGraph';
 
 interface INode extends NodeObject {
   name?: string;
-  teamTopology?: teamType;
+  teamType?: teamType;
 }
 
 interface ILink extends LinkObject {
@@ -101,7 +101,7 @@ const DependencyVisualization: React.FC = () => {
       return {
         id: teamId,
         name: teamData ? teamData.name : '',
-        teamTopology: teamData ? teamData.topology : teamType.UNDEFINED,
+        teamType: teamData ? teamData.type : teamType.UNDEFINED,
       };
     },
   );
@@ -130,8 +130,8 @@ const DependencyVisualization: React.FC = () => {
           ctx.beginPath();
           ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
           ctx.lineWidth = 2 / globalScale;
-          ctx.strokeStyle = node.teamTopology
-            ? teamTypeColor[node.teamTopology].color
+          ctx.strokeStyle = node.teamType
+            ? teamTypeColor[node.teamType].color
             : 'grey';
           ctx.stroke();
 
@@ -147,9 +147,7 @@ const DependencyVisualization: React.FC = () => {
           );
         }}
         nodeColorCallback={(node: INode) =>
-          node.teamTopology
-            ? teamTypeColor[node.teamTopology].backgroundColor
-            : 'grey'
+          node.teamType ? teamTypeColor[node.teamType].backgroundColor : 'grey'
         }
         onNodeClickCallback={(node: INode) => {
           // link nodes to the team

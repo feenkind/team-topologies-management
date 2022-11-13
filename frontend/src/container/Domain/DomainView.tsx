@@ -75,7 +75,7 @@ const DomainView: React.FC = () => {
                         domainTeams.map((team) => (
                           <TeamLink
                             key={team.id}
-                            teamType={team.topology}
+                            teamType={team.type}
                             url={`/project/${currentProject.id}/team/${team.id}`}
                             label={team.name}
                           />

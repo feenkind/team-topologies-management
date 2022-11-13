@@ -114,7 +114,7 @@ const ProjectOverview: React.FC = () => {
                       <TeamLink
                         key={team.id}
                         label={team.name}
-                        teamType={team.topology}
+                        teamType={team.type}
                         url={`/project/${currentProject.id}/team/${team.id}`}
                       />
                     ))}
