@@ -6,6 +6,7 @@ import { IInteraction, ITeam } from '../../store/slices/teamSlice';
 import TeamLink from '../../components/Buttons/TeamLink';
 import TeamInteractionModeCategory from '../../components/Categories/TeamInteractionModeCategory';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import { filterTeamInteractions } from './filterTeamInteractions';
 
 interface ITeamViewInteractionsProps {
   team: ITeam;
@@ -25,20 +26,18 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
   const currentDate = new Date();
   const currentInteractions =
     projectInteractions &&
-    projectInteractions.filter(
-      (interaction) =>
-        (interaction.teamIdOne === team.id ||
-          interaction.teamIdTwo === team.id) &&
-        interaction.startDate <= currentDate,
-    );
+    filterTeamInteractions({
+      interactions: projectInteractions,
+      teamId: team.id,
+      filterCurrent: true,
+    });
   const plannedInteractions =
     projectInteractions &&
-    projectInteractions.filter(
-      (interaction) =>
-        (interaction.teamIdOne === team.id ||
-          interaction.teamIdTwo === team.id) &&
-        interaction.startDate > currentDate,
-    );
+    filterTeamInteractions({
+      interactions: projectInteractions,
+      teamId: team.id,
+      filterExpected: true,
+    });
 
   const headerItems = [
     'Team name',
