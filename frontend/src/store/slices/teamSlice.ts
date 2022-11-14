@@ -63,12 +63,12 @@ export interface IDependency {
   description?: string;
 }
 
-interface IInteraction {
+export interface IInteraction {
   teamIdOne: string;
   teamIdTwo: string;
   interactionMode: interactionMode;
   purpose: string;
-  startDate: string;
+  startDate: Date;
   expectedDuration: number;
   additionalInformation?: string;
 }
@@ -284,8 +284,9 @@ export const initialState: IInitialState = {
         teamIdOne: '1',
         teamIdTwo: '2',
         interactionMode: interactionMode.X_AS_A_SERVICE,
-        purpose: 'Use the services from this perfect team',
-        startDate: '2022/09/10',
+        purpose:
+          'Perfect team provides services so awesome team will be' + ' faster.',
+        startDate: new Date('2022/09/10'),
         expectedDuration: 12,
         additionalInformation: 'We love working with this team',
       },
@@ -293,8 +294,8 @@ export const initialState: IInitialState = {
         teamIdOne: '1',
         teamIdTwo: '3',
         interactionMode: interactionMode.FACILITATING,
-        purpose: 'Learn a lot from this team',
-        startDate: '2022/09/10',
+        purpose: 'Work together, so Aweseome Team learns a lot.',
+        startDate: new Date('2022/09/10'),
         expectedDuration: 4,
         additionalInformation: 'All going according to plan',
       },
@@ -303,7 +304,7 @@ export const initialState: IInitialState = {
         teamIdTwo: '4',
         interactionMode: interactionMode.COLLABORATION,
         purpose: 'We need to find a good solution for a complicated problem.',
-        startDate: '2022/09/10',
+        startDate: new Date('2022/09/10'),
         expectedDuration: 8,
       },
       {
@@ -311,8 +312,16 @@ export const initialState: IInitialState = {
         teamIdTwo: '7',
         interactionMode: interactionMode.UNDEFINED,
         purpose: 'We do not know yet.',
-        startDate: '2022/11/13',
+        startDate: new Date('2023/11/13'),
         expectedDuration: 1,
+      },
+      {
+        teamIdOne: '1',
+        teamIdTwo: '3',
+        interactionMode: interactionMode.COLLABORATION,
+        purpose: 'We want to work closely together soon.',
+        startDate: new Date('2023/02/13'),
+        expectedDuration: 10,
       },
     ],
   },

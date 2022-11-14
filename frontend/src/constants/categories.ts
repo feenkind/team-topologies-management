@@ -19,7 +19,7 @@ export enum priority {
 }
 
 export enum teamType {
-  STREAM_ALIGNED = 'Stream Aligned',
+  STREAM_ALIGNED = 'Stream-Aligned',
   ENABLING = 'Enabling',
   COMPLICATED_SUBSYSTEM = 'Complicated Subsystem',
   PLATFORM = 'Platform',
