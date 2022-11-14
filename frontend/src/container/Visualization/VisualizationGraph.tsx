@@ -69,6 +69,11 @@ const VisualizationGraph: React.FC<IVisualizationGraphProperties> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, [graphWrapper]);
 
+  useEffect(() => {
+    // max distance for unconnected nodes
+    forceGraphRef.current?.d3Force('charge')?.distanceMax(35);
+  }, [forceGraphRef]);
+
   return (
     <Box ref={graphWrapper}>
       <ForceGraph2D

@@ -3,7 +3,13 @@ import { useAppSelector } from '../../hooks';
 import ContentVisualization, {
   ILegend,
 } from '../../components/Layout/ContentVisualization';
-import { Alert, Box } from '@mui/material';
+import {
+  Alert,
+  Box,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material';
 import VisualizationGraph from './VisualizationGraph';
 import { LinkObject, NodeObject } from 'react-force-graph-2d';
 import {
@@ -14,6 +20,7 @@ import {
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
 import TeamShape from '../../components/TeamShape';
+import { useState } from 'react';
 
 interface INode extends NodeObject {
   name?: string;
@@ -59,6 +66,8 @@ const TeamInteractionVisualization: React.FC = () => {
     (state) => state.team.interactions[currentProject.id],
   );
   const navigate = useNavigate();
+  const [showExpectedInteractions, setShowExpectedInteractions] =
+    useState<boolean>(false);
 
   if (!teams || teams.length === 0) {
     return (
@@ -113,18 +122,45 @@ const TeamInteractionVisualization: React.FC = () => {
     teamType: team.type,
   }));
 
-  const links: ILink[] =
-    interactions && interactions.length > 0
-      ? interactions.map((interaction) => ({
-          interactionMode: interaction.interactionMode,
-          source: interaction.teamIdOne,
-          target: interaction.teamIdTwo,
-        }))
-      : [];
+  const currentDate = new Date();
+  const interactionsToDisplay = interactions
+    ? interactions.filter((interaction) =>
+        showExpectedInteractions
+          ? interaction.startDate > currentDate
+          : interaction.startDate < currentDate,
+      )
+    : [];
+
+  const links: ILink[] = interactionsToDisplay.map((interaction) => ({
+    interactionMode: interaction.interactionMode,
+    source: interaction.teamIdOne,
+    target: interaction.teamIdTwo,
+  }));
 
   const nodeRelSize = 5;
   return (
     <ContentVisualization legend={legend}>
+      <Box alignItems="center" justifyContent="center" display="flex">
+        <ToggleButtonGroup
+          exclusive
+          value={showExpectedInteractions ? 'expected' : 'current'}
+          onChange={(event, value: string | null) => {
+            value === 'expected'
+              ? setShowExpectedInteractions(true)
+              : setShowExpectedInteractions(false);
+          }}
+          size="small"
+          color="primary"
+        >
+          <ToggleButton value="current">
+            <Typography variant="button">Current</Typography>
+          </ToggleButton>
+          <ToggleButton value="expected">
+            <Typography variant="button">Expected</Typography>
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+
       <VisualizationGraph
         links={links}
         linkColorCallback={(link: ILink) =>
