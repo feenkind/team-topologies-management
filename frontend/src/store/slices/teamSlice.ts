@@ -295,8 +295,8 @@ export const initialState: IInitialState = {
         teamIdTwo: '3',
         interactionMode: interactionMode.FACILITATING,
         purpose: 'Work together, so Aweseome Team learns a lot.',
-        startDate: new Date('2022/09/10'),
-        expectedDuration: 4,
+        startDate: new Date('2022/09/09'),
+        expectedDuration: 2,
         additionalInformation: 'All going according to plan',
       },
       {
@@ -305,7 +305,7 @@ export const initialState: IInitialState = {
         interactionMode: interactionMode.COLLABORATION,
         purpose: 'We need to find a good solution for a complicated problem.',
         startDate: new Date('2022/09/10'),
-        expectedDuration: 8,
+        expectedDuration: 20,
       },
       {
         teamIdOne: '1',

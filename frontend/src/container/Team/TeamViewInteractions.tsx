@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Table from '../../components/Table/Table';
-import { Paper, Typography } from '@mui/material';
+import { Box, Paper, Tooltip, Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks';
 import { IInteraction, ITeam } from '../../store/slices/teamSlice';
 import TeamLink from '../../components/Buttons/TeamLink';
 import TeamInteractionModeCategory from '../../components/Categories/TeamInteractionModeCategory';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 interface ITeamViewInteractionsProps {
   team: ITeam;
@@ -49,6 +50,17 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
   ];
   const headerWidths = [20, 15, 23, 10, 10, 22];
 
+  const isInteractionLongerThanPlanned = (
+    startDate: Date,
+    durationInWeeks: number,
+  ) => {
+    // clone to not overwrite the start date
+    const expectedDate = new Date(startDate.getTime());
+    // set expected date to date + expected time
+    expectedDate.setDate(expectedDate.getDate() + durationInWeeks * 7);
+    return expectedDate < currentDate;
+  };
+
   const generateInteractionsContent = (interactions: IInteraction[]) =>
     interactions.map((interaction) => {
       const otherTeamId =
@@ -73,7 +85,22 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
             interaction.startDate
               ? interaction.startDate.toLocaleDateString('en-GB')
               : '',
-            interaction.expectedDuration + ' weeks',
+            <Box display="flex" alignItems="center" key={otherTeamId}>
+              {interaction.expectedDuration + ' weeks'}
+              {isInteractionLongerThanPlanned(
+                interaction.startDate,
+                interaction.expectedDuration,
+              ) && (
+                <Tooltip title="Please check, as this interaction already takes longer than expected">
+                  <WarningAmberIcon
+                    fontSize="small"
+                    color="warning"
+                    sx={{ ml: 1 }}
+                  />
+                </Tooltip>
+              )}
+            </Box>,
+
             interaction.additionalInformation || '',
           ]
         : [];
