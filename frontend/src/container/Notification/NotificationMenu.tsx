@@ -11,12 +11,15 @@ const NotificationMenu: React.FC = () => {
 
   return (
     <Notifications
-      notificationItems={unreadNotifications.map((notification) => ({
-        id: notification.id,
-        type: notification.type,
-        area: notification.area,
-        summary: notification.summary,
-      }))}
+      notificationItems={unreadNotifications
+        // sort by date
+        .sort((a, b) => (a.date > b.date ? -1 : 1))
+        .map((notification) => ({
+          id: notification.id,
+          type: notification.type,
+          area: notification.area,
+          summary: notification.summary,
+        }))}
     />
   );
 };

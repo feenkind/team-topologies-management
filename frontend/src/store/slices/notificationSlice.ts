@@ -24,7 +24,7 @@ export const initialState: IInitialState = {
       id: '1',
       type: notificationType.REMINDER,
       area: notificationArea.TEAM_INTERACTIONS,
-      summary: 'Check the priority of domain “registration”',
+      summary: 'Check the priority of domain "registration"',
       reason:
         'The priority of a domain should be checked at least every 6 months. ',
       date: new Date('2022-03-29'),
@@ -51,6 +51,15 @@ export const initialState: IInitialState = {
       reason:
         'The interaction mode “facilitating” already exists for more than 6 months.',
       date: new Date('2022-11-01'),
+      read: false,
+    },
+    {
+      id: '4',
+      type: notificationType.REMINDER,
+      area: notificationArea.DOMAIN,
+      summary: 'Check the complexity of domain "registration"',
+      reason: 'A regular complexity check of domains is recommended.',
+      date: new Date('2022-10-07'),
       read: false,
     },
   ],

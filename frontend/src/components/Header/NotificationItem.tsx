@@ -26,11 +26,7 @@ const NotificationItem: React.FC<INotificationItemProps> = ({
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box sx={{ mr: 2 }}>{notificationIcon}</Box>
         <Box>
-          <Typography
-            variant="body2"
-            textTransform="uppercase"
-            color="text.secondary"
-          >
+          <Typography variant="overline" color="text.secondary">
             {`${item.type} for ${item.area}`}
           </Typography>
           <Typography variant="subtitle2">{item.summary}</Typography>
