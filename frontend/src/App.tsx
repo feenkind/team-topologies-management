@@ -15,6 +15,7 @@ import TeamAddToProject from './container/Team/TeamAddToProject';
 import DomainView from './container/Domain/DomainView';
 import Page404 from './components/Page404';
 import TeamView from './container/Team/TeamView';
+import NotificationList from './container/Notification/NotificationList';
 
 const App: React.FC = () => {
   return (
@@ -50,6 +51,7 @@ const App: React.FC = () => {
             element={<Visualization />}
           />
           <Route path="project/:projectId" element={<ProjectOverview />} />
+          <Route path="notifications" element={<NotificationList />} />
           <Route path="projects" element={<ProjectList />} />
           <Route path="teams" element={<TeamList />} />
           <Route path="/" element={<Dashboard />} />

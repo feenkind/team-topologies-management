@@ -92,7 +92,13 @@ const Notifications: React.FC<INotificationsProps> = ({
           ))}
 
         <ListItem sx={{ p: 2 }}>
-          <Button component={Link} to="" fullWidth variant="contained">
+          <Button
+            component={Link}
+            to="/notifications"
+            fullWidth
+            variant="contained"
+            onClick={handleClose}
+          >
             View all notification details
           </Button>
         </ListItem>
