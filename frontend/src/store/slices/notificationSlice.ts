@@ -28,7 +28,7 @@ export const initialState: IInitialState = {
       reason:
         'The priority of a domain should be checked at least every 6 months. ',
       date: new Date('2022-03-29'),
-      read: false,
+      read: true,
     },
     {
       id: '2',
@@ -44,7 +44,7 @@ export const initialState: IInitialState = {
     },
     {
       id: '3',
-      type: notificationType.REMINDER,
+      type: notificationType.WARNING,
       area: notificationArea.TEAM_INTERACTIONS,
       summary:
         'Check the interaction mode between AwesomeTeam and SomeRandomTeam',

@@ -19,7 +19,7 @@ const UserMenu: React.FC = () => {
       <IconButton
         size="large"
         aria-label="account of current user"
-        aria-controls="menu-appbar"
+        aria-controls="user-menu"
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"

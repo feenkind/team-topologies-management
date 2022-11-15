@@ -9,7 +9,16 @@ const NotificationMenu: React.FC = () => {
     ),
   );
 
-  return <Notifications notificationItems={[]} />;
+  return (
+    <Notifications
+      notificationItems={unreadNotifications.map((notification) => ({
+        id: notification.id,
+        type: notification.type,
+        area: notification.area,
+        summary: notification.summary,
+      }))}
+    />
+  );
 };
 
 export default NotificationMenu;

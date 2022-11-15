@@ -1,7 +1,7 @@
 export enum notificationType {
-  INFORMATION = 'information',
-  REMINDER = 'reminder',
-  WARNING = 'warning',
+  INFORMATION = 'Information',
+  REMINDER = 'Reminder',
+  WARNING = 'Warning',
 }
 
 export enum notificationArea {

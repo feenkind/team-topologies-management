@@ -1,11 +1,19 @@
 import * as React from 'react';
-import { Badge, Button, IconButton, Menu, Typography } from '@mui/material';
+import {
+  Badge,
+  Button,
+  IconButton,
+  ListItem,
+  Menu,
+  Typography,
+} from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from 'react-router-dom';
 import {
   notificationArea,
   notificationType,
 } from '../../constants/notifications';
+import NotificationItem from './NotificationItem';
 
 export interface INotificationItem {
   id: string;
@@ -48,12 +56,13 @@ const Notifications: React.FC<INotificationsProps> = ({
           },
         }}
       >
-        <Badge badgeContent={1} color="error">
+        <Badge badgeContent={notificationItems.length} color="error">
           <NotificationsIcon />
         </Badge>
       </IconButton>
+
       <Menu
-        id="menu-appbar"
+        id="notification-menu"
         anchorEl={anchorElement}
         anchorOrigin={{
           vertical: 'top',
@@ -66,17 +75,27 @@ const Notifications: React.FC<INotificationsProps> = ({
         }}
         open={Boolean(anchorElement)}
         onClose={handleClose}
-        sx={{ mt: '40px' }}
+        sx={{ mt: '40px', '& li': { maxWidth: '450px' } }}
       >
         {notificationItems.length === 0 && (
-          <Typography>
-            No new notifications. You can see older notifications by clicking
-            the button below.
-          </Typography>
+          <ListItem sx={{ p: 2 }} divider>
+            <Typography>
+              No new notifications. You can see older notifications by clicking
+              the button below.
+            </Typography>
+          </ListItem>
         )}
-        <Button component={Link} to="">
-          View all notifications
-        </Button>
+
+        {notificationItems.length > 0 &&
+          notificationItems.map((notification) => (
+            <NotificationItem key={notification.id} item={notification} />
+          ))}
+
+        <ListItem sx={{ p: 2 }}>
+          <Button component={Link} to="" fullWidth variant="contained">
+            View all notification details
+          </Button>
+        </ListItem>
       </Menu>
     </>
   );
