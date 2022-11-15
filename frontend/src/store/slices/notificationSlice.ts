@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   notificationArea,
   notificationType,
@@ -68,8 +68,17 @@ export const initialState: IInitialState = {
 const notificationSlice = createSlice({
   name: 'notification',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    markRead: (state, { payload }: PayloadAction<string>) => {
+      state.notifications.forEach((notification) => {
+        if (notification.id === payload) {
+          notification.read = true;
+          return;
+        }
+      });
+    },
+  },
 });
 
 export const notificationReducer = notificationSlice.reducer;
-export const {} = notificationSlice.actions;
+export const { markRead } = notificationSlice.actions;

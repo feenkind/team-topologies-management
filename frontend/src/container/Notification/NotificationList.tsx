@@ -1,14 +1,16 @@
 import * as React from 'react';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import Table from '../../components/Table/Table';
-import { useAppSelector } from '../../hooks';
-import { Alert, Typography } from '@mui/material';
-import { notificationType } from '../../constants/notifications';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { Alert, IconButton, Typography } from '@mui/material';
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import { markRead } from '../../store/slices/notificationSlice';
 
 const NotificationList: React.FC = () => {
   const notifications = useAppSelector(
     (state) => state.notification.notifications,
   );
+  const dispatch = useAppDispatch();
 
   // sort by date, copy first because array directly from store is immutable
   const sortedNotifications = notifications
@@ -22,17 +24,18 @@ const NotificationList: React.FC = () => {
         <Alert severity="info">There are no notifications to display.</Alert>
       )}
       <Table
-        headerItems={['Type', 'Area', 'Summary', 'Notification reason', 'Date']}
-        headerItemWidthsInPercentage={[15, 20, 25, 25, 15]}
+        headerItems={[
+          'Type',
+          'Area',
+          'Summary',
+          'Notification reason',
+          'Date',
+          'Mark read',
+        ]}
+        headerItemWidthsInPercentage={[10, 20, 25, 25, 10, 10]}
         contentItems={sortedNotifications.map((notification) => {
-          const variant =
-            notification.type === notificationType.WARNING
-              ? 'subtitle2'
-              : 'body2';
-          const color =
-            notification.type === notificationType.WARNING
-              ? 'text.primary'
-              : 'text.secondary';
+          const variant = !notification.read ? 'subtitle2' : 'body2';
+          const color = !notification.read ? 'text.primary' : 'text.secondary';
 
           return [
             <Typography key={notification.id} variant={variant} color={color}>
@@ -50,6 +53,15 @@ const NotificationList: React.FC = () => {
             <Typography key={notification.id} variant={variant} color={color}>
               {notification.date.toLocaleDateString('en-GB')}
             </Typography>,
+            <IconButton
+              key={notification.id}
+              disabled={notification.read}
+              onClick={() => {
+                dispatch(markRead(notification.id));
+              }}
+            >
+              <MarkEmailReadIcon />
+            </IconButton>,
           ];
         })}
       />
