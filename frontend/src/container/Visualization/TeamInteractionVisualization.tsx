@@ -124,11 +124,12 @@ const TeamInteractionVisualization: React.FC = () => {
 
   const currentDate = new Date();
   const interactionsToDisplay = interactions
-    ? interactions.filter((interaction) =>
-        showExpectedInteractions
-          ? interaction.startDate > currentDate
-          : interaction.startDate < currentDate,
-      )
+    ? interactions.filter((interaction) => {
+        const startDate = new Date(interaction.startDate);
+        return showExpectedInteractions
+          ? startDate > currentDate
+          : startDate < currentDate;
+      })
     : [];
 
   const links: ILink[] = interactionsToDisplay.map((interaction) => ({

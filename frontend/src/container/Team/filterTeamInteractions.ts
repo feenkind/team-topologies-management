@@ -24,7 +24,7 @@ export const filterTeamInteractions = ({
       (interaction) =>
         (interaction.teamIdOne === teamId ||
           interaction.teamIdTwo === teamId) &&
-        interaction.startDate <= currentDate,
+        new Date(interaction.startDate) <= currentDate,
     );
   }
 
@@ -33,7 +33,7 @@ export const filterTeamInteractions = ({
       (interaction) =>
         (interaction.teamIdOne === teamId ||
           interaction.teamIdTwo === teamId) &&
-        interaction.startDate > currentDate,
+        new Date(interaction.startDate) > currentDate,
     );
   }
 };

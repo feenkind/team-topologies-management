@@ -50,11 +50,11 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
   const headerWidths = [20, 15, 23, 10, 10, 22];
 
   const isInteractionLongerThanPlanned = (
-    startDate: Date,
+    startDate: string,
     durationInWeeks: number,
   ) => {
     // clone to not overwrite the start date
-    const expectedDate = new Date(startDate.getTime());
+    const expectedDate = new Date(startDate);
     // set expected date to date + expected time
     expectedDate.setDate(expectedDate.getDate() + durationInWeeks * 7);
     return expectedDate < currentDate;
@@ -82,7 +82,7 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
             />,
             interaction.purpose,
             interaction.startDate
-              ? interaction.startDate.toLocaleDateString('en-GB')
+              ? new Date(interaction.startDate).toLocaleDateString('en-GB')
               : '',
             <Box display="flex" alignItems="center" key={otherTeamId}>
               {interaction.expectedDuration + ' weeks'}

@@ -68,7 +68,7 @@ export interface IInteraction {
   teamIdTwo: string;
   interactionMode: interactionMode;
   purpose: string;
-  startDate: Date;
+  startDate: string;
   expectedDuration: number;
   additionalInformation?: string;
 }
@@ -286,7 +286,7 @@ export const initialState: IInitialState = {
         interactionMode: interactionMode.X_AS_A_SERVICE,
         purpose:
           'Perfect team provides services so awesome team will be faster.',
-        startDate: new Date('2022/09/10'),
+        startDate: '2022/09/10',
         expectedDuration: 12,
         additionalInformation: 'We love working with this team',
       },
@@ -295,7 +295,7 @@ export const initialState: IInitialState = {
         teamIdTwo: '3',
         interactionMode: interactionMode.FACILITATING,
         purpose: 'Work together, so Aweseome Team learns a lot.',
-        startDate: new Date('2022/09/09'),
+        startDate: '2022/09/09',
         expectedDuration: 2,
         additionalInformation: 'All going according to plan',
       },
@@ -304,7 +304,7 @@ export const initialState: IInitialState = {
         teamIdTwo: '4',
         interactionMode: interactionMode.COLLABORATION,
         purpose: 'We need to find a good solution for a complicated problem.',
-        startDate: new Date('2022/09/10'),
+        startDate: '2022/09/10',
         expectedDuration: 20,
       },
       {
@@ -312,7 +312,7 @@ export const initialState: IInitialState = {
         teamIdTwo: '7',
         interactionMode: interactionMode.UNDEFINED,
         purpose: 'We do not know yet.',
-        startDate: new Date('2023/11/13'),
+        startDate: '2023/11/13',
         expectedDuration: 1,
       },
       {
@@ -320,7 +320,7 @@ export const initialState: IInitialState = {
         teamIdTwo: '3',
         interactionMode: interactionMode.COLLABORATION,
         purpose: 'We want to work closely together soon.',
-        startDate: new Date('2023/02/13'),
+        startDate: '2023/02/13',
         expectedDuration: 10,
       },
     ],

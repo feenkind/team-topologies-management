@@ -13,7 +13,7 @@ const NotificationMenu: React.FC = () => {
     <Notifications
       notificationItems={unreadNotifications
         // sort by date
-        .sort((a, b) => (a.date > b.date ? -1 : 1))
+        .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
         .map((notification) => ({
           id: notification.id,
           type: notification.type,

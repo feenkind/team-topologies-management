@@ -10,7 +10,7 @@ interface INotification {
   area: notificationArea;
   summary: string;
   reason: string;
-  date: Date;
+  date: string;
   read: boolean;
 }
 
@@ -27,7 +27,7 @@ export const initialState: IInitialState = {
       summary: 'Check the priority of domain "registration"',
       reason:
         'The priority of a domain should be checked at least every 6 months. ',
-      date: new Date('2022-03-29'),
+      date: '2022-03-29',
       read: true,
     },
     {
@@ -39,7 +39,7 @@ export const initialState: IInitialState = {
       reason:
         'The interaction mode “facilitating” already exists for more than 3' +
         ' weeks.',
-      date: new Date('2022-05-21'),
+      date: '2022-05-21',
       read: false,
     },
     {
@@ -50,7 +50,7 @@ export const initialState: IInitialState = {
         'Check the interaction mode between AwesomeTeam and SomeRandomTeam',
       reason:
         'The interaction mode “facilitating” already exists for more than 6 months.',
-      date: new Date('2022-11-01'),
+      date: '2022-11-01',
       read: false,
     },
     {
@@ -59,7 +59,7 @@ export const initialState: IInitialState = {
       area: notificationArea.DOMAIN,
       summary: 'Check the complexity of domain "registration"',
       reason: 'A regular complexity check of domains is recommended.',
-      date: new Date('2022-10-07'),
+      date: '2022-10-07',
       read: false,
     },
   ],

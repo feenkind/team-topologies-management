@@ -15,7 +15,7 @@ const NotificationList: React.FC = () => {
   // sort by date, copy first because array directly from store is immutable
   const sortedNotifications = notifications
     .slice()
-    .sort((a, b) => (a.date > b.date ? -1 : 1));
+    .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1));
 
   return (
     <>
@@ -51,7 +51,7 @@ const NotificationList: React.FC = () => {
               {notification.reason}
             </Typography>,
             <Typography key={notification.id} variant={variant} color={color}>
-              {notification.date.toLocaleDateString('en-GB')}
+              {new Date(notification.date).toLocaleDateString('en-GB')}
             </Typography>,
             <IconButton
               key={notification.id}
