@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import ContentVisualization, {
   ILegend,
@@ -20,7 +21,6 @@ import {
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
 import TeamShape from '../../components/TeamShape';
-import { useState } from 'react';
 
 interface INode extends NodeObject {
   name?: string;
@@ -79,7 +79,7 @@ const TeamInteractionVisualization: React.FC = () => {
 
   const legend: ILegend[] = [
     {
-      description: 'Stream Aligned Team',
+      description: 'Stream-Aligned Team',
       element: getTeamTypeSymbol(teamType.STREAM_ALIGNED, 'Team A'),
     },
     {
@@ -187,6 +187,7 @@ const TeamInteractionVisualization: React.FC = () => {
 
           ctx.lineWidth = 2 / globalScale;
           ctx.strokeStyle = interactionModeColor[link.interactionMode].color;
+          ctx.beginPath();
           ctx.moveTo(start.x, start.y);
           ctx.lineTo(end.x, end.y);
           ctx.stroke();

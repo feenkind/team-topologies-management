@@ -285,7 +285,7 @@ export const initialState: IInitialState = {
         teamIdTwo: '2',
         interactionMode: interactionMode.X_AS_A_SERVICE,
         purpose:
-          'Perfect team provides services so awesome team will be' + ' faster.',
+          'Perfect team provides services so awesome team will be faster.',
         startDate: new Date('2022/09/10'),
         expectedDuration: 12,
         additionalInformation: 'We love working with this team',
@@ -308,7 +308,7 @@ export const initialState: IInitialState = {
         expectedDuration: 20,
       },
       {
-        teamIdOne: '1',
+        teamIdOne: '2',
         teamIdTwo: '7',
         interactionMode: interactionMode.UNDEFINED,
         purpose: 'We do not know yet.',
