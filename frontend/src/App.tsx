@@ -5,7 +5,7 @@ import Layout from './components/Layout/Layout';
 import ProjectOverview from './container/Project/ProjectOverview';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TeamList from './container/Team/TeamList';
-import Header from './container/Header';
+import Header from './container/Header/Header';
 import Sidebar from './container/Sidebar';
 import Visualization from './container/Visualization/Visualization';
 import DomainListForProject from './container/Domain/DomainListForProject';

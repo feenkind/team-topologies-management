@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { default as HeaderComponent } from '../components/Header/Header';
 import { useLocation } from 'react-router-dom';
-import { headerMenuItems } from '../constants/navigation';
+import { headerMenuItems } from '../../constants/navigation';
+import HeaderNavigation from '../../components/Header/HeaderNavigation';
 
-const Header: React.FC = () => {
+const MainNavigation: React.FC = () => {
   const location = useLocation();
   let activeMenuItem;
   if (location.pathname === '/teams') {
@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     activeMenuItem = headerMenuItems.DASHBOARD;
   }
 
-  return <HeaderComponent activeMenuItem={activeMenuItem} />;
+  return <HeaderNavigation activeMenuItem={activeMenuItem} />;
 };
 
-export default Header;
+export default MainNavigation;
