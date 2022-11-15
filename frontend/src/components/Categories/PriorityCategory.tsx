@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Chip } from '@mui/material';
 import { priority as priorityEnum } from '../../constants/categories';
-import { amber, deepOrange, teal } from '@mui/material/colors';
+import { deepPurple, grey, teal } from '@mui/material/colors';
 
 interface IPriorityCategoryProps {
   priority: priorityEnum;
@@ -10,12 +10,12 @@ interface IPriorityCategoryProps {
 const PriorityCategory: React.FC<IPriorityCategoryProps> = ({
   priority,
 }: IPriorityCategoryProps) => {
-  let color: string = teal[400];
+  let color: string = grey[500];
   if (priority === priorityEnum.SUPPORTING) {
-    color = amber[600];
+    color = deepPurple[300];
   }
   if (priority === priorityEnum.CORE) {
-    color = deepOrange[900];
+    color = teal[700];
   }
 
   return (

@@ -1,4 +1,4 @@
-import { amber, deepOrange, grey, teal } from '@mui/material/colors';
+import { amber, deepOrange, grey, lightGreen } from '@mui/material/colors';
 
 export enum complexity {
   SIMPLE = 'simple',
@@ -7,9 +7,9 @@ export enum complexity {
 }
 
 export const complexityColor = {
-  [complexity.SIMPLE]: teal[400],
-  [complexity.COMPLICATED]: amber[600],
-  [complexity.COMPLEX]: deepOrange[900],
+  [complexity.SIMPLE]: lightGreen[300],
+  [complexity.COMPLICATED]: amber[400],
+  [complexity.COMPLEX]: deepOrange[300],
 };
 
 export enum priority {
