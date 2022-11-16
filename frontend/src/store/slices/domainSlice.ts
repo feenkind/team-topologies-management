@@ -9,10 +9,20 @@ export interface IDomain {
   complexity: complexity;
 }
 
+interface IComplexityHistoricValue {
+  value: complexity;
+  date: string;
+  changeReason?: string;
+}
+
 interface IInitialState {
   // domains ordered by project
   domains: {
     [keys: string]: IDomain[];
+  };
+  // history ordered by domain id
+  historyComplexity: {
+    [keys: string]: IComplexityHistoricValue[];
   };
 }
 
@@ -70,6 +80,37 @@ export const initialState: IInitialState = {
         description: 'Domain B information',
         priority: priority.GENERIC,
         complexity: complexity.SIMPLE,
+      },
+    ],
+  },
+  historyComplexity: {
+    '1': [
+      {
+        value: complexity.COMPLICATED,
+        date: '2022-11-02',
+        changeReason:
+          'Complex sitation was resolved, so complexity switched' +
+          ' to complicated.',
+      },
+      {
+        value: complexity.COMPLEX,
+        date: '2022-10-05',
+        changeReason: 'Something happened and complexity increased.',
+      },
+      {
+        value: complexity.COMPLICATED,
+        date: '2022-06-15',
+        changeReason: 'It just got more complicated.',
+      },
+      {
+        value: complexity.SIMPLE,
+        date: '2022-03-24',
+      },
+    ],
+    '3': [
+      {
+        value: complexity.SIMPLE,
+        date: '2022-09-10',
       },
     ],
   },

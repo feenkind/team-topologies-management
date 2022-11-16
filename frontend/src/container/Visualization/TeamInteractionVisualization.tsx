@@ -21,6 +21,7 @@ import {
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
 import TeamShape from '../../components/TeamShape';
+import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOptionsWrapper';
 
 interface INode extends NodeObject {
   name?: string;
@@ -141,7 +142,7 @@ const TeamInteractionVisualization: React.FC = () => {
   const nodeRelSize = 5;
   return (
     <ContentVisualization legend={legend}>
-      <Box alignItems="center" justifyContent="center" display="flex">
+      <VisualizationOptionsWrapper>
         <ToggleButtonGroup
           exclusive
           value={showExpectedInteractions ? 'expected' : 'current'}
@@ -160,7 +161,7 @@ const TeamInteractionVisualization: React.FC = () => {
             <Typography variant="button">Expected</Typography>
           </ToggleButton>
         </ToggleButtonGroup>
-      </Box>
+      </VisualizationOptionsWrapper>
 
       <VisualizationGraph
         links={links}
