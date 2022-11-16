@@ -73,22 +73,25 @@ export interface IInteraction {
   additionalInformation?: string;
 }
 
-export interface IHistoricFTEValue {
-  value: number;
+interface IHistoricValue {
   date: string;
   changeReason?: string;
 }
 
-export interface IHistoricCognitiveLoadValue {
+export interface IHistoricFTEValue extends IHistoricValue {
   value: number;
-  date: string;
-  changeReason?: string;
 }
 
-export interface IHistoricDomainResponsibility {
+export interface IHistoricCognitiveLoadValue extends IHistoricValue {
+  value: number;
+}
+
+export interface IHistoricDomainResponsibility extends IHistoricValue {
   domains: string[];
-  date: string;
-  changeReason?: string;
+}
+
+interface IHistoricDependency extends IHistoricValue {
+  dependency: IDependency;
 }
 
 interface IInitialState {
@@ -109,6 +112,9 @@ interface IInitialState {
   };
   historyDomains: {
     [keys: string]: IHistoricDomainResponsibility[];
+  };
+  historyDependencies: {
+    [keys: string]: IHistoricDependency[];
   };
 }
 
@@ -407,6 +413,11 @@ export const initialState: IInitialState = {
         date: '2022-06-03',
         changeReason: 'Regular check in.',
       },
+      {
+        value: 13,
+        date: '2022-11-03',
+        changeReason: 'Regular check in.',
+      },
     ],
   },
   historyDomains: {
@@ -424,6 +435,19 @@ export const initialState: IInitialState = {
       {
         domains: ['2', 'a'],
         date: '2021-07-13',
+      },
+    ],
+  },
+  historyDependencies: {
+    '1': [
+      {
+        dependency: {
+          fromTeamId: '1',
+          toTeamId: '2',
+          dependencyType: dependencyType.BLOCKING,
+          description: 'We urgently need the implementation from this team.',
+        },
+        date: '2022-09-08',
       },
     ],
   },

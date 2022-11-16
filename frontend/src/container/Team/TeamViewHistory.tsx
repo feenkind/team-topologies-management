@@ -13,6 +13,7 @@ import {
 import { useState } from 'react';
 import { ITeam } from '../../store/slices/teamSlice';
 import TeamViewHistoryCognitiveLoadDiagram from './TeamViewHistoryCognitiveLoadDiagram';
+import TeamViewHistoryDependencyTable from './TeamViewHistoryDependencyTable';
 
 interface ITeamViewHistoryProps {
   team: ITeam;
@@ -29,6 +30,8 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
     (state) => state.team.historyDomains[team.id],
   );
 
+  const [historyDisplay, setHistoryDisplay] = useState<string>('cognitiveLoad');
+
   const [showFte, setShowFte] = useState<boolean>(true);
   const [showCognitiveLoad, setShowCognitiveLoad] = useState<boolean>(true);
   const [showDomainResponsibility, setShowDomainResponsibility] =
@@ -43,69 +46,80 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
             size="small"
             labelId="history-select-label"
             id="history-select"
-            value={'cognitiveLoad'}
+            value={historyDisplay}
             label="Show history for"
+            onChange={(selectedOption) =>
+              setHistoryDisplay(selectedOption.target.value)
+            }
           >
             <MenuItem value={'cognitiveLoad'}>Cognitive Load</MenuItem>
-            <MenuItem value={'dependencies'} disabled>
-              Dependencies
-            </MenuItem>
+            <MenuItem value={'dependencies'}>Dependencies</MenuItem>
             <MenuItem value={'interactions'} disabled>
               Interactions
             </MenuItem>
           </Select>
         </FormControl>
 
-        <FormGroup row>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={showFte}
-                onChange={(event) => setShowFte(event.target.checked)}
-                color="primary"
-              />
-            }
-            label="FTE"
-            labelPlacement="end"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={showCognitiveLoad}
-                onChange={(event) => setShowCognitiveLoad(event.target.checked)}
-                color="warning"
-              />
-            }
-            label="Cognitive load"
-            labelPlacement="end"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={showDomainResponsibility}
-                onChange={(event) =>
-                  setShowDomainResponsibility(event.target.checked)
-                }
-                color="success"
-              />
-            }
-            label="Domain responsibility"
-            labelPlacement="end"
-          />
-        </FormGroup>
+        {historyDisplay === 'cognitiveLoad' && (
+          <FormGroup row>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showFte}
+                  onChange={(event) => setShowFte(event.target.checked)}
+                  color="primary"
+                />
+              }
+              label="FTE"
+              labelPlacement="end"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showCognitiveLoad}
+                  onChange={(event) =>
+                    setShowCognitiveLoad(event.target.checked)
+                  }
+                  color="warning"
+                />
+              }
+              label="Cognitive load"
+              labelPlacement="end"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showDomainResponsibility}
+                  onChange={(event) =>
+                    setShowDomainResponsibility(event.target.checked)
+                  }
+                  color="success"
+                />
+              }
+              label="Domain responsibility"
+              labelPlacement="end"
+            />
+          </FormGroup>
+        )}
       </VisualizationOptionsWrapper>
 
-      <TeamViewHistoryCognitiveLoadDiagram
-        fteValues={fteHistory && showFte ? fteHistory : []}
-        cognitiveLoadValues={
-          cognitiveLoadHistory && showCognitiveLoad ? cognitiveLoadHistory : []
-        }
-        domainResponsibilities={
-          domainResponsibilityHistory && showDomainResponsibility
-            ? domainResponsibilityHistory
-            : []
-        }
-      />
+      {historyDisplay === 'cognitiveLoad' && (
+        <TeamViewHistoryCognitiveLoadDiagram
+          fteValues={fteHistory && showFte ? fteHistory : []}
+          cognitiveLoadValues={
+            cognitiveLoadHistory && showCognitiveLoad
+              ? cognitiveLoadHistory
+              : []
+          }
+          domainResponsibilities={
+            domainResponsibilityHistory && showDomainResponsibility
+              ? domainResponsibilityHistory
+              : []
+          }
+        />
+      )}
+
+      {historyDisplay === 'dependencies' && <TeamViewHistoryDependencyTable />}
     </>
   );
 };
