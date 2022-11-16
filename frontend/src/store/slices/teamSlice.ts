@@ -73,6 +73,18 @@ export interface IInteraction {
   additionalInformation?: string;
 }
 
+export interface IHistoricFTEValue {
+  value: number;
+  date: string;
+  changeReason?: string;
+}
+
+export interface IHistoricCognitiveLoadValue {
+  value: number;
+  date: string;
+  changeReason?: string;
+}
+
 interface IInitialState {
   // teams ordered by project
   teams: {
@@ -82,6 +94,10 @@ interface IInitialState {
   dependencies: { [keys: string]: IDependency[] };
   // interactions ordered by project
   interactions: { [keys: string]: IInteraction[] };
+  // history ordered by team
+  historyFte: {
+    [keys: string]: IHistoricFTEValue[];
+  };
 }
 
 export const initialState: IInitialState = {
@@ -322,6 +338,37 @@ export const initialState: IInitialState = {
         purpose: 'We want to work closely together soon.',
         startDate: '2023/02/13',
         expectedDuration: 10,
+      },
+    ],
+  },
+  historyFte: {
+    '1': [
+      { value: 1, date: '2021-07-13' },
+      {
+        value: 3,
+        date: '2021-07-20',
+        changeReason: 'Finally the team is complete.',
+      },
+      {
+        value: 4,
+        date: '2021-12-10',
+        changeReason:
+          'Things got more complicated, we needed another team member.',
+      },
+      {
+        value: 6,
+        date: '2022-04-02',
+        changeReason: 'Services are growing.',
+      },
+      {
+        value: 5,
+        date: '2022-08-13',
+        changeReason: 'Amber is on materinty leave.',
+      },
+      {
+        value: 4,
+        date: '2022-11-11',
+        changeReason: 'John found another job :(. Looking for new members.',
       },
     ],
   },

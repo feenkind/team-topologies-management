@@ -68,14 +68,18 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
   }));
 
   const createComplexityTooltip = (index: number): string => {
-    return `${sortedComplexityHistoryValues[index].date}: ${
+    return `${new Date(
+      sortedComplexityHistoryValues[index].date,
+    ).toLocaleDateString('en-GB')}: ${
       sortedComplexityHistoryValues[index].value
     }\n Notes: ${
       sortedComplexityHistoryValues[index].changeReason || 'No notes'
     }`;
   };
   const createPriorityTooltip = (index: number): string => {
-    return `${sortedPriorityHistoryValues[index].date}: ${
+    return `${new Date(
+      sortedPriorityHistoryValues[index].date,
+    ).toLocaleDateString('en-GB')}: ${
       sortedPriorityHistoryValues[index].value
     }\n Notes: ${
       sortedPriorityHistoryValues[index].changeReason || 'No notes'

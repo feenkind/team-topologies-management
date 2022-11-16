@@ -12,6 +12,7 @@ import TeamViewInteractions from './TeamViewInteractions';
 import TeamViewCognitiveLoad from './TeamViewCognitiveLoad';
 import { useCognitiveLoad } from './useCognitiveLoadHook';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import TeamViewHistory from './TeamViewHistory';
 
 const TeamView: React.FC = () => {
   const { projectId, teamId } = useParams<{
@@ -60,7 +61,7 @@ const TeamView: React.FC = () => {
                 <ErrorOutlineIcon color="error" />
               ) : undefined,
             },
-            { tabName: 'History', content: 'coming later' },
+            { tabName: 'History', content: <TeamViewHistory team={team} /> },
           ]}
         />
       </ContentWithHints>

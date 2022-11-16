@@ -30,8 +30,6 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
 
   const [showComplexity, setShowComplexity] = useState<boolean>(true);
   const [showPrioritiy, setShowPriority] = useState<boolean>(true);
-  const [showHistoryComplexityPriority, setShowHistoryComplexityPriority] =
-    useState<boolean>(true);
 
   return (
     <>
@@ -44,17 +42,9 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
             id="history-select"
             value={'complexityPriority'}
             label="Show history for"
-            onChange={(event) => {
-              if (event.target.value === 'complexityPriority') {
-                setShowHistoryComplexityPriority(true);
-              }
-            }}
           >
             <MenuItem value={'complexityPriority'}>
               Complexity and priority
-            </MenuItem>
-            <MenuItem value={'teams'} disabled>
-              Teams
             </MenuItem>
           </Select>
         </FormControl>

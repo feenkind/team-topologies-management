@@ -131,7 +131,10 @@ export const initialState: IInitialState = {
       {
         value: priority.CORE,
         date: '2022-05-10',
-        changeReason: 'Suddenly main topic in this project.',
+        changeReason:
+          'Suddenly main topic in this project. This is a very' +
+          ' long note. Very long. I do not know what else to write. Maybe' +
+          ' some more sentences will break the layout?',
       },
       {
         value: priority.GENERIC,
