@@ -6,10 +6,7 @@ import {
   VictoryChart,
   VictoryLine,
   VictoryTooltip,
-  VictoryZoomContainer,
-  VictoryLabel,
   VictoryScatter,
-  VictoryVoronoiContainer,
 } from 'victory';
 import { complexity, priority } from '../../constants/categories';
 
@@ -71,20 +68,22 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
   }));
 
   const createComplexityTooltip = (index: number): string => {
-    return `${sortedComplexityHistoryValues[index].date}: ${sortedComplexityHistoryValues[index].value}`;
+    return `${sortedComplexityHistoryValues[index].date}: ${
+      sortedComplexityHistoryValues[index].value
+    }\n Notes: ${
+      sortedComplexityHistoryValues[index].changeReason || 'No notes'
+    }`;
   };
   const createPriorityTooltip = (index: number): string => {
-    return `${sortedPriorityHistoryValues[index].date}: ${sortedPriorityHistoryValues[index].value}`;
+    return `${sortedPriorityHistoryValues[index].date}: ${
+      sortedPriorityHistoryValues[index].value
+    }\n Notes: ${
+      sortedPriorityHistoryValues[index].changeReason || 'No notes'
+    }`;
   };
 
   return (
-    <VictoryChart
-      scale={{ x: 'time', y: 'linear' }}
-      containerComponent={
-        // needed for tooltips
-        <VictoryVoronoiContainer mouseFollowTooltips />
-      }
-    >
+    <VictoryChart scale={{ x: 'time', y: 'linear' }}>
       <VictoryAxis
         dependentAxis
         tickFormat={['low', 'medium', 'high']}
@@ -103,10 +102,18 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
         }}
       />
       <VictoryLine
+        // display line for seeing the evolution
         data={dataComplexity}
         interpolation="stepAfter"
         style={{
-          data: { stroke: theme.palette.primary.main, opacity: 0.8 },
+          data: { stroke: theme.palette.primary.main, opacity: 0.5 },
+        }}
+      />
+      <VictoryScatter
+        // display bubbles for better tooltips
+        data={dataComplexity}
+        style={{
+          data: { fill: theme.palette.primary.main },
           labels: { fontSize: 6, color: theme.palette.primary.main },
         }}
         labels={({ index }) =>
@@ -115,15 +122,25 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
             ? createComplexityTooltip(index)
             : ''
         }
-        labelComponent={<VictoryTooltip />}
+        labelComponent={
+          <VictoryTooltip
+            flyoutStyle={{ stroke: theme.palette.primary.main }}
+          />
+        }
       />
-      <VictoryScatter data={dataComplexity} />
 
       <VictoryLine
         data={dataPriority}
         interpolation="stepAfter"
         style={{
-          data: { stroke: theme.palette.warning.main, opacity: 0.8 },
+          data: { stroke: theme.palette.warning.main, opacity: 0.5 },
+        }}
+      />
+      <VictoryScatter
+        // display bubbles for better tooltips
+        data={dataPriority}
+        style={{
+          data: { fill: theme.palette.warning.main },
           labels: { fontSize: 6, color: theme.palette.warning.main },
         }}
         labels={({ index }) =>
@@ -132,7 +149,12 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
             ? createPriorityTooltip(index)
             : ''
         }
-        labelComponent={<VictoryTooltip orientation="bottom" />}
+        labelComponent={
+          <VictoryTooltip
+            orientation="bottom"
+            flyoutStyle={{ stroke: theme.palette.warning.main }}
+          />
+        }
       />
     </VictoryChart>
   );
