@@ -101,6 +101,24 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
           tickLabels: { fontSize: 6 },
         }}
       />
+      {
+        // show "empty" line for one year, so the diagram axes shows nice
+        // dates when neither complexity nor priority is rendered
+        dataComplexity.length === 0 && dataPriority.length === 0 && (
+          <VictoryScatter
+            data={[
+              {
+                y: 0,
+                x: new Date(
+                  new Date(today).setFullYear(today.getFullYear() - 1),
+                ),
+              },
+              { y: 0, x: new Date(today) },
+            ]}
+          />
+        )
+      }
+
       <VictoryLine
         // display line for seeing the evolution
         data={dataComplexity}
