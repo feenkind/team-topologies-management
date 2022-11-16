@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import DomainViewHistoryComplexityPriorityDiagram from './DomainViewHistoryComplexityPriorityDiagram';
 
 interface IDomainViewHistoryProps {
   domain: IDomain;
@@ -20,7 +21,9 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
   const complexityHistory = useAppSelector(
     (state) => state.domain.historyComplexity[domain.id],
   );
-  const priorityHistory: string[] = [];
+  const priorityHistory = useAppSelector(
+    (state) => state.domain.historyPriority[domain.id],
+  );
 
   const [showComplexity, setShowComplexity] = useState<boolean>(false);
   const [showPrioritiy, setShowPriority] = useState<boolean>(false);
@@ -29,7 +32,7 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
     <>
       <VisualizationOptionsWrapper>
         <Typography variant="button" marginRight={3}>
-          Show history for
+          (Selected priority & complexity) Show history for
         </Typography>
         <FormGroup row>
           <FormControlLabel
@@ -38,6 +41,7 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
                 checked={showComplexity}
                 onChange={(event) => setShowComplexity(event.target.checked)}
                 disabled={!complexityHistory || complexityHistory.length === 0}
+                color="primary"
               />
             }
             label="Complexity"
@@ -49,6 +53,7 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
                 checked={showPrioritiy}
                 onChange={(event) => setShowPriority(event.target.checked)}
                 disabled={!priorityHistory || priorityHistory.length === 0}
+                color="secondary"
               />
             }
             label="Priority"
@@ -56,6 +61,13 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
           />
         </FormGroup>
       </VisualizationOptionsWrapper>
+
+      <DomainViewHistoryComplexityPriorityDiagram
+        complexityValues={
+          complexityHistory && showComplexity ? complexityHistory : []
+        }
+        priorityValues={priorityHistory && showPrioritiy ? priorityHistory : []}
+      />
     </>
   );
 };

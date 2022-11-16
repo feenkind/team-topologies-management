@@ -9,8 +9,8 @@ export interface IDomain {
   complexity: complexity;
 }
 
-interface IComplexityHistoricValue {
-  value: complexity;
+export interface IHistoricValue {
+  value: complexity | priority;
   date: string;
   changeReason?: string;
 }
@@ -22,7 +22,10 @@ interface IInitialState {
   };
   // history ordered by domain id
   historyComplexity: {
-    [keys: string]: IComplexityHistoricValue[];
+    [keys: string]: IHistoricValue[];
+  };
+  historyPriority: {
+    [keys: string]: IHistoricValue[];
   };
 }
 
@@ -106,11 +109,38 @@ export const initialState: IInitialState = {
         value: complexity.SIMPLE,
         date: '2022-03-24',
       },
+      {
+        value: complexity.COMPLEX,
+        date: '2022-01-24',
+      },
+      {
+        value: complexity.COMPLICATED,
+        date: '2021-11-21',
+      },
     ],
     '3': [
       {
         value: complexity.SIMPLE,
         date: '2022-09-10',
+      },
+    ],
+  },
+
+  historyPriority: {
+    '1': [
+      {
+        value: priority.CORE,
+        date: '2022-05-10',
+        changeReason: 'Suddenly main topic in this project.',
+      },
+      {
+        value: priority.GENERIC,
+        date: '2021-12-27',
+        changeReason: 'Not so important anymore for some reason.',
+      },
+      {
+        value: priority.SUPPORTING,
+        date: '2021-11-21',
       },
     ],
   },

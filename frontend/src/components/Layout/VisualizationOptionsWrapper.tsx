@@ -16,6 +16,7 @@ const VisualizationOptionsWrapper: React.FC<
         justifyContent: 'center',
         display: 'flex',
         p: 0.5,
+        mb: 2,
         backgroundColor: grey[50],
       }}
     >
