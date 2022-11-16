@@ -9,12 +9,15 @@ import {
 } from 'victory';
 import {
   IHistoricCognitiveLoadValue,
+  IHistoricDomainResponsibility,
   IHistoricFTEValue,
 } from '../../store/slices/teamSlice';
+import { useAppSelector } from '../../hooks';
 
 interface ITeamViewHistoryCognitiveLoadDiagramProps {
   fteValues: IHistoricFTEValue[];
   cognitiveLoadValues: IHistoricCognitiveLoadValue[];
+  domainResponsibilities: IHistoricDomainResponsibility[];
 }
 
 const TeamViewHistoryCognitiveLoadDiagram: React.FC<
@@ -22,8 +25,15 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
 > = ({
   fteValues,
   cognitiveLoadValues,
+  domainResponsibilities,
 }: ITeamViewHistoryCognitiveLoadDiagramProps) => {
   const theme = useTheme();
+  const currentProject = useAppSelector(
+    (state) => state.project.currentProject,
+  );
+  const domains = useAppSelector(
+    (state) => state.domain.domains[currentProject.id],
+  );
 
   // sort by date ascending, copy first because array directly from store is
   // immutable
@@ -31,6 +41,9 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
     .slice()
     .sort((a, b) => (new Date(a.date) > new Date(b.date) ? 1 : -1));
   const sortedCognitiveLoadValues = cognitiveLoadValues
+    .slice()
+    .sort((a, b) => (new Date(a.date) > new Date(b.date) ? 1 : -1));
+  const sortedDomainResponsibilities = domainResponsibilities
     .slice()
     .sort((a, b) => (new Date(a.date) > new Date(b.date) ? 1 : -1));
 
@@ -46,6 +59,11 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
       ...sortedCognitiveLoadValues[sortedCognitiveLoadValues.length - 1],
       date: today.toDateString(),
     });
+  sortedDomainResponsibilities.length > 0 &&
+    sortedDomainResponsibilities.push({
+      ...sortedDomainResponsibilities[sortedDomainResponsibilities.length - 1],
+      date: today.toDateString(),
+    });
 
   const dataFte = sortedFteValues.map((fteValue) => ({
     x: new Date(fteValue.date),
@@ -55,6 +73,12 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
     (cognitiveLoadValue) => ({
       x: new Date(cognitiveLoadValue.date),
       y: cognitiveLoadValue.value,
+    }),
+  );
+  const dataDomainResponsibilities = sortedDomainResponsibilities.map(
+    (domainResponsibility) => ({
+      x: new Date(domainResponsibility.date),
+      y: domainResponsibility.domains.length,
     }),
   );
 
@@ -71,6 +95,24 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
     ).toLocaleDateString('en-GB')}: ${
       sortedCognitiveLoadValues[index].value
     }\n Notes: ${sortedCognitiveLoadValues[index].changeReason || 'No notes'}`;
+  };
+  const createdDomainResponsibilityTooltip = (index: number): string => {
+    let domainDetails = '';
+    sortedDomainResponsibilities[index].domains.forEach((domainId) => {
+      const domainData = domains.find((domain) => domain.id === domainId);
+      if (domainData) {
+        domainDetails += `${domainData.name} (${domainData.complexity})\n`;
+      } else {
+        domainDetails += 'Unkown domain\n';
+      }
+    });
+    return `${new Date(
+      sortedDomainResponsibilities[index].date,
+    ).toLocaleDateString('en-GB')}: Following ${
+      sortedDomainResponsibilities[index].domains.length
+    } Domain(s)\n \n${domainDetails}\n \nNotes: ${
+      sortedDomainResponsibilities[index].changeReason || 'No notes'
+    }`;
   };
 
   return (
@@ -162,6 +204,35 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
           <VictoryTooltip
             flyoutStyle={{ stroke: theme.palette.warning.main }}
             orientation="bottom"
+          />
+        }
+      />
+
+      <VictoryLine
+        // display line for seeing the evolution
+        data={dataDomainResponsibilities}
+        interpolation="stepAfter"
+        style={{
+          data: { stroke: theme.palette.success.main, opacity: 0.5 },
+        }}
+      />
+      <VictoryScatter
+        // display bubbles for better tooltips
+        data={dataDomainResponsibilities}
+        style={{
+          data: { fill: theme.palette.success.main },
+          labels: { fontSize: 6, color: theme.palette.success.main },
+        }}
+        labels={({ index }) =>
+          // do not show last value, since it is not a real change
+          index < dataDomainResponsibilities.length - 1
+            ? createdDomainResponsibilityTooltip(index)
+            : ''
+        }
+        labelComponent={
+          <VictoryTooltip
+            flyoutStyle={{ stroke: theme.palette.success.main }}
+            orientation="top"
           />
         }
       />

@@ -126,7 +126,7 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
       <VictoryLine
         // display line for seeing the evolution
         data={dataComplexity}
-        interpolation="stepAfter"
+        interpolation="linear"
         style={{
           data: { stroke: theme.palette.primary.main, opacity: 0.5 },
         }}

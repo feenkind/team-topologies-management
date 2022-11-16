@@ -85,6 +85,12 @@ export interface IHistoricCognitiveLoadValue {
   changeReason?: string;
 }
 
+export interface IHistoricDomainResponsibility {
+  domains: string[];
+  date: string;
+  changeReason?: string;
+}
+
 interface IInitialState {
   // teams ordered by project
   teams: {
@@ -100,6 +106,9 @@ interface IInitialState {
   };
   historyCognitiveLoad: {
     [keys: string]: IHistoricCognitiveLoadValue[];
+  };
+  historyDomains: {
+    [keys: string]: IHistoricDomainResponsibility[];
   };
 }
 
@@ -397,6 +406,24 @@ export const initialState: IInitialState = {
         value: 12,
         date: '2022-06-03',
         changeReason: 'Regular check in.',
+      },
+    ],
+  },
+  historyDomains: {
+    '1': [
+      {
+        domains: ['1', '2'],
+        date: '2022-11-10',
+        changeReason: 'Taking over a domain because of xyz.',
+      },
+      {
+        domains: ['2'],
+        date: '2021-11-13',
+        changeReason: 'Domain a is not continued anymore.',
+      },
+      {
+        domains: ['2', 'a'],
+        date: '2021-07-13',
       },
     ],
   },
