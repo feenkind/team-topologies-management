@@ -98,6 +98,9 @@ interface IInitialState {
   historyFte: {
     [keys: string]: IHistoricFTEValue[];
   };
+  historyCognitiveLoad: {
+    [keys: string]: IHistoricCognitiveLoadValue[];
+  };
 }
 
 export const initialState: IInitialState = {
@@ -369,6 +372,31 @@ export const initialState: IInitialState = {
         value: 4,
         date: '2022-11-11',
         changeReason: 'John found another job :(. Looking for new members.',
+      },
+    ],
+  },
+  historyCognitiveLoad: {
+    '1': [
+      { value: 5, date: '2021-07-13' },
+      {
+        value: 20,
+        date: '2021-08-20',
+        changeReason: 'Getting used to the work.',
+      },
+      {
+        value: 16,
+        date: '2021-10-10',
+        changeReason: 'Regular check in.',
+      },
+      {
+        value: 18,
+        date: '2022-03-10',
+        changeReason: 'Still a lot, we are looking for a new member.',
+      },
+      {
+        value: 12,
+        date: '2022-06-03',
+        changeReason: 'Regular check in.',
       },
     ],
   },

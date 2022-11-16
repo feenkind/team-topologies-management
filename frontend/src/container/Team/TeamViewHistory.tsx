@@ -22,6 +22,9 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
   team,
 }: ITeamViewHistoryProps) => {
   const fteHistory = useAppSelector((state) => state.team.historyFte[team.id]);
+  const cognitiveLoadHistory = useAppSelector(
+    (state) => state.team.historyCognitiveLoad[team.id],
+  );
 
   const [showFte, setShowFte] = useState<boolean>(true);
   const [showCognitiveLoad, setShowCognitiveLoad] = useState<boolean>(true);
@@ -91,6 +94,9 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
 
       <TeamViewHistoryCognitiveLoadDiagram
         fteValues={fteHistory && showFte ? fteHistory : []}
+        cognitiveLoadValues={
+          cognitiveLoadHistory && showCognitiveLoad ? cognitiveLoadHistory : []
+        }
       />
     </>
   );
