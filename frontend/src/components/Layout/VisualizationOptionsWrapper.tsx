@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Box } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { Box, Divider } from '@mui/material';
 
 interface IVisualizationOptionsWrapperProps {
   children: React.ReactNode | React.ReactNode[];
@@ -13,13 +12,13 @@ const VisualizationOptionsWrapper: React.FC<
     <Box
       sx={{
         alignItems: 'center',
-        justifyContent: 'center',
+        //justifyContent: 'center',
         display: 'flex',
         p: 0.5,
         mb: 2,
-        backgroundColor: grey[50],
       }}
     >
+      <Divider />
       {children}
     </Box>
   );

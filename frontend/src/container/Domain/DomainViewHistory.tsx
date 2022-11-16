@@ -4,9 +4,12 @@ import { useAppSelector } from '../../hooks';
 import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOptionsWrapper';
 import {
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
-  Typography,
+  InputLabel,
+  MenuItem,
+  Select,
 } from '@mui/material';
 import { useState } from 'react';
 import DomainViewHistoryComplexityPriorityDiagram from './DomainViewHistoryComplexityPriorityDiagram';
@@ -25,22 +28,43 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
     (state) => state.domain.historyPriority[domain.id],
   );
 
-  const [showComplexity, setShowComplexity] = useState<boolean>(false);
-  const [showPrioritiy, setShowPriority] = useState<boolean>(false);
+  const [showComplexity, setShowComplexity] = useState<boolean>(true);
+  const [showPrioritiy, setShowPriority] = useState<boolean>(true);
+  const [showHistoryComplexityPriority, setShowHistoryComplexityPriority] =
+    useState<boolean>(true);
 
   return (
     <>
       <VisualizationOptionsWrapper>
-        <Typography variant="button" marginRight={3}>
-          (Selected priority & complexity) Show history for
-        </Typography>
+        <FormControl sx={{ mr: 3 }}>
+          <InputLabel id="history-select-label">Show history for</InputLabel>
+          <Select
+            size="small"
+            labelId="history-select-label"
+            id="history-select"
+            value={'complexityPriority'}
+            label="Show history for"
+            onChange={(event) => {
+              if (event.target.value === 'complexityPriority') {
+                setShowHistoryComplexityPriority(true);
+              }
+            }}
+          >
+            <MenuItem value={'complexityPriority'}>
+              Complexity and priority
+            </MenuItem>
+            <MenuItem value={'teams'} disabled>
+              Teams
+            </MenuItem>
+          </Select>
+        </FormControl>
+
         <FormGroup row>
           <FormControlLabel
             control={
               <Checkbox
                 checked={showComplexity}
                 onChange={(event) => setShowComplexity(event.target.checked)}
-                disabled={!complexityHistory || complexityHistory.length === 0}
                 color="primary"
               />
             }
@@ -52,8 +76,7 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
               <Checkbox
                 checked={showPrioritiy}
                 onChange={(event) => setShowPriority(event.target.checked)}
-                disabled={!priorityHistory || priorityHistory.length === 0}
-                color="secondary"
+                color="warning"
               />
             }
             label="Priority"

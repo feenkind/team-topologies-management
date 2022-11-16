@@ -143,6 +143,9 @@ const TeamInteractionVisualization: React.FC = () => {
   return (
     <ContentVisualization legend={legend}>
       <VisualizationOptionsWrapper>
+        <Typography variant="button" marginRight={2}>
+          Show situation
+        </Typography>
         <ToggleButtonGroup
           exclusive
           value={showExpectedInteractions ? 'expected' : 'current'}
