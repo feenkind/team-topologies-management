@@ -5,11 +5,8 @@ import Page404 from '../../components/Page404';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import Tabs from '../../components/Layout/Tabs';
-import { Typography } from '@mui/material';
-import InformationGrid from '../../components/Layout/InformationGrid';
-import ComplexityCategory from '../../components/Categories/ComplexityCategory';
-import PriorityCategory from '../../components/Categories/PriorityCategory';
-import TeamLink from '../../components/Buttons/TeamLink';
+import DomainViewInformation from './DomainViewInformation';
+import DomainViewHistory from './DomainViewHistory';
 
 const DomainView: React.FC = () => {
   const { domainId } = useParams<{
@@ -21,18 +18,11 @@ const DomainView: React.FC = () => {
   const domains = useAppSelector(
     (state) => state.domain.domains[currentProject.id],
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
-  if (!domains) {
-    return <Page404 />;
-  }
 
-  const domain = domains.find((domain) => domain.id === domainId);
+  const domain = domains && domains.find((domain) => domain.id === domainId);
   if (!domain) {
     return <Page404 />;
   }
-
-  const domainTeams =
-    teams && teams.filter((team) => team.domains?.includes(domain.id));
 
   return (
     <>
@@ -42,56 +32,11 @@ const DomainView: React.FC = () => {
           tabContent={[
             {
               tabName: 'Information',
-              content: (
-                <InformationGrid
-                  informationItems={[
-                    {
-                      label: 'Name',
-                      content: domain.name,
-                    },
-                    {
-                      label: 'Priority',
-                      content: <PriorityCategory priority={domain.priority} />,
-                    },
-                    {
-                      label: 'Complexity',
-                      content: (
-                        <ComplexityCategory complexity={domain.complexity} />
-                      ),
-                    },
-                    {
-                      label: 'FTE sum of all teams',
-                      content: domainTeams
-                        ? domainTeams.reduce(
-                            (fteSum, team) => fteSum + team.fte,
-                            0,
-                          )
-                        : 0,
-                    },
-                    {
-                      label: 'Responsible team(s)',
-                      content:
-                        domainTeams &&
-                        domainTeams.map((team) => (
-                          <TeamLink
-                            key={team.id}
-                            teamType={team.type}
-                            url={`/project/${currentProject.id}/team/${team.id}`}
-                            label={team.name}
-                          />
-                        )),
-                    },
-                    {
-                      label: 'Description',
-                      content: domain.description,
-                    },
-                  ]}
-                />
-              ),
+              content: <DomainViewInformation domain={domain} />,
             },
             {
               tabName: 'History',
-              content: <Typography>Not implemented yet</Typography>,
+              content: <DomainViewHistory domain={domain} />,
             },
           ]}
         />

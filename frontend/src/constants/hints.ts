@@ -24,6 +24,12 @@ export const teamHints: IHintMapping = {
     linkUrl: '',
     linkLabel: 'Lern more about team topologies',
   },
+  interactionModes: {
+    summary: 'Interaction Modes',
+    description: 'What do they mean?',
+    linkUrl: '',
+    linkLabel: 'Lern more about team topologies',
+  },
 };
 
 export const domainHints: IHintMapping = {
