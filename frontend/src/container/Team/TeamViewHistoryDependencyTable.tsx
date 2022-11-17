@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useAppSelector } from '../../hooks';
-import { ITeam } from '../../store/slices/teamSlice';
+import { changeType, ITeam } from '../../store/slices/teamSlice';
 import { Alert } from '@mui/material';
 import Table from '../../components/Table/Table';
 
@@ -45,7 +45,7 @@ const TeamViewHistoryDependencyTable: React.FC<
       headerItems={[
         'Date',
         'History note',
-        'Dependency action',
+        'Action',
         'Dependency type',
         'Description',
       ]}
@@ -54,8 +54,12 @@ const TeamViewHistoryDependencyTable: React.FC<
         new Date(dependencyHistory.date).toLocaleDateString('en-GB'),
         dependencyHistory.changeReason || 'No note',
         dependencyHistory.changeType,
-        dependencyHistory.dependency.dependencyType,
-        dependencyHistory.dependency.description,
+        dependencyHistory.changeType === changeType.REMOVED
+          ? ''
+          : dependencyHistory.dependency.dependencyType,
+        dependencyHistory.changeType === changeType.REMOVED
+          ? ''
+          : dependencyHistory.dependency.description,
       ])}
     />
   );

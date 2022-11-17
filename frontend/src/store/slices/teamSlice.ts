@@ -73,7 +73,7 @@ export interface IInteraction {
   additionalInformation?: string;
 }
 
-enum changeType {
+export enum changeType {
   ADDED = 'Dependency added',
   REMOVED = 'Dependency removed',
   CHANGED = 'Dependency changed',
