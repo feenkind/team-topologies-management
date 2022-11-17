@@ -41,6 +41,10 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
     otherTeams[0].id,
   );
 
+  const selectedOtherTeam = otherTeams.find(
+    (team) => team.id === selectedTeamId,
+  );
+
   return (
     <>
       <VisualizationOptionsWrapper>
@@ -143,10 +147,10 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
         />
       )}
 
-      {historyDisplay === 'dependencies' && (
+      {historyDisplay === 'dependencies' && selectedOtherTeam && (
         <TeamViewHistoryDependencyTable
           team={team}
-          otherTeamId={selectedTeamId}
+          otherTeam={selectedOtherTeam}
         />
       )}
     </>
