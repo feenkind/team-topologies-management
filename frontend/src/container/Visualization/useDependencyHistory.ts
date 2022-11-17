@@ -8,13 +8,23 @@ export const useDependencyHistory = ({
   projectId: string;
   date: string;
 }): { dependencies: IDependency[] } => {
-  const dependencies = useAppSelector(
+  const dependencyHistory = useAppSelector(
     (state) => state.team.historyDependencies[projectId],
   );
+  const currentDependencies = useAppSelector(
+    (state) => state.team.dependencies[projectId],
+  );
+  const today = new Date();
 
-  if (!dependencies) {
-    return { dependencies: [] };
+  if (date === today.toDateString() && currentDependencies) {
+    return { dependencies: currentDependencies };
   }
 
-  return { dependencies: [dependencies[0].dependency] };
+  return { dependencies: [] };
+
+  // if (!dependencyHistory) {
+  //   return { dependencies: [] };
+  // }
+  //
+  // return { dependencies: [dependencyHistory[0].dependency] };
 };

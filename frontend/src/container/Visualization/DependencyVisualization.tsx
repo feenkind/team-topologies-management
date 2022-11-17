@@ -27,6 +27,7 @@ import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOp
 import { useState } from 'react';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useDependencyHistory } from './useDependencyHistory';
 
 interface INode extends NodeObject {
   name?: string;
@@ -54,9 +55,6 @@ const DependencyVisualization: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const dependencies = useAppSelector(
-    (state) => state.team.dependencies[currentProject.id],
-  );
   const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
   const navigate = useNavigate();
 
@@ -65,6 +63,11 @@ const DependencyVisualization: React.FC = () => {
     today.toDateString(),
   );
   const [selectedDateIndex, setSelectedDateIndex] = useState<number>(0);
+
+  const { dependencies } = useDependencyHistory({
+    projectId: currentProject.id,
+    date: selectedDate,
+  });
 
   const dependencyHistory = useAppSelector(
     (state) => state.team.historyDependencies[currentProject.id],
@@ -124,16 +127,6 @@ const DependencyVisualization: React.FC = () => {
       description: dependency.description,
     });
   });
-
-  if (!dependencies || dependencies.length === 0) {
-    return (
-      <ContentVisualization legend={legend}>
-        <Alert severity="info">
-          Yay! {currentProject.name} has no team dependencies.{' '}
-        </Alert>
-      </ContentVisualization>
-    );
-  }
 
   // remove duplicates from nodes and add more data
   const nodes: INode[] = Array.from(new Set(teamIdsWithDependencies)).map(
@@ -213,52 +206,63 @@ const DependencyVisualization: React.FC = () => {
         </IconButton>
       </VisualizationOptionsWrapper>
 
-      <VisualizationGraph
-        links={links}
-        linkColorCallback={(link: ILink) =>
-          link.dependencyType ? dependencyColor[link.dependencyType] : 'grey'
-        }
-        linkWidthCallback={(link: ILink) =>
-          link.dependencyType && link.dependencyType === dependencyType.BLOCKING
-            ? 3
-            : 0.5
-        }
-        nodeSize={nodeRelSize}
-        nodes={nodes}
-        nodeCanvasObjectCallback={(node: INode, ctx, globalScale) => {
-          if (!node.name || !node.x || !node.y) {
-            return;
-          }
-          // border for nodes
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
-          ctx.lineWidth = 2 / globalScale;
-          ctx.strokeStyle = node.teamType
-            ? teamTypeColor[node.teamType].color
-            : 'grey';
-          ctx.stroke();
+      {dependencies.length === 0 && (
+        <Alert severity="info">
+          Yay! {currentProject.name} has no team dependencies at this time.
+        </Alert>
+      )}
 
-          // team names
-          ctx.font = `${10 / globalScale}px sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = 'black';
-          ctx.fillText(
-            node.name,
-            node.x,
-            node.y + nodeRelSize + 15 / globalScale,
-          );
-        }}
-        nodeColorCallback={(node: INode) =>
-          node.teamType ? teamTypeColor[node.teamType].backgroundColor : 'grey'
-        }
-        onNodeClickCallback={(node: INode) => {
-          // link nodes to the team
-          navigate(`/project/${currentProject.id}/team/${node.id}`);
-        }}
-        showDirection={true}
-        showNodeBubbles={true}
-      />
+      {dependencies.length > 0 && (
+        <VisualizationGraph
+          links={links}
+          linkColorCallback={(link: ILink) =>
+            link.dependencyType ? dependencyColor[link.dependencyType] : 'grey'
+          }
+          linkWidthCallback={(link: ILink) =>
+            link.dependencyType &&
+            link.dependencyType === dependencyType.BLOCKING
+              ? 3
+              : 0.5
+          }
+          nodeSize={nodeRelSize}
+          nodes={nodes}
+          nodeCanvasObjectCallback={(node: INode, ctx, globalScale) => {
+            if (!node.name || !node.x || !node.y) {
+              return;
+            }
+            // border for nodes
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, nodeRelSize, 0, 2 * Math.PI, false);
+            ctx.lineWidth = 2 / globalScale;
+            ctx.strokeStyle = node.teamType
+              ? teamTypeColor[node.teamType].color
+              : 'grey';
+            ctx.stroke();
+
+            // team names
+            ctx.font = `${10 / globalScale}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = 'black';
+            ctx.fillText(
+              node.name,
+              node.x,
+              node.y + nodeRelSize + 15 / globalScale,
+            );
+          }}
+          nodeColorCallback={(node: INode) =>
+            node.teamType
+              ? teamTypeColor[node.teamType].backgroundColor
+              : 'grey'
+          }
+          onNodeClickCallback={(node: INode) => {
+            // link nodes to the team
+            navigate(`/project/${currentProject.id}/team/${node.id}`);
+          }}
+          showDirection={true}
+          showNodeBubbles={true}
+        />
+      )}
     </ContentVisualization>
   );
 };

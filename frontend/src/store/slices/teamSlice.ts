@@ -273,6 +273,14 @@ export const initialState: IInitialState = {
         name: 'Unwanted Team',
         type: teamType.ENABLING,
       },
+      {
+        cognitiveLoad: 0,
+        focus: '',
+        fte: 1,
+        id: '7',
+        name: 'Solo Team',
+        type: teamType.PLATFORM,
+      },
     ],
     '3': [
       {
@@ -317,6 +325,14 @@ export const initialState: IInitialState = {
         toTeamId: '3',
         dependencyType: dependencyType.SLOWING,
         description: 'Another blocking dependency.',
+      },
+    ],
+    '2': [
+      {
+        fromTeamId: '5',
+        toTeamId: '7',
+        dependencyType: dependencyType.BLOCKING,
+        description: 'We urgently need the implementation from this team.',
       },
     ],
   },
@@ -596,6 +612,7 @@ export const initialState: IInitialState = {
         changeType: changeType.ADDED,
       },
     ],
+    '2': [],
   },
 };
 
