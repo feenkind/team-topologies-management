@@ -6,7 +6,7 @@ import ContentWithHints from '../../components/Layout/ContentWithHints';
 import TableLinkText from '../../components/Table/TableLinkText';
 import TeamTypeCategory from '../../components/Categories/TeamTypeCategory';
 import ButtonLink from '../../components/Buttons/ButtonLink';
-import { Button, Typography } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const TeamListForProject: React.FC = () => {
@@ -22,9 +22,10 @@ const TeamListForProject: React.FC = () => {
     return (
       <>
         <PageHeadline text={`No teams in ${currentProject.name}`} />
-        <Typography variant="body1">
+        <Alert severity="info">
           No teams are working on this project so far.
-        </Typography>
+        </Alert>
+
         <Button
           variant="contained"
           component={Link}

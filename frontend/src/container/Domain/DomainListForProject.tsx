@@ -2,7 +2,7 @@ import * as React from 'react';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import Table from '../../components/Table/Table';
 import { useAppSelector } from '../../hooks';
-import { Button, Typography } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import TableLinkText from '../../components/Table/TableLinkText';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
@@ -24,9 +24,9 @@ const DomainListForProject: React.FC = () => {
     return (
       <>
         <PageHeadline text={`No domains in ${currentProject.name}`} />
-        <Typography variant="body1">
+        <Alert severity="info">
           No domains have been added for this project so far.
-        </Typography>
+        </Alert>
         <Button
           variant="contained"
           component={Link}

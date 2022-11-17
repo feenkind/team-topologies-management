@@ -72,9 +72,7 @@ const TeamInteractionVisualization: React.FC = () => {
 
   if (!teams || teams.length === 0) {
     return (
-      <ContentVisualization>
-        <Alert severity="info"> {currentProject.name} has no teams yet.</Alert>
-      </ContentVisualization>
+      <Alert severity="info"> {currentProject.name} has no teams yet.</Alert>
     );
   }
 

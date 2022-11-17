@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ITeam } from '../../store/slices/teamSlice';
-import { Link, Paper, Typography } from '@mui/material';
+import { Alert, Link, Paper, Typography } from '@mui/material';
 import Table from '../../components/Table/Table';
 
 interface ITeamViewWorkProps {
@@ -32,9 +32,9 @@ const TeamViewWork: React.FC<ITeamViewWorkProps> = ({
             ])}
           />
         ) : (
-          <Typography p={2}>
+          <Alert severity="info">
             This team does not provide any services.
-          </Typography>
+          </Alert>
         )}
       </Paper>
 
@@ -61,9 +61,9 @@ const TeamViewWork: React.FC<ITeamViewWorkProps> = ({
             ])}
           />
         ) : (
-          <Typography p={2}>
+          <Alert severity="info">
             This team is currently not working on anything.
-          </Typography>
+          </Alert>
         )}
       </Paper>
 
@@ -90,9 +90,9 @@ const TeamViewWork: React.FC<ITeamViewWorkProps> = ({
             ])}
           />
         ) : (
-          <Typography p={2}>
+          <Alert severity="info">
             This team has no specific way of working.
-          </Typography>
+          </Alert>
         )}
       </Paper>
     </>

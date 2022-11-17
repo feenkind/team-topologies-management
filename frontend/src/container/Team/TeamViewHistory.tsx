@@ -1,6 +1,7 @@
 import * as React from 'react';
 import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOptionsWrapper';
 import {
+  Alert,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -38,7 +39,7 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
     ),
   );
   const [selectedTeamId, setSelectedTeamId] = useState<string>(
-    otherTeams[0].id,
+    otherTeams.length > 0 ? otherTeams[0].id : '',
   );
 
   const selectedOtherTeam = otherTeams.find(
@@ -110,7 +111,7 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
           </FormGroup>
         )}
 
-        {historyDisplay === 'dependencies' && (
+        {historyDisplay === 'dependencies' && otherTeams.length > 0 && (
           <>
             <Typography mr={3}>with team</Typography>
             <FormControl>
@@ -152,6 +153,12 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
           team={team}
           otherTeam={selectedOtherTeam}
         />
+      )}
+      {historyDisplay === 'dependencies' && !selectedOtherTeam && (
+        <Alert severity="info" sx={{ mt: 3 }}>
+          This project has no other teams and therefore {team.name} had no
+          dependencies within the project.
+        </Alert>
       )}
     </>
   );

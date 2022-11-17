@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Table from '../../components/Table/Table';
-import { Paper, Typography } from '@mui/material';
+import { Alert, Paper, Typography } from '@mui/material';
 import { IDependency, ITeam } from '../../store/slices/teamSlice';
 import { useAppSelector } from '../../hooks';
 import DependencyCategory from '../../components/Categories/DependencyCategory';
@@ -83,9 +83,9 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
             contentItems={mapDependenciesToTableContent(teamsDependingOn, true)}
           />
         ) : (
-          <Typography p={2}>
+          <Alert severity="info">
             This team does not depend on any other teams right now.
-          </Typography>
+          </Alert>
         )}
       </Paper>
       <Typography
@@ -104,9 +104,9 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
             contentItems={mapDependenciesToTableContent(dependingTeams, false)}
           />
         ) : (
-          <Typography p={2}>
+          <Alert severity="info">
             No teams are depending on this team right now.
-          </Typography>
+          </Alert>
         )}
       </Paper>
     </>

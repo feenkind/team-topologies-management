@@ -124,9 +124,9 @@ const TeamViewCognitiveLoad: React.FC<ITeamViewCognitiveLoadProps> = ({
             contentItems={contentItems}
           />
         ) : (
-          <Typography p={2}>
+          <Alert severity="info">
             This team does not work on any domains right now.
-          </Typography>
+          </Alert>
         )}
       </Paper>
     </>

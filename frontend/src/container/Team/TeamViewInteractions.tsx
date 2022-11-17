@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Table from '../../components/Table/Table';
-import { Box, Paper, Tooltip, Typography } from '@mui/material';
+import { Alert, Box, Paper, Tooltip, Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks';
 import { IInteraction, ITeam } from '../../store/slices/teamSlice';
 import TeamLink from '../../components/Buttons/TeamLink';
@@ -118,9 +118,9 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
             contentItems={generateInteractionsContent(currentInteractions)}
           />
         ) : (
-          <Typography p={2}>
+          <Alert severity="info">
             This team does not interact with any other teams right now.
-          </Typography>
+          </Alert>
         )}
       </Paper>
 
@@ -140,9 +140,9 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
             contentItems={generateInteractionsContent(plannedInteractions)}
           />
         ) : (
-          <Typography p={2}>
+          <Alert severity="info">
             This team does not expect any interactions so far.
-          </Typography>
+          </Alert>
         )}
       </Paper>
     </>
