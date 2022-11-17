@@ -7,25 +7,23 @@ import {
   VictoryTooltip,
   VictoryScatter,
 } from 'victory';
-import {
-  IHistoricCognitiveLoadValue,
-  IHistoricDomainResponsibility,
-  IHistoricFTEValue,
-} from '../../store/slices/teamSlice';
+import { ITeam } from '../../store/slices/teamSlice';
 import { useAppSelector } from '../../hooks';
 
 interface ITeamViewHistoryCognitiveLoadDiagramProps {
-  fteValues: IHistoricFTEValue[];
-  cognitiveLoadValues: IHistoricCognitiveLoadValue[];
-  domainResponsibilities: IHistoricDomainResponsibility[];
+  team: ITeam;
+  showFte: boolean;
+  showCognitiveLoad: boolean;
+  showDomainResponsibilities: boolean;
 }
 
 const TeamViewHistoryCognitiveLoadDiagram: React.FC<
   ITeamViewHistoryCognitiveLoadDiagramProps
 > = ({
-  fteValues,
-  cognitiveLoadValues,
-  domainResponsibilities,
+  team,
+  showFte,
+  showCognitiveLoad,
+  showDomainResponsibilities,
 }: ITeamViewHistoryCognitiveLoadDiagramProps) => {
   const theme = useTheme();
   const currentProject = useAppSelector(
@@ -34,6 +32,22 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
   const domains = useAppSelector(
     (state) => state.domain.domains[currentProject.id],
   );
+
+  const fteHistory = useAppSelector((state) => state.team.historyFte[team.id]);
+  const cognitiveLoadHistory = useAppSelector(
+    (state) => state.team.historyCognitiveLoad[team.id],
+  );
+  const domainResponsibilityHistory = useAppSelector(
+    (state) => state.team.historyDomains[team.id],
+  );
+
+  const fteValues = showFte && fteHistory ? fteHistory : [];
+  const cognitiveLoadValues =
+    showCognitiveLoad && cognitiveLoadHistory ? cognitiveLoadHistory : [];
+  const domainResponsibilities =
+    showDomainResponsibilities && domainResponsibilityHistory
+      ? domainResponsibilityHistory
+      : [];
 
   // sort by date ascending, copy first because array directly from store is
   // immutable

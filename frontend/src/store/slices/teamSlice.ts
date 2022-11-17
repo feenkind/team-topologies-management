@@ -84,15 +84,15 @@ interface IHistoricValue {
   changeReason?: string;
 }
 
-export interface IHistoricFTEValue extends IHistoricValue {
+interface IHistoricFTEValue extends IHistoricValue {
   value: number;
 }
 
-export interface IHistoricCognitiveLoadValue extends IHistoricValue {
+interface IHistoricCognitiveLoadValue extends IHistoricValue {
   value: number;
 }
 
-export interface IHistoricDomainResponsibility extends IHistoricValue {
+interface IHistoricDomainResponsibility extends IHistoricValue {
   domains: string[];
 }
 

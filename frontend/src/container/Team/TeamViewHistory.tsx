@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useAppSelector } from '../../hooks';
 import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOptionsWrapper';
 import {
   Checkbox,
@@ -22,14 +21,6 @@ interface ITeamViewHistoryProps {
 const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
   team,
 }: ITeamViewHistoryProps) => {
-  const fteHistory = useAppSelector((state) => state.team.historyFte[team.id]);
-  const cognitiveLoadHistory = useAppSelector(
-    (state) => state.team.historyCognitiveLoad[team.id],
-  );
-  const domainResponsibilityHistory = useAppSelector(
-    (state) => state.team.historyDomains[team.id],
-  );
-
   const [historyDisplay, setHistoryDisplay] = useState<string>('cognitiveLoad');
 
   const [showFte, setShowFte] = useState<boolean>(true);
@@ -105,17 +96,10 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
 
       {historyDisplay === 'cognitiveLoad' && (
         <TeamViewHistoryCognitiveLoadDiagram
-          fteValues={fteHistory && showFte ? fteHistory : []}
-          cognitiveLoadValues={
-            cognitiveLoadHistory && showCognitiveLoad
-              ? cognitiveLoadHistory
-              : []
-          }
-          domainResponsibilities={
-            domainResponsibilityHistory && showDomainResponsibility
-              ? domainResponsibilityHistory
-              : []
-          }
+          team={team}
+          showFte={showFte}
+          showCognitiveLoad={showCognitiveLoad}
+          showDomainResponsibilities={showDomainResponsibility}
         />
       )}
 
