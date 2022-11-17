@@ -61,9 +61,23 @@ const DependencyVisualization: React.FC = () => {
   const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
   const navigate = useNavigate();
 
-  const today = new Date();
+  const dependencyHistory = useAppSelector(
+    (state) => state.team.historyDependencies[currentProject.id],
+  );
+  const dependencyHistoryChangeDates =
+    dependencyHistory &&
+    dependencyHistory.map((dependencyHistory) => dependencyHistory.date);
+  // remove duplicate dates and order desc
+  const sortedDependencyHistoryChangeDates =
+    dependencyHistoryChangeDates &&
+    Array.from(new Set(dependencyHistoryChangeDates)).sort((a, b) =>
+      new Date(a) > new Date(b) ? -1 : 1,
+    );
+
   const [selectedDate, setSelectedDate] = useState<string>(
-    today.toDateString(),
+    sortedDependencyHistoryChangeDates
+      ? sortedDependencyHistoryChangeDates[0]
+      : '',
   );
   const [selectedDateIndex, setSelectedDateIndex] = useState<number>(0);
 
@@ -72,9 +86,6 @@ const DependencyVisualization: React.FC = () => {
     date: selectedDate,
   });
 
-  const dependencyHistory = useAppSelector(
-    (state) => state.team.historyDependencies[currentProject.id],
-  );
   if (!dependencyHistory) {
     return (
       <Alert severity="info">
@@ -82,16 +93,6 @@ const DependencyVisualization: React.FC = () => {
       </Alert>
     );
   }
-
-  const dependencyHistoryChangeDates = dependencyHistory.map(
-    (dependencyHistory) => dependencyHistory.date,
-  );
-  // remove duplicate dates and order desc
-  const sortedDependencyHistoryChangeDates = Array.from(
-    new Set(dependencyHistoryChangeDates),
-  ).sort((a, b) => (new Date(a) > new Date(b) ? -1 : 1));
-  // add today at the beginning
-  sortedDependencyHistoryChangeDates.unshift(today.toDateString());
 
   const legend: ILegend[] = [
     {

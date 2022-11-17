@@ -11,13 +11,9 @@ export const useDependencyHistory = ({
   const dependencyHistory = useAppSelector(
     (state) => state.team.historyDependencies[projectId],
   );
-  const currentDependencies = useAppSelector(
-    (state) => state.team.dependencies[projectId],
-  );
-  const today = new Date();
 
-  if (date === today.toDateString() && currentDependencies) {
-    return { dependencies: currentDependencies };
+  if (!dependencyHistory) {
+    return { dependencies: [] };
   }
 
   // order dependency history asc by date
