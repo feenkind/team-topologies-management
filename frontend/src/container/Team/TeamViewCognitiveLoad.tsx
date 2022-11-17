@@ -97,7 +97,7 @@ const TeamViewCognitiveLoad: React.FC<ITeamViewCognitiveLoadProps> = ({
             content: (
               <Box display="flex" alignItems="center">
                 {team.cognitiveLoad}
-                <Tooltip title="Subjective estimation according to the cognitive load assessment. 5 is a very high cognitive load, 25 is a very low cognitive load.">
+                <Tooltip title="Subjective estimation according to the cognitive load assessment. 25 is a very high cognitive load, 0 is a very low cognitive load.">
                   <HelpOutlineOutlinedIcon
                     fontSize="small"
                     sx={{ ml: 1, color: grey[400] }}

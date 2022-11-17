@@ -420,7 +420,7 @@ export const initialState: IInitialState = {
       {
         value: 20,
         date: '2021-08-20',
-        changeReason: 'Getting used to the work.',
+        changeReason: 'A lot to learn. A lot.',
       },
       {
         value: 16,

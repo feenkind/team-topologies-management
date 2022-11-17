@@ -35,9 +35,9 @@ export const useCognitiveLoad = ({
   ).length;
 
   // subjective load feeling is most important
-  // subjective cognitive load that is under 10 means on average 2/5 points for
+  // subjective cognitive load that is over 20 means on average 4/5 points for
   // each category
-  if (team.cognitiveLoad <= 11) {
+  if (team.cognitiveLoad >= 20) {
     return {
       isLoadTooHigh: true,
     };

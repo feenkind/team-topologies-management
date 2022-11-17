@@ -145,7 +145,7 @@ const DependencyVisualization: React.FC = () => {
   );
 
   // needed for drawing the border around the nodes
-  const nodeRelSize = 2;
+  const nodeRelSize = 1;
   return (
     <ContentVisualization legend={legend}>
       <VisualizationOptionsWrapper>
