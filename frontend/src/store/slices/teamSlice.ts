@@ -612,7 +612,58 @@ export const initialState: IInitialState = {
         changeType: changeType.ADDED,
       },
     ],
-    '2': [],
+    '2': [
+      {
+        dependency: {
+          fromTeamId: '5',
+          toTeamId: '7',
+          dependencyType: dependencyType.BLOCKING,
+          description: 'We urgently need the implementation from this team.',
+        },
+        date: '2022-11-05',
+        changeType: changeType.ADDED,
+      },
+      {
+        dependency: {
+          fromTeamId: '5',
+          toTeamId: '7',
+          dependencyType: dependencyType.OK,
+          description: 'We urgently need the implementation from this team.',
+        },
+        date: '2022-11-04',
+        changeType: changeType.REMOVED,
+      },
+      {
+        dependency: {
+          fromTeamId: '5',
+          toTeamId: '7',
+          dependencyType: dependencyType.OK,
+          description: 'We urgently need the implementation from this team.',
+        },
+        date: '2022-11-03',
+        changeType: changeType.CHANGED,
+      },
+      {
+        dependency: {
+          fromTeamId: '5',
+          toTeamId: '7',
+          dependencyType: dependencyType.SLOWING,
+          description: 'We urgently need the implementation from this team.',
+        },
+        date: '2022-11-02',
+        changeType: changeType.CHANGED,
+      },
+      {
+        dependency: {
+          fromTeamId: '5',
+          toTeamId: '7',
+          dependencyType: dependencyType.BLOCKING,
+          description: 'We urgently need the implementation from this team.',
+        },
+        date: '2022-11-01',
+        changeType: changeType.ADDED,
+      },
+    ],
   },
 };
 

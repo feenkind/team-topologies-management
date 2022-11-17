@@ -19,6 +19,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
@@ -28,6 +29,8 @@ import { useState } from 'react';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useDependencyHistory } from './useDependencyHistory';
+import { grey } from '@mui/material/colors';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 
 interface INode extends NodeObject {
   name?: string;
@@ -145,9 +148,15 @@ const DependencyVisualization: React.FC = () => {
   return (
     <ContentVisualization legend={legend}>
       <VisualizationOptionsWrapper>
-        <Typography variant="button" marginRight={3}>
+        <Typography variant="button" marginRight={1}>
           Show dependency for
         </Typography>
+        <Tooltip title="The select box shows all dates with changes to the team depenencies.">
+          <HelpOutlineOutlinedIcon
+            fontSize="small"
+            sx={{ mr: 1, color: grey[400] }}
+          />
+        </Tooltip>
         <IconButton
           sx={{ mr: 1 }}
           disabled={
