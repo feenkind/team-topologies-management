@@ -11,9 +11,22 @@ import {
   teamTypeColor,
 } from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
-import { Alert, Box, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import VisualizationGraph from './VisualizationGraph';
+import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOptionsWrapper';
+import { useState } from 'react';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 interface INode extends NodeObject {
   name?: string;
@@ -47,15 +60,32 @@ const DependencyVisualization: React.FC = () => {
   const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
   const navigate = useNavigate();
 
-  if (!dependencies || dependencies.length === 0) {
+  const today = new Date();
+  const [selectedDate, setSelectedDate] = useState<string>(
+    today.toDateString(),
+  );
+  const [selectedDateIndex, setSelectedDateIndex] = useState<number>(0);
+
+  const dependencyHistory = useAppSelector(
+    (state) => state.team.historyDependencies[currentProject.id],
+  );
+  if (!dependencyHistory) {
     return (
-      <ContentVisualization>
-        <Alert severity="info">
-          Yay! {currentProject.name} has no team dependencies.{' '}
-        </Alert>
-      </ContentVisualization>
+      <Alert severity="info">
+        {currentProject.name} never had any dependencies.
+      </Alert>
     );
   }
+
+  const dependencyHistoryChangeDates = dependencyHistory.map(
+    (dependencyHistory) => dependencyHistory.date,
+  );
+  // remove duplicate dates and order desc
+  const sortedDependencyHistoryChangeDates = Array.from(
+    new Set(dependencyHistoryChangeDates),
+  ).sort((a, b) => (new Date(a) > new Date(b) ? -1 : 1));
+  // add today at the beginning
+  sortedDependencyHistoryChangeDates.unshift(today.toDateString());
 
   const legend: ILegend[] = [
     {
@@ -94,6 +124,17 @@ const DependencyVisualization: React.FC = () => {
       description: dependency.description,
     });
   });
+
+  if (!dependencies || dependencies.length === 0) {
+    return (
+      <ContentVisualization legend={legend}>
+        <Alert severity="info">
+          Yay! {currentProject.name} has no team dependencies.{' '}
+        </Alert>
+      </ContentVisualization>
+    );
+  }
+
   // remove duplicates from nodes and add more data
   const nodes: INode[] = Array.from(new Set(teamIdsWithDependencies)).map(
     (teamId) => {
@@ -110,6 +151,68 @@ const DependencyVisualization: React.FC = () => {
   const nodeRelSize = 2;
   return (
     <ContentVisualization legend={legend}>
+      <VisualizationOptionsWrapper>
+        <Typography variant="button" marginRight={3}>
+          Show dependency for
+        </Typography>
+        <IconButton
+          sx={{ mr: 1 }}
+          disabled={
+            selectedDateIndex ===
+              sortedDependencyHistoryChangeDates.length - 1 ||
+            selectedDateIndex === -1
+          }
+          onClick={() => {
+            // click back sets the next value in the array, because we have
+            // a desc order
+            setSelectedDate(
+              sortedDependencyHistoryChangeDates[selectedDateIndex + 1],
+            );
+            setSelectedDateIndex(selectedDateIndex + 1);
+          }}
+        >
+          <ArrowBackIosNewIcon />
+        </IconButton>
+        <FormControl>
+          <InputLabel id="dependency-date-select-label">Date</InputLabel>
+          <Select
+            size="small"
+            labelId="dependency-date-select-label"
+            id="dependency-date-select"
+            value={selectedDate}
+            label="Date"
+            onChange={(selectedOption) => {
+              setSelectedDate(selectedOption.target.value);
+              const selectedDateIndex =
+                sortedDependencyHistoryChangeDates.findIndex(
+                  (date) => date === selectedOption.target.value,
+                );
+              setSelectedDateIndex(selectedDateIndex);
+            }}
+          >
+            {sortedDependencyHistoryChangeDates.map((date) => (
+              <MenuItem key={date} value={date}>
+                {new Date(date).toLocaleDateString('en-GB')}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <IconButton
+          sx={{ ml: 1 }}
+          disabled={selectedDateIndex < 1}
+          onClick={() => {
+            // click forwards sets the previous value in the array, because we
+            // have a desc order
+            setSelectedDate(
+              sortedDependencyHistoryChangeDates[selectedDateIndex - 1],
+            );
+            setSelectedDateIndex(selectedDateIndex - 1);
+          }}
+        >
+          <ArrowForwardIosIcon />
+        </IconButton>
+      </VisualizationOptionsWrapper>
+
       <VisualizationGraph
         links={links}
         linkColorCallback={(link: ILink) =>
