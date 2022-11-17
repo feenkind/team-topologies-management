@@ -153,7 +153,7 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
 
       <VictoryLine
         data={dataPriority}
-        interpolation="stepAfter"
+        interpolation="linear"
         style={{
           data: { stroke: theme.palette.warning.main, opacity: 0.5 },
         }}

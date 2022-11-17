@@ -73,6 +73,12 @@ export interface IInteraction {
   additionalInformation?: string;
 }
 
+enum changeType {
+  ADDED,
+  REMOVED,
+  CHANGED,
+}
+
 interface IHistoricValue {
   date: string;
   changeReason?: string;
@@ -92,6 +98,7 @@ export interface IHistoricDomainResponsibility extends IHistoricValue {
 
 interface IHistoricDependency extends IHistoricValue {
   dependency: IDependency;
+  changeType: changeType;
 }
 
 interface IInitialState {
@@ -113,6 +120,7 @@ interface IInitialState {
   historyDomains: {
     [keys: string]: IHistoricDomainResponsibility[];
   };
+  // historic dependencies ordered by project
   historyDependencies: {
     [keys: string]: IHistoricDependency[];
   };
@@ -434,6 +442,10 @@ export const initialState: IInitialState = {
       },
       {
         domains: ['2', 'a'],
+        date: '2021-07-30',
+      },
+      {
+        domains: [],
         date: '2021-07-13',
       },
     ],
@@ -447,7 +459,141 @@ export const initialState: IInitialState = {
           dependencyType: dependencyType.BLOCKING,
           description: 'We urgently need the implementation from this team.',
         },
-        date: '2022-09-08',
+        date: '2022-11-07',
+        changeReason: 'Blocker added because deadline is coming closer.',
+        changeType: changeType.CHANGED,
+      },
+      {
+        dependency: {
+          fromTeamId: '1',
+          toTeamId: '2',
+          dependencyType: dependencyType.SLOWING,
+          description: 'We need the implementation from this team.',
+        },
+        date: '2022-11-01',
+        changeReason: 'Added know dependency.',
+        changeType: changeType.ADDED,
+      },
+      {
+        dependency: {
+          fromTeamId: '1',
+          toTeamId: '3',
+          dependencyType: dependencyType.OK,
+          description:
+            'Nothing that needs to happen soon. We are just talking.',
+        },
+        date: '2022-10-27',
+        changeReason:
+          'Constant talking added as dependency to make things' +
+          ' more visible.',
+        changeType: changeType.ADDED,
+      },
+      {
+        dependency: {
+          fromTeamId: '1',
+          toTeamId: '4',
+          dependencyType: dependencyType.OK,
+          description: 'Just random stuff.',
+        },
+        date: '2022-11-16',
+        changeType: changeType.ADDED,
+      },
+      {
+        dependency: {
+          fromTeamId: '4',
+          toTeamId: '2',
+          dependencyType: dependencyType.SLOWING,
+          description: 'Something should happen there, soon...',
+        },
+        date: '2022-10-02',
+        changeType: changeType.ADDED,
+      },
+      {
+        dependency: {
+          fromTeamId: '4',
+          toTeamId: '3',
+          dependencyType: dependencyType.SLOWING,
+          description: 'Another blocking dependency.',
+        },
+        date: '2022-11-09',
+        changeType: changeType.ADDED,
+      },
+      {
+        dependency: {
+          fromTeamId: '1',
+          toTeamId: '4',
+          dependencyType: dependencyType.OK,
+          description: 'Know dependency because of xyz, no problems expected.',
+        },
+        date: '2022-07-20',
+        changeReason: 'Dependency resolved.',
+        changeType: changeType.REMOVED,
+      },
+      {
+        dependency: {
+          fromTeamId: '1',
+          toTeamId: '4',
+          dependencyType: dependencyType.OK,
+          description: 'Know dependency because of xyz, no problems expected.',
+        },
+        date: '2022-07-02',
+        changeReason: 'Make dependency visible.',
+        changeType: changeType.ADDED,
+      },
+      {
+        dependency: {
+          fromTeamId: '1',
+          toTeamId: '2',
+          dependencyType: dependencyType.OK,
+          description: 'Know dependency because of xyz, no problems expected.',
+        },
+        date: '2022-06-16',
+        changeReason: 'Dependency resolved.',
+        changeType: changeType.REMOVED,
+      },
+      {
+        dependency: {
+          fromTeamId: '1',
+          toTeamId: '2',
+          dependencyType: dependencyType.OK,
+          description: 'Know dependency because of xyz, no problems expected.',
+        },
+        date: '2022-05-23',
+        changeReason: 'Make dependency visible.',
+        changeType: changeType.ADDED,
+      },
+      {
+        dependency: {
+          fromTeamId: '2',
+          toTeamId: '3',
+          dependencyType: dependencyType.BLOCKING,
+          description: 'Urgently waiting on finishing the service.',
+        },
+        date: '2022-08-10',
+        changeReason: 'Dependency resolved.',
+        changeType: changeType.REMOVED,
+      },
+      {
+        dependency: {
+          fromTeamId: '2',
+          toTeamId: '3',
+          dependencyType: dependencyType.BLOCKING,
+          description: 'Urgently waiting on finishing the service.',
+        },
+        date: '2022-07-21',
+        changeReason: 'Dependency got worse.',
+        changeType: changeType.CHANGED,
+      },
+      {
+        dependency: {
+          fromTeamId: '2',
+          toTeamId: '3',
+          dependencyType: dependencyType.SLOWING,
+          description: 'Waiting on finishing the service.',
+        },
+        date: '2022-06-01',
+        changeReason: 'Make dependency visible.',
+        changeType: changeType.ADDED,
       },
     ],
   },
