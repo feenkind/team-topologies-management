@@ -284,7 +284,7 @@ export const initialState: IInitialState = {
     ],
     '3': [
       {
-        cognitiveLoad: 0,
+        cognitiveLoad: 20,
         focus: '',
         fte: 1,
         id: '6',

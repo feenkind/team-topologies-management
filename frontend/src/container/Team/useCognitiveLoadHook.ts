@@ -8,13 +8,14 @@ export const useCognitiveLoad = ({
 }: {
   team?: ITeam;
   projectId?: string;
-}): { isLoadTooHigh: boolean } => {
+}): { isSubjectiveLoadTooHigh: boolean; isComplexityLoadToHigh: boolean } => {
   const domains = useAppSelector(
     (state) => (projectId && state.domain.domains[projectId]) || [],
   );
   if (!team || !projectId) {
     return {
-      isLoadTooHigh: false,
+      isSubjectiveLoadTooHigh: false,
+      isComplexityLoadToHigh: false,
     };
   }
 
@@ -34,18 +35,15 @@ export const useCognitiveLoad = ({
       domain.complexity === complexity.COMPLEX,
   ).length;
 
-  // subjective load feeling is most important
   // subjective cognitive load that is over 20 means on average 4/5 points for
   // each category
-  if (team.cognitiveLoad >= 20) {
-    return {
-      isLoadTooHigh: true,
-    };
-  }
+  const isSubjectiveLoadTooHigh = team.cognitiveLoad >= 20;
+
   // not more than one complex domain
   if (amountComplexDomains > 1) {
     return {
-      isLoadTooHigh: true,
+      isSubjectiveLoadTooHigh,
+      isComplexityLoadToHigh: true,
     };
   }
   // if one complex domain, no other domains
@@ -54,17 +52,20 @@ export const useCognitiveLoad = ({
     (amountComplicatedDomains > 0 || amountSimpleDomains > 0)
   ) {
     return {
-      isLoadTooHigh: true,
+      isSubjectiveLoadTooHigh,
+      isComplexityLoadToHigh: true,
     };
   }
   // ideally not more then 1 complicated and not more than 3 simple domains
   if (amountComplicatedDomains > 1 || amountSimpleDomains > 3) {
     return {
-      isLoadTooHigh: true,
+      isSubjectiveLoadTooHigh,
+      isComplexityLoadToHigh: true,
     };
   }
 
   return {
-    isLoadTooHigh: false,
+    isSubjectiveLoadTooHigh,
+    isComplexityLoadToHigh: false,
   };
 };

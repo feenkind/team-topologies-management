@@ -26,7 +26,7 @@ const TeamView: React.FC = () => {
         state.team.teams[projectId].find((team) => team.id === teamId)) ||
       undefined,
   );
-  const { isLoadTooHigh } = useCognitiveLoad({
+  const { isSubjectiveLoadTooHigh } = useCognitiveLoad({
     team: team,
     projectId: projectId,
   });
@@ -57,7 +57,7 @@ const TeamView: React.FC = () => {
             {
               tabName: 'Cognitive Load',
               content: <TeamViewCognitiveLoad team={team} />,
-              tabIcon: isLoadTooHigh ? (
+              tabIcon: isSubjectiveLoadTooHigh ? (
                 <ErrorOutlineIcon color="error" />
               ) : undefined,
             },

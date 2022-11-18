@@ -24,7 +24,7 @@ const TeamViewCognitiveLoad: React.FC<ITeamViewCognitiveLoadProps> = ({
   const domains = useAppSelector(
     (state) => state.domain.domains[currentProject.id] || [],
   );
-  const { isLoadTooHigh } = useCognitiveLoad({
+  const { isComplexityLoadToHigh, isSubjectiveLoadTooHigh } = useCognitiveLoad({
     team,
     projectId: currentProject.id,
   });
@@ -77,13 +77,26 @@ const TeamViewCognitiveLoad: React.FC<ITeamViewCognitiveLoadProps> = ({
     ]);
   }
 
+  let loadTooHighText = '';
+  if (isSubjectiveLoadTooHigh && isComplexityLoadToHigh) {
+    loadTooHighText = `Team ${team.name} has a high cognitive load. The reasons are a very high subjective cognitive load and the responsibility for too
+          many or too complex domains.`;
+  }
+  if (isSubjectiveLoadTooHigh && !isComplexityLoadToHigh) {
+    loadTooHighText = `Team ${team.name} has a high cognitive load. The reason is a very high subjective cognitive load. Please check the team size, interaction modes and domain responsibilites and complexities.`;
+  }
+  if (!isSubjectiveLoadTooHigh && isComplexityLoadToHigh) {
+    loadTooHighText = `Team ${team.name} might have a high cognitive load because of its responsibility for too many or too complex domains. Please check the subjective cognitive load of this team.`;
+  }
+
   return (
     <>
-      {isLoadTooHigh && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          Team {team.name} has a high cognitive load. The reasons can be either
-          a very high subjective cognitive load or the responsibility for too
-          many or too complex domains.
+      {(isSubjectiveLoadTooHigh || isComplexityLoadToHigh) && (
+        <Alert
+          severity={isSubjectiveLoadTooHigh ? 'error' : 'warning'}
+          sx={{ mb: 3 }}
+        >
+          {loadTooHighText}
         </Alert>
       )}
       <InformationGrid
