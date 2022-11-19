@@ -8,8 +8,14 @@ import {
   Alert,
   Box,
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import VisualizationGraph from './VisualizationGraph';
@@ -23,6 +29,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import TeamShape from '../../components/TeamShape';
 import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOptionsWrapper';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import { grey } from '@mui/material/colors';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useTeamTypeHistory } from './useTeamTypeHistory';
+import { useInteractionsHistory } from './useInteractionsHistory';
 
 interface INode extends NodeObject {
   name?: string;
@@ -60,16 +72,48 @@ const getInteractionModeSymbol = (interactionMode: interactionMode) => {
 };
 
 const TeamInteractionVisualization: React.FC = () => {
+  const navigate = useNavigate();
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
   const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
-  const interactions = useAppSelector(
-    (state) => state.team.interactions[currentProject.id],
+  const interactionsHistory = useAppSelector(
+    (state) => state.team.historyInteractions[currentProject.id],
   );
-  const navigate = useNavigate();
+  const interactionsHistoryChangeDates =
+    interactionsHistory && interactionsHistory.map((history) => history.date);
+  // remove duplicate dates and order desc
+  const sortedInteractionsHistoryChangeDates =
+    interactionsHistoryChangeDates &&
+    Array.from(new Set(interactionsHistoryChangeDates)).sort((a, b) =>
+      new Date(a) > new Date(b) ? -1 : 1,
+    );
+
+  const [selectedDate, setSelectedDate] = useState<string>(
+    sortedInteractionsHistoryChangeDates
+      ? sortedInteractionsHistoryChangeDates[0]
+      : '',
+  );
+  const [selectedDateIndex, setSelectedDateIndex] = useState<number>(0);
   const [showExpectedInteractions, setShowExpectedInteractions] =
     useState<boolean>(false);
+
+  const { interactions } = useInteractionsHistory({
+    projectId: currentProject.id,
+    date: selectedDate,
+  });
+  const { teamTypesByTeamId } = useTeamTypeHistory({
+    projectId: currentProject.id,
+    date: selectedDate,
+  });
+
+  if (!interactionsHistory) {
+    return (
+      <Alert severity="info">
+        {currentProject.name} never had any interactions between teams.
+      </Alert>
+    );
+  }
 
   if (!teams || teams.length === 0) {
     return (
@@ -119,7 +163,7 @@ const TeamInteractionVisualization: React.FC = () => {
   const nodes: INode[] = teams.map((team) => ({
     name: team.name,
     id: team.id,
-    teamType: team.type,
+    teamType: teamTypesByTeamId[team.id] || teamType.UNDEFINED,
   }));
 
   const currentDate = new Date();
@@ -147,9 +191,71 @@ const TeamInteractionVisualization: React.FC = () => {
     <ContentVisualization legend={legend}>
       <VisualizationOptionsWrapper>
         <Typography variant="button" marginRight={1}>
-          Show interactions for
+          Show interactions at
         </Typography>
-        <FormGroup row>
+        <Tooltip title="The select box shows all dates with changes to the team depenencies.">
+          <HelpOutlineOutlinedIcon
+            fontSize="small"
+            sx={{ mr: 1, color: grey[400] }}
+          />
+        </Tooltip>
+        <IconButton
+          sx={{ mr: 1 }}
+          disabled={
+            selectedDateIndex ===
+              sortedInteractionsHistoryChangeDates.length - 1 ||
+            selectedDateIndex === -1
+          }
+          onClick={() => {
+            // click back sets the next value in the array, because we have
+            // a desc order
+            setSelectedDate(
+              sortedInteractionsHistoryChangeDates[selectedDateIndex + 1],
+            );
+            setSelectedDateIndex(selectedDateIndex + 1);
+          }}
+        >
+          <ArrowBackIosNewIcon />
+        </IconButton>
+        <FormControl>
+          <InputLabel id="interactions-date-select-label">Date</InputLabel>
+          <Select
+            size="small"
+            labelId="interactions-date-select-label"
+            id="interactions-date-select"
+            value={selectedDate}
+            label="Date"
+            onChange={(selectedOption) => {
+              setSelectedDate(selectedOption.target.value);
+              const selectedDateIndex =
+                sortedInteractionsHistoryChangeDates.findIndex(
+                  (date) => date === selectedOption.target.value,
+                );
+              setSelectedDateIndex(selectedDateIndex);
+            }}
+          >
+            {sortedInteractionsHistoryChangeDates.map((date) => (
+              <MenuItem key={date} value={date}>
+                {new Date(date).toLocaleDateString('en-GB')}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <IconButton
+          sx={{ ml: 1 }}
+          disabled={selectedDateIndex < 1}
+          onClick={() => {
+            // click forwards sets the previous value in the array, because we
+            // have a desc order
+            setSelectedDate(
+              sortedInteractionsHistoryChangeDates[selectedDateIndex - 1],
+            );
+            setSelectedDateIndex(selectedDateIndex - 1);
+          }}
+        >
+          <ArrowForwardIosIcon />
+        </IconButton>
+        <FormGroup sx={{ ml: 4 }}>
           <FormControlLabel
             control={
               <Checkbox

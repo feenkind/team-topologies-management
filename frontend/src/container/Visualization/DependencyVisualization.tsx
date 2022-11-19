@@ -155,7 +155,7 @@ const DependencyVisualization: React.FC = () => {
     <ContentVisualization legend={legend}>
       <VisualizationOptionsWrapper>
         <Typography variant="button" marginRight={1}>
-          Show dependency for
+          Show dependency at
         </Typography>
         <Tooltip title="The select box shows all dates with changes to the team depenencies.">
           <HelpOutlineOutlinedIcon
