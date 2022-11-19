@@ -367,6 +367,14 @@ export const initialState: IInitialState = {
       },
       {
         teamIdOne: '2',
+        teamIdTwo: '4',
+        interactionMode: interactionMode.COLLABORATION,
+        purpose: 'We need to find a good solution for a complicated problem.',
+        startDate: '2022/07/15',
+        expectedDuration: 5,
+      },
+      {
+        teamIdOne: '2',
         teamIdTwo: '7',
         interactionMode: interactionMode.UNDEFINED,
         purpose: 'We do not know yet.',

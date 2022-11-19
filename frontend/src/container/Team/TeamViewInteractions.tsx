@@ -7,6 +7,7 @@ import TeamLink from '../../components/Buttons/TeamLink';
 import TeamInteractionModeCategory from '../../components/Categories/TeamInteractionModeCategory';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { filterTeamInteractions } from './filterTeamInteractions';
+import { interactionMode } from '../../constants/categories';
 
 interface ITeamViewInteractionsProps {
   team: ITeam;
@@ -60,6 +61,13 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
     return expectedDate < currentDate;
   };
 
+  const hasMoreThanOneCollaboration = (): boolean =>
+    !!currentInteractions &&
+    currentInteractions.filter(
+      (interaction) =>
+        interaction.interactionMode === interactionMode.COLLABORATION,
+    ).length > 1;
+
   const generateInteractionsContent = (interactions: IInteraction[]) =>
     interactions.map((interaction) => {
       const otherTeamId =
@@ -107,6 +115,12 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
 
   return (
     <>
+      {hasMoreThanOneCollaboration() && (
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          This team has currently more than one active collaboration. Please
+          make sure, all interactions are in the intended mode.
+        </Alert>
+      )}
       <Typography variant="button" component="h3" marginBottom={4}>
         Team {team.name} is currently interacting with
       </Typography>
