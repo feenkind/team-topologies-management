@@ -7,6 +7,7 @@ import { useAppSelector } from '../../hooks';
 import { complexity, priority } from '../../constants/categories';
 import theme from '../../theme';
 import CircleIcon from '@mui/icons-material/Circle';
+import { Alert } from '@mui/material';
 
 const getNodeColorFromFte = (fteAmount: number): string => {
   if (fteAmount < 5) {
@@ -73,46 +74,62 @@ const DomainVisualization: React.FC = () => {
     : [];
 
   return (
-    <ContentVisualization legend={legend}>
-      <VictoryChart>
-        <VictoryAxis
-          dependentAxis
-          tickFormat={[
-            complexity.SIMPLE,
-            complexity.COMPLICATED,
-            complexity.COMPLEX,
-          ]}
-          tickValues={[
-            complexity.SIMPLE,
-            complexity.COMPLICATED,
-            complexity.COMPLEX,
-          ]}
-          style={{
-            axisLabel: { fontSize: 10, padding: 35 },
-            tickLabels: { fontSize: 6 },
-          }}
-        />
-        <VictoryAxis
-          tickFormat={[priority.GENERIC, priority.SUPPORTING, priority.CORE]}
-          tickValues={[priority.GENERIC, priority.SUPPORTING, priority.CORE]}
-          style={{
-            axisLabel: { fontSize: 10, padding: 35 },
-            tickLabels: { fontSize: 6 },
-          }}
-        />
-        <VictoryScatter
-          data={data}
-          style={{
-            data: {
-              fill: ({ datum }) => getNodeColorFromFte(datum.fte),
-            },
-            labels: { fontSize: 6, fill: theme.palette.secondary.dark },
-          }}
-          labels={({ datum }) => datum.name}
-          size={({ datum }) => datum.fte}
-        />
-      </VictoryChart>
-    </ContentVisualization>
+    <>
+      {data.length == 0 && (
+        <Alert severity="info">{currentProject.name} has no domains.</Alert>
+      )}
+
+      {data.length > 0 && (
+        <ContentVisualization legend={legend}>
+          <VictoryChart>
+            <VictoryAxis
+              dependentAxis
+              tickFormat={[
+                complexity.SIMPLE,
+                complexity.COMPLICATED,
+                complexity.COMPLEX,
+              ]}
+              tickValues={[
+                complexity.SIMPLE,
+                complexity.COMPLICATED,
+                complexity.COMPLEX,
+              ]}
+              style={{
+                axisLabel: { fontSize: 10, padding: 35 },
+                tickLabels: { fontSize: 6 },
+              }}
+            />
+            <VictoryAxis
+              tickFormat={[
+                priority.GENERIC,
+                priority.SUPPORTING,
+                priority.CORE,
+              ]}
+              tickValues={[
+                priority.GENERIC,
+                priority.SUPPORTING,
+                priority.CORE,
+              ]}
+              style={{
+                axisLabel: { fontSize: 10, padding: 35 },
+                tickLabels: { fontSize: 6 },
+              }}
+            />
+            <VictoryScatter
+              data={data}
+              style={{
+                data: {
+                  fill: ({ datum }) => getNodeColorFromFte(datum.fte),
+                },
+                labels: { fontSize: 6, fill: theme.palette.secondary.dark },
+              }}
+              labels={({ datum }) => datum.name}
+              size={({ datum }) => datum.fte}
+            />
+          </VictoryChart>
+        </ContentVisualization>
+      )}
+    </>
   );
 };
 
