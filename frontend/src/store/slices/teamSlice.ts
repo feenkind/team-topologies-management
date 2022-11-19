@@ -50,6 +50,7 @@ export interface ITeam {
   name: string;
   platform?: string;
   services?: IService[];
+  teamCreationDate: string;
   type: teamType;
   wikiSearchTerms?: string[];
   waysOfWorking?: IWaysOfWorking[];
@@ -184,6 +185,7 @@ export const initialState: IInitialState = {
             versioningType: versioningType.SEMANTIC,
           },
         ],
+        teamCreationDate: '2022-01-01',
         type: teamType.STREAM_ALIGNED,
         waysOfWorking: [
           {
@@ -230,6 +232,7 @@ export const initialState: IInitialState = {
             versioningType: versioningType.SEMANTIC,
           },
         ],
+        teamCreationDate: '2022-01-01',
         type: teamType.PLATFORM,
         waysOfWorking: [
           {
@@ -259,6 +262,7 @@ export const initialState: IInitialState = {
         fte: 5,
         id: '3',
         name: 'Random Team',
+        teamCreationDate: '2022-01-01',
         type: teamType.ENABLING,
       },
       {
@@ -268,6 +272,7 @@ export const initialState: IInitialState = {
         fte: 2,
         id: '4',
         name: 'Party Team',
+        teamCreationDate: '2022-01-01',
         type: teamType.COMPLICATED_SUBSYSTEM,
       },
       {
@@ -277,6 +282,7 @@ export const initialState: IInitialState = {
         fte: 2,
         id: '7',
         name: 'New Team',
+        teamCreationDate: '2022-11-01',
         type: teamType.UNDEFINED,
       },
     ],
@@ -287,6 +293,7 @@ export const initialState: IInitialState = {
         fte: 2,
         id: '5',
         name: 'Unwanted Team',
+        teamCreationDate: '2022-01-01',
         type: teamType.ENABLING,
       },
       {
@@ -295,6 +302,7 @@ export const initialState: IInitialState = {
         fte: 1,
         id: '7',
         name: 'Solo Team',
+        teamCreationDate: '2022-01-01',
         type: teamType.PLATFORM,
       },
     ],
@@ -305,6 +313,7 @@ export const initialState: IInitialState = {
         fte: 1,
         id: '6',
         name: 'Undecided Team',
+        teamCreationDate: '2022-01-01',
         type: teamType.UNDEFINED,
       },
     ],

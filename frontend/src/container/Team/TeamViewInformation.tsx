@@ -68,6 +68,10 @@ const TeamViewInformation: React.FC<ITeamViewInformationProps> = ({
               )
             : 'No search terms defined',
         },
+        {
+          label: 'Team creation date',
+          content: new Date(team.teamCreationDate).toLocaleDateString('en-GB'),
+        },
       ]}
     />
   );
