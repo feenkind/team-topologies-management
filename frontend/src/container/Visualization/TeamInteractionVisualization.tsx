@@ -7,8 +7,9 @@ import ContentVisualization, {
 import {
   Alert,
   Box,
-  ToggleButton,
-  ToggleButtonGroup,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
   Typography,
 } from '@mui/material';
 import VisualizationGraph from './VisualizationGraph';
@@ -122,13 +123,17 @@ const TeamInteractionVisualization: React.FC = () => {
   }));
 
   const currentDate = new Date();
+  // if show expected interactions is not checked, filter interactions for
+  // current
   const interactionsToDisplay = interactions
-    ? interactions.filter((interaction) => {
-        const startDate = new Date(interaction.startDate);
-        return showExpectedInteractions
-          ? startDate > currentDate
-          : startDate < currentDate;
-      })
+    ? !showExpectedInteractions
+      ? interactions.filter((interaction) => {
+          const startDate = new Date(interaction.startDate);
+          return showExpectedInteractions
+            ? startDate > currentDate
+            : startDate < currentDate;
+        })
+      : interactions
     : [];
 
   const links: ILink[] = interactionsToDisplay.map((interaction) => ({
@@ -141,27 +146,24 @@ const TeamInteractionVisualization: React.FC = () => {
   return (
     <ContentVisualization legend={legend}>
       <VisualizationOptionsWrapper>
-        <Typography variant="button" marginRight={2}>
-          Show situation
+        <Typography variant="button" marginRight={1}>
+          Show interactions for
         </Typography>
-        <ToggleButtonGroup
-          exclusive
-          value={showExpectedInteractions ? 'expected' : 'current'}
-          onChange={(event, value: string | null) => {
-            value === 'expected'
-              ? setShowExpectedInteractions(true)
-              : setShowExpectedInteractions(false);
-          }}
-          size="small"
-          color="primary"
-        >
-          <ToggleButton value="current">
-            <Typography variant="button">Current</Typography>
-          </ToggleButton>
-          <ToggleButton value="expected">
-            <Typography variant="button">Expected</Typography>
-          </ToggleButton>
-        </ToggleButtonGroup>
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={showExpectedInteractions}
+                onChange={(event) =>
+                  setShowExpectedInteractions(event.target.checked)
+                }
+                color="primary"
+              />
+            }
+            label="Also show expected interactions"
+            labelPlacement="end"
+          />
+        </FormGroup>
       </VisualizationOptionsWrapper>
 
       <VisualizationGraph
