@@ -31,6 +31,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useDependencyHistory } from './useDependencyHistory';
 import { grey } from '@mui/material/colors';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import { useTeamTypeHistory } from './useTeamTypeHistory';
 
 interface INode extends NodeObject {
   name?: string;
@@ -82,6 +83,10 @@ const DependencyVisualization: React.FC = () => {
   const [selectedDateIndex, setSelectedDateIndex] = useState<number>(0);
 
   const { dependencies } = useDependencyHistory({
+    projectId: currentProject.id,
+    date: selectedDate,
+  });
+  const { teamTypesByTeamId } = useTeamTypeHistory({
     projectId: currentProject.id,
     date: selectedDate,
   });
@@ -139,7 +144,7 @@ const DependencyVisualization: React.FC = () => {
       return {
         id: teamId,
         name: teamData ? teamData.name : '',
-        teamType: teamData ? teamData.type : teamType.UNDEFINED,
+        teamType: teamTypesByTeamId[teamId] || teamType.UNDEFINED,
       };
     },
   );

@@ -101,6 +101,10 @@ interface IHistoricDependency extends IHistoricValue {
   changeType: changeType;
 }
 
+interface IHistoricTeamType extends IHistoricValue {
+  teamType: teamType;
+}
+
 interface IInitialState {
   // teams ordered by project
   teams: {
@@ -119,6 +123,9 @@ interface IInitialState {
   };
   historyDomains: {
     [keys: string]: IHistoricDomainResponsibility[];
+  };
+  historyTeamTypes: {
+    [keys: string]: IHistoricTeamType[];
   };
   // historic dependencies ordered by project
   historyDependencies: {
@@ -471,6 +478,24 @@ export const initialState: IInitialState = {
       {
         domains: [],
         date: '2021-07-13',
+      },
+    ],
+  },
+  historyTeamTypes: {
+    '1': [
+      {
+        teamType: teamType.STREAM_ALIGNED,
+        date: '2022-11-09',
+        changeReason: 'Finally found the correct team type.',
+      },
+      {
+        teamType: teamType.ENABLING,
+        date: '2022-11-06',
+        changeReason: 'Triyng to be an enabling team.',
+      },
+      {
+        teamType: teamType.UNDEFINED,
+        date: '2022-07-13',
       },
     ],
   },
