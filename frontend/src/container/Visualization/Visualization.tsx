@@ -8,7 +8,7 @@ const Visualization: React.FC = () => {
     <Tabs
       tabContent={[
         {
-          tabName: 'Team Interactions',
+          tabName: 'Teams',
           content: <TeamInteractionVisualization />,
         },
         {

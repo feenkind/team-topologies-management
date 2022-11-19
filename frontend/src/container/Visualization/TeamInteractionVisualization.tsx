@@ -80,23 +80,44 @@ const TeamInteractionVisualization: React.FC = () => {
   const interactionsHistory = useAppSelector(
     (state) => state.team.historyInteractions[currentProject.id],
   );
+  const teamTypeHistory = useAppSelector(
+    (state) => state.team.historyTeamTypes,
+  );
+
+  const initialTeamHistoryChangeDates: string[] = [];
+  // create flat array with all team type change dates of all project teams
+  const teamTypeHistoryChangeDates = teams.reduce((changeDates, team) => {
+    if (teamTypeHistory && teamTypeHistory[team.id]) {
+      const teamChangeDates = teamTypeHistory[team.id].map(
+        (history) => history.date,
+      );
+      return [...changeDates, ...teamChangeDates];
+    }
+    return [...changeDates];
+  }, initialTeamHistoryChangeDates);
+
   const interactionsHistoryChangeDates =
     interactionsHistory && interactionsHistory.map((history) => history.date);
+
+  // merge team type and interaction change dates together
+  const historyChangeDates = [
+    ...teamTypeHistoryChangeDates,
+    ...interactionsHistoryChangeDates,
+  ];
+
   // remove duplicate dates and order desc
-  const sortedInteractionsHistoryChangeDates =
-    interactionsHistoryChangeDates &&
-    Array.from(new Set(interactionsHistoryChangeDates)).sort((a, b) =>
+  const sortedHistoryChangeDates =
+    historyChangeDates &&
+    Array.from(new Set(historyChangeDates)).sort((a, b) =>
       new Date(a) > new Date(b) ? -1 : 1,
     );
 
   const [selectedDate, setSelectedDate] = useState<string>(
-    sortedInteractionsHistoryChangeDates
-      ? sortedInteractionsHistoryChangeDates[0]
-      : '',
+    sortedHistoryChangeDates ? sortedHistoryChangeDates[0] : '',
   );
   const [selectedDateIndex, setSelectedDateIndex] = useState<number>(0);
   const [showExpectedInteractions, setShowExpectedInteractions] =
-    useState<boolean>(false);
+    useState<boolean>(true);
 
   const { interactions } = useInteractionsHistory({
     projectId: currentProject.id,
@@ -196,7 +217,7 @@ const TeamInteractionVisualization: React.FC = () => {
         <Typography variant="button" marginRight={1}>
           Show interactions at
         </Typography>
-        <Tooltip title="The select box shows all dates with changes to the team depenencies.">
+        <Tooltip title="The select box shows all dates with changes to the team types or interactions.">
           <HelpOutlineOutlinedIcon
             fontSize="small"
             sx={{ mr: 1, color: grey[400] }}
@@ -205,16 +226,13 @@ const TeamInteractionVisualization: React.FC = () => {
         <IconButton
           sx={{ mr: 1 }}
           disabled={
-            selectedDateIndex ===
-              sortedInteractionsHistoryChangeDates.length - 1 ||
+            selectedDateIndex === sortedHistoryChangeDates.length - 1 ||
             selectedDateIndex === -1
           }
           onClick={() => {
             // click back sets the next value in the array, because we have
             // a desc order
-            setSelectedDate(
-              sortedInteractionsHistoryChangeDates[selectedDateIndex + 1],
-            );
+            setSelectedDate(sortedHistoryChangeDates[selectedDateIndex + 1]);
             setSelectedDateIndex(selectedDateIndex + 1);
           }}
         >
@@ -230,14 +248,13 @@ const TeamInteractionVisualization: React.FC = () => {
             label="Date"
             onChange={(selectedOption) => {
               setSelectedDate(selectedOption.target.value);
-              const selectedDateIndex =
-                sortedInteractionsHistoryChangeDates.findIndex(
-                  (date) => date === selectedOption.target.value,
-                );
+              const selectedDateIndex = sortedHistoryChangeDates.findIndex(
+                (date) => date === selectedOption.target.value,
+              );
               setSelectedDateIndex(selectedDateIndex);
             }}
           >
-            {sortedInteractionsHistoryChangeDates.map((date) => (
+            {sortedHistoryChangeDates.map((date) => (
               <MenuItem key={date} value={date}>
                 {new Date(date).toLocaleDateString('en-GB')}
               </MenuItem>
@@ -250,9 +267,7 @@ const TeamInteractionVisualization: React.FC = () => {
           onClick={() => {
             // click forwards sets the previous value in the array, because we
             // have a desc order
-            setSelectedDate(
-              sortedInteractionsHistoryChangeDates[selectedDateIndex - 1],
-            );
+            setSelectedDate(sortedHistoryChangeDates[selectedDateIndex - 1]);
             setSelectedDateIndex(selectedDateIndex - 1);
           }}
         >

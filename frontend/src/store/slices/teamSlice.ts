@@ -516,6 +516,17 @@ export const initialState: IInitialState = {
         date: '2022-07-13',
       },
     ],
+    '2': [
+      {
+        teamType: teamType.PLATFORM,
+        date: '2022-11-05',
+        changeReason: 'Finally found the correct team type.',
+      },
+      {
+        teamType: teamType.UNDEFINED,
+        date: '2022-07-13',
+      },
+    ],
   },
   historyDependencies: {
     '1': [
