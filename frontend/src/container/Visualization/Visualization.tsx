@@ -2,6 +2,7 @@ import * as React from 'react';
 import Tabs from '../../components/Layout/Tabs';
 import DependencyVisualization from './DependencyVisualization';
 import TeamInteractionVisualization from './TeamInteractionVisualization';
+import DomainVisualization from './DomainVisualization';
 
 const Visualization: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ const Visualization: React.FC = () => {
           tabName: 'Dependencies',
           content: <DependencyVisualization />,
         },
-        { tabName: 'Core Domain Chart', content: 'Not' + ' implemented yet' },
+        { tabName: 'Domains', content: <DomainVisualization /> },
       ]}
     />
   );
