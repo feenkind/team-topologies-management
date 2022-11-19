@@ -96,8 +96,9 @@ const TeamInteractionVisualization: React.FC = () => {
     return [...changeDates];
   }, initialTeamHistoryChangeDates);
 
-  const interactionsHistoryChangeDates =
-    interactionsHistory && interactionsHistory.map((history) => history.date);
+  const interactionsHistoryChangeDates = interactionsHistory
+    ? interactionsHistory.map((history) => history.date)
+    : [];
 
   // merge team type and interaction change dates together
   const historyChangeDates = [
