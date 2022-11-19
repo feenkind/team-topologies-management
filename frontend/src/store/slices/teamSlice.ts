@@ -74,9 +74,9 @@ export interface IInteraction {
 }
 
 export enum changeType {
-  ADDED = 'Dependency added',
-  REMOVED = 'Dependency removed',
-  CHANGED = 'Dependency changed',
+  ADDED = 'added',
+  REMOVED = 'removed',
+  CHANGED = 'changed',
 }
 
 interface IHistoricValue {
