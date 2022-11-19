@@ -23,7 +23,7 @@ const TeamViewInformation: React.FC<ITeamViewInformationProps> = ({
           content: team.focus,
         },
         {
-          label: 'Team Topology',
+          label: 'Team type',
           content: <TeamTypeCategory teamType={team.type} />,
         },
         {

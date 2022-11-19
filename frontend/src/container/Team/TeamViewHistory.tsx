@@ -16,6 +16,7 @@ import { ITeam } from '../../store/slices/teamSlice';
 import TeamViewHistoryCognitiveLoadDiagram from './TeamViewHistoryCognitiveLoadDiagram';
 import TeamViewHistoryDependencyTable from './TeamViewHistoryDependencyTable';
 import { useAppSelector } from '../../hooks';
+import TeamViewHistoryTeamTypeTable from './TeamViewHistoryTeamTypeTable';
 
 interface ITeamViewHistoryProps {
   team: ITeam;
@@ -62,6 +63,7 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
             }
           >
             <MenuItem value={'cognitiveLoad'}>Cognitive Load</MenuItem>
+            <MenuItem value={'teamType'}>Team Type</MenuItem>
             <MenuItem value={'dependencies'}>Dependencies</MenuItem>
             <MenuItem value={'interactions'} disabled>
               Interactions
@@ -146,6 +148,10 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
           showCognitiveLoad={showCognitiveLoad}
           showDomainResponsibilities={showDomainResponsibility}
         />
+      )}
+
+      {historyDisplay === 'teamType' && (
+        <TeamViewHistoryTeamTypeTable team={team} />
       )}
 
       {historyDisplay === 'dependencies' && selectedOtherTeam && (
