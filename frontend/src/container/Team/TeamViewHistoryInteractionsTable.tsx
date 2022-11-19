@@ -72,7 +72,7 @@ const TeamViewHistoryInteractionsTable: React.FC<
         ),
         history.interaction.purpose,
         new Date(history.interaction.startDate).toLocaleDateString('en-GB'),
-        `${history.interaction.startDate} weeks`,
+        `${history.interaction.expectedDuration} weeks`,
         history.interaction.additionalInformation || '',
       ])}
     />
