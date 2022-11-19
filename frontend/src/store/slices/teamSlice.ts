@@ -96,13 +96,18 @@ interface IHistoricDomainResponsibility extends IHistoricValue {
   domains: string[];
 }
 
+interface IHistoricTeamType extends IHistoricValue {
+  teamType: teamType;
+}
+
 interface IHistoricDependency extends IHistoricValue {
   dependency: IDependency;
   changeType: changeType;
 }
 
-interface IHistoricTeamType extends IHistoricValue {
-  teamType: teamType;
+interface IHistoricInteraction extends IHistoricValue {
+  interaction: IInteraction;
+  changeType: changeType;
 }
 
 interface IInitialState {
@@ -130,6 +135,10 @@ interface IInitialState {
   // historic dependencies ordered by project
   historyDependencies: {
     [keys: string]: IHistoricDependency[];
+  };
+  // historic interactions ordered by project
+  historyInteractions: {
+    [keys: string]: IHistoricInteraction[];
   };
 }
 
@@ -360,7 +369,7 @@ export const initialState: IInitialState = {
         teamIdTwo: '3',
         interactionMode: interactionMode.FACILITATING,
         purpose: 'Work together, so Aweseome Team learns a lot.',
-        startDate: '2022/09/09',
+        startDate: '2022/11/01',
         expectedDuration: 2,
         additionalInformation: 'All going according to plan',
       },
@@ -390,7 +399,7 @@ export const initialState: IInitialState = {
       },
       {
         teamIdOne: '1',
-        teamIdTwo: '3',
+        teamIdTwo: '7',
         interactionMode: interactionMode.COLLABORATION,
         purpose: 'We want to work closely together soon.',
         startDate: '2023/02/13',
@@ -694,6 +703,100 @@ export const initialState: IInitialState = {
           description: 'We urgently need the implementation from this team.',
         },
         date: '2022-11-01',
+        changeType: changeType.ADDED,
+      },
+    ],
+  },
+  historyInteractions: {
+    '1': [
+      {
+        interaction: {
+          teamIdOne: '1',
+          teamIdTwo: '7',
+          interactionMode: interactionMode.COLLABORATION,
+          purpose: 'We want to work closely together soon.',
+          startDate: '2023/02/13',
+          expectedDuration: 10,
+        },
+        date: '2022-11-11',
+        changeType: changeType.ADDED,
+      },
+      {
+        interaction: {
+          teamIdOne: '1',
+          teamIdTwo: '3',
+          interactionMode: interactionMode.FACILITATING,
+          purpose: 'Work together, so Aweseome Team learns a lot.',
+          startDate: '2022/11/01',
+          expectedDuration: 2,
+          additionalInformation: 'All going according to plan',
+        },
+        date: '2022-11-01',
+        changeType: changeType.ADDED,
+      },
+      {
+        interaction: {
+          teamIdOne: '1',
+          teamIdTwo: '3',
+          interactionMode: interactionMode.FACILITATING,
+          purpose: 'Work together, so Aweseome Team learns a lot.',
+          startDate: '2022/09/10',
+          expectedDuration: 2,
+        },
+        date: '2022-09-30',
+        changeType: changeType.REMOVED,
+        changeReason: 'Support not needed anymore.',
+      },
+      {
+        interaction: {
+          teamIdOne: '1',
+          teamIdTwo: '3',
+          interactionMode: interactionMode.FACILITATING,
+          purpose: 'Supporting AwesomeTeam in doing awesome things.',
+          startDate: '2022/09/10',
+          expectedDuration: 2,
+        },
+        date: '2022-09-10',
+        changeType: changeType.ADDED,
+        changeReason: 'Support is needed.',
+      },
+      {
+        interaction: {
+          teamIdOne: '1',
+          teamIdTwo: '4',
+          interactionMode: interactionMode.COLLABORATION,
+          purpose: 'We need to find a good solution for a complicated problem.',
+          startDate: '2022/10/30',
+          expectedDuration: 20,
+        },
+        date: '2022-10-15',
+        changeType: changeType.CHANGED,
+        changeReason: 'Deeper collaboration needed, also start date changed.',
+      },
+      {
+        interaction: {
+          teamIdOne: '1',
+          teamIdTwo: '4',
+          interactionMode: interactionMode.FACILITATING,
+          purpose: 'Helping to find a good solution for a complicated problem.',
+          startDate: '2022/10/10',
+          expectedDuration: 20,
+        },
+        date: '2022-10-09',
+        changeType: changeType.ADDED,
+      },
+      {
+        interaction: {
+          teamIdOne: '1',
+          teamIdTwo: '2',
+          interactionMode: interactionMode.X_AS_A_SERVICE,
+          purpose:
+            'Perfect team provides services so awesome team will be faster.',
+          startDate: '2022/09/10',
+          expectedDuration: 12,
+          additionalInformation: 'We love working with this team',
+        },
+        date: '2022-09-01',
         changeType: changeType.ADDED,
       },
     ],

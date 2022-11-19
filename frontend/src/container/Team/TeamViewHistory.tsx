@@ -17,6 +17,7 @@ import TeamViewHistoryCognitiveLoadDiagram from './TeamViewHistoryCognitiveLoadD
 import TeamViewHistoryDependencyTable from './TeamViewHistoryDependencyTable';
 import { useAppSelector } from '../../hooks';
 import TeamViewHistoryTeamTypeTable from './TeamViewHistoryTeamTypeTable';
+import TeamViewHistoryInteractionsTable from './TeamViewHistoryInteractionsTable';
 
 interface ITeamViewHistoryProps {
   team: ITeam;
@@ -65,9 +66,7 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
             <MenuItem value={'cognitiveLoad'}>Cognitive Load</MenuItem>
             <MenuItem value={'teamType'}>Team Type</MenuItem>
             <MenuItem value={'dependencies'}>Dependencies</MenuItem>
-            <MenuItem value={'interactions'} disabled>
-              Interactions
-            </MenuItem>
+            <MenuItem value={'interactions'}>Interactions</MenuItem>
           </Select>
         </FormControl>
 
@@ -113,32 +112,34 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
           </FormGroup>
         )}
 
-        {historyDisplay === 'dependencies' && otherTeams.length > 0 && (
-          <>
-            <Typography mr={3}>with team</Typography>
-            <FormControl>
-              <InputLabel id="dependency-team-select-label">
-                Team name
-              </InputLabel>
-              <Select
-                size="small"
-                labelId="dependency-team-select-label"
-                id="dependency-team-select"
-                value={selectedTeamId}
-                label="Team name"
-                onChange={(selectedOption) =>
-                  setSelectedTeamId(selectedOption.target.value)
-                }
-              >
-                {otherTeams.map((team) => (
-                  <MenuItem key={team.id} value={team.id}>
-                    {team.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </>
-        )}
+        {(historyDisplay === 'dependencies' ||
+          historyDisplay === 'interactions') &&
+          otherTeams.length > 0 && (
+            <>
+              <Typography mr={3}>with team</Typography>
+              <FormControl>
+                <InputLabel id="dependency-team-select-label">
+                  Team name
+                </InputLabel>
+                <Select
+                  size="small"
+                  labelId="dependency-team-select-label"
+                  id="dependency-team-select"
+                  value={selectedTeamId}
+                  label="Team name"
+                  onChange={(selectedOption) =>
+                    setSelectedTeamId(selectedOption.target.value)
+                  }
+                >
+                  {otherTeams.map((team) => (
+                    <MenuItem key={team.id} value={team.id}>
+                      {team.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </>
+          )}
       </VisualizationOptionsWrapper>
 
       {historyDisplay === 'cognitiveLoad' && (
@@ -164,6 +165,19 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
         <Alert severity="info" sx={{ mt: 3 }}>
           This project has no other teams and therefore {team.name} had no
           dependencies within the project.
+        </Alert>
+      )}
+
+      {historyDisplay === 'interactions' && selectedOtherTeam && (
+        <TeamViewHistoryInteractionsTable
+          team={team}
+          otherTeam={selectedOtherTeam}
+        />
+      )}
+      {historyDisplay === 'interactions' && !selectedOtherTeam && (
+        <Alert severity="info" sx={{ mt: 3 }}>
+          This project has no other teams and therefore {team.name} had no
+          interactions with other teams in this project.
         </Alert>
       )}
     </>
