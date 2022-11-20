@@ -49,4 +49,13 @@ export const domainHints: IHintMapping = {
     linkUrl: 'https://github.com/ddd-crew/core-domain-charts',
     linkLabel: 'Learn more',
   },
+  domainPriority: {
+    summary: 'Domain Priority',
+    description:
+      'Core, supporting or generic? -> Link to questions of core domain' +
+      ' chart?',
+    linkUrl:
+      'https://github.com/ddd-crew/core-domain-charts#suggestions-for-measuring-complexity-and-differentiation',
+    linkLabel: 'Learn more',
+  },
 };
