@@ -5,7 +5,7 @@ const createProjects = async (prisma: PrismaClient) => {
     where: { name: 'Shopping platform' },
   });
 
-  if (!existingProject) {
+  if (existingProject.length === 0) {
     const project = await prisma.project.create({
       data: {
         name: 'Shopping platform',

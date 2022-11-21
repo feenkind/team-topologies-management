@@ -11,7 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import axiosInstance from '../../axios';
 import { useEffect, useState } from 'react';
-import { setDataLoaded } from '../../store/slices/globalSlice';
+import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
 
 interface IProjectFormInput {
   name: string;
@@ -37,13 +37,16 @@ const ProjectForm: React.FC = () => {
   useEffect(() => {
     // make sure to always work with the newest data when editing
     if (projectId) {
-      axiosInstance.get(`/projects/${projectId}`).then((response) => {
-        setProjectData(response.data);
-        setValue('name', response.data.name);
-        setValue('description', response.data.description);
-      });
+      axiosInstance
+        .get(`/projects/${projectId}`)
+        .then((response) => {
+          setProjectData(response.data);
+          setValue('name', response.data.name);
+          setValue('description', response.data.description);
+        })
+        .catch(() => dispatch(setNetworkError(true)));
     }
-  }, [projectId, setProjectData, setValue]);
+  }, [projectId, setProjectData, setValue, dispatch]);
 
   const onSubmit: SubmitHandler<IProjectFormInput> = (data) => {
     const project = {
@@ -52,22 +55,28 @@ const ProjectForm: React.FC = () => {
     };
 
     if (projectData) {
-      axiosInstance.put(`/projects/${projectData.id}`, project).then(() => {
-        // trigger new data loading from backend to refresh all data
-        dispatch(setDataLoaded(false));
+      axiosInstance
+        .put(`/projects/${projectData.id}`, project)
+        .then(() => {
+          // trigger new data loading from backend to refresh all data
+          dispatch(setDataLoaded(false));
 
-        // just go back when editing
-        navigate(-1);
-      });
+          // just go back when editing
+          navigate(-1);
+        })
+        .catch(() => dispatch(setNetworkError(true)));
     }
 
     if (!projectId) {
-      axiosInstance.post('/projects', project).then((response) => {
-        dispatch(addProject({ ...project, id: response.data.id }));
+      axiosInstance
+        .post('/projects', project)
+        .then((response) => {
+          dispatch(addProject({ ...project, id: response.data.id }));
 
-        // go to overview after adding
-        navigate(`/project/${response.data.id}`);
-      });
+          // go to overview after adding
+          navigate(`/project/${response.data.id}`);
+        })
+        .catch(() => dispatch(setNetworkError(true)));
     }
   };
 
