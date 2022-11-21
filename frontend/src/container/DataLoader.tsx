@@ -7,7 +7,7 @@ import {
   setCurrentProject,
 } from '../store/slices/projectSlice';
 import axiosInstance from '../axios';
-import { setDataLoaded } from '../store/slices/globalSlice';
+import { setDataLoaded, setNetworkError } from '../store/slices/globalSlice';
 
 interface IDataLoaderProps {
   children: React.ReactNode | React.ReactNode[];
@@ -16,7 +16,7 @@ interface IDataLoaderProps {
 const DataLoader: React.FC<IDataLoaderProps> = ({
   children,
 }: IDataLoaderProps) => {
-  const isDataLoaded = useAppSelector((state) => state.global.isDataLoaded);
+  const isDataLoaded = useAppSelector((state) => state.global.dataLoaded);
   const currentProjectId = useAppSelector(
     (state) => state.project.currentProject.id,
   );
@@ -36,11 +36,14 @@ const DataLoader: React.FC<IDataLoaderProps> = ({
         .then((response) => {
           if (response.data && response.data.length > 0) {
             dispatch(addAllProjects(response.data));
+
             dispatch(setDataLoaded(true));
+            dispatch(setNetworkError(false));
           }
         })
         .catch(() => {
           dispatch(setDataLoaded(false));
+          dispatch(setNetworkError(true));
         });
     }
   }, [isDataLoaded, dispatch]);

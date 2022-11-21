@@ -3,10 +3,10 @@ import { useAppSelector } from '../hooks';
 import { Alert } from '@mui/material';
 
 const ErrorDisplay: React.FC = () => {
-  const isDataLoaded = useAppSelector((state) => state.global.isDataLoaded);
+  const networkError = useAppSelector((state) => state.global.networkError);
   return (
     <>
-      {!isDataLoaded && (
+      {networkError && (
         <Alert severity="error" sx={{ mb: 3 }}>
           The application data could not be loaded from the backend. Please try
           again later.

@@ -9,6 +9,7 @@ import { useAppDispatch } from '../../hooks';
 import { addProject } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
+import axiosInstance from '../../axios';
 
 interface IProjectAddFormInput {
   name: string;
@@ -26,15 +27,19 @@ const ProjectAddForm: React.FC = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<IProjectAddFormInput> = (data) => {
-    const projectId = Date.now().toString();
-    dispatch(
-      addProject({
-        id: projectId,
-        name: data.name,
-        description: data.description,
-      }),
-    );
-    navigate(`/project/${projectId}`);
+    axiosInstance
+      .post('/projects', { name: data.name, description: data.description })
+      .then((response) => {
+        dispatch(
+          addProject({
+            id: response.data.id,
+            name: data.name,
+            description: data.description,
+          }),
+        );
+
+        navigate(`/project/${response.data.id}`);
+      });
   };
 
   return (

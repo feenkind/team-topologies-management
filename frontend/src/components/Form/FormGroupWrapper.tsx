@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Paper, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
 
 interface IFormGroupWrapperProps {
   caption: string;
@@ -15,7 +14,7 @@ const FormGroupWrapper: React.FC<IFormGroupWrapperProps> = ({
     <Paper
       variant="outlined"
       sx={{
-        backgroundColor: grey[50],
+        backgroundColor: 'white',
         p: 2,
         my: 3,
         position: 'relative',
@@ -31,7 +30,7 @@ const FormGroupWrapper: React.FC<IFormGroupWrapperProps> = ({
           top: '-12px',
           px: 1,
           py: 0.5,
-          backgroundColor: grey[50],
+          backgroundColor: 'white',
           borderRadius: 1,
         }}
       >

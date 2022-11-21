@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IInitialState {
-  isDataLoaded: boolean;
+  dataLoaded: boolean;
+  networkError: boolean;
 }
 
 export const initialState: IInitialState = {
-  isDataLoaded: false,
+  dataLoaded: false,
+  networkError: false,
 };
 
 const globalSlice = createSlice({
@@ -13,10 +15,13 @@ const globalSlice = createSlice({
   initialState: initialState,
   reducers: {
     setDataLoaded: (state, { payload }: PayloadAction<boolean>) => {
-      state.isDataLoaded = payload;
+      state.dataLoaded = payload;
+    },
+    setNetworkError: (state, { payload }: PayloadAction<boolean>) => {
+      state.networkError = payload;
     },
   },
 });
 
 export const globalReducer = globalSlice.reducer;
-export const { setDataLoaded } = globalSlice.actions;
+export const { setDataLoaded, setNetworkError } = globalSlice.actions;
