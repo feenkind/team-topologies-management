@@ -16,12 +16,20 @@ import DomainView from './container/Domain/DomainView';
 import Page404 from './components/Page404';
 import TeamView from './container/Team/TeamView';
 import NotificationList from './container/Notification/NotificationList';
+import DataLoader from './container/DataLoader';
+import ProjectNotFound from './container/Project/ProjectNotFound';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout header={<Header />} sidebar={<Sidebar />} />}>
+        <Route
+          element={
+            <DataLoader>
+              <Layout header={<Header />} sidebar={<Sidebar />} />
+            </DataLoader>
+          }
+        >
           <Route
             path="project/:projectId/team/:teamId"
             element={<TeamView />}
@@ -54,6 +62,7 @@ const App: React.FC = () => {
           <Route path="notifications" element={<NotificationList />} />
           <Route path="projects" element={<ProjectList />} />
           <Route path="teams" element={<TeamList />} />
+          <Route path="project-not-found" element={<ProjectNotFound />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="*" element={<Page404 />} />
         </Route>

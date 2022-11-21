@@ -41,6 +41,12 @@ export const domainHints: IHintMapping = {
     linkUrl: 'https://github.com/ddd-crew/eventstorming-glossary-cheat-sheet',
     linkLabel: 'Go to the cheatsheet',
   },
+  eventStormingRemote: {
+    summary: 'Remote Event Storming',
+    description: 'Remote event storming...',
+    linkUrl: '',
+    linkLabel: 'Go to the article',
+  },
   coreDomainChart: {
     summary: 'Core Domain Chart',
     description:
@@ -56,6 +62,12 @@ export const domainHints: IHintMapping = {
       ' chart?',
     linkUrl:
       'https://github.com/ddd-crew/core-domain-charts#suggestions-for-measuring-complexity-and-differentiation',
+    linkLabel: 'Learn more',
+  },
+  domainStorytelling: {
+    summary: 'Domain Storytelling',
+    description: '',
+    linkUrl: '',
     linkLabel: 'Learn more',
   },
 };
