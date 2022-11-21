@@ -20,7 +20,7 @@ import ProjectNotFound from './container/Project/ProjectNotFound';
 import TeamAddForm from './container/Team/TeamAddForm';
 import DomainEditForm from './container/Domain/DomainEditForm';
 import TeamEditForm from './container/Team/TeamEditForm';
-import ProjectAddForm from './container/Project/ProjectAddForm';
+import ProjectForm from './container/Project/ProjectForm';
 import ErrorDisplay from './container/ErrorDisplay';
 
 const App: React.FC = () => {
@@ -72,9 +72,10 @@ const App: React.FC = () => {
             path="project/:projectId/visualization"
             element={<Visualization />}
           />
+          <Route path="project/:projectId/edit" element={<ProjectForm />} />
           <Route path="project/:projectId" element={<ProjectOverview />} />
           <Route path="notifications" element={<NotificationList />} />
-          <Route path="projects/add" element={<ProjectAddForm />} />
+          <Route path="projects/add" element={<ProjectForm />} />
           <Route path="projects" element={<ProjectList />} />
           <Route path="teams" element={<TeamList />} />
           <Route path="project-not-found" element={<ProjectNotFound />} />

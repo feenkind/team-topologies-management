@@ -13,8 +13,12 @@ const ProjectList: React.FC = () => {
   const domains = useAppSelector((state) => state.domain.domains);
   const teams = useAppSelector((state) => state.team.teams);
 
+  const sortedProjectsByName = projects
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   const tableHeaderItems = ['Name', 'Domains', 'Teams'];
-  const tableContentItems = projects.map((project) => {
+  const tableContentItems = sortedProjectsByName.map((project) => {
     const domainLinks = domains[project.id]
       ? domains[project.id].map((domain) => (
           <ButtonLink
@@ -45,10 +49,10 @@ const ProjectList: React.FC = () => {
       <>{teamLinks}</>,
     ];
   });
-  const actions = projects.map((project) => ({
+  const actions = sortedProjectsByName.map((project) => ({
     basePath: `/project/${project.id}`,
     view: true,
-    edit: false,
+    edit: true,
     delete: false,
   }));
 

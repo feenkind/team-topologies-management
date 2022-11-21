@@ -6,45 +6,78 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useAppDispatch } from '../../hooks';
-import { addProject } from '../../store/slices/projectSlice';
-import { useNavigate } from 'react-router-dom';
+import { addProject, IProject } from '../../store/slices/projectSlice';
+import { useNavigate, useParams } from 'react-router-dom';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import axiosInstance from '../../axios';
+import { useEffect, useState } from 'react';
+import { setDataLoaded } from '../../store/slices/globalSlice';
 
-interface IProjectAddFormInput {
+interface IProjectFormInput {
   name: string;
   description: string;
 }
 
-const ProjectAddForm: React.FC = () => {
+const ProjectForm: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { projectId } = useParams<{
+    projectId: string;
+  }>();
+  const [projectData, setProjectData] = useState<IProject>();
+
   const {
     register,
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<IProjectAddFormInput>();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  } = useForm<IProjectFormInput>();
 
-  const onSubmit: SubmitHandler<IProjectAddFormInput> = (data) => {
-    axiosInstance
-      .post('/projects', { name: data.name, description: data.description })
-      .then((response) => {
-        dispatch(
-          addProject({
-            id: response.data.id,
-            name: data.name,
-            description: data.description,
-          }),
-        );
+  useEffect(() => {
+    // make sure to always work with the newest data when editing
+    if (projectId) {
+      axiosInstance.get(`/projects/${projectId}`).then((response) => {
+        setProjectData(response.data);
+        setValue('name', response.data.name);
+        setValue('description', response.data.description);
+      });
+    }
+  }, [projectId, setProjectData, setValue]);
 
+  const onSubmit: SubmitHandler<IProjectFormInput> = (data) => {
+    const project = {
+      name: data.name,
+      description: data.description,
+    };
+
+    if (projectData) {
+      axiosInstance.put(`/projects/${projectData.id}`, project).then(() => {
+        // trigger new data loading from backend to refresh all data
+        dispatch(setDataLoaded(false));
+
+        // just go back when editing
+        navigate(-1);
+      });
+    }
+
+    if (!projectId) {
+      axiosInstance.post('/projects', project).then((response) => {
+        dispatch(addProject({ ...project, id: response.data.id }));
+
+        // go to overview after adding
         navigate(`/project/${response.data.id}`);
       });
+    }
   };
 
   return (
     <>
-      <PageHeadline text="Add a new project" />
+      <PageHeadline
+        text={
+          projectData ? `Edit project ${projectData.name}` : 'Add a new project'
+        }
+      />
       <ContentWithHints hints={[projectHints.projectDescription]}>
         <FormGroupWrapper caption="Basic Information">
           <Controller
@@ -103,11 +136,11 @@ const ProjectAddForm: React.FC = () => {
           />
         </FormGroupWrapper>
         <Button onClick={handleSubmit(onSubmit)} variant="contained">
-          Create new project
+          {projectData ? 'Save changes to project' : 'Create new project'}
         </Button>
       </ContentWithHints>
     </>
   );
 };
 
-export default ProjectAddForm;
+export default ProjectForm;

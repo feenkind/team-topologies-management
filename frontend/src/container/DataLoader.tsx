@@ -57,10 +57,10 @@ const DataLoader: React.FC<IDataLoaderProps> = ({
   }, [dispatch, projectId, currentProjectId, projectExists]);
 
   useEffect(() => {
-    if (projectId && !projectExists) {
+    if (isDataLoaded && projectId && !projectExists) {
       navigate('/project-not-found');
     }
-  }, [projectExists, projectId, navigate]);
+  }, [projectExists, projectId, navigate, isDataLoaded]);
 
   return <>{children}</>;
 };
