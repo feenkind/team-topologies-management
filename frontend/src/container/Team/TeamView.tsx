@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Page404 from '../../components/Page404';
 import { useAppSelector } from '../../hooks';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
@@ -13,6 +13,8 @@ import TeamViewCognitiveLoad from './TeamViewCognitiveLoad';
 import { useCognitiveLoad } from './useCognitiveLoadHook';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TeamViewHistory from './TeamViewHistory';
+import { IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 const TeamView: React.FC = () => {
   const { teamId } = useParams<{
@@ -34,7 +36,17 @@ const TeamView: React.FC = () => {
 
   return (
     <>
-      <TeamPageHeadline teamName={team.name} teamType={team.type} />
+      <TeamPageHeadline teamName={team.name} teamType={team.type}>
+        <IconButton
+          component={Link}
+          to={`/project/${currentProject.id}/team/${team.id}/edit`}
+          sx={{ ml: 1 }}
+          size="small"
+        >
+          <EditIcon />
+        </IconButton>
+      </TeamPageHeadline>
+
       <ContentWithHints>
         <Tabs
           tabContent={[

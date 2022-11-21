@@ -73,7 +73,7 @@ const DomainListForProject: React.FC = () => {
   const actions = domains.map((domain) => ({
     basePath: `/project/${currentProject.id}/domain/${domain.id}`,
     view: true,
-    edit: false,
+    edit: true,
     delete: false,
   }));
 

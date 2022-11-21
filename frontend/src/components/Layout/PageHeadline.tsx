@@ -1,17 +1,22 @@
 import * as React from 'react';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 interface IPageHeadlineProps {
   text: string;
+  children?: React.ReactNode | React.ReactNode[];
 }
 
 const PageHeadline: React.FC<IPageHeadlineProps> = ({
   text,
+  children,
 }: IPageHeadlineProps) => {
   return (
-    <Typography component="h1" variant="h6" marginBottom={3}>
-      {text}
-    </Typography>
+    <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 3 }}>
+      <Typography component="h1" variant="h6">
+        {text}
+      </Typography>
+      {children}
+    </Box>
   );
 };
 

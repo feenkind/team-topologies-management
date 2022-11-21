@@ -20,7 +20,7 @@ const TeamEditForm: React.FC = () => {
 
   return (
     <>
-      <PageHeadline text={`Edit domain ${team.name}`} />
+      <PageHeadline text={`Edit team ${team.name}`} />
       <ContentWithHints>will be implemented soon</ContentWithHints>
     </>
   );

@@ -5,6 +5,8 @@ import Table from '../../components/Table/Table';
 import TableLinkText from '../../components/Table/TableLinkText';
 import ButtonLink from '../../components/Buttons/ButtonLink';
 import TeamLink from '../../components/Buttons/TeamLink';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const ProjectList: React.FC = () => {
   const projects = useAppSelector((state) => state.project.projects);
@@ -50,6 +52,14 @@ const ProjectList: React.FC = () => {
   return (
     <>
       <PageHeadline text="All projects" />
+      <Button
+        component={Link}
+        to="/projects/add"
+        variant="contained"
+        sx={{ mb: 3 }}
+      >
+        Add new project
+      </Button>
       <Table
         headerItems={tableHeaderItems}
         contentItems={tableContentItems}

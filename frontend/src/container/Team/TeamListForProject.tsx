@@ -73,7 +73,7 @@ const TeamListForProject: React.FC = () => {
   const actions = teams.map((team) => ({
     basePath: `/project/${currentProject.id}/team/${team.id}`,
     view: true,
-    edit: false,
+    edit: true,
     delete: false,
   }));
 

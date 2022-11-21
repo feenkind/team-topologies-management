@@ -10,6 +10,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
 
 export interface ITableAction {
@@ -81,6 +82,17 @@ const Table: React.FC<ITableProps> = ({
                         to={`${actions[rowIndex].basePath}`}
                       >
                         <ManageSearchIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+
+                  {actions[rowIndex].edit && (
+                    <Tooltip title="Edit">
+                      <IconButton
+                        component={Link}
+                        to={`${actions[rowIndex].basePath}/edit`}
+                      >
+                        <EditIcon />
                       </IconButton>
                     </Tooltip>
                   )}
