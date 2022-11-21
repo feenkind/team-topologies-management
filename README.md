@@ -30,8 +30,15 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-For basic authentication, copy the `.env.example` and rename it to `.env`.
+For basic authentication and databse, copy the `.env.example` and rename it 
+to `.env`.
 Add a user and a password.
+
+## Database
+Start the postgres database in docker with
+```bash
+$ docker-compose --env-file backend/.env up db
+````
 
 ## Test
 
