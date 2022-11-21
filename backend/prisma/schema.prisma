@@ -16,4 +16,41 @@ model Project {
   updatedAt   DateTime @updatedAt
   name        String   @db.VarChar(255)
   description String
+  Domain      Domain?
+}
+
+model Domain {
+  id            String          @id @default(cuid())
+  project       Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId     String          @unique @db.Text
+  name          String          @db.VarChar(255)
+  description   String
+  priority      Priority
+  complexity    Complexity
+  active        Boolean
+  DomainHistory DomainHistory[]
+}
+
+model DomainHistory {
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  domain      Domain     @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  domainId    String     @db.Text
+  changeNote  String
+  name        String     @db.VarChar(255)
+  description String
+  priority    Priority
+  complexity  Complexity
+}
+
+enum Priority {
+  GENERIC
+  SUPPORTING
+  CORE
+}
+
+enum Complexity {
+  SIMPLE
+  COMPLICATED
+  COMPLEX
 }
