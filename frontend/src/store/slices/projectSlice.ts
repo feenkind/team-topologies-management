@@ -16,46 +16,10 @@ interface IInitialState {
 
 export const initialState: IInitialState = {
   currentProject: {
-    id: '1',
-    name: 'A Shopping Platform',
+    id: '',
+    name: '',
   },
-  projects: [
-    {
-      id: '1',
-      name: 'A Shopping Platform',
-      description:
-        'Some context for test project. Lorem ipsum dolor sit amet,' +
-        ' consetetur sadipscing elitr, sed diam nonumy eirmod tempor' +
-        ' invidunt ut labore et dolore magna aliquyam erat, sed diam' +
-        ' voluptua. At vero eos et accusam et justo duo dolores et ea' +
-        ' rebum. Stet clita kasd gubergren, no sea takimata sanctus est' +
-        ' Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,' +
-        ' consetetur sadipscing elitr, sed dia nonumy eirmod tempor' +
-        ' invidunt ut labore et dolore magna aliquyam erat, sed diam' +
-        ' voluptua. At vero eos et accusam et justo duo dolores et ea' +
-        ' rebum. Stet clita kasd gubergren, no sea takimata sanctus est' +
-        ' Lorem ipsum dolor sit amet.',
-    },
-    {
-      id: '2',
-      name: 'Another Project',
-      description: 'Some context.',
-    },
-    {
-      id: '3',
-      name: 'Some Random Project',
-      description:
-        'Some more context. Some more context. Some more context.' +
-        ' Some more context. Some more context. Some more context. Some' +
-        ' more context. Some more context. Some more context. Some more' +
-        ' context. Some more context. Some more context.',
-    },
-    {
-      id: '4',
-      name: 'Brand new project',
-      description: 'We do not know anything yet.',
-    },
-  ],
+  projects: [],
 };
 
 const projectSlice = createSlice({
@@ -74,8 +38,14 @@ const projectSlice = createSlice({
       state.currentProject.id = payload.id;
       state.currentProject.name = payload.name;
     },
+    addAllProjects: (state, { payload }: PayloadAction<IProject[]>) => {
+      state.projects = payload;
+      state.currentProject.id = payload[0].id || '';
+      state.currentProject.name = payload[0].name || '';
+    },
   },
 });
 
 export const projectReducer = projectSlice.reducer;
-export const { setCurrentProject, addProject } = projectSlice.actions;
+export const { setCurrentProject, addProject, addAllProjects } =
+  projectSlice.actions;

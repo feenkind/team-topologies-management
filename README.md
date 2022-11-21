@@ -11,6 +11,11 @@ Install all node module with `npm i`.
 The application can be started with navigating to the frontend folder and 
 running `npm run start`.
 
+For basic authentication and backend connection, copy the `.env.example` and 
+rename it
+to `.env`.
+Add all needed values.
+
 
 # Backend application
 The frontend application uses NestJS.
@@ -30,9 +35,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-For basic authentication and databse, copy the `.env.example` and rename it 
+For basic authentication and database, copy the `.env.example` and rename it 
 to `.env`.
-Add a user and a password.
+Add all needed values.
 
 ## Database
 Start the postgres database in docker with

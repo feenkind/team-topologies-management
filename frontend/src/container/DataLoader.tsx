@@ -2,7 +2,11 @@ import * as React from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { setCurrentProject } from '../store/slices/projectSlice';
+import {
+  addAllProjects,
+  setCurrentProject,
+} from '../store/slices/projectSlice';
+import axiosInstance from '../axios';
 
 interface IDataLoaderProps {
   children: React.ReactNode | React.ReactNode[];
@@ -20,6 +24,17 @@ const DataLoader: React.FC<IDataLoaderProps> = ({
   const { projectId } = useParams<{
     projectId: string;
   }>();
+
+  // load all data
+  useEffect(() => {
+    if (projects.length === 0) {
+      axiosInstance.request({ url: '/projects' }).then((response) => {
+        if (response.data && response.data.length > 0) {
+          dispatch(addAllProjects(response.data));
+        }
+      });
+    }
+  }, [projects, dispatch]);
 
   const projectExists = projects.find((project) => project.id === projectId);
 
