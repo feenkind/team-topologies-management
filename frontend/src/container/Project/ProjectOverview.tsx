@@ -127,7 +127,6 @@ const ProjectOverview: React.FC = () => {
                 to={`/project/${currentProject.id}/domains`}
                 variant="contained"
                 color="secondary"
-                fullWidth
               >
                 See domain details for this project
               </Button>
@@ -152,6 +151,16 @@ const ProjectOverview: React.FC = () => {
                 {currentProjectData.description}
               </Typography>
             </CardContent>
+            <CardActions sx={{ alignItems: 'center' }}>
+              <Button
+                component={Link}
+                to={`/project/${currentProject.id}/edit`}
+                variant="outlined"
+                color="primary"
+              >
+                Edit project details
+              </Button>
+            </CardActions>
           </Card>
         </Grid>
 
@@ -195,7 +204,6 @@ const ProjectOverview: React.FC = () => {
                 component={Link}
                 to={`/project/${currentProject.id}/teams`}
                 variant="contained"
-                fullWidth
                 color="secondary"
               >
                 See team details for this project
@@ -347,7 +355,6 @@ const ProjectOverview: React.FC = () => {
                 component={Link}
                 to={`/project/${currentProject.id}/visualization`}
                 variant="contained"
-                fullWidth
                 color="secondary"
               >
                 See visualization for interactions and dependencies
