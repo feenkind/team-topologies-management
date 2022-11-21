@@ -45,6 +45,9 @@ Start the postgres database in docker with
 $ docker-compose --env-file backend/.env up db
 ````
 
+For some test data, execute
+`npx prisma db seed`.
+
 ## Test
 
 ```bash
