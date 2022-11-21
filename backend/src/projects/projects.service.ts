@@ -1,25 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
-import { projects } from '../dummyData';
-import { Project } from './entities/project.entity';
+import { Project, Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class ProjectsService {
-  create(createProjectDto: CreateProjectDto) {
-    return 'This action adds a new project';
+  constructor(private prisma: PrismaService) {}
+
+  create(createInput: Prisma.ProjectCreateInput) {
+    return this.prisma.project.create({ data: createInput });
   }
 
-  findAll(): Project[] {
-    return projects;
+  async findAll(): Promise<Project[]> {
+    return this.prisma.project.findMany();
   }
 
-  findOne(id: string) {
-    return projects.find((project) => id === project.id);
+  async findOne(id: string): Promise<Project> {
+    return this.prisma.project.findUnique({ where: { id } });
   }
 
-  update(id: string, updateProjectDto: UpdateProjectDto) {
-    return `This action updates a #${id} project`;
+  async update({
+    data,
+    where,
+  }: {
+    data: Prisma.ProjectUpdateInput;
+    where: Prisma.ProjectWhereUniqueInput;
+  }): Promise<Project> {
+    return this.prisma.project.update({ data, where });
   }
 
   remove(id: string) {

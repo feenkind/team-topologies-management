@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -20,7 +20,10 @@ export class ProjectsController {
   @UseGuards(AuthGuard('basic'))
   @Post()
   create(@Body() createProjectDto: CreateProjectDto) {
-    return this.projectsService.create(createProjectDto);
+    return this.projectsService.create({
+      name: createProjectDto.name,
+      description: createProjectDto.description,
+    });
   }
 
   @UseGuards(AuthGuard('basic'))
@@ -36,9 +39,15 @@ export class ProjectsController {
   }
 
   @UseGuards(AuthGuard('basic'))
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
-    return this.projectsService.update(id, updateProjectDto);
+    return this.projectsService.update({
+      where: { id: id },
+      data: {
+        name: updateProjectDto.name,
+        description: updateProjectDto.description,
+      },
+    });
   }
 
   @UseGuards(AuthGuard('basic'))
