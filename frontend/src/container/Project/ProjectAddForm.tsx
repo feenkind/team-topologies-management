@@ -3,11 +3,12 @@ import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import { projectHints } from '../../constants/hints';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import { Button, FormHelperText, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useAppDispatch } from '../../hooks';
 import { addProject } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
+import FormElementWrapper from '../../components/Form/FormElementWrapper';
 
 interface IProjectAddFormInput {
   name: string;
@@ -46,7 +47,7 @@ const ProjectAddForm: React.FC = () => {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <>
+              <FormElementWrapper errors={errors.name}>
                 <TextField
                   required
                   fullWidth
@@ -64,10 +65,7 @@ const ProjectAddForm: React.FC = () => {
                     },
                   })}
                 />
-                {!!errors.name && (
-                  <FormHelperText error>{errors.name.message}</FormHelperText>
-                )}
-              </>
+              </FormElementWrapper>
             )}
           />
 
@@ -76,7 +74,7 @@ const ProjectAddForm: React.FC = () => {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <>
+              <FormElementWrapper errors={errors.description}>
                 <TextField
                   required
                   fullWidth
@@ -95,12 +93,7 @@ const ProjectAddForm: React.FC = () => {
                     },
                   })}
                 />
-                {!!errors.description && (
-                  <FormHelperText error>
-                    {errors.description.message}
-                  </FormHelperText>
-                )}
-              </>
+              </FormElementWrapper>
             )}
           />
         </FormGroupWrapper>
