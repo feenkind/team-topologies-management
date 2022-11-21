@@ -11,13 +11,16 @@ import Visualization from './container/Visualization/Visualization';
 import DomainListForProject from './container/Domain/DomainListForProject';
 import TeamListForProject from './container/Team/TeamListForProject';
 import DomainAddForm from './container/Domain/DomainAddForm';
-import TeamAddToProject from './container/Team/TeamAddToProject';
 import DomainView from './container/Domain/DomainView';
 import Page404 from './components/Page404';
 import TeamView from './container/Team/TeamView';
 import NotificationList from './container/Notification/NotificationList';
 import DataLoader from './container/DataLoader';
 import ProjectNotFound from './container/Project/ProjectNotFound';
+import TeamAddForm from './container/Team/TeamAddForm';
+import DomainEditForm from './container/Domain/DomainEditForm';
+import TeamEditForm from './container/Team/TeamEditForm';
+import ProjectAddForm from './container/Project/ProjectAddForm';
 
 const App: React.FC = () => {
   return (
@@ -31,16 +34,22 @@ const App: React.FC = () => {
           }
         >
           <Route
+            path="project/:projectId/team/:teamId/edit"
+            element={<TeamEditForm />}
+          />
+          <Route
             path="project/:projectId/team/:teamId"
             element={<TeamView />}
           />
-          <Route
-            path="project/:projectId/team/add"
-            element={<TeamAddToProject />}
-          />
+          <Route path="project/:projectId/team/add" element={<TeamAddForm />} />
           <Route
             path="project/:projectId/teams"
             element={<TeamListForProject />}
+          />
+
+          <Route
+            path="project/:projectId/domain/:domainId/edit"
+            element={<DomainEditForm />}
           />
           <Route
             path="project/:projectId/domain/:domainId"
@@ -60,6 +69,7 @@ const App: React.FC = () => {
           />
           <Route path="project/:projectId" element={<ProjectOverview />} />
           <Route path="notifications" element={<NotificationList />} />
+          <Route path="projects/add" element={<ProjectAddForm />} />
           <Route path="projects" element={<ProjectList />} />
           <Route path="teams" element={<TeamList />} />
           <Route path="project-not-found" element={<ProjectNotFound />} />

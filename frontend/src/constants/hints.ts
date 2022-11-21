@@ -1,8 +1,8 @@
 export interface IHint {
   summary: string;
   description: string;
-  linkUrl: string;
-  linkLabel: string;
+  linkUrl?: string;
+  linkLabel?: string;
 }
 
 interface IHintMapping {
@@ -69,5 +69,15 @@ export const domainHints: IHintMapping = {
     description: '',
     linkUrl: '',
     linkLabel: 'Learn more',
+  },
+};
+
+export const projectHints: IHintMapping = {
+  projectDescription: {
+    summary: 'What is a project?',
+    description:
+      'A project is a logical container around your domains. It can be a' +
+      ' value stream or a product or something completely different.' +
+      ' After creation you can add domains and teams to your project.',
   },
 };

@@ -15,20 +15,17 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TeamViewHistory from './TeamViewHistory';
 
 const TeamView: React.FC = () => {
-  const { projectId, teamId } = useParams<{
-    projectId: string;
+  const { teamId } = useParams<{
     teamId: string;
   }>();
-  const team = useAppSelector(
-    (state) =>
-      (projectId &&
-        teamId &&
-        state.team.teams[projectId].find((team) => team.id === teamId)) ||
-      undefined,
+  const currentProject = useAppSelector(
+    (state) => state.project.currentProject,
   );
+  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const team = teams && teams.find((team) => team.id === teamId);
   const { isSubjectiveLoadTooHigh } = useCognitiveLoad({
     team: team,
-    projectId: projectId,
+    projectId: currentProject.id,
   });
 
   if (!team) {

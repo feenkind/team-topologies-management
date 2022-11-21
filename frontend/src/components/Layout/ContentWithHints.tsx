@@ -48,16 +48,18 @@ const ContentWithHints: React.FC<IContentWithHintsProps> = ({
               <Typography variant="body2" paragraph>
                 {hint.description}
               </Typography>
-              <Button
-                component={Link}
-                href={hint.linkUrl}
-                target="_blank"
-                fullWidth
-                variant="contained"
-                color="secondary"
-              >
-                {hint.linkLabel}
-              </Button>
+              {hint.linkUrl && (
+                <Button
+                  component={Link}
+                  href={hint.linkUrl}
+                  target="_blank"
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                >
+                  {hint.linkLabel || hint.linkUrl}
+                </Button>
+              )}
             </AccordionDetails>
           </Accordion>
         ))}
