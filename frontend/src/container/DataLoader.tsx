@@ -7,6 +7,7 @@ import {
   setCurrentProject,
 } from '../store/slices/projectSlice';
 import axiosInstance from '../axios';
+import { setDataLoaded } from '../store/slices/globalSlice';
 
 interface IDataLoaderProps {
   children: React.ReactNode | React.ReactNode[];
@@ -15,26 +16,34 @@ interface IDataLoaderProps {
 const DataLoader: React.FC<IDataLoaderProps> = ({
   children,
 }: IDataLoaderProps) => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const isDataLoaded = useAppSelector((state) => state.global.isDataLoaded);
   const currentProjectId = useAppSelector(
     (state) => state.project.currentProject.id,
   );
   const projects = useAppSelector((state) => state.project.projects);
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { projectId } = useParams<{
     projectId: string;
   }>();
 
-  // load all data
+  // load all data if not already done
   useEffect(() => {
-    if (projects.length === 0) {
-      axiosInstance.request({ url: '/projects' }).then((response) => {
-        if (response.data && response.data.length > 0) {
-          dispatch(addAllProjects(response.data));
-        }
-      });
+    if (!isDataLoaded) {
+      axiosInstance
+        .request({ url: '/projects' })
+        .then((response) => {
+          if (response.data && response.data.length > 0) {
+            dispatch(addAllProjects(response.data));
+            dispatch(setDataLoaded(true));
+          }
+        })
+        .catch(() => {
+          dispatch(setDataLoaded(false));
+        });
     }
-  }, [projects, dispatch]);
+  }, [isDataLoaded, dispatch]);
 
   const projectExists = projects.find((project) => project.id === projectId);
 

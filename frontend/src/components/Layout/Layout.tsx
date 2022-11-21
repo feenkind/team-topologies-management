@@ -8,9 +8,14 @@ import { useState } from 'react';
 interface ILayoutProps {
   header: React.ReactNode;
   sidebar: React.ReactNode;
+  errorDisplay: React.ReactNode;
 }
 
-const Layout: React.FC<ILayoutProps> = ({ header, sidebar }: ILayoutProps) => {
+const Layout: React.FC<ILayoutProps> = ({
+  header,
+  sidebar,
+  errorDisplay,
+}: ILayoutProps) => {
   const drawerWidth = '280';
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -121,6 +126,7 @@ const Layout: React.FC<ILayoutProps> = ({ header, sidebar }: ILayoutProps) => {
         }}
       >
         <Toolbar />
+        {errorDisplay}
         <Outlet />
       </Box>
     </Box>

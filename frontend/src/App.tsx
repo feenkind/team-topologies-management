@@ -21,6 +21,7 @@ import TeamAddForm from './container/Team/TeamAddForm';
 import DomainEditForm from './container/Domain/DomainEditForm';
 import TeamEditForm from './container/Team/TeamEditForm';
 import ProjectAddForm from './container/Project/ProjectAddForm';
+import ErrorDisplay from './container/ErrorDisplay';
 
 const App: React.FC = () => {
   return (
@@ -29,7 +30,11 @@ const App: React.FC = () => {
         <Route
           element={
             <DataLoader>
-              <Layout header={<Header />} sidebar={<Sidebar />} />
+              <Layout
+                header={<Header />}
+                sidebar={<Sidebar />}
+                errorDisplay={<ErrorDisplay />}
+              />
             </DataLoader>
           }
         >
