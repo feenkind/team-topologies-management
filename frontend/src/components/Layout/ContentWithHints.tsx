@@ -23,7 +23,7 @@ const ContentWithHints: React.FC<IContentWithHintsProps> = ({
   hints,
 }: IContentWithHintsProps) => {
   const hintBox = (
-    <Paper sx={{ backgroundColor: 'grey.100', py: 3, px: 2 }}>
+    <Paper sx={{ backgroundColor: 'secondary.main', py: 3, px: 2, my: 3 }}>
       <Typography
         variant="subtitle1"
         component="h2"
