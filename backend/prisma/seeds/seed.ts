@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import createProjects from './projectSeed';
+import createDomains from './domainSeed';
 
 const prisma = new PrismaClient();
 
@@ -9,6 +10,7 @@ async function main() {
   }
 
   await createProjects(prisma);
+  await createDomains(prisma);
 }
 
 main()
