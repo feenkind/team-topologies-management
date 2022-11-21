@@ -30,24 +30,24 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
     (state) => state.project.currentProject,
   );
   const domains = useAppSelector(
-    (state) => state.domain.domains[currentProject.id],
+    (state) => state.domain.domains[currentProject.id] || [],
   );
 
-  const fteHistory = useAppSelector((state) => state.team.historyFte[team.id]);
+  const fteHistory = useAppSelector(
+    (state) => state.team.historyFte[team.id] || [],
+  );
   const cognitiveLoadHistory = useAppSelector(
-    (state) => state.team.historyCognitiveLoad[team.id],
+    (state) => state.team.historyCognitiveLoad[team.id] || [],
   );
   const domainResponsibilityHistory = useAppSelector(
-    (state) => state.team.historyDomains[team.id],
+    (state) => state.team.historyDomains[team.id] || [],
   );
 
-  const fteValues = showFte && fteHistory ? fteHistory : [];
-  const cognitiveLoadValues =
-    showCognitiveLoad && cognitiveLoadHistory ? cognitiveLoadHistory : [];
-  const domainResponsibilities =
-    showDomainResponsibilities && domainResponsibilityHistory
-      ? domainResponsibilityHistory
-      : [];
+  const fteValues = showFte ? fteHistory : [];
+  const cognitiveLoadValues = showCognitiveLoad ? cognitiveLoadHistory : [];
+  const domainResponsibilities = showDomainResponsibilities
+    ? domainResponsibilityHistory
+    : [];
 
   // sort by date ascending, copy first because array directly from store is
   // immutable

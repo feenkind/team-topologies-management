@@ -71,7 +71,8 @@ const projectSlice = createSlice({
     },
     addProject: (state, { payload }: PayloadAction<IProject>) => {
       state.projects.push(payload);
-      setCurrentProject(payload.id);
+      state.currentProject.id = payload.id;
+      state.currentProject.name = payload.name;
     },
   },
 });

@@ -5,6 +5,9 @@ import { projectHints } from '../../constants/hints';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
+import { useAppDispatch } from '../../hooks';
+import { addProject } from '../../store/slices/projectSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface IProjectAddFormInput {
   name: string;
@@ -12,10 +15,20 @@ interface IProjectAddFormInput {
 }
 
 const ProjectAddForm: React.FC = () => {
-  const { control, handleSubmit } = useForm<IProjectAddFormInput>();
+  const { register, control, handleSubmit } = useForm<IProjectAddFormInput>();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<IProjectAddFormInput> = (data) => {
-    console.log(data);
+    const projectId = Date.now().toString();
+    dispatch(
+      addProject({
+        id: projectId,
+        name: data.name,
+        description: data.description,
+      }),
+    );
+    navigate(`/project/${projectId}`);
   };
 
   return (
@@ -37,6 +50,7 @@ const ProjectAddForm: React.FC = () => {
                 label="Project name"
                 placeholder="Please enter a project name"
                 {...field}
+                {...register('name', { required: true })}
               />
             )}
           />
@@ -56,6 +70,7 @@ const ProjectAddForm: React.FC = () => {
                 label="Project description"
                 placeholder="Please enter a short project description to provide some context"
                 {...field}
+                {...register('description', { required: true })}
               />
             )}
           />

@@ -19,26 +19,24 @@ const TeamViewInteractions: React.FC<ITeamViewInteractionsProps> = ({
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
   const projectInteractions = useAppSelector(
-    (state) => state.team.interactions[currentProject.id],
+    (state) => state.team.interactions[currentProject.id] || [],
   );
 
   const currentDate = new Date();
-  const currentInteractions =
-    projectInteractions &&
-    filterTeamInteractions({
-      interactions: projectInteractions,
-      teamId: team.id,
-      filterCurrent: true,
-    });
-  const plannedInteractions =
-    projectInteractions &&
-    filterTeamInteractions({
-      interactions: projectInteractions,
-      teamId: team.id,
-      filterExpected: true,
-    });
+  const currentInteractions = filterTeamInteractions({
+    interactions: projectInteractions,
+    teamId: team.id,
+    filterCurrent: true,
+  });
+  const plannedInteractions = filterTeamInteractions({
+    interactions: projectInteractions,
+    teamId: team.id,
+    filterExpected: true,
+  });
 
   const headerItems = [
     'Team name',

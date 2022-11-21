@@ -17,9 +17,10 @@ const DomainViewInformation: React.FC<IDomainViewInformationProps> = ({
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
-  const domainTeams =
-    teams && teams.filter((team) => team.domains?.includes(domain.id));
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
+  const domainTeams = teams.filter((team) => team.domains?.includes(domain.id));
 
   return (
     <>

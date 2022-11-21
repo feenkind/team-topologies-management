@@ -16,16 +16,18 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
-  const dependencies = useAppSelector(
-    (state) => state.team.dependencies[currentProject.id],
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
   );
-  const teamsDependingOn =
-    dependencies &&
-    dependencies.filter((dependency) => dependency.fromTeamId === team.id);
-  const dependingTeams =
-    dependencies &&
-    dependencies.filter((dependency) => dependency.toTeamId === team.id);
+  const dependencies = useAppSelector(
+    (state) => state.team.dependencies[currentProject.id] || [],
+  );
+  const teamsDependingOn = dependencies.filter(
+    (dependency) => dependency.fromTeamId === team.id,
+  );
+  const dependingTeams = dependencies.filter(
+    (dependency) => dependency.toTeamId === team.id,
+  );
 
   const mapDependenciesToTableContent = (
     dependencies: IDependency[],

@@ -24,6 +24,16 @@ const ProjectList: React.FC = () => {
           />
         ))
       : [];
+    const teamLinks = teams[project.id]
+      ? teams[project.id].map((projectTeam) => (
+          <TeamLink
+            key={projectTeam.id}
+            label={projectTeam.name}
+            url={`/project/${project.id}/team/${projectTeam.id}`}
+            teamType={projectTeam.type}
+          />
+        ))
+      : [];
 
     return [
       <TableLinkText
@@ -32,14 +42,7 @@ const ProjectList: React.FC = () => {
         url={`/project/${project.id}`}
       />,
       <>{domainLinks}</>,
-      teams[project.id].map((projectTeam) => (
-        <TeamLink
-          key={projectTeam.id}
-          label={projectTeam.name}
-          url={`/project/${project.id}/team/${projectTeam.id}`}
-          teamType={projectTeam.type}
-        />
-      )),
+      <>{teamLinks}</>,
     ];
   });
   const actions = projects.map((project) => ({

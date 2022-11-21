@@ -76,12 +76,14 @@ const TeamInteractionVisualization: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
   const interactionsHistory = useAppSelector(
-    (state) => state.team.historyInteractions[currentProject.id],
+    (state) => state.team.historyInteractions[currentProject.id] || [],
   );
   const teamTypeHistory = useAppSelector(
-    (state) => state.team.historyTeamTypes,
+    (state) => state.team.historyTeamTypes || [],
   );
 
   const initialTeamHistoryChangeDates: string[] = [];
@@ -129,7 +131,7 @@ const TeamInteractionVisualization: React.FC = () => {
     date: selectedDate,
   });
 
-  if (!interactionsHistory) {
+  if (interactionsHistory.length === 0) {
     return (
       <Alert severity="info">
         {currentProject.name} never had any interactions between teams.
@@ -138,11 +140,9 @@ const TeamInteractionVisualization: React.FC = () => {
   }
 
   // only teams already created before chosen display date are relevant
-  const relevantTeams =
-    teams &&
-    teams.filter(
-      (team) => new Date(team.teamCreationDate) <= new Date(selectedDate),
-    );
+  const relevantTeams = teams.filter(
+    (team) => new Date(team.teamCreationDate) <= new Date(selectedDate),
+  );
 
   const legend: ILegend[] = [
     {
@@ -183,27 +183,22 @@ const TeamInteractionVisualization: React.FC = () => {
     },
   ];
 
-  const nodes: INode[] = relevantTeams
-    ? relevantTeams.map((team) => ({
-        name: team.name,
-        id: team.id,
-        teamType: teamTypesByTeamId[team.id] || teamType.UNDEFINED,
-      }))
-    : [];
-
+  const nodes: INode[] = relevantTeams.map((team) => ({
+    name: team.name,
+    id: team.id,
+    teamType: teamTypesByTeamId[team.id] || teamType.UNDEFINED,
+  }));
   const currentDate = new Date();
   // if show expected interactions is not checked, filter interactions for
   // current
-  const interactionsToDisplay = interactions
-    ? !showExpectedInteractions
-      ? interactions.filter((interaction) => {
-          const startDate = new Date(interaction.startDate);
-          return showExpectedInteractions
-            ? startDate > currentDate
-            : startDate < currentDate;
-        })
-      : interactions
-    : [];
+  const interactionsToDisplay = !showExpectedInteractions
+    ? interactions.filter((interaction) => {
+        const startDate = new Date(interaction.startDate);
+        return showExpectedInteractions
+          ? startDate > currentDate
+          : startDate < currentDate;
+      })
+    : interactions;
 
   const links: ILink[] = interactionsToDisplay.map((interaction) => ({
     interactionMode: interaction.interactionMode,

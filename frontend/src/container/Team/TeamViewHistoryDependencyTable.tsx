@@ -17,20 +17,18 @@ const TeamViewHistoryDependencyTable: React.FC<
     (state) => state.project.currentProject,
   );
   const dependencyHistoryProject = useAppSelector(
-    (state) => state.team.historyDependencies[currentProject.id],
+    (state) => state.team.historyDependencies[currentProject.id] || [],
   );
 
-  const relevantDependencyHistory =
-    dependencyHistoryProject &&
-    dependencyHistoryProject.filter(
-      (dependencyHistory) =>
-        (dependencyHistory.dependency.fromTeamId === team.id ||
-          dependencyHistory.dependency.toTeamId === team.id) &&
-        (dependencyHistory.dependency.fromTeamId === otherTeam.id ||
-          dependencyHistory.dependency.toTeamId === otherTeam.id),
-    );
+  const relevantDependencyHistory = dependencyHistoryProject.filter(
+    (dependencyHistory) =>
+      (dependencyHistory.dependency.fromTeamId === team.id ||
+        dependencyHistory.dependency.toTeamId === team.id) &&
+      (dependencyHistory.dependency.fromTeamId === otherTeam.id ||
+        dependencyHistory.dependency.toTeamId === otherTeam.id),
+  );
 
-  if (!dependencyHistoryProject || relevantDependencyHistory.length === 0) {
+  if (relevantDependencyHistory.length === 0) {
     return (
       <Alert severity="info" sx={{ mt: 3 }}>
         {team.name} and {otherTeam.name} never had any dependencies.

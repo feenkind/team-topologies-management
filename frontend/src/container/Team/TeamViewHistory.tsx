@@ -35,11 +35,10 @@ const TeamViewHistory: React.FC<ITeamViewHistoryProps> = ({
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const otherTeams = useAppSelector((state) =>
-    state.team.teams[currentProject.id].filter(
-      (teamValue) => teamValue.id !== team.id,
-    ),
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
   );
+  const otherTeams = teams.filter((teamValue) => teamValue.id !== team.id);
   const [selectedTeamId, setSelectedTeamId] = useState<string>(
     otherTeams.length > 0 ? otherTeams[0].id : '',
   );

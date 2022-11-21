@@ -13,9 +13,11 @@ const TeamListForProject: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
   const projectDomains = useAppSelector(
-    (state) => state.domain.domains[currentProject.id],
+    (state) => state.domain.domains[currentProject.id] || [],
   );
 
   if (teams.length === 0) {

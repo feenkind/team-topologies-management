@@ -23,8 +23,10 @@ const TeamView: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
-  const team = teams && teams.find((team) => team.id === teamId);
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
+  const team = teams.find((team) => team.id === teamId);
   const { isSubjectiveLoadTooHigh } = useCognitiveLoad({
     team: team,
     projectId: currentProject.id,

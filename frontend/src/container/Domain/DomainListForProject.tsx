@@ -16,11 +16,13 @@ const DomainListForProject: React.FC = () => {
     (state) => state.project.currentProject,
   );
   const domains = useAppSelector(
-    (state) => state.domain.domains[currentProject.id],
+    (state) => state.domain.domains[currentProject.id] || [],
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
 
-  if (!domains) {
+  if (domains.length === 0) {
     return (
       <>
         <PageHeadline text={`No domains in ${currentProject.name}`} />

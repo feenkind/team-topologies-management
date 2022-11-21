@@ -59,21 +59,21 @@ const DependencyVisualization: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
   const navigate = useNavigate();
 
   const dependencyHistory = useAppSelector(
-    (state) => state.team.historyDependencies[currentProject.id],
+    (state) => state.team.historyDependencies[currentProject.id] || [],
   );
-  const dependencyHistoryChangeDates =
-    dependencyHistory &&
-    dependencyHistory.map((dependencyHistory) => dependencyHistory.date);
+  const dependencyHistoryChangeDates = dependencyHistory.map(
+    (dependencyHistory) => dependencyHistory.date,
+  );
   // remove duplicate dates and order desc
-  const sortedDependencyHistoryChangeDates =
-    dependencyHistoryChangeDates &&
-    Array.from(new Set(dependencyHistoryChangeDates)).sort((a, b) =>
-      new Date(a) > new Date(b) ? -1 : 1,
-    );
+  const sortedDependencyHistoryChangeDates = Array.from(
+    new Set(dependencyHistoryChangeDates),
+  ).sort((a, b) => (new Date(a) > new Date(b) ? -1 : 1));
 
   const [selectedDate, setSelectedDate] = useState<string>(
     sortedDependencyHistoryChangeDates
@@ -91,7 +91,7 @@ const DependencyVisualization: React.FC = () => {
     date: selectedDate,
   });
 
-  if (!dependencyHistory) {
+  if (dependencyHistory.length === 0) {
     return (
       <Alert severity="info">
         {currentProject.name} never had any dependencies.

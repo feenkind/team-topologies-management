@@ -24,9 +24,11 @@ const DomainVisualization: React.FC = () => {
     (state) => state.project.currentProject,
   );
   const domains = useAppSelector(
-    (state) => state.domain.domains[currentProject.id],
+    (state) => state.domain.domains[currentProject.id] || [],
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
 
   const legend: ILegend[] = [
     {
@@ -58,20 +60,18 @@ const DomainVisualization: React.FC = () => {
     },
   ];
 
-  const data = domains
-    ? domains.map((domain) => {
-        const domainTeams = teams
-          ? teams.filter((team) => team.domains?.includes(domain.id))
-          : [];
-        const fte = domainTeams.reduce((fteSum, team) => fteSum + team.fte, 0);
-        return {
-          x: domain.priority,
-          y: domain.complexity,
-          fte: fte,
-          name: domain.name,
-        };
-      })
-    : [];
+  const data = domains.map((domain) => {
+    const domainTeams = teams
+      ? teams.filter((team) => team.domains?.includes(domain.id))
+      : [];
+    const fte = domainTeams.reduce((fteSum, team) => fteSum + team.fte, 0);
+    return {
+      x: domain.priority,
+      y: domain.complexity,
+      fte: fte,
+      name: domain.name,
+    };
+  });
 
   return (
     <>

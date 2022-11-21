@@ -12,10 +12,10 @@ const TeamViewHistoryTeamTypeTable: React.FC<
   ITeamViewHistoryTeamTypeTableProps
 > = ({ team }: ITeamViewHistoryTeamTypeTableProps) => {
   const teamTypeHistory = useAppSelector(
-    (state) => state.team.historyTeamTypes[team.id],
+    (state) => state.team.historyTeamTypes[team.id] || [],
   );
 
-  if (!teamTypeHistory) {
+  if (teamTypeHistory.length === 0) {
     return (
       <Alert severity="info" sx={{ mt: 3 }}>
         {team.name} has always been a team with team type {team.type}.

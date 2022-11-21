@@ -13,7 +13,7 @@ const DomainEditForm: React.FC = () => {
     (state) => state.project.currentProject,
   );
   const domains = useAppSelector(
-    (state) => state.domain.domains[currentProject.id],
+    (state) => state.domain.domains[currentProject.id] || [],
   );
 
   const domain = domains && domains.find((domain) => domain.id === domainId);

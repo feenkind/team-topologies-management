@@ -17,23 +17,18 @@ const TeamViewHistoryInteractionsTable: React.FC<
     (state) => state.project.currentProject,
   );
   const interactionsHistoryProject = useAppSelector(
-    (state) => state.team.historyInteractions[currentProject.id],
+    (state) => state.team.historyInteractions[currentProject.id] || [],
   );
 
-  const relevantInteractionsHistory =
-    interactionsHistoryProject &&
-    interactionsHistoryProject.filter(
-      (history) =>
-        (history.interaction.teamIdOne === team.id ||
-          history.interaction.teamIdTwo === team.id) &&
-        (history.interaction.teamIdOne === otherTeam.id ||
-          history.interaction.teamIdTwo === otherTeam.id),
-    );
+  const relevantInteractionsHistory = interactionsHistoryProject.filter(
+    (history) =>
+      (history.interaction.teamIdOne === team.id ||
+        history.interaction.teamIdTwo === team.id) &&
+      (history.interaction.teamIdOne === otherTeam.id ||
+        history.interaction.teamIdTwo === otherTeam.id),
+  );
 
-  if (
-    !relevantInteractionsHistory ||
-    relevantInteractionsHistory.length === 0
-  ) {
+  if (relevantInteractionsHistory.length === 0) {
     return (
       <Alert severity="info" sx={{ mt: 3 }}>
         {team.name} and {otherTeam.name} never had any interaction.

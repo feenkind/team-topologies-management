@@ -22,10 +22,10 @@ const DomainViewHistory: React.FC<IDomainViewHistoryProps> = ({
   domain,
 }: IDomainViewHistoryProps) => {
   const complexityHistory = useAppSelector(
-    (state) => state.domain.historyComplexity[domain.id],
+    (state) => state.domain.historyComplexity[domain.id] || [],
   );
   const priorityHistory = useAppSelector(
-    (state) => state.domain.historyPriority[domain.id],
+    (state) => state.domain.historyPriority[domain.id] || [],
   );
 
   const [showComplexity, setShowComplexity] = useState<boolean>(true);

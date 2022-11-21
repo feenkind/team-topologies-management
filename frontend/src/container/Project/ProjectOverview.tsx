@@ -34,14 +34,16 @@ const ProjectOverview: React.FC = () => {
     (project) => project.id === currentProject.id,
   );
   const domains = useAppSelector(
-    (state) => state.domain.domains[currentProject.id],
+    (state) => state.domain.domains[currentProject.id] || [],
   );
-  const teams = useAppSelector((state) => state.team.teams[currentProject.id]);
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
   const interactions = useAppSelector(
-    (state) => state.team.interactions[currentProject.id],
+    (state) => state.team.interactions[currentProject.id] || [],
   );
   const dependencies = useAppSelector(
-    (state) => state.team.dependencies[currentProject.id],
+    (state) => state.team.dependencies[currentProject.id] || [],
   );
 
   const currentDate = new Date();
