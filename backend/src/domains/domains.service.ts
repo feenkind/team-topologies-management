@@ -12,7 +12,11 @@ export class DomainsService {
     return 'This action adds a new domain';
   }
 
-  async findAll(): Promise<Domain[]> {
+  async findAll(includeHistory: boolean): Promise<Domain[]> {
+    if (includeHistory) {
+      return this.prisma.domain.findMany({ include: { DomainHistory: true } });
+    }
+
     return this.prisma.domain.findMany();
   }
 

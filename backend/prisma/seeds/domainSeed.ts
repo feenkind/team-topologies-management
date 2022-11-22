@@ -131,8 +131,24 @@ const createDomains = async (prisma: PrismaClient) => {
   }
 
   const domainData = createDomainData(existingProject[0]);
-  const domains = await prisma.domain.createMany({
+  await prisma.domain.createMany({
     data: domainData,
+  });
+  const domains = await prisma.domain.findMany({
+    where: { project: existingProject[0] },
+  });
+  const domainHistoryData: Prisma.DomainHistoryCreateManyInput[] = domains.map(
+    (domain) => ({
+      domainId: domain.id,
+      changeNote: 'Initial creation.',
+      name: domain.name,
+      description: domain.description,
+      priority: domain.priority,
+      complexity: domain.complexity,
+    }),
+  );
+  await prisma.domainHistory.createMany({
+    data: domainHistoryData,
   });
 
   console.log(`Created following domains: `, {

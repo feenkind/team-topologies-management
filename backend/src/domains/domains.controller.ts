@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { DomainsService } from './domains.service';
 import { CreateDomainDto } from './dto/create-domain.dto';
@@ -21,8 +22,8 @@ export class DomainsController {
   }
 
   @Get()
-  findAll() {
-    return this.domainService.findAll();
+  findAll(@Query() query: { includeHistory: boolean }) {
+    return this.domainService.findAll(query.includeHistory);
   }
 
   @Get(':id')
