@@ -80,15 +80,32 @@ const DomainForm: React.FC = () => {
       projectId: projectId,
     };
 
-    axiosInstance
-      .post('/domains', domain)
-      .then((response) => {
-        // trigger new data loading from backend to refresh all data
-        dispatch(setDataLoaded(false));
-        // go to view after adding
-        navigate(`/project/${projectId}/domain/${response.data.id}`);
-      })
-      .catch(() => dispatch(setNetworkError(true)));
+    if (domainData) {
+      axiosInstance
+        .put(`/domains/${domainData.id}`, {
+          ...domain,
+          changeNote: data.changeNote,
+        })
+        .then(() => {
+          // trigger new data loading from backend to refresh all data
+          dispatch(setDataLoaded(false));
+          // go back after editing
+          navigate(-1);
+        })
+        .catch(() => dispatch(setNetworkError(true)));
+    }
+
+    if (!domainId) {
+      axiosInstance
+        .post('/domains', domain)
+        .then((response) => {
+          // trigger new data loading from backend to refresh all data
+          dispatch(setDataLoaded(false));
+          // go to view after adding
+          navigate(`/project/${projectId}/domain/${response.data.id}`);
+        })
+        .catch(() => dispatch(setNetworkError(true)));
+    }
   };
 
   return (
@@ -242,36 +259,38 @@ const DomainForm: React.FC = () => {
         <ActionWrapperBottom>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} md={6}>
-              <Controller
-                name="changeNote"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <FormElementWrapper errors={errors.changeNote}>
-                    <TextField
-                      required
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      multiline
-                      rows={1}
-                      label="Note"
-                      placeholder="Please enter a short description why you did those changes"
-                      sx={{
-                        mr: 9,
-                      }}
-                      error={!!errors.changeNote}
-                      {...field}
-                      {...register('changeNote', {
-                        required: {
-                          value: true,
-                          message: 'Please add a reason for your changes',
-                        },
-                      })}
-                    />
-                  </FormElementWrapper>
-                )}
-              />
+              {domainData && (
+                <Controller
+                  name="changeNote"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <FormElementWrapper errors={errors.changeNote}>
+                      <TextField
+                        required
+                        fullWidth
+                        margin="normal"
+                        variant="outlined"
+                        multiline
+                        rows={1}
+                        label="Note"
+                        placeholder="Please enter a short description why you did those changes"
+                        sx={{
+                          mr: 9,
+                        }}
+                        error={!!errors.changeNote}
+                        {...field}
+                        {...register('changeNote', {
+                          required: {
+                            value: true,
+                            message: 'Please add a reason for your changes',
+                          },
+                        })}
+                      />
+                    </FormElementWrapper>
+                  )}
+                />
+              )}
             </Grid>
             <Grid item xs={12} md={6} textAlign="right">
               <Button

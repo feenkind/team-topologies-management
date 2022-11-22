@@ -43,8 +43,12 @@ const DomainListForProject: React.FC = () => {
     );
   }
 
+  const sortedDomainsByName = domains
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   const tableHeaderItems = ['Name', 'Team(s)', 'Priority', 'Complexity', 'FTE'];
-  const tableContentItems = domains.map((domain) => {
+  const tableContentItems = sortedDomainsByName.map((domain) => {
     const domainTeams = teams.filter((team) =>
       team.domains?.includes(domain.id),
     );
@@ -72,7 +76,7 @@ const DomainListForProject: React.FC = () => {
       fte,
     ];
   });
-  const actions = domains.map((domain) => ({
+  const actions = sortedDomainsByName.map((domain) => ({
     basePath: `/project/${currentProject.id}/domain/${domain.id}`,
     view: true,
     edit: true,

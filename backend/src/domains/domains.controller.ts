@@ -61,7 +61,26 @@ export class DomainsController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateDomainDto: UpdateDomainDto) {
-    return this.domainService.update(+id, updateDomainDto);
+    return this.domainService.update({
+      data: {
+        name: updateDomainDto.name,
+        description: updateDomainDto.description,
+        priority: updateDomainDto.priority,
+        complexity: updateDomainDto.complexity,
+        DomainHistory: {
+          create: [
+            {
+              name: updateDomainDto.name,
+              description: updateDomainDto.description,
+              priority: updateDomainDto.priority,
+              complexity: updateDomainDto.complexity,
+              changeNote: updateDomainDto.changeNote,
+            },
+          ],
+        },
+      },
+      where: { id: id },
+    });
   }
 
   @Delete(':id')

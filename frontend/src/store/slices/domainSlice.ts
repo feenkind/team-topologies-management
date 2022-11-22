@@ -54,6 +54,8 @@ const domainSlice = createSlice({
       state,
       { payload }: PayloadAction<IDomainDataWithHistory[]>,
     ) => {
+      state = { ...initialState };
+
       payload.forEach((domainData) => {
         const domain = {
           id: domainData.id,
@@ -64,7 +66,7 @@ const domainSlice = createSlice({
         };
 
         if (!state.domains[domainData.projectId]) {
-          state.domains[domainData.projectId] = [];
+          state.domains = { ...state.domains, [domainData.projectId]: [] };
         }
 
         if (
@@ -81,8 +83,14 @@ const domainSlice = createSlice({
         );
 
         if (domainData.DomainHistory.length > 0) {
-          state.historyComplexity[domainData.id] = [];
-          state.historyPriority[domainData.id] = [];
+          state.historyComplexity = {
+            ...state.historyComplexity,
+            [domainData.id]: [],
+          };
+          state.historyPriority = {
+            ...state.historyPriority,
+            [domainData.id]: [],
+          };
         }
 
         for (let i = 0; i < domainData.DomainHistory.length; i++) {
@@ -128,6 +136,8 @@ const domainSlice = createSlice({
           }
         }
       });
+
+      return state;
     },
   },
 });

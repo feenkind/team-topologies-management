@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateDomainDto } from './dto/update-domain.dto';
 import { PrismaService } from '../prisma.service';
 import { Domain, Prisma } from '@prisma/client';
 
@@ -23,8 +22,14 @@ export class DomainsService {
     return this.prisma.domain.findUnique({ where: { id } });
   }
 
-  update(id: number, updateDomainDto: UpdateDomainDto) {
-    return `This action updates a #${id} domain`;
+  update({
+    data,
+    where,
+  }: {
+    data: Prisma.DomainUpdateInput;
+    where: Prisma.DomainWhereUniqueInput;
+  }): Promise<Domain> {
+    return this.prisma.domain.update({ data, where });
   }
 
   remove(id: number) {
