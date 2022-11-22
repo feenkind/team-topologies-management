@@ -12,6 +12,7 @@ import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { Project } from '@prisma/client';
 
 @Controller('projects')
 export class ProjectsController {
@@ -19,7 +20,7 @@ export class ProjectsController {
 
   @UseGuards(AuthGuard('basic'))
   @Post()
-  create(@Body() createProjectDto: CreateProjectDto) {
+  create(@Body() createProjectDto: CreateProjectDto): Promise<Project> {
     return this.projectsService.create({
       name: createProjectDto.name,
       description: createProjectDto.description,
@@ -28,19 +29,22 @@ export class ProjectsController {
 
   @UseGuards(AuthGuard('basic'))
   @Get()
-  findAll() {
+  findAll(): Promise<Project[]> {
     return this.projectsService.findAll();
   }
 
   @UseGuards(AuthGuard('basic'))
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<Project> {
     return this.projectsService.findOne(id);
   }
 
   @UseGuards(AuthGuard('basic'))
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateProjectDto: UpdateProjectDto,
+  ): Promise<Project> {
     return this.projectsService.update({
       where: { id: id },
       data: {

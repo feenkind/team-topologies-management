@@ -11,6 +11,7 @@ export enum Complexity {
 }
 
 export class CreateDomainDto {
+  projectId: string;
   name: string;
   description: string;
   priority: Priority;

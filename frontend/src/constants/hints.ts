@@ -64,6 +64,12 @@ export const domainHints: IHintMapping = {
       'https://github.com/ddd-crew/core-domain-charts#suggestions-for-measuring-complexity-and-differentiation',
     linkLabel: 'Learn more',
   },
+  domainComplexity: {
+    summary: 'What is the domain complexity?',
+    description: 'TODO',
+    linkUrl: '',
+    linkLabel: 'Learn more',
+  },
   domainStorytelling: {
     summary: 'Domain Storytelling',
     description: '',

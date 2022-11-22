@@ -6,7 +6,7 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { Button, Grid, TextField } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useAppDispatch } from '../../hooks';
-import { addProject, IProject } from '../../store/slices/projectSlice';
+import { IProject } from '../../store/slices/projectSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import axiosInstance from '../../axios';
@@ -61,7 +61,6 @@ const ProjectForm: React.FC = () => {
         .then(() => {
           // trigger new data loading from backend to refresh all data
           dispatch(setDataLoaded(false));
-
           // just go back when editing
           navigate(-1);
         })
@@ -72,8 +71,8 @@ const ProjectForm: React.FC = () => {
       axiosInstance
         .post('/projects', project)
         .then((response) => {
-          dispatch(addProject({ ...project, id: response.data.id }));
-
+          // trigger new data loading from backend to refresh all data
+          dispatch(setDataLoaded(false));
           // go to overview after adding
           navigate(`/project/${response.data.id}`);
         })

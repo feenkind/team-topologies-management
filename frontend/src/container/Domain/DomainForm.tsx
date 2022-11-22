@@ -1,11 +1,11 @@
 import * as React from 'react';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import Page404 from '../../components/Page404';
 import { useState } from 'react';
-import { IProject } from '../../store/slices/projectSlice';
+import { addProject, IProject } from '../../store/slices/projectSlice';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
@@ -21,6 +21,9 @@ import {
 } from '@mui/material';
 import { complexity, priority } from '../../constants/categories';
 import ActionWrapperBottom from '../../components/Layout/ActionWrapperBottom';
+import axiosInstance from '../../axios';
+import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
+import { domainHints } from '../../constants/hints';
 
 interface IDomainFormInput {
   name: string;
@@ -31,6 +34,7 @@ interface IDomainFormInput {
 
 const DomainForm: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { projectId, domainId } = useParams<{
     projectId: string;
     domainId: string;
@@ -47,7 +51,23 @@ const DomainForm: React.FC = () => {
   } = useForm<IDomainFormInput>();
 
   const onSubmit: SubmitHandler<IDomainFormInput> = (data) => {
-    console.log(data);
+    const domain = {
+      name: data.name,
+      description: data.description,
+      priority: data.priority,
+      complexity: data.complexity,
+      projectId: projectId,
+    };
+
+    axiosInstance
+      .post('/domains', domain)
+      .then((response) => {
+        // trigger new data loading from backend to refresh all data
+        dispatch(setDataLoaded(false));
+        // go to view after adding
+        navigate(`/project/${projectId}/domain/${response.data.id}`);
+      })
+      .catch(() => dispatch(setNetworkError(true)));
   };
 
   // const domains = useAppSelector(
@@ -62,7 +82,9 @@ const DomainForm: React.FC = () => {
   return (
     <>
       <PageHeadline text={`Add domain`} />
-      <ContentWithHints>
+      <ContentWithHints
+        hints={[domainHints.domainPriority, domainHints.domainComplexity]}
+      >
         <FormGroupWrapper caption="Basic Information">
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
@@ -94,7 +116,12 @@ const DomainForm: React.FC = () => {
             </Grid>
 
             <Grid item xs={12} md={6}>
-              <FormControl fullWidth variant="outlined" margin="normal">
+              <FormControl
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                error={!!errors.complexity}
+              >
                 <InputLabel id="complexity-select">Complexity</InputLabel>
                 <Controller
                   name="complexity"
@@ -107,6 +134,12 @@ const DomainForm: React.FC = () => {
                         fullWidth
                         labelId="complexity-select"
                         label="Complexity"
+                        {...register('complexity', {
+                          required: {
+                            value: true,
+                            message: 'Please choose a domain complexity.',
+                          },
+                        })}
                       >
                         {Object.values(complexity).map((complexity) => (
                           <MenuItem key={complexity} value={complexity}>
@@ -122,7 +155,12 @@ const DomainForm: React.FC = () => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <FormControl fullWidth variant="outlined" margin="normal">
+            <FormControl
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              error={!!errors.priority}
+            >
               <InputLabel id="priority-select">Priority</InputLabel>
               <Controller
                 name="priority"
@@ -135,6 +173,12 @@ const DomainForm: React.FC = () => {
                       fullWidth
                       labelId="priority-select"
                       label="Priority"
+                      {...register('priority', {
+                        required: {
+                          value: true,
+                          message: 'Please choose a domain priority.',
+                        },
+                      })}
                     >
                       {Object.values(priority).map((priority) => (
                         <MenuItem key={priority} value={priority}>
