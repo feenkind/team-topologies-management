@@ -33,11 +33,6 @@ const projectSlice = createSlice({
       );
       state.currentProject.name = currentProject ? currentProject.name : '';
     },
-    addProject: (state, { payload }: PayloadAction<IProject>) => {
-      state.projects.push(payload);
-      state.currentProject.id = payload.id;
-      state.currentProject.name = payload.name;
-    },
     addAllProjects: (state, { payload }: PayloadAction<IProject[]>) => {
       state.projects = payload;
       state.currentProject.id = state.currentProject.id || payload[0].id || '';
@@ -48,5 +43,4 @@ const projectSlice = createSlice({
 });
 
 export const projectReducer = projectSlice.reducer;
-export const { setCurrentProject, addProject, addAllProjects } =
-  projectSlice.actions;
+export const { setCurrentProject, addAllProjects } = projectSlice.actions;

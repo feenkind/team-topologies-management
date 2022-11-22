@@ -1,16 +1,14 @@
 import * as React from 'react';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { useNavigate, useParams } from 'react-router-dom';
-import Page404 from '../../components/Page404';
-import { useState } from 'react';
-import { addProject, IProject } from '../../store/slices/projectSlice';
+import { useEffect, useState } from 'react';
+import { IProject } from '../../store/slices/projectSlice';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import {
-  AppBar,
   Button,
   FormControl,
   Grid,
@@ -30,6 +28,7 @@ interface IDomainFormInput {
   description: string;
   priority: string;
   complexity: string;
+  changeNote: string;
 }
 
 const DomainForm: React.FC = () => {
@@ -47,8 +46,30 @@ const DomainForm: React.FC = () => {
     control,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<IDomainFormInput>();
+
+  useEffect(() => {
+    // make sure to always work with the newest data when editing
+    if (domainId) {
+      axiosInstance
+        .get(`/domains/${domainId}`)
+        .then((response) => {
+          setDomainData(response.data);
+          setValue('name', response.data.name);
+          setValue('description', response.data.description);
+          setValue('priority', response.data.priority);
+          setValue('complexity', response.data.complexity);
+        })
+        .catch(() => dispatch(setNetworkError(true)));
+    } else {
+      // needed if component does not unmount between edit and add, e.g.
+      // if a user edits a domain and clicks on add domain directly after
+      setDomainData(undefined);
+      reset({ name: '', description: '', complexity: '', priority: '' });
+    }
+  }, [domainId, setDomainData, setValue, dispatch, reset]);
 
   const onSubmit: SubmitHandler<IDomainFormInput> = (data) => {
     const domain = {
@@ -70,18 +91,13 @@ const DomainForm: React.FC = () => {
       .catch(() => dispatch(setNetworkError(true)));
   };
 
-  // const domains = useAppSelector(
-  //   (state) => state.domain.domains[currentProject.id] || [],
-  // );
-  //
-  // const domain = domains && domains.find((domain) => domain.id === domainId);
-  // if (!domain) {
-  //   return <Page404 />;
-  // }
-
   return (
     <>
-      <PageHeadline text={`Add domain`} />
+      <PageHeadline
+        text={
+          domainData ? `Edit domain ${domainData.name}` : 'Add' + ' new domain'
+        }
+      />
       <ContentWithHints
         hints={[domainHints.domainPriority, domainHints.domainComplexity]}
       >
@@ -224,18 +240,58 @@ const DomainForm: React.FC = () => {
         </FormGroupWrapper>
 
         <ActionWrapperBottom>
-          <Button
-            onClick={() => {
-              navigate(-1);
-            }}
-            variant="outlined"
-            sx={{ mr: 2 }}
-          >
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit(onSubmit)} variant="contained">
-            {'Create new domain'}
-          </Button>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="changeNote"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <FormElementWrapper errors={errors.changeNote}>
+                    <TextField
+                      required
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      multiline
+                      rows={1}
+                      label="Note"
+                      placeholder="Please enter a short description why you did those changes"
+                      sx={{
+                        mr: 9,
+                      }}
+                      error={!!errors.changeNote}
+                      {...field}
+                      {...register('changeNote', {
+                        required: {
+                          value: true,
+                          message: 'Please add a reason for your changes',
+                        },
+                      })}
+                    />
+                  </FormElementWrapper>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} textAlign="right">
+              <Button
+                onClick={() => {
+                  navigate(-1);
+                }}
+                variant="outlined"
+                sx={{ mr: 2 }}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSubmit(onSubmit)}
+                variant="contained"
+                sx={{ minWidth: '250px' }}
+              >
+                {domainData ? 'Save changes to domain' : 'Create new domain'}
+              </Button>
+            </Grid>
+          </Grid>
         </ActionWrapperBottom>
       </ContentWithHints>
     </>
