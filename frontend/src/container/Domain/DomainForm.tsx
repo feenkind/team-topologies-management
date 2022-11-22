@@ -95,7 +95,7 @@ const DomainForm: React.FC = () => {
         .catch(() => dispatch(setNetworkError(true)));
     }
 
-    if (!domainId) {
+    if (!domainData) {
       axiosInstance
         .post('/domains', domain)
         .then((response) => {

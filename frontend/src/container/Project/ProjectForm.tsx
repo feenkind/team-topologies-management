@@ -67,7 +67,7 @@ const ProjectForm: React.FC = () => {
         .catch(() => dispatch(setNetworkError(true)));
     }
 
-    if (!projectId) {
+    if (!projectData) {
       axiosInstance
         .post('/projects', project)
         .then((response) => {

@@ -14,7 +14,7 @@ import DomainView from './container/Domain/DomainView';
 import Page404 from './components/Page404';
 import TeamView from './container/Team/TeamView';
 import NotificationList from './container/Notification/NotificationList';
-import DataLoader from './container/DataLoader';
+import DataLoader from './container/DataLoader/DataLoader';
 import ProjectNotFound from './container/Project/ProjectNotFound';
 import TeamAddForm from './container/Team/TeamAddForm';
 import DomainForm from './container/Domain/DomainForm';
