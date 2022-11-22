@@ -50,12 +50,12 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
       ...sortedComplexityHistoryValues[
         sortedComplexityHistoryValues.length - 1
       ],
-      date: today.toDateString(),
+      date: today.toString(),
     });
   sortedPriorityHistoryValues.length > 0 &&
     sortedPriorityHistoryValues.push({
       ...sortedPriorityHistoryValues[sortedPriorityHistoryValues.length - 1],
-      date: today.toDateString(),
+      date: today.toString(),
     });
 
   const dataComplexity = sortedComplexityHistoryValues.map((historyValue) => ({

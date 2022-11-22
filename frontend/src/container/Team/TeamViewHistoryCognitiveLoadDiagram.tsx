@@ -66,17 +66,17 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
   sortedFteValues.length > 0 &&
     sortedFteValues.push({
       ...sortedFteValues[sortedFteValues.length - 1],
-      date: today.toDateString(),
+      date: today.toString(),
     });
   sortedCognitiveLoadValues.length > 0 &&
     sortedCognitiveLoadValues.push({
       ...sortedCognitiveLoadValues[sortedCognitiveLoadValues.length - 1],
-      date: today.toDateString(),
+      date: today.toString(),
     });
   sortedDomainResponsibilities.length > 0 &&
     sortedDomainResponsibilities.push({
       ...sortedDomainResponsibilities[sortedDomainResponsibilities.length - 1],
-      date: today.toDateString(),
+      date: today.toString(),
     });
 
   const dataFte = sortedFteValues.map((fteValue) => ({
