@@ -12,6 +12,7 @@ import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import axiosInstance from '../../axios';
 import { useEffect, useState } from 'react';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
+import ActionWrapperBottom from '../../components/Layout/ActionWrapperBottom';
 
 interface IProjectFormInput {
   name: string;
@@ -150,9 +151,20 @@ const ProjectForm: React.FC = () => {
             </Grid>
           </Grid>
         </FormGroupWrapper>
-        <Button onClick={handleSubmit(onSubmit)} variant="contained">
-          {projectData ? 'Save changes to project' : 'Create new project'}
-        </Button>
+        <ActionWrapperBottom>
+          <Button
+            onClick={() => {
+              navigate(-1);
+            }}
+            variant="outlined"
+            sx={{ mr: 2 }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit(onSubmit)} variant="contained">
+            {projectData ? 'Save changes to project' : 'Create new project'}
+          </Button>
+        </ActionWrapperBottom>
       </ContentWithHints>
     </>
   );

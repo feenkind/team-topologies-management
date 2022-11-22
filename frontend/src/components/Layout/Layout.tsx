@@ -4,6 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Outlet } from 'react-router-dom';
 import Logo from '../Header/Logo';
 import { useState } from 'react';
+import { sidebarWidth } from '../../constants/sizes';
 
 interface ILayoutProps {
   header: React.ReactNode;
@@ -16,7 +17,6 @@ const Layout: React.FC<ILayoutProps> = ({
   sidebar,
   errorDisplay,
 }: ILayoutProps) => {
-  const drawerWidth = '280';
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -59,7 +59,7 @@ const Layout: React.FC<ILayoutProps> = ({
         display: { xs: 'block', sm: 'none' },
         '& .MuiDrawer-paper': {
           boxSizing: 'border-box',
-          width: `${drawerWidth}px`,
+          width: `${sidebarWidth}px`,
         },
       }}
       PaperProps={{
@@ -80,7 +80,7 @@ const Layout: React.FC<ILayoutProps> = ({
         display: { xs: 'none', sm: 'block' },
         '& .MuiDrawer-paper': {
           boxSizing: 'border-box',
-          width: `${drawerWidth}px`,
+          width: `${sidebarWidth}px`,
         },
       }}
       open
@@ -100,8 +100,8 @@ const Layout: React.FC<ILayoutProps> = ({
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          width: { sm: `calc(100% - ${sidebarWidth}px)` },
+          ml: { sm: `${sidebarWidth}px` },
           boxShadow: 1,
         }}
       >
@@ -110,7 +110,7 @@ const Layout: React.FC<ILayoutProps> = ({
 
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{ width: { sm: sidebarWidth }, flexShrink: { sm: 0 } }}
       >
         {mobileSidebar}
         {desktopSidebar}
@@ -121,8 +121,7 @@ const Layout: React.FC<ILayoutProps> = ({
         sx={{
           flexGrow: 1,
           p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          width: { sm: `calc(100% - ${sidebarWidth}px)` },
         }}
       >
         <Toolbar />
