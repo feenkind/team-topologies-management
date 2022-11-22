@@ -135,7 +135,7 @@ const ProjectOverview: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Card sx={{ backgroundColor: 'secondary.main' }} elevation={4}>
+          <Card sx={{ backgroundColor: 'secondary.main', p: 1 }} elevation={4}>
             <CardContent>
               <Typography
                 variant="overline"

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { IProject } from '../../store/slices/projectSlice';
@@ -32,6 +32,9 @@ interface IDomainFormInput {
 }
 
 const DomainForm: React.FC = () => {
+  const currentProject = useAppSelector(
+    (state) => state.project.currentProject,
+  );
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { projectId, domainId } = useParams<{
@@ -89,8 +92,8 @@ const DomainForm: React.FC = () => {
         .then(() => {
           // trigger new data loading from backend to refresh all data
           dispatch(setDataLoaded(false));
-          // go back after editing
-          navigate(-1);
+          // go to detail view after editing
+          navigate(`/project/${projectId}/domain/${domainData.id}`);
         })
         .catch(() => dispatch(setNetworkError(true)));
     }
@@ -112,7 +115,9 @@ const DomainForm: React.FC = () => {
     <>
       <PageHeadline
         text={
-          domainData ? `Edit domain ${domainData.name}` : 'Add' + ' new domain'
+          domainData
+            ? `Edit domain ${domainData.name}`
+            : `Add a new domain to project ${currentProject.name}`
         }
       />
       <ContentWithHints

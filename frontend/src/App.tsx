@@ -16,9 +16,8 @@ import TeamView from './container/Team/TeamView';
 import NotificationList from './container/Notification/NotificationList';
 import DataLoader from './container/DataLoader/DataLoader';
 import ProjectNotFound from './container/Project/ProjectNotFound';
-import TeamAddForm from './container/Team/TeamAddForm';
+import TeamForm from './container/Team/TeamForm';
 import DomainForm from './container/Domain/DomainForm';
-import TeamEditForm from './container/Team/TeamEditForm';
 import ProjectForm from './container/Project/ProjectForm';
 import ErrorDisplay from './container/ErrorDisplay';
 
@@ -39,13 +38,13 @@ const App: React.FC = () => {
         >
           <Route
             path="project/:projectId/team/:teamId/edit"
-            element={<TeamEditForm />}
+            element={<TeamForm />}
           />
           <Route
             path="project/:projectId/team/:teamId"
             element={<TeamView />}
           />
-          <Route path="project/:projectId/team/add" element={<TeamAddForm />} />
+          <Route path="project/:projectId/team/add" element={<TeamForm />} />
           <Route
             path="project/:projectId/teams"
             element={<TeamListForProject />}

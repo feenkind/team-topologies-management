@@ -35,9 +35,8 @@ const projectSlice = createSlice({
     },
     addAllProjects: (state, { payload }: PayloadAction<IProject[]>) => {
       state.projects = payload;
-      state.currentProject.id = state.currentProject.id || payload[0].id || '';
-      state.currentProject.name =
-        state.currentProject.name || payload[0].name || '';
+      state.currentProject.id = payload[0].id || '';
+      state.currentProject.name = payload[0].name || '';
     },
   },
 });

@@ -61,8 +61,8 @@ const ProjectForm: React.FC = () => {
         .then(() => {
           // trigger new data loading from backend to refresh all data
           dispatch(setDataLoaded(false));
-          // just go back when editing
-          navigate(-1);
+          // go to overview after editing
+          navigate(`/project/${projectData.id}`);
         })
         .catch(() => dispatch(setNetworkError(true)));
     }
