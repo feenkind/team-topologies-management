@@ -3,7 +3,7 @@ import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import { projectHints } from '../../constants/hints';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import { Button, TextField } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useAppDispatch } from '../../hooks';
 import { addProject, IProject } from '../../store/slices/projectSlice';
@@ -89,60 +89,66 @@ const ProjectForm: React.FC = () => {
       />
       <ContentWithHints hints={[projectHints.projectDescription]}>
         <FormGroupWrapper caption="Basic Information">
-          <Controller
-            name="name"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <FormElementWrapper errors={errors.name}>
-                <TextField
-                  required
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  sx={{ maxWidth: '500px' }}
-                  label="Project name"
-                  placeholder="Please enter a project name"
-                  error={!!errors.name}
-                  {...field}
-                  {...register('name', {
-                    required: {
-                      value: true,
-                      message: 'Name is required for projects.',
-                    },
-                  })}
-                />
-              </FormElementWrapper>
-            )}
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="name"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <FormElementWrapper errors={errors.name}>
+                    <TextField
+                      required
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      sx={{ maxWidth: '500px' }}
+                      label="Project name"
+                      placeholder="Please enter a project name"
+                      error={!!errors.name}
+                      {...field}
+                      {...register('name', {
+                        required: {
+                          value: true,
+                          message: 'Name is required for projects.',
+                        },
+                      })}
+                    />
+                  </FormElementWrapper>
+                )}
+              />
+            </Grid>
 
-          <Controller
-            name="description"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <FormElementWrapper errors={errors.description}>
-                <TextField
-                  required
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  multiline
-                  rows={4}
-                  label="Project description"
-                  placeholder="Please enter a short project description to provide some context"
-                  error={!!errors.description}
-                  {...field}
-                  {...register('description', {
-                    required: {
-                      value: true,
-                      message: 'Description is required for projects.',
-                    },
-                  })}
-                />
-              </FormElementWrapper>
-            )}
-          />
+            <Grid item xs={12} md={12}>
+              <Controller
+                name="description"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <FormElementWrapper errors={errors.description}>
+                    <TextField
+                      required
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      multiline
+                      rows={4}
+                      label="Project description"
+                      placeholder="Please enter a short project description to provide some context"
+                      error={!!errors.description}
+                      {...field}
+                      {...register('description', {
+                        required: {
+                          value: true,
+                          message: 'Description is required for projects.',
+                        },
+                      })}
+                    />
+                  </FormElementWrapper>
+                )}
+              />
+            </Grid>
+          </Grid>
         </FormGroupWrapper>
         <Button onClick={handleSubmit(onSubmit)} variant="contained">
           {projectData ? 'Save changes to project' : 'Create new project'}

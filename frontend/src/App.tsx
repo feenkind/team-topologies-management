@@ -10,7 +10,6 @@ import Sidebar from './container/Sidebar';
 import Visualization from './container/Visualization/Visualization';
 import DomainListForProject from './container/Domain/DomainListForProject';
 import TeamListForProject from './container/Team/TeamListForProject';
-import DomainAddForm from './container/Domain/DomainAddForm';
 import DomainView from './container/Domain/DomainView';
 import Page404 from './components/Page404';
 import TeamView from './container/Team/TeamView';
@@ -18,7 +17,7 @@ import NotificationList from './container/Notification/NotificationList';
 import DataLoader from './container/DataLoader';
 import ProjectNotFound from './container/Project/ProjectNotFound';
 import TeamAddForm from './container/Team/TeamAddForm';
-import DomainEditForm from './container/Domain/DomainEditForm';
+import DomainForm from './container/Domain/DomainForm';
 import TeamEditForm from './container/Team/TeamEditForm';
 import ProjectForm from './container/Project/ProjectForm';
 import ErrorDisplay from './container/ErrorDisplay';
@@ -54,7 +53,7 @@ const App: React.FC = () => {
 
           <Route
             path="project/:projectId/domain/:domainId/edit"
-            element={<DomainEditForm />}
+            element={<DomainForm />}
           />
           <Route
             path="project/:projectId/domain/:domainId"
@@ -62,7 +61,7 @@ const App: React.FC = () => {
           />
           <Route
             path="project/:projectId/domain/add"
-            element={<DomainAddForm />}
+            element={<DomainForm />}
           />
           <Route
             path="project/:projectId/domains"
