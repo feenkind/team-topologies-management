@@ -9,7 +9,13 @@ export interface IDomain {
   complexity: complexity;
 }
 
-interface IDomainData extends IDomain {
+interface IDomainHistory extends IDomain {
+  domainId: string;
+  createdAt: string;
+  changeNote: string;
+}
+
+interface IDomainDataWithHistory extends IDomain {
   projectId: string;
 }
 
@@ -43,7 +49,10 @@ const domainSlice = createSlice({
   name: 'domain',
   initialState: initialState,
   reducers: {
-    addAllDomains: (state, { payload }: PayloadAction<IDomainData[]>) => {
+    addAllDomainsWithHistory: (
+      state,
+      { payload }: PayloadAction<IDomainDataWithHistory[]>,
+    ) => {
       payload.forEach((domainData) => {
         const domain = {
           id: domainData.id,
@@ -70,4 +79,4 @@ const domainSlice = createSlice({
 });
 
 export const domainReducer = domainSlice.reducer;
-export const { addAllDomains } = domainSlice.actions;
+export const { addAllDomainsWithHistory } = domainSlice.actions;

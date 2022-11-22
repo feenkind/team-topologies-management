@@ -9,7 +9,7 @@ import {
 import axiosInstance from '../axios';
 import { setDataLoaded, setNetworkError } from '../store/slices/globalSlice';
 import axios from 'axios';
-import { addAllDomains } from '../store/slices/domainSlice';
+import { addAllDomainsWithHistory } from '../store/slices/domainSlice';
 
 interface IDataLoaderProps {
   children: React.ReactNode | React.ReactNode[];
@@ -35,7 +35,7 @@ const DataLoader: React.FC<IDataLoaderProps> = ({
     if (!isDataLoaded) {
       const requests = [
         axiosInstance.get('/projects'),
-        axiosInstance.get('/domains'),
+        axiosInstance.get('/domains?includeHistory=true'),
       ];
 
       axios
@@ -45,7 +45,7 @@ const DataLoader: React.FC<IDataLoaderProps> = ({
           const domainData = responses[1].data;
 
           dispatch(addAllProjects(projectData));
-          dispatch(addAllDomains(domainData));
+          dispatch(addAllDomainsWithHistory(domainData));
 
           dispatch(setDataLoaded(true));
           dispatch(setNetworkError(false));
