@@ -17,6 +17,7 @@ interface IDomainHistory extends IDomain {
 
 interface IDomainDataWithHistory extends IDomain {
   projectId: string;
+  DomainHistory: IDomainHistory[];
 }
 
 export interface IHistoricValue {
@@ -72,6 +73,59 @@ const domainSlice = createSlice({
           )
         ) {
           state.domains[domainData.projectId].push(domain);
+        }
+
+        // order historic values asc by date
+        domainData.DomainHistory.sort((a, b) =>
+          new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
+        );
+
+        if (domainData.DomainHistory.length > 0) {
+          state.historyComplexity[domainData.id] = [];
+          state.historyPriority[domainData.id] = [];
+        }
+
+        for (let i = 0; i < domainData.DomainHistory.length; i++) {
+          // first history value is always relevant
+          if (i === 0) {
+            state.historyComplexity[domainData.id].push({
+              value: domainData.DomainHistory[i].complexity,
+              date: domainData.DomainHistory[i].createdAt,
+              changeReason: domainData.DomainHistory[i].changeNote,
+            });
+
+            state.historyPriority[domainData.id].push({
+              value: domainData.DomainHistory[i].priority,
+              date: domainData.DomainHistory[i].createdAt,
+              changeReason: domainData.DomainHistory[i].changeNote,
+            });
+
+            continue;
+          }
+
+          // check if complexity value changed and save to history, if so
+          if (
+            domainData.DomainHistory[i - 1].complexity !==
+            domainData.DomainHistory[i].complexity
+          ) {
+            state.historyComplexity[domainData.id].push({
+              value: domainData.DomainHistory[i].complexity,
+              date: domainData.DomainHistory[i].createdAt,
+              changeReason: domainData.DomainHistory[i].changeNote,
+            });
+          }
+
+          // check if priority value changed and save to history, if so
+          if (
+            domainData.DomainHistory[i - 1].priority !==
+            domainData.DomainHistory[i].priority
+          ) {
+            state.historyPriority[domainData.id].push({
+              value: domainData.DomainHistory[i].priority,
+              date: domainData.DomainHistory[i].createdAt,
+              changeReason: domainData.DomainHistory[i].changeNote,
+            });
+          }
         }
       });
     },
