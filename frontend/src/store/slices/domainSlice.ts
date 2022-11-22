@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { complexity, priority } from '../../constants/categories';
 
 export interface IDomain {
@@ -7,6 +7,10 @@ export interface IDomain {
   description: string;
   priority: priority;
   complexity: complexity;
+}
+
+interface IDomainData extends IDomain {
+  projectId: string;
 }
 
 export interface IHistoricValue {
@@ -38,8 +42,32 @@ export const initialState: IInitialState = {
 const domainSlice = createSlice({
   name: 'domain',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    addAllDomains: (state, { payload }: PayloadAction<IDomainData[]>) => {
+      payload.forEach((domainData) => {
+        const domain = {
+          id: domainData.id,
+          name: domainData.name,
+          description: domainData.description,
+          priority: domainData.priority,
+          complexity: domainData.complexity,
+        };
+
+        if (!state.domains[domainData.projectId]) {
+          state.domains[domainData.projectId] = [];
+        }
+
+        if (
+          !state.domains[domainData.projectId].find(
+            (domain) => domain.id === domainData.id,
+          )
+        ) {
+          state.domains[domainData.projectId].push(domain);
+        }
+      });
+    },
+  },
 });
 
 export const domainReducer = domainSlice.reducer;
-export const {} = domainSlice.actions;
+export const { addAllDomains } = domainSlice.actions;

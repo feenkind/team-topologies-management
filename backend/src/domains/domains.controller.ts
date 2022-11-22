@@ -7,13 +7,13 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
-import { DomainService } from './domain.service';
+import { DomainsService } from './domains.service';
 import { CreateDomainDto } from './dto/create-domain.dto';
 import { UpdateDomainDto } from './dto/update-domain.dto';
 
-@Controller('domain')
-export class DomainController {
-  constructor(private readonly domainService: DomainService) {}
+@Controller('domains')
+export class DomainsController {
+  constructor(private readonly domainService: DomainsService) {}
 
   @Post()
   create(@Body() createDomainDto: CreateDomainDto) {
@@ -27,7 +27,7 @@ export class DomainController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.domainService.findOne(+id);
+    return this.domainService.findOne(id);
   }
 
   @Put(':id')

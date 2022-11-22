@@ -13,9 +13,9 @@ export const complexityColor = {
 };
 
 export enum priority {
-  GENERIC = 'Generic',
-  SUPPORTING = 'Supporting',
-  CORE = 'Core',
+  GENERIC = 'generic',
+  SUPPORTING = 'supporting',
+  CORE = 'core',
 }
 
 export enum teamType {

@@ -1,8 +1,8 @@
 -- CreateEnum
-CREATE TYPE "Priority" AS ENUM ('GENERIC', 'SUPPORTING', 'CORE');
+CREATE TYPE "Priority" AS ENUM ('generic', 'supporting', 'core');
 
 -- CreateEnum
-CREATE TYPE "Complexity" AS ENUM ('SIMPLE', 'COMPLICATED', 'COMPLEX');
+CREATE TYPE "Complexity" AS ENUM ('simple', 'complicated', 'complex');
 
 -- CreateTable
 CREATE TABLE "Domain" (
@@ -30,9 +30,6 @@ CREATE TABLE "DomainHistory" (
 
     CONSTRAINT "DomainHistory_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Domain_projectId_key" ON "Domain"("projectId");
 
 -- AddForeignKey
 ALTER TABLE "Domain" ADD CONSTRAINT "Domain_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;

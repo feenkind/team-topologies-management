@@ -8,6 +8,8 @@ import {
 } from '../store/slices/projectSlice';
 import axiosInstance from '../axios';
 import { setDataLoaded, setNetworkError } from '../store/slices/globalSlice';
+import axios from 'axios';
+import { addAllDomains } from '../store/slices/domainSlice';
 
 interface IDataLoaderProps {
   children: React.ReactNode | React.ReactNode[];
@@ -31,15 +33,22 @@ const DataLoader: React.FC<IDataLoaderProps> = ({
   // load all data if not already done
   useEffect(() => {
     if (!isDataLoaded) {
-      axiosInstance
-        .request({ url: '/projects' })
-        .then((response) => {
-          if (response.data && response.data.length > 0) {
-            dispatch(addAllProjects(response.data));
+      const requests = [
+        axiosInstance.get('/projects'),
+        axiosInstance.get('/domains'),
+      ];
 
-            dispatch(setDataLoaded(true));
-            dispatch(setNetworkError(false));
-          }
+      axios
+        .all(requests)
+        .then((responses) => {
+          const projectData = responses[0].data;
+          const domainData = responses[1].data;
+
+          dispatch(addAllProjects(projectData));
+          dispatch(addAllDomains(domainData));
+
+          dispatch(setDataLoaded(true));
+          dispatch(setNetworkError(false));
         })
         .catch(() => {
           dispatch(setDataLoaded(false));

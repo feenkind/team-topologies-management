@@ -16,13 +16,13 @@ model Project {
   updatedAt   DateTime @updatedAt
   name        String   @db.VarChar(255)
   description String
-  Domain      Domain?
+  Domain      Domain[]
 }
 
 model Domain {
   id            String          @id @default(cuid())
   project       Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId     String          @unique @db.Text
+  projectId     String          @db.Text
   name          String          @db.VarChar(255)
   description   String
   priority      Priority
@@ -44,13 +44,13 @@ model DomainHistory {
 }
 
 enum Priority {
-  GENERIC
-  SUPPORTING
-  CORE
+  generic
+  supporting
+  core
 }
 
 enum Complexity {
-  SIMPLE
-  COMPLICATED
-  COMPLEX
+  simple
+  complicated
+  complex
 }
