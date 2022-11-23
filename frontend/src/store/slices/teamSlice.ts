@@ -10,6 +10,12 @@ import {
   versioningType,
 } from '../../constants/teamApi';
 import { ITeamDataWithHistory } from './interfacesTeamImport';
+import {
+  createHistoricCognitiveLoadValue,
+  createHistoricFteValue,
+  createHistoricTeamType,
+  createTeam,
+} from './mappingsTeamImport';
 
 export interface IChannel {
   type: channelType;
@@ -86,11 +92,11 @@ interface IHistoricValue {
   changeReason?: string;
 }
 
-interface IHistoricFTEValue extends IHistoricValue {
+export interface IHistoricFTEValue extends IHistoricValue {
   value: number;
 }
 
-interface IHistoricCognitiveLoadValue extends IHistoricValue {
+export interface IHistoricCognitiveLoadValue extends IHistoricValue {
   value: number;
 }
 
@@ -98,7 +104,7 @@ interface IHistoricDomainResponsibility extends IHistoricValue {
   domains: string[];
 }
 
-interface IHistoricTeamType extends IHistoricValue {
+export interface IHistoricTeamType extends IHistoricValue {
   teamType: teamType;
 }
 
@@ -170,43 +176,12 @@ const teamSlice = createSlice({
         teamData.TeamHistory.sort((a, b) =>
           new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
         );
+        // order team domain history values asc by date
+        teamData.DomainsOnTeamsHistory.sort((a, b) =>
+          new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
+        );
 
-        const team: ITeam = {
-          channels: teamData.CommunicationChannel.map((channel) => ({
-            type: channel.type,
-            name: channel.name,
-          })),
-          cognitiveLoad: teamData.cognitiveLoad,
-          domains: teamData.DomainsOnTeams.map((domain) => domain.domainId),
-          focus: teamData.focus,
-          fte: teamData.fte,
-          id: teamData.id,
-          meetings: teamData.Meeting.map((meeting) => ({
-            purpose: meeting.purpose,
-            day: meeting.day,
-            time: meeting.time,
-            durationMinutes: meeting.durationMinutes,
-          })),
-          name: teamData.name,
-          platform: teamData.platform || '',
-          services: teamData.Service.map((service) => ({
-            versioningType: service.versioningType,
-            repository: service.repository,
-            name: service.name,
-            url: service.url,
-          })),
-          type: teamData.type,
-          wikiSearchTerms: teamData.wikiSearchTerms,
-          waysOfWorking: teamData.WayOfWorking.map((way) => ({
-            name: way.name,
-            url: way.url || '',
-          })),
-          workInProgress: teamData.Work.map((work) => ({
-            summary: work.summary,
-            repository: work.repository || '',
-          })),
-          teamCreationDate: teamData.TeamHistory[0].createdAt,
-        };
+        const team = createTeam(teamData);
 
         if (!state.teams[teamData.projectId]) {
           state.teams = { ...state.teams, [teamData.projectId]: [] };
@@ -218,6 +193,58 @@ const teamSlice = createSlice({
           )
         ) {
           state.teams[teamData.projectId].push(team);
+        }
+
+        for (let i = 0; i < teamData.TeamHistory.length; i++) {
+          const currentHistory = teamData.TeamHistory[i];
+          // first history value is always relevant
+          if (i === 0) {
+            state.historyFte = {
+              ...state.historyFte,
+              [teamData.id]: [],
+            };
+            state.historyCognitiveLoad = {
+              ...state.historyCognitiveLoad,
+              [teamData.id]: [],
+            };
+            state.historyTeamTypes = {
+              ...state.historyTeamTypes,
+              [teamData.id]: [],
+            };
+
+            state.historyFte[teamData.id].push(
+              createHistoricFteValue(currentHistory),
+            );
+            state.historyCognitiveLoad[teamData.id].push(
+              createHistoricCognitiveLoadValue(currentHistory),
+            );
+            state.historyTeamTypes[teamData.id].push(
+              createHistoricTeamType(currentHistory),
+            );
+
+            continue;
+          }
+
+          // check if current history values are different than previous and
+          // save only, if so
+          const previousHistory = teamData.TeamHistory[i - 1];
+          if (previousHistory.fte !== currentHistory.fte) {
+            state.historyFte[teamData.id].push(
+              createHistoricFteValue(currentHistory),
+            );
+          }
+
+          if (previousHistory.cognitiveLoad !== currentHistory.cognitiveLoad) {
+            state.historyCognitiveLoad[teamData.id].push(
+              createHistoricCognitiveLoadValue(currentHistory),
+            );
+          }
+
+          if (previousHistory.type !== currentHistory.type) {
+            state.historyTeamTypes[teamData.id].push(
+              createHistoricTeamType(currentHistory),
+            );
+          }
         }
       });
 

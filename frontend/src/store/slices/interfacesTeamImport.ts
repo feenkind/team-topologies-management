@@ -30,7 +30,8 @@ interface IDomainOnTeams {
 }
 
 interface IDomainOnTeamsHistory extends IDomainOnTeams, ITeamDataHistoryBase {}
-interface ITeamHistory extends ITeamDataHistoryBase {
+
+export interface ITeamDataHistory extends ITeamDataHistoryBase {
   fte: number;
   type: teamType;
   cognitiveLoad: number;
@@ -46,7 +47,7 @@ export interface ITeamDataWithHistory {
   type: teamType;
   platform?: string;
   wikiSearchTerms: string[];
-  TeamHistory: ITeamHistory[];
+  TeamHistory: ITeamDataHistory[];
   CommunicationChannel: ITeamDataChannel[];
   Meeting: ITeamDataMeeting[];
   Service: ITeamDataService[];
