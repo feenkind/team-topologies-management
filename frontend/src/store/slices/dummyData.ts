@@ -6,7 +6,7 @@ import {
   teamType,
 } from '../../constants/categories';
 import {
-  channelTypes,
+  channelType,
   meetingsDay,
   versioningType,
 } from '../../constants/teamApi';
@@ -156,8 +156,8 @@ const initialTeamsState = {
     '1': [
       {
         channels: [
-          { type: channelTypes.SLACK, name: '#aweseome-team' },
-          { type: channelTypes.SLACK, name: '#all-teams' },
+          { type: channelType.SLACK, name: '#aweseome-team' },
+          { type: channelType.SLACK, name: '#all-teams' },
         ],
         cognitiveLoad: 13,
         domains: ['1', '2'],
@@ -216,7 +216,7 @@ const initialTeamsState = {
         ],
       },
       {
-        channels: [{ type: channelTypes.SLACK, name: '#perfect-team' }],
+        channels: [{ type: channelType.SLACK, name: '#perfect-team' }],
         cognitiveLoad: 19,
         domains: ['3', '4'],
         focus: '',

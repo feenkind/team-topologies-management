@@ -19,11 +19,11 @@ export enum priority {
 }
 
 export enum teamType {
-  STREAM_ALIGNED = 'Stream-Aligned',
-  ENABLING = 'Enabling',
-  COMPLICATED_SUBSYSTEM = 'Complicated Subsystem',
-  PLATFORM = 'Platform',
-  UNDEFINED = 'Undefined Type',
+  STREAM_ALIGNED = 'stream_aligned',
+  ENABLING = 'enabling',
+  COMPLICATED_SUBSYSTEM = 'complicated_subsystem',
+  PLATFORM = 'platform',
+  UNDEFINED = 'undefined',
 }
 
 export const teamTypeColor = {

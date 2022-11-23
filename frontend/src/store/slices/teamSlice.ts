@@ -1,40 +1,41 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   dependencyType,
   interactionMode,
   teamType,
 } from '../../constants/categories';
 import {
-  channelTypes,
+  channelType,
   meetingsDay,
   versioningType,
 } from '../../constants/teamApi';
+import { ITeamDataWithHistory } from './interfacesTeamImport';
 
-interface IChannel {
-  type: channelTypes;
+export interface IChannel {
+  type: channelType;
   name: string;
 }
 
-interface IMeeting {
+export interface IMeeting {
   purpose: string;
   day: meetingsDay;
   time: string;
   durationMinutes: number;
 }
 
-interface IService {
+export interface IService {
   name: string;
   url: string;
   repository: string;
   versioningType: versioningType;
 }
 
-interface IWorkInProgress {
+export interface IWorkInProgress {
   summary: string;
   repository?: string;
 }
 
-interface IWaysOfWorking {
+export interface IWaysOfWorking {
   name: string;
   url?: string;
 }
@@ -50,11 +51,11 @@ export interface ITeam {
   name: string;
   platform?: string;
   services?: IService[];
-  teamCreationDate: string;
   type: teamType;
   wikiSearchTerms?: string[];
   waysOfWorking?: IWaysOfWorking[];
   workInProgress?: IWorkInProgress[];
+  teamCreationDate: string;
 }
 
 export interface IDependency {
@@ -158,8 +159,72 @@ export const initialState: IInitialState = {
 const teamSlice = createSlice({
   name: 'team',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    addAllTeamDataWithHistory: (
+      state,
+      { payload }: PayloadAction<ITeamDataWithHistory[]>,
+    ) => {
+      state = { ...initialState };
+      payload.forEach((teamData) => {
+        // order team history values asc by date
+        teamData.TeamHistory.sort((a, b) =>
+          new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
+        );
+
+        const team: ITeam = {
+          channels: teamData.CommunicationChannel.map((channel) => ({
+            type: channel.type,
+            name: channel.name,
+          })),
+          cognitiveLoad: teamData.cognitiveLoad,
+          domains: teamData.DomainsOnTeams.map((domain) => domain.domainId),
+          focus: teamData.focus,
+          fte: teamData.fte,
+          id: teamData.id,
+          meetings: teamData.Meeting.map((meeting) => ({
+            purpose: meeting.purpose,
+            day: meeting.day,
+            time: meeting.time,
+            durationMinutes: meeting.durationMinutes,
+          })),
+          name: teamData.name,
+          platform: teamData.platform || '',
+          services: teamData.Service.map((service) => ({
+            versioningType: service.versioningType,
+            repository: service.repository,
+            name: service.name,
+            url: service.url,
+          })),
+          type: teamData.type,
+          wikiSearchTerms: teamData.wikiSearchTerms,
+          waysOfWorking: teamData.WayOfWorking.map((way) => ({
+            name: way.name,
+            url: way.url || '',
+          })),
+          workInProgress: teamData.Work.map((work) => ({
+            summary: work.summary,
+            repository: work.repository || '',
+          })),
+          teamCreationDate: teamData.TeamHistory[0].createdAt,
+        };
+
+        if (!state.teams[teamData.projectId]) {
+          state.teams = { ...state.teams, [teamData.projectId]: [] };
+        }
+
+        if (
+          !state.teams[teamData.projectId].find(
+            (team) => team.id === teamData.id,
+          )
+        ) {
+          state.teams[teamData.projectId].push(team);
+        }
+      });
+
+      return state;
+    },
+  },
 });
 
 export const teamReducer = teamSlice.reducer;
-export const {} = teamSlice.actions;
+export const { addAllTeamDataWithHistory } = teamSlice.actions;

@@ -1,4 +1,4 @@
-export enum channelTypes {
+export enum channelType {
   SLACK = 'slack',
 }
 
