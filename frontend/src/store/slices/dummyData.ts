@@ -10,7 +10,7 @@ import {
   meetingsDay,
   versioningType,
 } from '../../constants/teamApi';
-import { changeType } from './teamSlice';
+import { changeType } from './team/teamSlice';
 
 const projectShoppingPlatform = {
   id: '1',

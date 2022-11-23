@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { projectReducer } from './slices/projectSlice';
-import { domainReducer } from './slices/domainSlice';
-import { teamReducer } from './slices/teamSlice';
+import { domainReducer } from './slices/domain/domainSlice';
+import { teamReducer } from './slices/team/teamSlice';
 import { notificationReducer } from './slices/notificationSlice';
 import { globalReducer } from './slices/globalSlice';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useAppSelector } from '../../hooks';
-import { changeType, ITeam } from '../../store/slices/teamSlice';
+import { changeType, ITeam } from '../../store/slices/team/teamSlice';
 import { Alert } from '@mui/material';
 import Table from '../../components/Table/Table';
 import DependencyCategory from '../../components/Categories/DependencyCategory';

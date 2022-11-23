@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Table from '../../components/Table/Table';
 import { Alert, Paper, Typography } from '@mui/material';
-import { IDependency, ITeam } from '../../store/slices/teamSlice';
+import { IDependency, ITeam } from '../../store/slices/team/teamSlice';
 import { useAppSelector } from '../../hooks';
 import DependencyCategory from '../../components/Categories/DependencyCategory';
 import TeamLink from '../../components/Buttons/TeamLink';

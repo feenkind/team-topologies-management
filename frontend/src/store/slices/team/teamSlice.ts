@@ -3,12 +3,12 @@ import {
   dependencyType,
   interactionMode,
   teamType,
-} from '../../constants/categories';
+} from '../../../constants/categories';
 import {
   channelType,
   meetingsDay,
   versioningType,
-} from '../../constants/teamApi';
+} from '../../../constants/teamApi';
 import { ITeamDataWithHistory } from './interfacesTeamImport';
 import {
   createHistoricCognitiveLoadValue,

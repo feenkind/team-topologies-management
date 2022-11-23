@@ -5,7 +5,7 @@ import {
   IWaysOfWorking,
   IWorkInProgress,
 } from './teamSlice';
-import { teamType } from '../../constants/categories';
+import { teamType } from '../../../constants/categories';
 
 interface ITeamDataHistoryBase {
   id: string;

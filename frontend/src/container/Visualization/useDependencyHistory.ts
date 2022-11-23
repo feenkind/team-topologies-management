@@ -1,4 +1,4 @@
-import { changeType, IDependency } from '../../store/slices/teamSlice';
+import { changeType, IDependency } from '../../store/slices/team/teamSlice';
 import { useAppSelector } from '../../hooks';
 
 export const useDependencyHistory = ({

@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { ITeam } from '../../store/slices/teamSlice';
+import { ITeam } from '../../store/slices/team/teamSlice';
 import TeamViewHistoryCognitiveLoadDiagram from './TeamViewHistoryCognitiveLoadDiagram';
 import TeamViewHistoryDependencyTable from './TeamViewHistoryDependencyTable';
 import { useAppSelector } from '../../hooks';

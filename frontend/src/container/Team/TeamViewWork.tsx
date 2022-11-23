@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ITeam } from '../../store/slices/teamSlice';
+import { ITeam } from '../../store/slices/team/teamSlice';
 import { Alert, Link, Paper, Typography } from '@mui/material';
 import Table from '../../components/Table/Table';
 

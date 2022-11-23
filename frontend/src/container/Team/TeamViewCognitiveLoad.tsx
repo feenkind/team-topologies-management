@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ITeam } from '../../store/slices/teamSlice';
+import { ITeam } from '../../store/slices/team/teamSlice';
 import InformationGrid from '../../components/Layout/InformationGrid';
 import { Alert, Box, Paper, Tooltip, Typography } from '@mui/material';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';

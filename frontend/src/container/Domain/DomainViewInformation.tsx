@@ -3,7 +3,7 @@ import PriorityCategory from '../../components/Categories/PriorityCategory';
 import ComplexityCategory from '../../components/Categories/ComplexityCategory';
 import TeamLink from '../../components/Buttons/TeamLink';
 import InformationGrid from '../../components/Layout/InformationGrid';
-import { IDomain } from '../../store/slices/domainSlice';
+import { IDomain } from '../../store/slices/domain/domainSlice';
 import { useAppSelector } from '../../hooks';
 import { Alert } from '@mui/material';
 

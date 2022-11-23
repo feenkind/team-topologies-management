@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IDomain } from '../../store/slices/domainSlice';
+import { IDomain } from '../../store/slices/domain/domainSlice';
 import { useAppSelector } from '../../hooks';
 import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOptionsWrapper';
 import {

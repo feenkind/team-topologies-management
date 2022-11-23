@@ -7,7 +7,7 @@ import {
   VictoryTooltip,
   VictoryScatter,
 } from 'victory';
-import { ITeam } from '../../store/slices/teamSlice';
+import { ITeam } from '../../store/slices/team/teamSlice';
 import { useAppSelector } from '../../hooks';
 
 interface ITeamViewHistoryCognitiveLoadDiagramProps {

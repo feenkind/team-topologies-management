@@ -4,9 +4,9 @@ import { useEffect } from 'react';
 import axiosInstance from '../../axios';
 import axios from 'axios';
 import { addAllProjects } from '../../store/slices/projectSlice';
-import { addAllDomainsWithHistory } from '../../store/slices/domainSlice';
+import { addAllDomainsWithHistory } from '../../store/slices/domain/domainSlice';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
-import { addAllTeamDataWithHistory } from '../../store/slices/teamSlice';
+import { addAllTeamDataWithHistory } from '../../store/slices/team/teamSlice';
 
 const LoadBackendData: React.FC = () => {
   const isDataLoaded = useAppSelector((state) => state.global.dataLoaded);

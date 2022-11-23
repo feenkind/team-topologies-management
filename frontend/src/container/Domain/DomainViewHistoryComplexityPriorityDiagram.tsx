@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IHistoricValue } from '../../store/slices/domainSlice';
+import { IHistoricValue } from '../../store/slices/domain/domainSlice';
 import { useTheme } from '@mui/material';
 import {
   VictoryAxis,

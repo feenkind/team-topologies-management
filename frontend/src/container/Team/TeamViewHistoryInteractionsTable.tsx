@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { changeType, ITeam } from '../../store/slices/teamSlice';
+import { changeType, ITeam } from '../../store/slices/team/teamSlice';
 
 import Table from '../../components/Table/Table';
 import { useAppSelector } from '../../hooks';
