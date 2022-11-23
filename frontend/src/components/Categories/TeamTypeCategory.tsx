@@ -1,20 +1,31 @@
 import * as React from 'react';
 import { Chip } from '@mui/material';
 import {
-  teamType as teamTopologyEnum,
+  teamType as teamTypeEnum,
   teamTypeColor,
 } from '../../constants/categories';
 
 interface ITeamTypeCategoryProps {
-  teamType: teamTopologyEnum;
+  teamType: teamTypeEnum;
 }
 
 const TeamTypeCategory: React.FC<ITeamTypeCategoryProps> = ({
   teamType,
 }: ITeamTypeCategoryProps) => {
+  let teamTypeDisplay = teamType.toString();
+  if (teamType === teamTypeEnum.STREAM_ALIGNED) {
+    teamTypeDisplay = 'stream-aligned';
+  }
+  if (teamType === teamTypeEnum.COMPLICATED_SUBSYSTEM) {
+    teamTypeDisplay = 'complicated subsystem';
+  }
+  if (teamType === teamTypeEnum.UNDEFINED) {
+    teamTypeDisplay = 'undefined type';
+  }
+
   return (
     <Chip
-      label={teamType}
+      label={teamTypeDisplay}
       sx={{
         color: 'black',
         borderColor: teamTypeColor[teamType].color,
