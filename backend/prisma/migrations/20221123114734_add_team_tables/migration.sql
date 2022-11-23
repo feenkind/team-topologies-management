@@ -85,8 +85,8 @@ CREATE TABLE "Service" (
     "teamId" TEXT NOT NULL,
     "versioning" "VersioningType" NOT NULL,
     "name" VARCHAR(255) NOT NULL,
-    "url" TEXT NOT NULL,
-    "repository" TEXT NOT NULL,
+    "url" TEXT,
+    "repository" TEXT,
 
     CONSTRAINT "Service_pkey" PRIMARY KEY ("id")
 );
@@ -96,19 +96,19 @@ CREATE TABLE "WayOfWorking" (
     "id" TEXT NOT NULL,
     "teamId" TEXT NOT NULL,
     "name" VARCHAR(255) NOT NULL,
-    "url" TEXT NOT NULL,
+    "url" TEXT,
 
     CONSTRAINT "WayOfWorking_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "WorkInProgress" (
+CREATE TABLE "Work" (
     "id" TEXT NOT NULL,
     "teamId" TEXT NOT NULL,
     "summary" TEXT NOT NULL,
-    "repository" TEXT NOT NULL,
+    "repository" TEXT,
 
-    CONSTRAINT "WorkInProgress_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Work_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
@@ -142,4 +142,4 @@ ALTER TABLE "Service" ADD CONSTRAINT "Service_teamId_fkey" FOREIGN KEY ("teamId"
 ALTER TABLE "WayOfWorking" ADD CONSTRAINT "WayOfWorking_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "WorkInProgress" ADD CONSTRAINT "WorkInProgress_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Work" ADD CONSTRAINT "Work_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;

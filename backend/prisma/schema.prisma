@@ -62,9 +62,9 @@ model Team {
   Meeting               Meeting[]
   Service               Service[]
   WayOfWorking          WayOfWorking[]
-  WorkInProgress        WorkInProgress[]
   DomainsOnTeams        DomainsOnTeams[]
   DomainsOnTeamsHistory DomainsOnTeamsHistory[]
+  Work                  Work[]
 }
 
 model TeamHistory {
@@ -121,8 +121,8 @@ model Service {
   teamId     String         @db.Text
   versioning VersioningType
   name       String         @db.VarChar(255)
-  url        String
-  repository String
+  url        String?
+  repository String?
 }
 
 model WayOfWorking {
@@ -130,15 +130,15 @@ model WayOfWorking {
   team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId String @db.Text
   name   String @db.VarChar(255)
-  url    String
+  url    String?
 }
 
-model WorkInProgress {
-  id         String @id @default(cuid())
-  team       Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId     String @db.Text
+model Work {
+  id         String  @id @default(cuid())
+  team       Team    @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId     String  @db.Text
   summary    String
-  repository String
+  repository String?
 }
 
 enum Priority {

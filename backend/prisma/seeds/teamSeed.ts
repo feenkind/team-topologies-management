@@ -1,5 +1,10 @@
 import { Domain, Team, PrismaClient } from '@prisma/client';
-import { TeamType } from '../../src/teams/dto/create-team.dto';
+import {
+  channelTypes,
+  meetingsDay,
+  TeamType,
+  versioningType,
+} from '../../src/teams/dto/create-team.dto';
 
 const infrastructureTeam = {
   name: 'Infrastructure Team',
@@ -11,7 +16,61 @@ const infrastructureTeam = {
     'The infrastructure team is responsible for building and' +
     ' maintaining the shopping platform infrastructure',
   platform: 'Shopping Platform Infrastructure',
-  wikiSearchTerms: ['infrastrucutre', 'shoppingPlatform'],
+  wikiSearchTerms: ['infrastrucutre', 'shoppingPlatform', 'platform'],
+  meetings: [
+    {
+      purpose: 'Daily sync',
+      day: meetingsDay.DAILY,
+      time: '9:30',
+      durationMinutes: 15,
+    },
+    {
+      purpose:
+        'Meeting for any questions regarding our services, everybody' +
+        ' is welcome to join.',
+      day: meetingsDay.MONDAY,
+      time: '14:00',
+      durationMinutes: 30,
+    },
+  ],
+  channels: [
+    { type: channelTypes.SLACK, name: '#platform-team-infrastructure' },
+    { type: channelTypes.SLACK, name: '#shopping-platform' },
+  ],
+  services: [
+    {
+      name: 'Deployment Service',
+      url: 'https://github.com/example.com/example-service-a',
+      repository: 'https://github.com/example.com/example-service-a',
+      versioningType: versioningType.SEMANTIC,
+    },
+    {
+      name: 'Logging Service',
+      url: 'https://github.com/example.com/example-service-b',
+      repository: 'https://github.com/example.com/example-service-b',
+      versioningType: versioningType.SEMANTIC,
+    },
+  ],
+  waysOfWorking: [
+    {
+      name: 'Scrum',
+      url: 'https://scrumguides.org/',
+    },
+    {
+      name: 'Lean',
+      url: 'https://example.internal-wiki.com/ways-of-working/lean',
+    },
+  ],
+  workInProgress: [
+    {
+      summary: 'Implementing add ons for deployment service',
+      repository: 'https://github.com/example.com/example-service-a',
+    },
+    {
+      summary: 'Helping with the preparations for the meetup in February',
+      repository: 'https://github.com/example.com/example-service-a',
+    },
+  ],
 };
 
 const createTeams = async (prisma: PrismaClient) => {
@@ -50,7 +109,51 @@ const createTeams = async (prisma: PrismaClient) => {
         cognitiveLoad: infrastructureTeam.cognitiveLoad,
         fte: infrastructureTeam.fte,
         type: infrastructureTeam.teamType,
-        DomainsOnTeams: { create: { domainId: domainInfrastructure.id } },
+        platform: infrastructureTeam.platform,
+        wikiSearchTerms: infrastructureTeam.wikiSearchTerms,
+        DomainsOnTeams: { create: [{ domainId: domainInfrastructure.id }] },
+        CommunicationChannel: {
+          create: infrastructureTeam.channels.map((channel) => ({
+            type: channel.type,
+            name: channel.name,
+          })),
+        },
+        Meeting: {
+          create: infrastructureTeam.meetings.map((meeting) => ({
+            day: meeting.day,
+            purpose: meeting.purpose,
+            time: meeting.time,
+            durationMinutes: meeting.durationMinutes,
+          })),
+        },
+        Service: {
+          create: infrastructureTeam.services.map((service) => ({
+            versioning: service.versioningType,
+            url: service.url,
+            name: service.name,
+            repository: service.repository,
+          })),
+        },
+        WayOfWorking: {
+          create: infrastructureTeam.waysOfWorking.map((way) => ({
+            name: way.name,
+            url: way.url,
+          })),
+        },
+        Work: {
+          create: infrastructureTeam.workInProgress.map((work) => ({
+            summary: work.summary,
+            repository: work.repository,
+          })),
+        },
+        TeamHistory: {
+          create: {
+            changeNote: 'Initial creation.',
+            cognitiveLoad: infrastructureTeam.cognitiveLoad,
+            fte: infrastructureTeam.fte,
+            type: infrastructureTeam.teamType,
+          },
+        },
       },
     });
 
