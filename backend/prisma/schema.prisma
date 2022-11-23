@@ -30,7 +30,6 @@ model Domain {
   complexity            Complexity
   active                Boolean
   DomainHistory         DomainHistory[]
-  Team                  Team[]
   DomainsOnTeams        DomainsOnTeams[]
   DomainsOnTeamsHistory DomainsOnTeamsHistory[]
 }
@@ -57,6 +56,7 @@ model Team {
   fte                   Int                     @db.SmallInt
   focus                 String
   type                  TeamType
+  platform              String?
   wikiSearchTerms       String[]
   CommunicationChannel  CommunicationChannel[]
   Meeting               Meeting[]
@@ -64,8 +64,6 @@ model Team {
   WayOfWorking          WayOfWorking[]
   WorkInProgress        WorkInProgress[]
   DomainsOnTeams        DomainsOnTeams[]
-  Domain                Domain?                 @relation(fields: [domainId], references: [id])
-  domainId              String?
   DomainsOnTeamsHistory DomainsOnTeamsHistory[]
 }
 

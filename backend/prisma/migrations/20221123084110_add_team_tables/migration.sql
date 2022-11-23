@@ -19,8 +19,8 @@ CREATE TABLE "Team" (
     "fte" SMALLINT NOT NULL,
     "focus" TEXT NOT NULL,
     "type" "TeamType" NOT NULL,
+    "platform" TEXT,
     "wikiSearchTerms" TEXT[],
-    "domainId" TEXT,
 
     CONSTRAINT "Team_pkey" PRIMARY KEY ("id")
 );
@@ -113,9 +113,6 @@ CREATE TABLE "WorkInProgress" (
 
 -- AddForeignKey
 ALTER TABLE "Team" ADD CONSTRAINT "Team_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Team" ADD CONSTRAINT "Team_domainId_fkey" FOREIGN KEY ("domainId") REFERENCES "Domain"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "TeamHistory" ADD CONSTRAINT "TeamHistory_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
