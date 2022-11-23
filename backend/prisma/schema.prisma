@@ -65,6 +65,10 @@ model Team {
   DomainsOnTeams        DomainsOnTeams[]
   DomainsOnTeamsHistory DomainsOnTeamsHistory[]
   Work                  Work[]
+  dependencyTo          Dependency[]            @relation("teamFrom")
+  dependencyFrom        Dependency[]            @relation("teamTo")
+  dependencyHistoryTo   DependencyHistory[]     @relation("historyTeamFrom")
+  dependencyHistoryFrom DependencyHistory[]     @relation("historyTeamTo")
 }
 
 model TeamHistory {
@@ -126,10 +130,10 @@ model Service {
 }
 
 model WayOfWorking {
-  id     String @id @default(cuid())
-  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId String @db.Text
-  name   String @db.VarChar(255)
+  id     String  @id @default(cuid())
+  team   Team    @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId String  @db.Text
+  name   String  @db.VarChar(255)
   url    String?
 }
 
@@ -139,6 +143,30 @@ model Work {
   teamId     String  @db.Text
   summary    String
   repository String?
+}
+
+model Dependency {
+  teamFrom       Team           @relation("teamFrom", fields: [teamIdFrom], references: [id], onDelete: Cascade)
+  teamIdFrom     String         @db.Text
+  teamTo         Team           @relation("teamTo", fields: [teamIdTo], references: [id], onDelete: Cascade)
+  teamIdTo       String         @db.Text
+  dependencyType DependencyType
+  description    String?
+
+  @@id([teamIdFrom, teamIdTo])
+}
+
+model DependencyHistory {
+  id             String         @id @default(cuid())
+  createdAt      DateTime       @default(now())
+  changeNote     String
+  changeType     ChangeType
+  teamFrom       Team           @relation("historyTeamFrom", fields: [teamIdFrom], references: [id], onDelete: Cascade)
+  teamIdFrom     String         @db.Text
+  teamTo         Team           @relation("historyTeamTo", fields: [teamIdTo], references: [id], onDelete: Cascade)
+  teamIdTo       String         @db.Text
+  dependencyType DependencyType
+  description    String?
 }
 
 enum Priority {
@@ -177,4 +205,16 @@ enum MeetingDay {
 enum VersioningType {
   semantic
   sequential
+}
+
+enum DependencyType {
+  ok
+  slowing
+  blocking
+}
+
+enum ChangeType {
+  added
+  removed
+  changed
 }
