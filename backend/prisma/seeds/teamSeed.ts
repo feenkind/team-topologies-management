@@ -315,14 +315,14 @@ const gpsTeam = {
       fte: 2,
       type: TeamType.ENABLING,
       changeNote: 'Regular cognitive load check.',
-      createdAt: new Date('2022-10-10'),
+      createdAt: new Date('2022-09-01'),
     },
     {
       cognitiveLoad: 9,
       fte: 4,
       type: TeamType.ENABLING,
       changeNote: 'Initial creation.',
-      createdAt: new Date('2022-07-10'),
+      createdAt: new Date('2022-06-01'),
     },
   ],
   historyDomains: [
@@ -334,7 +334,7 @@ const gpsTeam = {
     {
       domains: ['Shipping', 'Product Catalogue'],
       changeNote: 'Initial creation.',
-      createdAt: new Date('2022-07-10'),
+      createdAt: new Date('2022-06-01'),
     },
   ],
 };

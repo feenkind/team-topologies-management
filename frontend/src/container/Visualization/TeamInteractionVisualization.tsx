@@ -109,14 +109,12 @@ const TeamInteractionVisualization: React.FC = () => {
   ];
 
   // remove duplicate dates and order desc
-  const sortedHistoryChangeDates =
-    historyChangeDates &&
-    Array.from(new Set(historyChangeDates)).sort((a, b) =>
-      new Date(a) > new Date(b) ? -1 : 1,
-    );
+  const sortedHistoryChangeDates = Array.from(new Set(historyChangeDates)).sort(
+    (a, b) => (new Date(a) > new Date(b) ? -1 : 1),
+  );
 
   const [selectedDate, setSelectedDate] = useState<string>(
-    sortedHistoryChangeDates ? sortedHistoryChangeDates[0] : '',
+    sortedHistoryChangeDates[0],
   );
   const [selectedDateIndex, setSelectedDateIndex] = useState<number>(0);
   const [showExpectedInteractions, setShowExpectedInteractions] =
@@ -131,11 +129,9 @@ const TeamInteractionVisualization: React.FC = () => {
     date: selectedDate,
   });
 
-  if (interactionsHistory.length === 0) {
+  if (historyChangeDates.length === 0) {
     return (
-      <Alert severity="info">
-        {currentProject.name} never had any interactions between teams.
-      </Alert>
+      <Alert severity="info">{currentProject.name} never had any teams.</Alert>
     );
   }
 
