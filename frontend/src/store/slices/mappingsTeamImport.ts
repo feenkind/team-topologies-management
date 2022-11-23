@@ -1,5 +1,6 @@
 import {
   IHistoricCognitiveLoadValue,
+  IHistoricDomainResponsibility,
   IHistoricFTEValue,
   IHistoricTeamType,
   ITeam,
@@ -67,4 +68,13 @@ export const createHistoricTeamType = (
   teamType: teamDataHistory.type,
   date: teamDataHistory.createdAt,
   changeReason: teamDataHistory.changeNote,
+});
+
+export const createHistoricDomainResponsibility = (
+  date: string,
+  domainHistory: { domains: string[]; changeNote: string },
+): IHistoricDomainResponsibility => ({
+  domains: domainHistory.domains,
+  date: date,
+  changeReason: domainHistory.changeNote,
 });

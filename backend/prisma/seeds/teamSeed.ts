@@ -183,7 +183,7 @@ const appTeam = {
   ],
   historyDomains: [
     {
-      domains: ['Mobile App Android'],
+      domains: ['Mobile App iOS', 'Mobile App Android'],
       changeNote: 'Added new responsibility.',
       createdAt: new Date('2022-09-23'),
     },

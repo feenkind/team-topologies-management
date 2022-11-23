@@ -12,6 +12,7 @@ import {
 import { ITeamDataWithHistory } from './interfacesTeamImport';
 import {
   createHistoricCognitiveLoadValue,
+  createHistoricDomainResponsibility,
   createHistoricFteValue,
   createHistoricTeamType,
   createTeam,
@@ -100,7 +101,7 @@ export interface IHistoricCognitiveLoadValue extends IHistoricValue {
   value: number;
 }
 
-interface IHistoricDomainResponsibility extends IHistoricValue {
+export interface IHistoricDomainResponsibility extends IHistoricValue {
   domains: string[];
 }
 
@@ -243,6 +244,81 @@ const teamSlice = createSlice({
           if (previousHistory.type !== currentHistory.type) {
             state.historyTeamTypes[teamData.id].push(
               createHistoricTeamType(currentHistory),
+            );
+          }
+        }
+
+        const domainHistoryByDateInitial: {
+          [keys: string]: { domains: string[]; changeNote: string };
+        } = {};
+        // create object with domain ids ordered by date
+        const domainHistoryByDate = teamData.DomainsOnTeamsHistory.reduce(
+          (historyByDate, currentHistory) => {
+            if (historyByDate[currentHistory.createdAt]) {
+              historyByDate[currentHistory.createdAt] = {
+                ...historyByDate[currentHistory.createdAt],
+                domains: [
+                  ...historyByDate[currentHistory.createdAt].domains,
+                  currentHistory.domainId,
+                ],
+              };
+            } else {
+              historyByDate[currentHistory.createdAt] = {
+                changeNote: currentHistory.changeNote,
+                domains: [currentHistory.domainId],
+              };
+            }
+
+            return { ...historyByDate };
+          },
+          domainHistoryByDateInitial,
+        );
+
+        const domainHistoryDates = Object.keys(domainHistoryByDate);
+        for (let i = 0; i < domainHistoryDates.length; i++) {
+          const currentDate = domainHistoryDates[i];
+          const currentDomainData = domainHistoryByDate[currentDate];
+          // order domain ids in history, so we can better compare later and
+          // there will be no new history just because the order of domains
+          // changed
+          currentDomainData.domains.sort();
+
+          // first history value is always relevant
+          if (i === 0) {
+            state.historyDomains = {
+              ...state.historyDomains,
+              [teamData.id]: [],
+            };
+
+            state.historyDomains[teamData.id].push(
+              createHistoricDomainResponsibility(
+                currentDate,
+                currentDomainData,
+              ),
+            );
+
+            continue;
+          }
+
+          // check if current history values are different than previous and
+          // save only, if so
+          const previousDomainData =
+            domainHistoryByDate[domainHistoryDates[i - 1]];
+          if (
+            !(
+              currentDomainData.domains.length ===
+                previousDomainData.domains.length &&
+              currentDomainData.domains.every(
+                (domainId, index) =>
+                  domainId === previousDomainData.domains[index],
+              )
+            )
+          ) {
+            state.historyDomains[teamData.id].push(
+              createHistoricDomainResponsibility(
+                currentDate,
+                currentDomainData,
+              ),
             );
           }
         }

@@ -122,7 +122,7 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
     });
     return `${new Date(
       sortedDomainResponsibilities[index].date,
-    ).toLocaleDateString('en-GB')}: Following ${
+    ).toLocaleDateString('en-GB')}: ${
       sortedDomainResponsibilities[index].domains.length
     } Domain(s)\n \n${domainDetails}\n \nNotes: ${
       sortedDomainResponsibilities[index].changeReason || 'No notes'
