@@ -42,7 +42,7 @@ const createTeams = async (prisma: PrismaClient) => {
   const domainInfrastructure = await findDomain('Infrastructure');
   const exitingTeam = await findTeam('Infrastructure Team');
   if (domainInfrastructure && !exitingTeam) {
-    await prisma.team.create({
+    const createdTeam = await prisma.team.create({
       data: {
         project: { connect: { id: existingProject[0].id } },
         name: infrastructureTeam.name,
@@ -50,8 +50,11 @@ const createTeams = async (prisma: PrismaClient) => {
         cognitiveLoad: infrastructureTeam.cognitiveLoad,
         fte: infrastructureTeam.fte,
         type: infrastructureTeam.teamType,
+        DomainsOnTeams: { create: { domainId: domainInfrastructure.id } },
       },
     });
+
+    console.log('Created team: ', { createdTeam });
   }
 };
 
