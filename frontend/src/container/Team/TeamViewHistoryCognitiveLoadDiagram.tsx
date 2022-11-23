@@ -130,7 +130,7 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
   };
 
   return (
-    <VictoryChart scale={{ x: 'time', y: 'linear' }}>
+    <VictoryChart scale={{ x: 'time', y: 'linear' }} domain={{ y: [0, 25] }}>
       <VictoryAxis
         dependentAxis
         label="Value"
