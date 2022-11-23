@@ -17,18 +17,22 @@ model Project {
   name        String   @db.VarChar(255)
   description String
   Domain      Domain[]
+  Team        Team[]
 }
 
 model Domain {
-  id            String          @id @default(cuid())
-  project       Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId     String          @db.Text
-  name          String          @db.VarChar(255)
-  description   String
-  priority      Priority
-  complexity    Complexity
-  active        Boolean
-  DomainHistory DomainHistory[]
+  id                    String                  @id @default(cuid())
+  project               Project                 @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId             String                  @db.Text
+  name                  String                  @db.VarChar(255)
+  description           String
+  priority              Priority
+  complexity            Complexity
+  active                Boolean
+  DomainHistory         DomainHistory[]
+  Team                  Team[]
+  DomainsOnTeams        DomainsOnTeams[]
+  DomainsOnTeamsHistory DomainsOnTeamsHistory[]
 }
 
 model DomainHistory {
@@ -43,6 +47,102 @@ model DomainHistory {
   complexity  Complexity
 }
 
+model Team {
+  id                    String                  @id @default(cuid())
+  project               Project                 @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId             String                  @db.Text
+  TeamHistory           TeamHistory[]
+  name                  String
+  cognitiveLoad         Int                     @db.SmallInt
+  fte                   Int                     @db.SmallInt
+  focus                 String
+  type                  TeamType
+  wikiSearchTerms       String[]
+  CommunicationChannel  CommunicationChannel[]
+  Meeting               Meeting[]
+  Service               Service[]
+  WayOfWorking          WayOfWorking[]
+  WorkInProgress        WorkInProgress[]
+  DomainsOnTeams        DomainsOnTeams[]
+  Domain                Domain?                 @relation(fields: [domainId], references: [id])
+  domainId              String?
+  DomainsOnTeamsHistory DomainsOnTeamsHistory[]
+}
+
+model TeamHistory {
+  id            String   @id @default(cuid())
+  team          Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId        String   @db.Text
+  createdAt     DateTime @default(now())
+  changeNote    String
+  cognitiveLoad Int      @db.SmallInt
+  fte           Int      @db.SmallInt
+  type          TeamType
+}
+
+model DomainsOnTeams {
+  domain   Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  domainId String @db.Text
+  team     Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId   String @db.Text
+
+  @@id([domainId, teamId])
+}
+
+model DomainsOnTeamsHistory {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  changeNote String
+  domain     Domain   @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  domainId   String   @db.Text
+  team       Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId     String   @db.Text
+}
+
+model CommunicationChannel {
+  id     String      @id @default(cuid())
+  team   Team        @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId String      @db.Text
+  type   ChannelType
+  name   String
+}
+
+model Meeting {
+  id              String     @id @default(cuid())
+  team            Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId          String     @db.Text
+  day             MeetingDay
+  purpose         String
+  time            String     @db.VarChar(255)
+  durationMinutes Int        @db.SmallInt
+}
+
+model Service {
+  id         String         @id @default(cuid())
+  team       Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId     String         @db.Text
+  versioning VersioningType
+  name       String         @db.VarChar(255)
+  url        String
+  repository String
+}
+
+model WayOfWorking {
+  id     String @id @default(cuid())
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId String @db.Text
+  name   String @db.VarChar(255)
+  url    String
+}
+
+model WorkInProgress {
+  id         String @id @default(cuid())
+  team       Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId     String @db.Text
+  summary    String
+  repository String
+}
+
 enum Priority {
   generic
   supporting
@@ -53,4 +153,30 @@ enum Complexity {
   simple
   complicated
   complex
+}
+
+enum TeamType {
+  stream_aligned
+  platform
+  enabling
+  complicated_subsystem
+  undefined
+}
+
+enum ChannelType {
+  slack
+}
+
+enum MeetingDay {
+  daily
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+}
+
+enum VersioningType {
+  semantic
+  sequential
 }

@@ -155,6 +155,7 @@ const createDomains = async (prisma: PrismaClient) => {
       description: domain.description,
       priority: domain.priority,
       complexity: domain.complexity,
+      createdAt: new Date('2022-11-11'),
     }));
   await prisma.domainHistory.createMany({
     data: [...domainHistoryDataInitial, ...domainHistoryDataCurrent],
