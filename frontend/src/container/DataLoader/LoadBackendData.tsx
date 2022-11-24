@@ -8,6 +8,7 @@ import { addAllDomainsWithHistory } from '../../store/slices/domain/domainSlice'
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
 import {
   addAllDependencies,
+  addAllDependencyHistory,
   addAllTeamDataWithHistory,
 } from '../../store/slices/team/teamSlice';
 
@@ -39,6 +40,7 @@ const LoadBackendData: React.FC = () => {
           dispatch(addAllDomainsWithHistory(domainData));
           dispatch(addAllTeamDataWithHistory(teamData));
           dispatch(addAllDependencies(dependencies));
+          dispatch(addAllDependencyHistory(dependencyHistory));
 
           dispatch(setDataLoaded(true));
           dispatch(setNetworkError(false));

@@ -362,7 +362,32 @@ const teamSlice = createSlice({
       state,
       { payload }: PayloadAction<IDepdencyHistoryImport[]>,
     ) => {
-      return state;
+      const historyDependencies: { [keys: string]: IHistoricDependency[] } = {};
+      payload.forEach((dependencyHistory) => {
+        const importedHistory = {
+          dependency: {
+            fromTeamId: dependencyHistory.teamIdFrom,
+            toTeamId: dependencyHistory.teamIdTo,
+            dependencyType: dependencyHistory.dependencyType,
+            description: dependencyHistory.description,
+          },
+          changeType: dependencyHistory.changeType,
+          changeReason: dependencyHistory.changeNote,
+          date: dependencyHistory.createdAt,
+        };
+        // check project id of any team to see connected dependency project
+        // this needs to be changed as soon as teams can have dependencies
+        // over different projects
+        const projectId = dependencyHistory.teamFrom.projectId;
+        // append dependency or create new
+        if (historyDependencies[projectId]) {
+          historyDependencies[projectId].push(importedHistory);
+        } else {
+          historyDependencies[projectId] = [importedHistory];
+        }
+      });
+
+      state.historyDependencies = historyDependencies;
     },
   },
 });
