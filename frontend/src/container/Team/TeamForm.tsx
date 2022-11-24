@@ -9,9 +9,15 @@ import ActionWrapperBottom from '../../components/Layout/ActionWrapperBottom';
 import { useState } from 'react';
 import { IProject } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
+import Tabs from '../../components/Layout/Tabs';
+import TeamFormInformation from './TeamFormInformation';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import TeamFormInteractions from './TeamFormInteractions';
 
-interface ITeamFormInput {
+export interface ITeamFormInput {
   changeNote: string;
+  name: string;
+  expectedDuration: string;
 }
 
 const TeamForm: React.FC = () => {
@@ -27,18 +33,57 @@ const TeamForm: React.FC = () => {
     control,
     handleSubmit,
     setValue,
-    reset,
+    setError,
+    trigger,
     formState: { errors },
   } = useForm<ITeamFormInput>();
 
-  const onSubmit: SubmitHandler<ITeamFormInput> = (data) => {
+  const onSubmit: SubmitHandler<ITeamFormInput> = async (data) => {
+    const result = await trigger('name');
+    console.log(result);
     console.log(data);
   };
+
+  const informationError = !!errors.name;
+  const interactionsError = !!errors.expectedDuration;
 
   return (
     <>
       <PageHeadline text={`Add a new team to project ${currentProject.name}`} />
       <ContentWithHints>
+        <Tabs
+          tabContent={[
+            {
+              tabName: 'Information',
+              tabIcon: informationError ? (
+                <ErrorOutlineIcon color="error" />
+              ) : undefined,
+              content: (
+                <TeamFormInformation
+                  register={register}
+                  control={control}
+                  errors={errors}
+                />
+              ),
+            },
+            { tabName: 'Work', content: '' },
+            {
+              tabName: 'Interactions',
+              tabIcon: interactionsError ? (
+                <ErrorOutlineIcon color="error" />
+              ) : undefined,
+              content: (
+                <TeamFormInteractions
+                  register={register}
+                  control={control}
+                  errors={errors}
+                />
+              ),
+            },
+            { tabName: 'Dependencies', content: '' },
+          ]}
+        />
+
         <ActionWrapperBottom>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} md={6}>
