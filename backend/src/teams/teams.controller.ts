@@ -11,11 +11,15 @@ import {
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
-import { Team } from '@prisma/client';
+import { Dependency, Team } from '@prisma/client';
+import { DependenciesService } from './dependencies.service';
 
 @Controller('teams')
 export class TeamsController {
-  constructor(private readonly teamsService: TeamsService) {}
+  constructor(
+    private readonly teamsService: TeamsService,
+    private readonly depdendencyService: DependenciesService,
+  ) {}
 
   @Post()
   create(@Body() createTeamDto: CreateTeamDto) {
@@ -25,6 +29,16 @@ export class TeamsController {
   @Get()
   findAll(@Query() query: { includeHistory: boolean }): Promise<Team[]> {
     return this.teamsService.findAll(query.includeHistory);
+  }
+
+  @Get('dependencies')
+  findAllDependencies(): Promise<Dependency[]> {
+    return this.depdendencyService.findAll();
+  }
+
+  @Get('dependencies/history')
+  findAllDependenciesHistoric(): Promise<Dependency[]> {
+    return this.depdendencyService.findAllHistoric();
   }
 
   @Get(':id')
