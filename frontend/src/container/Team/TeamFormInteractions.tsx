@@ -22,14 +22,13 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
   errors,
 }: ITeamFormInteractionsProps) => {
   return (
-    <FormGroupWrapper caption="Basic">
+    <FormGroupWrapper caption="Team Interactions">
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Controller
             name="expectedDuration"
             control={control}
             defaultValue=""
-            {...register}
             render={({ field }) => (
               <FormElementWrapper errors={errors.expectedDuration}>
                 <TextField

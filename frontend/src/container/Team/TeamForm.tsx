@@ -17,6 +17,10 @@ import TeamFormInteractions from './TeamFormInteractions';
 export interface ITeamFormInput {
   changeNote: string;
   name: string;
+  teamType: string;
+  focus: string;
+  domains: string[];
+
   expectedDuration: string;
 }
 
@@ -34,17 +38,29 @@ const TeamForm: React.FC = () => {
     handleSubmit,
     setValue,
     setError,
-    trigger,
     formState: { errors },
   } = useForm<ITeamFormInput>();
 
   const onSubmit: SubmitHandler<ITeamFormInput> = async (data) => {
-    const result = await trigger('name');
-    console.log(result);
+    // custom validation needed, for some reason react hook form does not
+    // validate on submit if a form is hidden in a tab
+    let invalid = false;
+    if (data.name.length === 0) {
+      setError('name', { type: 'required' });
+      invalid = true;
+    }
+    if (data.teamType.length === 0) {
+      setError('teamType', { type: 'required' });
+      invalid = true;
+    }
+
+    if (invalid) {
+      return;
+    }
     console.log(data);
   };
 
-  const informationError = !!errors.name;
+  const informationError = !!errors.name && !!errors.teamType && !!errors.focus;
   const interactionsError = !!errors.expectedDuration;
 
   return (
