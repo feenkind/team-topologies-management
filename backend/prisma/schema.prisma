@@ -47,28 +47,32 @@ model DomainHistory {
 }
 
 model Team {
-  id                    String                  @id @default(cuid())
-  project               Project                 @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId             String                  @db.Text
-  TeamHistory           TeamHistory[]
-  name                  String
-  cognitiveLoad         Int                     @db.SmallInt
-  fte                   Int                     @db.SmallInt
-  focus                 String
-  type                  TeamType
-  platform              String?
-  wikiSearchTerms       String[]
-  CommunicationChannel  CommunicationChannel[]
-  Meeting               Meeting[]
-  Service               Service[]
-  WayOfWorking          WayOfWorking[]
-  DomainsOnTeams        DomainsOnTeams[]
-  DomainsOnTeamsHistory DomainsOnTeamsHistory[]
-  Work                  Work[]
-  dependencyTo          Dependency[]            @relation("teamFrom")
-  dependencyFrom        Dependency[]            @relation("teamTo")
-  dependencyHistoryTo   DependencyHistory[]     @relation("historyTeamFrom")
-  dependencyHistoryFrom DependencyHistory[]     @relation("historyTeamTo")
+  id                        String                  @id @default(cuid())
+  project                   Project                 @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId                 String                  @db.Text
+  TeamHistory               TeamHistory[]
+  name                      String
+  cognitiveLoad             Int                     @db.SmallInt
+  fte                       Int                     @db.SmallInt
+  focus                     String
+  type                      TeamType
+  platform                  String?
+  wikiSearchTerms           String[]
+  CommunicationChannel      CommunicationChannel[]
+  Meeting                   Meeting[]
+  Service                   Service[]
+  WayOfWorking              WayOfWorking[]
+  DomainsOnTeams            DomainsOnTeams[]
+  DomainsOnTeamsHistory     DomainsOnTeamsHistory[]
+  Work                      Work[]
+  dependency                Dependency[]            @relation("teamFrom")
+  dependingTeam             Dependency[]            @relation("teamTo")
+  dependencyHistory         DependencyHistory[]     @relation("historyTeamFrom")
+  dependingHistory          DependencyHistory[]     @relation("historyTeamTo")
+  interactionTeamTwo        Interaction[]           @relation("teamOne")
+  interactionTeamOne        Interaction[]           @relation("teamTwo")
+  interactionHistoryTeamTwo InteractionHistory[]    @relation("historyTeamOne")
+  interactionHistoryTeamOne InteractionHistory[]    @relation("historyTeamTwo")
 }
 
 model TeamHistory {
@@ -169,6 +173,36 @@ model DependencyHistory {
   description    String?
 }
 
+model Interaction {
+  teamOne               Team            @relation("teamOne", fields: [teamIdOne], references: [id], onDelete: Cascade)
+  teamIdOne             String          @db.Text
+  teamTwo               Team            @relation("teamTwo", fields: [teamIdTwo], references: [id], onDelete: Cascade)
+  teamIdTwo             String          @db.Text
+  interactionMode       InteractionMode
+  purpose               String
+  startDate             DateTime
+  expectedDuration      Int             @db.SmallInt
+  additionalInformation String?
+
+  @@id([teamIdOne, teamIdTwo])
+}
+
+model InteractionHistory {
+  id                    String          @id @default(cuid())
+  createdAt             DateTime        @default(now())
+  changeNote            String
+  changeType            ChangeType
+  teamOne               Team            @relation("historyTeamOne", fields: [teamIdOne], references: [id], onDelete: Cascade)
+  teamIdOne             String          @db.Text
+  teamTwo               Team            @relation("historyTeamTwo", fields: [teamIdTwo], references: [id], onDelete: Cascade)
+  teamIdTwo             String          @db.Text
+  interactionMode       InteractionMode
+  purpose               String
+  startDate             DateTime
+  expectedDuration      Int             @db.SmallInt
+  additionalInformation String?
+}
+
 enum Priority {
   generic
   supporting
@@ -211,6 +245,13 @@ enum DependencyType {
   ok
   slowing
   blocking
+}
+
+enum InteractionMode {
+  collaboration
+  x_as_a_service
+  facilitating
+  undefined
 }
 
 enum ChangeType {

@@ -938,7 +938,7 @@ const createTeams = async (prisma: PrismaClient) => {
         description: 'We need new components for the app navigation in iOS.',
       },
       changeType: changeType.ADDED,
-      createdAt: new Date('2022-09-07'),
+      createdAt: new Date('2022-09-08'),
       changeNote: 'Add dependency.',
     },
     // gps to product
