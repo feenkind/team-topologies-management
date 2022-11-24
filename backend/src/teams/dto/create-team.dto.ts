@@ -33,7 +33,7 @@ export enum dependencyType {
 export enum changeType {
   ADDED = 'added',
   CHANGED = 'changed',
-  DELETED = 'deleted',
+  REMOVED = 'removed',
 }
 
 export class CreateTeamDto {}

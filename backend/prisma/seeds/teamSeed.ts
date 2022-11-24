@@ -829,6 +829,7 @@ const createTeams = async (prisma: PrismaClient) => {
   ];
 
   const dependencyHistories = [
+    // auth to infra
     {
       dependency: {
         fromTeamId: authTeam.id,
@@ -840,11 +841,159 @@ const createTeams = async (prisma: PrismaClient) => {
       },
       changeType: changeType.CHANGED,
       createdAt: new Date('2022-11-20'),
-      changeNote: 'Dependency is blocking now',
+      changeNote: 'Dependency is really slowing us now.',
+    },
+    {
+      dependency: {
+        fromTeamId: authTeam.id,
+        toTeamId: infrastructureTeam.id,
+        dependencyType: dependencyType.OK,
+        description:
+          'We need some onboarding on the deployment services so we' +
+          ' can start with our features.',
+      },
+      changeType: changeType.CHANGED,
+      createdAt: new Date('2022-11-10'),
+      changeNote: 'Added dependency.',
+    },
+    // product to infra
+    {
+      dependency: {
+        fromTeamId: productTeam.id,
+        toTeamId: infrastructureTeam.id,
+        dependencyType: dependencyType.OK,
+        description:
+          'First use of the logging service and we need some support,' +
+          ' but seems to be fine right now.',
+      },
+      changeType: changeType.ADDED,
+      createdAt: new Date('2022-10-09'),
+      changeNote: 'Added dependency to reflect needed support.',
+    },
+    // payment to order
+    {
+      dependency: {
+        fromTeamId: paymentUndefinedTeam.id,
+        toTeamId: orderTeam.id,
+        dependencyType: dependencyType.BLOCKING,
+        description:
+          'We need the new checkout feature to be done before we can update' +
+          ' the payment methods.',
+      },
+      changeType: changeType.ADDED,
+      createdAt: new Date('2022-11-20'),
+      changeNote: 'Added dependency for newly planned feature.',
+    },
+    // product to ux
+    {
+      dependency: {
+        fromTeamId: productTeam.id,
+        toTeamId: uxTeam.id,
+        dependencyType: dependencyType.SLOWING,
+        description: 'We need new components for the product display.',
+      },
+      changeType: changeType.REMOVED,
+      createdAt: new Date('2022-10-08'),
+      changeNote: 'Removed dependency as it is resolved now.',
+    },
+    {
+      dependency: {
+        fromTeamId: productTeam.id,
+        toTeamId: uxTeam.id,
+        dependencyType: dependencyType.SLOWING,
+        description: 'We need new components for the product display.',
+      },
+      changeType: changeType.CHANGED,
+      createdAt: new Date('2022-09-28'),
+      changeNote: 'Dependency is slowing us now.',
+    },
+    {
+      dependency: {
+        fromTeamId: productTeam.id,
+        toTeamId: uxTeam.id,
+        dependencyType: dependencyType.OK,
+        description: 'We need new components for the product display.',
+      },
+      changeType: changeType.ADDED,
+      createdAt: new Date('2022-09-08'),
+      changeNote: 'Added dependency because a new feature is planned.',
+    },
+    // app to ux
+    {
+      dependency: {
+        fromTeamId: appTeam.id,
+        toTeamId: uxTeam.id,
+        dependencyType: dependencyType.OK,
+        description: 'We need new components for the app navigation in iOS.',
+      },
+      changeType: changeType.REMOVED,
+      createdAt: new Date('2022-09-14'),
+      changeNote: 'Removed dependency as it is resolved now.',
+    },
+    {
+      dependency: {
+        fromTeamId: appTeam.id,
+        toTeamId: uxTeam.id,
+        dependencyType: dependencyType.OK,
+        description: 'We need new components for the app navigation in iOS.',
+      },
+      changeType: changeType.ADDED,
+      createdAt: new Date('2022-09-07'),
+      changeNote: 'Add dependency.',
+    },
+    // gps to product
+    {
+      dependency: {
+        fromTeamId: gpsTeam.id,
+        toTeamId: productTeam.id,
+        dependencyType: dependencyType.OK,
+        description:
+          'Some onboarding on the new repository structure is needed.',
+      },
+      changeType: changeType.REMOVED,
+      createdAt: new Date('2022-09-07'),
+      changeNote: 'Removed dependency.',
+    },
+    {
+      dependency: {
+        fromTeamId: gpsTeam.id,
+        toTeamId: productTeam.id,
+        dependencyType: dependencyType.OK,
+        description:
+          'Some onboarding on the new repository structure is needed.',
+      },
+      changeType: changeType.ADDED,
+      createdAt: new Date('2022-09-03'),
+      changeNote: 'Added dependency.',
+    },
+
+    // old ux to product dependency
+    {
+      dependency: {
+        fromTeamId: authTeam.id,
+        toTeamId: productTeam.id,
+        dependencyType: dependencyType.BLOCKING,
+        description: 'Onboarding needed to understand requirements.',
+      },
+      changeType: changeType.REMOVED,
+      createdAt: new Date('2022-07-21'),
+      changeNote: 'Removed dependency.',
+    },
+    {
+      dependency: {
+        fromTeamId: authTeam.id,
+        toTeamId: productTeam.id,
+        dependencyType: dependencyType.BLOCKING,
+        description: 'Onboarding needed to understand requirements.',
+      },
+      changeType: changeType.ADDED,
+      createdAt: new Date('2022-07-09'),
+      changeNote: 'Added dependency.',
     },
   ];
 
   const createdDependencies = [];
+  const createdDependencyHistories = [];
   for (let i = 0; i < dependencies.length; i++) {
     const currentDependency = dependencies[i];
 
@@ -859,8 +1008,30 @@ const createTeams = async (prisma: PrismaClient) => {
 
     createdDependencies.push(createdDependency);
   }
+  for (let i = 0; i < dependencyHistories.length; i++) {
+    const currentHistoryDependency = dependencyHistories[i];
+
+    const createdDependency = await prisma.dependencyHistory.create({
+      data: {
+        teamFrom: {
+          connect: { id: currentHistoryDependency.dependency.fromTeamId },
+        },
+        teamTo: {
+          connect: { id: currentHistoryDependency.dependency.toTeamId },
+        },
+        dependencyType: currentHistoryDependency.dependency.dependencyType,
+        description: currentHistoryDependency.dependency.description,
+        changeNote: currentHistoryDependency.changeNote,
+        createdAt: currentHistoryDependency.createdAt,
+        changeType: currentHistoryDependency.changeType,
+      },
+    });
+
+    createdDependencyHistories.push(createdDependency);
+  }
 
   console.log('Created dependencies: ', { createdDependencies });
+  console.log('Created dependency histories: ', { createdDependencyHistories });
 };
 
 export default createTeams;

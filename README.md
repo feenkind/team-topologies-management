@@ -45,8 +45,11 @@ Start the postgres database in docker with
 $ docker-compose --env-file backend/.env up db
 ````
 
+To apply all migrations, execute `npx prisma migrate dev`.
+
 For some test data, execute
-`npx prisma db seed`.
+`npx prisma db seed`. This command will also be executed when resetting the 
+database with `npx prisma migrate reset`.
 
 ## Test
 

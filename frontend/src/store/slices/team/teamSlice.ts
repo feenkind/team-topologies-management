@@ -300,6 +300,9 @@ const teamSlice = createSlice({
             continue;
           }
 
+          // TODO: check if this is needed or the values will only be saved
+          //  in the db
+          //  already when different
           // check if current history values are different than previous and
           // save only, if so
           const previousDomainData =
