@@ -30,6 +30,13 @@ export enum dependencyType {
   BLOCKING = 'blocking',
 }
 
+export enum interactionMode {
+  COLLABORATION = 'collaboration',
+  X_AS_A_SERVICE = 'x_as_a_service',
+  FACILITATING = 'facilitating',
+  UNDEFINED = 'undefined',
+}
+
 export enum changeType {
   ADDED = 'added',
   CHANGED = 'changed',

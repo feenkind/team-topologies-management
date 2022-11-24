@@ -3,6 +3,7 @@ import {
   changeType,
   channelTypes,
   dependencyType,
+  interactionMode,
   meetingsDay,
   TeamType,
   versioningType,
@@ -1032,6 +1033,106 @@ const createTeams = async (prisma: PrismaClient) => {
 
   console.log('Created dependencies: ', { createdDependencies });
   console.log('Created dependency histories: ', { createdDependencyHistories });
+
+  const interactions = [
+    {
+      teamIdOne: infrastructureTeam.id,
+      teamIdTwo: appTeam.id,
+      interactionMode: interactionMode.X_AS_A_SERVICE,
+      purpose: 'Using the deployment service of the infrastructure team.',
+      startDate: new Date('2022-11-05'),
+      expectedDuration: 12,
+      additionalNotes:
+        'Interaction is expected to last longer, but we' +
+        ' should reevaluate after 12 weeks.',
+    },
+    {
+      teamIdOne: infrastructureTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.X_AS_A_SERVICE,
+      purpose:
+        'Using the deployment and logging service of the' +
+        ' infrastructure team.',
+      startDate: new Date('2022-09-20'),
+      expectedDuration: 12,
+      additionalNotes:
+        'Interaction is expected to last longer, but we' +
+        ' should reevaluate after 12 weeks.',
+    },
+    {
+      teamIdOne: infrastructureTeam.id,
+      teamIdTwo: orderTeam.id,
+      interactionMode: interactionMode.X_AS_A_SERVICE,
+      purpose: 'Using the deployment service of the infrastructure team.',
+      startDate: new Date('2022-10-13'),
+      expectedDuration: 12,
+      additionalNotes:
+        'Interaction is expected to last longer, but we' +
+        ' should reevaluate after 12 weeks.',
+    },
+    {
+      teamIdOne: uxTeam.id,
+      teamIdTwo: appTeam.id,
+      interactionMode: interactionMode.FACILITATING,
+      purpose: 'Helping to get the design right.',
+      startDate: new Date('2022-10-13'),
+      expectedDuration: 8,
+      additionalNotes: 'Initial onboarding for design specific reasons.',
+    },
+    {
+      teamIdOne: uxTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.FACILITATING,
+      purpose: 'Helping with the new product display.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 4,
+      additionalNotes: 'Making sure the product display will look beautiful.',
+    },
+    {
+      teamIdOne: gpsTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.COLLABORATION,
+      purpose:
+        'Figuring out the gps data functionality for displaying' +
+        ' products with the new feature.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 5,
+      additionalNotes: 'Intense work expected.',
+    },
+    {
+      teamIdOne: authTeam.id,
+      teamIdTwo: infrastructureTeam.id,
+      interactionMode: interactionMode.COLLABORATION,
+      purpose:
+        'Exploring the boundaries between infrastructure and authentication.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 2,
+      additionalNotes:
+        'The authentication team is newly created and also' +
+        ' needs some onboarding.',
+    },
+  ];
+
+  const createdInteractions = [];
+  for (let i = 0; i < interactions.length; i++) {
+    const currentInteraction = interactions[i];
+
+    const createdInteraction = await prisma.interaction.create({
+      data: {
+        teamOne: { connect: { id: currentInteraction.teamIdOne } },
+        teamTwo: { connect: { id: currentInteraction.teamIdTwo } },
+        interactionMode: currentInteraction.interactionMode,
+        purpose: currentInteraction.purpose,
+        startDate: currentInteraction.startDate,
+        expectedDuration: currentInteraction.expectedDuration,
+        additionalInformation: currentInteraction.additionalNotes,
+      },
+    });
+
+    createdInteractions.push(createdInteraction);
+  }
+
+  console.log('Created interactions: ', { createdInteractions });
 };
 
 export default createTeams;
