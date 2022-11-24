@@ -1,12 +1,15 @@
 import { Domain, Team, PrismaClient } from '@prisma/client';
 import {
+  changeType,
   channelTypes,
+  dependencyType,
   meetingsDay,
   TeamType,
   versioningType,
 } from '../../src/teams/dto/create-team.dto';
 
 const infrastructureTeam = {
+  id: '',
   name: 'Infrastructure Team',
   teamType: TeamType.PLATFORM,
   domains: ['Infrastructure'],
@@ -113,6 +116,7 @@ const infrastructureTeam = {
 };
 
 const appTeam = {
+  id: '',
   name: 'Mobile Apps Team',
   teamType: TeamType.STREAM_ALIGNED,
   domains: ['Mobile App iOS', 'Mobile App Android'],
@@ -196,6 +200,7 @@ const appTeam = {
 };
 
 const productTeam = {
+  id: '',
   name: 'Product Display Team',
   teamType: TeamType.STREAM_ALIGNED,
   domains: ['Product Catalogue'],
@@ -264,6 +269,7 @@ const productTeam = {
 };
 
 const gpsTeam = {
+  id: '',
   name: 'GPS Experts Team',
   teamType: TeamType.COMPLICATED_SUBSYSTEM,
   domains: ['Product Catalogue'],
@@ -340,6 +346,7 @@ const gpsTeam = {
 };
 
 const orderTeam = {
+  id: '',
   name: 'Customer Order Team',
   teamType: TeamType.STREAM_ALIGNED,
   domains: ['Orders', 'Shipping', 'Inventory'],
@@ -429,6 +436,7 @@ const orderTeam = {
 };
 
 const paymentUndefinedTeam = {
+  id: '',
   name: 'Payment Team',
   teamType: TeamType.UNDEFINED,
   domains: ['Payment'],
@@ -497,6 +505,7 @@ const paymentUndefinedTeam = {
 };
 
 const authTeam = {
+  id: '',
   name: 'Auth Team',
   teamType: TeamType.STREAM_ALIGNED,
   domains: ['Authentication and Authorization', 'Customer Management'],
@@ -556,6 +565,7 @@ const authTeam = {
 };
 
 const uxTeam = {
+  id: '',
   name: 'UI/UX Team',
   teamType: TeamType.ENABLING,
   domains: ['Mobile App iOS', 'Mobile App Android', 'Product Catalogue'],
@@ -786,9 +796,71 @@ const createTeams = async (prisma: PrismaClient) => {
     }
 
     createdTeams.push(createdTeam);
+    teams[i].id = createdTeam.id;
   }
 
   console.log('Created teams: ', { createdTeams });
+
+  const dependencies = [
+    {
+      fromTeamId: authTeam.id,
+      toTeamId: infrastructureTeam.id,
+      dependencyType: dependencyType.SLOWING,
+      description:
+        'We need some onboarding on the deployment services so we' +
+        ' can start with our features.',
+    },
+    {
+      fromTeamId: productTeam.id,
+      toTeamId: infrastructureTeam.id,
+      dependencyType: dependencyType.OK,
+      description:
+        'First use of the logging service and we need some support,' +
+        ' but seems to be fine right now.',
+    },
+    {
+      fromTeamId: paymentUndefinedTeam.id,
+      toTeamId: orderTeam.id,
+      dependencyType: dependencyType.BLOCKING,
+      description:
+        'We need the new checkout feature to be done before we can update' +
+        ' the payment methods.',
+    },
+  ];
+
+  const dependencyHistories = [
+    {
+      dependency: {
+        fromTeamId: authTeam.id,
+        toTeamId: infrastructureTeam.id,
+        dependencyType: dependencyType.SLOWING,
+        description:
+          'We need some onboarding on the deployment services so we' +
+          ' can start with our features.',
+      },
+      changeType: changeType.CHANGED,
+      createdAt: new Date('2022-11-20'),
+      changeNote: 'Dependency is blocking now',
+    },
+  ];
+
+  const createdDependencies = [];
+  for (let i = 0; i < dependencies.length; i++) {
+    const currentDependency = dependencies[i];
+
+    const createdDependency = await prisma.dependency.create({
+      data: {
+        teamFrom: { connect: { id: currentDependency.fromTeamId } },
+        teamTo: { connect: { id: currentDependency.toTeamId } },
+        dependencyType: currentDependency.dependencyType,
+        description: currentDependency.description,
+      },
+    });
+
+    createdDependencies.push(createdDependency);
+  }
+
+  console.log('Created dependencies: ', { createdDependencies });
 };
 
 export default createTeams;

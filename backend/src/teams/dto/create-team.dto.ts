@@ -24,4 +24,16 @@ export enum versioningType {
   SEQUENTIAL = 'sequential',
 }
 
+export enum dependencyType {
+  OK = 'ok',
+  SLOWING = 'slowing',
+  BLOCKING = 'blocking',
+}
+
+export enum changeType {
+  ADDED = 'added',
+  CHANGED = 'changed',
+  DELETED = 'deleted',
+}
+
 export class CreateTeamDto {}
