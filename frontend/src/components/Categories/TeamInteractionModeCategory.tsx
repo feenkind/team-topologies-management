@@ -12,9 +12,14 @@ interface ITeamInteractionModeCategoryProps {
 const TeamInteractionModeCategory: React.FC<
   ITeamInteractionModeCategoryProps
 > = ({ interactionMode }: ITeamInteractionModeCategoryProps) => {
+  let interactionModeDisplay = interactionMode.toString();
+  if (interactionMode === interactionModeEnum.X_AS_A_SERVICE) {
+    interactionModeDisplay = 'x-as-a-service';
+  }
+
   return (
     <Chip
-      label={interactionMode}
+      label={interactionModeDisplay}
       sx={{
         color: 'black',
         borderColor: interactionModeColor[interactionMode].color,
