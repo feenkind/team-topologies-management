@@ -30,7 +30,7 @@ export const createTeam = (teamData: ITeamImportWithHistory): ITeam => {
     name: teamData.name,
     platform: teamData.platform || '',
     services: teamData.Service.map((service) => ({
-      versioningType: service.versioningType,
+      versioning: service.versioning,
       repository: service.repository,
       name: service.name,
       url: service.url,

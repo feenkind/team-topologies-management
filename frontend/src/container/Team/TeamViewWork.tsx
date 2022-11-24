@@ -28,7 +28,7 @@ const TeamViewWork: React.FC<ITeamViewWorkProps> = ({
               <Link key={`serviceRepository${index}`} href={service.repository}>
                 {service.name} repository
               </Link>,
-              service.versioningType,
+              service.versioning,
             ])}
           />
         ) : (

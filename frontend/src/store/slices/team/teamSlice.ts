@@ -38,7 +38,7 @@ export interface IService {
   name: string;
   url: string;
   repository: string;
-  versioningType: versioningType;
+  versioning: versioningType;
 }
 
 export interface IWorkInProgress {
