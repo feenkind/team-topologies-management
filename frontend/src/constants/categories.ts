@@ -50,9 +50,9 @@ export const teamTypeColor = {
 };
 
 export enum interactionMode {
-  COLLABORATION = 'Collaboration',
-  X_AS_A_SERVICE = 'X-as-a-Service',
-  FACILITATING = 'Facilitating',
+  COLLABORATION = 'collaboration',
+  X_AS_A_SERVICE = 'x_as_a_service',
+  FACILITATING = 'facilitating',
   UNDEFINED = 'undefined',
 }
 

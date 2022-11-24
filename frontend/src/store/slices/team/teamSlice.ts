@@ -21,6 +21,10 @@ import {
   IDepdencyHistoryImport,
   IDepdencyImport,
 } from './interfacesDependencyImport';
+import {
+  IInteractionHistoryImport,
+  IInteractionImport,
+} from './interfacesInteractionImport';
 
 export interface IChannel {
   type: channelType;
@@ -389,6 +393,72 @@ const teamSlice = createSlice({
 
       state.historyDependencies = historyDependencies;
     },
+
+    addAllInteractions: (
+      state,
+      { payload }: PayloadAction<IInteractionImport[]>,
+    ) => {
+      const interactions: { [keys: string]: IInteraction[] } = {};
+      payload.forEach((interaction) => {
+        const importedInteraction = {
+          teamIdOne: interaction.teamIdOne,
+          teamIdTwo: interaction.teamIdTwo,
+          interactionMode: interaction.interactionMode,
+          purpose: interaction.purpose,
+          startDate: interaction.startDate,
+          expectedDuration: interaction.expectedDuration,
+          additionalInformation: interaction.additionalInformation,
+        };
+        // check project id of any team to see connected interactions project
+        // this needs to be changed as soon as teams can have interactions
+        // over different projects
+        const projectId = interaction.teamOne.projectId;
+        // append interaction or create new
+        if (interactions[projectId]) {
+          interactions[projectId].push(importedInteraction);
+        } else {
+          interactions[projectId] = [importedInteraction];
+        }
+      });
+
+      state.interactions = interactions;
+    },
+
+    addAllInteractionHistory: (
+      state,
+      { payload }: PayloadAction<IInteractionHistoryImport[]>,
+    ) => {
+      const historyInteractions: { [keys: string]: IHistoricInteraction[] } =
+        {};
+      payload.forEach((history) => {
+        const importedHistory = {
+          interaction: {
+            teamIdOne: history.teamIdOne,
+            teamIdTwo: history.teamIdTwo,
+            interactionMode: history.interactionMode,
+            purpose: history.purpose,
+            startDate: history.startDate,
+            expectedDuration: history.expectedDuration,
+            additionalInformation: history.additionalInformation,
+          },
+          changeType: history.changeType,
+          changeReason: history.changeNote,
+          date: history.createdAt,
+        };
+        // check project id of any team to see connected interactions project
+        // this needs to be changed as soon as teams can have interactions
+        // over different projects
+        const projectId = history.teamOne.projectId;
+        // append interaction or create new
+        if (historyInteractions[projectId]) {
+          historyInteractions[projectId].push(importedHistory);
+        } else {
+          historyInteractions[projectId] = [importedHistory];
+        }
+      });
+
+      state.historyInteractions = historyInteractions;
+    },
   },
 });
 
@@ -397,4 +467,6 @@ export const {
   addAllTeamDataWithHistory,
   addAllDependencies,
   addAllDependencyHistory,
+  addAllInteractions,
+  addAllInteractionHistory,
 } = teamSlice.actions;
