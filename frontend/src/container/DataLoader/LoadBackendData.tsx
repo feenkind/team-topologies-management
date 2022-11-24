@@ -6,7 +6,10 @@ import axios from 'axios';
 import { addAllProjects } from '../../store/slices/projectSlice';
 import { addAllDomainsWithHistory } from '../../store/slices/domain/domainSlice';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
-import { addAllTeamDataWithHistory } from '../../store/slices/team/teamSlice';
+import {
+  addAllDependencies,
+  addAllTeamDataWithHistory,
+} from '../../store/slices/team/teamSlice';
 
 const LoadBackendData: React.FC = () => {
   const isDataLoaded = useAppSelector((state) => state.global.dataLoaded);
@@ -19,6 +22,8 @@ const LoadBackendData: React.FC = () => {
         axiosInstance.get('/projects'),
         axiosInstance.get('/domains?includeHistory=true'),
         axiosInstance.get('/teams?includeHistory=true'),
+        axiosInstance.get('/teams/dependencies'),
+        axiosInstance.get('/teams/dependencies/history'),
       ];
 
       axios
@@ -27,10 +32,13 @@ const LoadBackendData: React.FC = () => {
           const projectData = responses[0].data;
           const domainData = responses[1].data;
           const teamData = responses[2].data;
+          const dependencies = responses[3].data;
+          const dependencyHistory = responses[4].data;
 
           dispatch(addAllProjects(projectData));
           dispatch(addAllDomainsWithHistory(domainData));
           dispatch(addAllTeamDataWithHistory(teamData));
+          dispatch(addAllDependencies(dependencies));
 
           dispatch(setDataLoaded(true));
           dispatch(setNetworkError(false));

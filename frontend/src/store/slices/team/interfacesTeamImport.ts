@@ -7,37 +7,41 @@ import {
 } from './teamSlice';
 import { teamType } from '../../../constants/categories';
 
-interface ITeamDataHistoryBase {
+interface ITeamImportHistoryBase {
   id: string;
   createdAt: string;
   changeNote: string;
 }
 
-interface ITeamDataRelationBase {
+interface ITeamImportRelationBase {
   id: string;
   teamId: string;
 }
 
-interface ITeamDataChannel extends IChannel, ITeamDataRelationBase {}
-interface ITeamDataMeeting extends IMeeting, ITeamDataRelationBase {}
-interface ITeamDataService extends IService, ITeamDataRelationBase {}
-interface ITeamDataWayOfWorking extends IWaysOfWorking, ITeamDataRelationBase {}
-interface ITeamDataWork extends IWorkInProgress, ITeamDataRelationBase {}
+interface ITeamImportChannel extends IChannel, ITeamImportRelationBase {}
+interface ITeamImportMeeting extends IMeeting, ITeamImportRelationBase {}
+interface ITeamImportService extends IService, ITeamImportRelationBase {}
+interface ITeamImportWayOfWorking
+  extends IWaysOfWorking,
+    ITeamImportRelationBase {}
+interface ITeamImportWork extends IWorkInProgress, ITeamImportRelationBase {}
 
 interface IDomainOnTeams {
   domainId: string;
   teamId: string;
 }
 
-interface IDomainOnTeamsHistory extends IDomainOnTeams, ITeamDataHistoryBase {}
+interface IDomainOnTeamsHistory
+  extends IDomainOnTeams,
+    ITeamImportHistoryBase {}
 
-export interface ITeamDataHistory extends ITeamDataHistoryBase {
+export interface ITeamImportHistory extends ITeamImportHistoryBase {
   fte: number;
   type: teamType;
   cognitiveLoad: number;
 }
 
-export interface ITeamDataWithHistory {
+export interface ITeamImport {
   id: string;
   projectId: string;
   name: string;
@@ -47,12 +51,15 @@ export interface ITeamDataWithHistory {
   type: teamType;
   platform?: string;
   wikiSearchTerms: string[];
-  TeamHistory: ITeamDataHistory[];
-  CommunicationChannel: ITeamDataChannel[];
-  Meeting: ITeamDataMeeting[];
-  Service: ITeamDataService[];
-  WayOfWorking: ITeamDataWayOfWorking[];
-  Work: ITeamDataWork[];
+}
+
+export interface ITeamImportWithHistory extends ITeamImport {
+  TeamHistory: ITeamImportHistory[];
+  CommunicationChannel: ITeamImportChannel[];
+  Meeting: ITeamImportMeeting[];
+  Service: ITeamImportService[];
+  WayOfWorking: ITeamImportWayOfWorking[];
+  Work: ITeamImportWork[];
   DomainsOnTeams: IDomainOnTeams[];
   DomainsOnTeamsHistory: IDomainOnTeamsHistory[];
 }

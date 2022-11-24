@@ -1,12 +1,12 @@
 import { IDomain } from './domainSlice';
 
-export interface IDomainHistory extends IDomain {
+export interface IDomainImportHistory extends IDomain {
   domainId: string;
   createdAt: string;
   changeNote: string;
 }
 
-export interface IDomainDataWithHistory extends IDomain {
+export interface IDomainImportWithHistory extends IDomain {
   projectId: string;
-  DomainHistory: IDomainHistory[];
+  DomainHistory: IDomainImportHistory[];
 }

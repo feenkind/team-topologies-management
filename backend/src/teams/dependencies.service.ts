@@ -7,10 +7,14 @@ export class DependenciesService {
   constructor(private prisma: PrismaService) {}
 
   findAll(): Promise<Dependency[]> {
-    return this.prisma.dependency.findMany();
+    return this.prisma.dependency.findMany({
+      include: { teamFrom: true, teamTo: true },
+    });
   }
 
   findAllHistoric(): Promise<DependencyHistory[]> {
-    return this.prisma.dependencyHistory.findMany();
+    return this.prisma.dependencyHistory.findMany({
+      include: { teamFrom: true, teamTo: true },
+    });
   }
 }

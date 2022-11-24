@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { complexity, priority } from '../../../constants/categories';
-import { IDomainDataWithHistory } from './interfacesDomainImport';
+import { IDomainImportWithHistory } from './interfacesDomainImport';
 import {
   createDomain,
   createHistoricComplexityValue,
@@ -47,10 +47,8 @@ const domainSlice = createSlice({
   reducers: {
     addAllDomainsWithHistory: (
       state,
-      { payload }: PayloadAction<IDomainDataWithHistory[]>,
+      { payload }: PayloadAction<IDomainImportWithHistory[]>,
     ) => {
-      state = { ...initialState };
-
       payload.forEach((domainData) => {
         const domain = createDomain(domainData);
 
@@ -112,8 +110,6 @@ const domainSlice = createSlice({
           }
         }
       });
-
-      return state;
     },
   },
 });

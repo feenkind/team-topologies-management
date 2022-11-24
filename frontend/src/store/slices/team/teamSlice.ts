@@ -9,7 +9,7 @@ import {
   meetingsDay,
   versioningType,
 } from '../../../constants/teamApi';
-import { ITeamDataWithHistory } from './interfacesTeamImport';
+import { ITeamImportWithHistory } from './interfacesTeamImport';
 import {
   createHistoricCognitiveLoadValue,
   createHistoricDomainResponsibility,
@@ -17,6 +17,10 @@ import {
   createHistoricTeamType,
   createTeam,
 } from './mappingsTeamImport';
+import {
+  IDepdencyHistoryImport,
+  IDepdencyImport,
+} from './interfacesDependencyImport';
 
 export interface IChannel {
   type: channelType;
@@ -169,9 +173,8 @@ const teamSlice = createSlice({
   reducers: {
     addAllTeamDataWithHistory: (
       state,
-      { payload }: PayloadAction<ITeamDataWithHistory[]>,
+      { payload }: PayloadAction<ITeamImportWithHistory[]>,
     ) => {
-      state = { ...initialState };
       payload.forEach((teamData) => {
         // order team history values asc by date
         teamData.TeamHistory.sort((a, b) =>
@@ -326,11 +329,47 @@ const teamSlice = createSlice({
           }
         }
       });
+    },
 
+    addAllDependencies: (
+      state,
+      { payload }: PayloadAction<IDepdencyImport[]>,
+    ) => {
+      const dependencies: { [keys: string]: IDependency[] } = {};
+      payload.forEach((dependency) => {
+        const importedDependency = {
+          fromTeamId: dependency.teamIdFrom,
+          toTeamId: dependency.teamIdTo,
+          dependencyType: dependency.dependencyType,
+          description: dependency.description,
+        };
+        // check project id of any team to see connected dependency project
+        // this needs to be changed as soon as teams can have dependencies
+        // over different projects
+        const projectId = dependency.teamFrom.projectId;
+        // append dependency or create new
+        if (dependencies[projectId]) {
+          dependencies[projectId].push(importedDependency);
+        } else {
+          dependencies[projectId] = [importedDependency];
+        }
+      });
+
+      state.dependencies = dependencies;
+    },
+
+    addAllDependencyHistory: (
+      state,
+      { payload }: PayloadAction<IDepdencyHistoryImport[]>,
+    ) => {
       return state;
     },
   },
 });
 
 export const teamReducer = teamSlice.reducer;
-export const { addAllTeamDataWithHistory } = teamSlice.actions;
+export const {
+  addAllTeamDataWithHistory,
+  addAllDependencies,
+  addAllDependencyHistory,
+} = teamSlice.actions;

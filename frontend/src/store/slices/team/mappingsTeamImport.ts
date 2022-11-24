@@ -5,9 +5,12 @@ import {
   IHistoricTeamType,
   ITeam,
 } from './teamSlice';
-import { ITeamDataHistory, ITeamDataWithHistory } from './interfacesTeamImport';
+import {
+  ITeamImportHistory,
+  ITeamImportWithHistory,
+} from './interfacesTeamImport';
 
-export const createTeam = (teamData: ITeamDataWithHistory): ITeam => {
+export const createTeam = (teamData: ITeamImportWithHistory): ITeam => {
   return {
     channels: teamData.CommunicationChannel.map((channel) => ({
       type: channel.type,
@@ -47,7 +50,7 @@ export const createTeam = (teamData: ITeamDataWithHistory): ITeam => {
 };
 
 export const createHistoricFteValue = (
-  teamDataHistory: ITeamDataHistory,
+  teamDataHistory: ITeamImportHistory,
 ): IHistoricFTEValue => ({
   value: teamDataHistory.fte,
   date: teamDataHistory.createdAt,
@@ -55,7 +58,7 @@ export const createHistoricFteValue = (
 });
 
 export const createHistoricCognitiveLoadValue = (
-  teamDataHistory: ITeamDataHistory,
+  teamDataHistory: ITeamImportHistory,
 ): IHistoricCognitiveLoadValue => ({
   value: teamDataHistory.cognitiveLoad,
   date: teamDataHistory.createdAt,
@@ -63,7 +66,7 @@ export const createHistoricCognitiveLoadValue = (
 });
 
 export const createHistoricTeamType = (
-  teamDataHistory: ITeamDataHistory,
+  teamDataHistory: ITeamImportHistory,
 ): IHistoricTeamType => ({
   teamType: teamDataHistory.type,
   date: teamDataHistory.createdAt,
