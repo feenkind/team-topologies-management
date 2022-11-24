@@ -1053,7 +1053,7 @@ const createTeams = async (prisma: PrismaClient) => {
       purpose:
         'Using the deployment and logging service of the' +
         ' infrastructure team.',
-      startDate: new Date('2022-09-20'),
+      startDate: new Date('2022-11-05'),
       expectedDuration: 12,
       additionalNotes:
         'Interaction is expected to last longer, but we' +
@@ -1089,6 +1089,17 @@ const createTeams = async (prisma: PrismaClient) => {
       additionalNotes: 'Making sure the product display will look beautiful.',
     },
     {
+      teamIdOne: uxTeam.id,
+      teamIdTwo: orderTeam.id,
+      interactionMode: interactionMode.FACILITATING,
+      purpose:
+        'Helping with new checkout design as soon as the feature is' +
+        ' planned.',
+      startDate: new Date('2023-03-10'),
+      expectedDuration: 8,
+      additionalNotes: '',
+    },
+    {
       teamIdOne: gpsTeam.id,
       teamIdTwo: productTeam.id,
       interactionMode: interactionMode.COLLABORATION,
@@ -1113,7 +1124,196 @@ const createTeams = async (prisma: PrismaClient) => {
     },
   ];
 
+  const interactionsHistory = [
+    // infra and app
+    {
+      teamIdOne: infrastructureTeam.id,
+      teamIdTwo: appTeam.id,
+      interactionMode: interactionMode.X_AS_A_SERVICE,
+      purpose: 'Using the deployment service of the infrastructure team.',
+      startDate: new Date('2022-11-05'),
+      expectedDuration: 12,
+      additionalNotes:
+        'Interaction is expected to last longer, but we' +
+        ' should reevaluate after 12 weeks.',
+      createdAt: new Date('2022-10-20'),
+      changeType: changeType.ADDED,
+      changeNote:
+        'Added interaction as the new deployment service will be used soon.',
+    },
+
+    // infra and product
+    {
+      teamIdOne: infrastructureTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.X_AS_A_SERVICE,
+      purpose:
+        'Using the deployment and logging service of the' +
+        ' infrastructure team.',
+      startDate: new Date('2022-11-05'),
+      expectedDuration: 12,
+      additionalNotes:
+        'Interaction is expected to last longer, but we' +
+        ' should reevaluate after 12 weeks.',
+      createdAt: new Date('2022-10-20'),
+      changeType: changeType.CHANGED,
+      changeNote:
+        'Changed interaction as the new deployment service will be used now' +
+        ' as a service.',
+    },
+    {
+      teamIdOne: infrastructureTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.COLLABORATION,
+      purpose:
+        'Working together to get to know all requirements for the deployment' +
+        ' service.',
+      startDate: new Date('2022-09-02'),
+      expectedDuration: 8,
+      additionalNotes: 'Need to focus to get it done soon.',
+      createdAt: new Date('2022-08-30'),
+      changeType: changeType.ADDED,
+      changeNote: 'Added interaction mode.',
+    },
+
+    // infra and order
+    {
+      teamIdOne: infrastructureTeam.id,
+      teamIdTwo: orderTeam.id,
+      interactionMode: interactionMode.X_AS_A_SERVICE,
+      purpose: 'Using the deployment service of the infrastructure team.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 12,
+      additionalNotes:
+        'Interaction is expected to last longer, but we' +
+        ' should reevaluate after 12 weeks.',
+      createdAt: new Date('2022-11-02'),
+      changeType: changeType.ADDED,
+      changeNote: 'Added interaction mode.',
+    },
+
+    // ux and app
+    {
+      teamIdOne: uxTeam.id,
+      teamIdTwo: appTeam.id,
+      interactionMode: interactionMode.FACILITATING,
+      purpose: 'Helping to get the design right.',
+      startDate: new Date('2022-10-13'),
+      expectedDuration: 8,
+      additionalNotes: 'Initial onboarding for design specific reasons.',
+      createdAt: new Date('2022-10-13'),
+      changeType: changeType.ADDED,
+      changeNote: 'Added interaction mode.',
+    },
+
+    // ux and product
+    {
+      teamIdOne: uxTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.FACILITATING,
+      purpose: 'Helping with the new product display.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 4,
+      additionalNotes: 'Making sure the product display will look beautiful.',
+      createdAt: new Date('2022-11-10'),
+      changeType: changeType.ADDED,
+      changeNote: 'Added interaction mode.',
+    },
+    {
+      teamIdOne: uxTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.FACILITATING,
+      purpose: 'Helping with the styling of the product detail view.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 4,
+      additionalNotes: 'Trying to also teach some design principles.',
+      createdAt: new Date('2022-09-05'),
+      changeType: changeType.REMOVED,
+      changeNote:
+        'Removed interaction mode as the feature is done and the' +
+        ' team can continue on its own.',
+    },
+    {
+      teamIdOne: uxTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.FACILITATING,
+      purpose: 'Helping with the styling of the product detail view.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 4,
+      additionalNotes: 'Trying to also teach some design principles.',
+      createdAt: new Date('2022-08-01'),
+      changeType: changeType.ADDED,
+      changeNote: 'Added interaction mode.',
+    },
+
+    // ux and order
+    {
+      teamIdOne: uxTeam.id,
+      teamIdTwo: orderTeam.id,
+      interactionMode: interactionMode.FACILITATING,
+      purpose:
+        'Helping with new checkout design as soon as the feature is' +
+        ' planned.',
+      startDate: new Date('2023-03-10'),
+      expectedDuration: 8,
+      additionalNotes: '',
+      createdAt: new Date('2022-11-23'),
+      changeType: changeType.ADDED,
+      changeNote: 'Added expected interaction mode.',
+    },
+
+    // gps and product
+    {
+      teamIdOne: gpsTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.COLLABORATION,
+      purpose:
+        'Figuring out the gps data functionality for displaying' +
+        ' products with the new feature.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 5,
+      additionalNotes: 'Intense work expected.',
+      createdAt: new Date('2022-11-23'),
+      changeType: changeType.CHANGED,
+      changeNote:
+        'Prelonged the interaction, as it seems to take longer' +
+        ' than expected.',
+    },
+    {
+      teamIdOne: gpsTeam.id,
+      teamIdTwo: productTeam.id,
+      interactionMode: interactionMode.COLLABORATION,
+      purpose:
+        'Figuring out the gps data functionality for displaying' +
+        ' products with the new feature.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 2,
+      additionalNotes: 'Intense work expected.',
+      createdAt: new Date('2022-11-07'),
+      changeType: changeType.ADDED,
+      changeNote: 'Add interaction mode.',
+    },
+
+    // auth and infra
+    {
+      teamIdOne: authTeam.id,
+      teamIdTwo: infrastructureTeam.id,
+      interactionMode: interactionMode.COLLABORATION,
+      purpose:
+        'Exploring the boundaries between infrastructure and authentication.',
+      startDate: new Date('2022-11-13'),
+      expectedDuration: 2,
+      additionalNotes:
+        'The authentication team is newly created and also' +
+        ' needs some onboarding.',
+      createdAt: new Date('2022-11-07'),
+      changeType: changeType.ADDED,
+      changeNote: 'Add interaction mode.',
+    },
+  ];
+
   const createdInteractions = [];
+  const createdInteractionHistory = [];
   for (let i = 0; i < interactions.length; i++) {
     const currentInteraction = interactions[i];
 
@@ -1132,7 +1332,29 @@ const createTeams = async (prisma: PrismaClient) => {
     createdInteractions.push(createdInteraction);
   }
 
+  for (let i = 0; i < interactionsHistory.length; i++) {
+    const currentHistory = interactionsHistory[i];
+
+    const createdHistory = await prisma.interactionHistory.create({
+      data: {
+        teamOne: { connect: { id: currentHistory.teamIdOne } },
+        teamTwo: { connect: { id: currentHistory.teamIdTwo } },
+        interactionMode: currentHistory.interactionMode,
+        purpose: currentHistory.purpose,
+        startDate: currentHistory.startDate,
+        expectedDuration: currentHistory.expectedDuration,
+        additionalInformation: currentHistory.additionalNotes,
+        createdAt: currentHistory.createdAt,
+        changeType: currentHistory.changeType,
+        changeNote: currentHistory.changeNote,
+      },
+    });
+
+    createdInteractionHistory.push(createdHistory);
+  }
+
   console.log('Created interactions: ', { createdInteractions });
+  console.log('Created interaction history: ', { createdInteractionHistory });
 };
 
 export default createTeams;
