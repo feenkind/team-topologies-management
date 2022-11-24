@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { FormHelperText } from '@mui/material';
-import { FieldError } from 'react-hook-form';
 
 interface IFormElementWrapperProps {
   children: React.ReactNode;
-  errors: FieldError | undefined;
+  // because of react hook form typing, especially for array values, we can
+  // not really know the type
+  errors: any;
 }
 
 const FormElementWrapper: React.FC<IFormElementWrapperProps> = ({

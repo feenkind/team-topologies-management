@@ -20,6 +20,10 @@ export interface ITeamFormInput {
   teamType: string;
   focus: string;
   domains: string[];
+  fte: number;
+  cognitiveLoad: number;
+  platform: string;
+  wikiSearchTerms: string;
 
   expectedDuration: string;
 }
