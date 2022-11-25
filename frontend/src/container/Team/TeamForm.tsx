@@ -13,6 +13,7 @@ import TeamFormInteractions from './TeamFormInteractions';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import FormActions from '../../components/Form/FormActions';
 import TeamFormWork from './TeamFormWork';
+import TeamFormDependencies from './TeamFormDependencies';
 
 export interface ITeamFormInput {
   changeNote: string;
@@ -47,6 +48,13 @@ export interface ITeamFormInput {
     startDate: string;
     expectedDuration: string;
     interactionPurpose: string;
+    additionalInformation?: string;
+  }[];
+
+  dependencies: {
+    otherTeamId: string;
+    dependencyType: string;
+    dependencyDescription: string;
     additionalInformation?: string;
   }[];
 }
@@ -96,6 +104,7 @@ const TeamForm: React.FC = () => {
   const informationError = !!errors.name && !!errors.teamType && !!errors.focus;
   const workError = !!errors.services;
   const interactionsError = !!errors.interactions;
+  const dependenciesError = !!errors.dependencies;
 
   return (
     <>
@@ -142,7 +151,19 @@ const TeamForm: React.FC = () => {
                 />
               ),
             },
-            { tabName: 'Dependencies', content: '' },
+            {
+              tabName: 'Dependencies',
+              tabIcon: dependenciesError ? (
+                <ErrorOutlineIcon color="error" />
+              ) : undefined,
+              content: (
+                <TeamFormDependencies
+                  register={register}
+                  control={control}
+                  errors={errors}
+                />
+              ),
+            },
           ]}
         />
         <FormActions
