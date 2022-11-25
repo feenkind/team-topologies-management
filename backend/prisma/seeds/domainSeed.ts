@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient, Project } from '@prisma/client';
-import { Complexity, Priority } from '../../src/domains/dto/create-domain.dto';
+import { complexity, priority } from '../../src/domains/dto/create-domain.dto';
 
 const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
   return [
@@ -8,8 +8,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
       description:
         'All about the iOS app. Currently this app is progrmamed in Swift.' +
         ' Technical responsibles are John and Paula.',
-      priority: Priority.SUPPORTING,
-      complexity: Complexity.COMPLICATED,
+      priority: priority.SUPPORTING,
+      complexity: complexity.COMPLICATED,
       active: true,
       projectId: project.id,
     },
@@ -18,8 +18,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
       description:
         'This domain is focused on the android application. Technically' +
         ' responsible is Eric.',
-      priority: Priority.SUPPORTING,
-      complexity: Complexity.COMPLICATED,
+      priority: priority.SUPPORTING,
+      complexity: complexity.COMPLICATED,
       active: true,
       projectId: project.id,
     },
@@ -29,8 +29,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         'The product catalogue on the' +
         ' website that can be searched by customers. Technical responsibles:' +
         ' Adrian and Tom',
-      priority: Priority.CORE,
-      complexity: Complexity.COMPLEX,
+      priority: priority.CORE,
+      complexity: complexity.COMPLEX,
       active: true,
       projectId: project.id,
     },
@@ -39,8 +39,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
       description:
         'All functionality needed for placing' +
         ' orders in the shopping system. Contact person is Janine.',
-      priority: Priority.SUPPORTING,
-      complexity: Complexity.COMPLICATED,
+      priority: priority.SUPPORTING,
+      complexity: complexity.COMPLICATED,
       active: true,
       projectId: project.id,
     },
@@ -50,8 +50,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         'This domain includes all payment related' +
         ' functionality. Might be splitted in the future, if more payment' +
         ' methods will be accepted. Contact person: Alfred.',
-      priority: Priority.GENERIC,
-      complexity: Complexity.COMPLICATED,
+      priority: priority.GENERIC,
+      complexity: complexity.COMPLICATED,
       active: true,
       projectId: project.id,
     },
@@ -61,8 +61,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         'Responsibility of this domain is the' +
         ' shipping and delivery functionality of the shopping platform.' +
         ' Technical responsibles: Jan and Thomas.',
-      priority: Priority.GENERIC,
-      complexity: Complexity.SIMPLE,
+      priority: priority.GENERIC,
+      complexity: complexity.SIMPLE,
       active: true,
       projectId: project.id,
     },
@@ -71,8 +71,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
       description:
         'Keeping track of products and their' +
         ' inventory status. Responsibles: Jana and Clara.',
-      priority: Priority.GENERIC,
-      complexity: Complexity.SIMPLE,
+      priority: priority.GENERIC,
+      complexity: complexity.SIMPLE,
       active: true,
       projectId: project.id,
     },
@@ -82,8 +82,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         'All about account creation,' +
         ' update and deletion. Currently no technical responsibles, please' +
         ' approach the team.',
-      priority: Priority.SUPPORTING,
-      complexity: Complexity.COMPLICATED,
+      priority: priority.SUPPORTING,
+      complexity: complexity.COMPLICATED,
       active: true,
       projectId: project.id,
     },
@@ -94,8 +94,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' and authorization' +
         ' for customers and administrators. Contact Torsten or Michael for' +
         ' more information.',
-      priority: Priority.GENERIC,
-      complexity: Complexity.COMPLEX,
+      priority: priority.GENERIC,
+      complexity: complexity.COMPLEX,
       active: true,
       projectId: project.id,
     },
@@ -105,8 +105,8 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         'Underlying infrastructure for the' +
         ' web application. Might need to be splitted soon. Technical' +
         ' responsible: Hannah and Julia.',
-      priority: Priority.SUPPORTING,
-      complexity: Complexity.COMPLEX,
+      priority: priority.SUPPORTING,
+      complexity: complexity.COMPLEX,
       active: true,
       projectId: project.id,
     },
@@ -143,8 +143,8 @@ const createDomains = async (prisma: PrismaClient) => {
       changeNote: 'Initial creation.',
       name: domain.name,
       description: '',
-      priority: Priority.GENERIC,
-      complexity: Complexity.SIMPLE,
+      priority: priority.GENERIC,
+      complexity: complexity.SIMPLE,
       createdAt: new Date('2022-05-10'),
     }));
   const domainHistoryDataCurrent: Prisma.DomainHistoryCreateManyInput[] =

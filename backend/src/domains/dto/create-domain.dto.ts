@@ -1,12 +1,12 @@
 import { IsEnum, IsString } from 'class-validator';
 
-export enum Priority {
+export enum priority {
   GENERIC = 'generic',
   SUPPORTING = 'supporting',
   CORE = 'core',
 }
 
-export enum Complexity {
+export enum complexity {
   SIMPLE = 'simple',
   COMPLICATED = 'complicated',
   COMPLEX = 'complex',
@@ -22,9 +22,9 @@ export class CreateDomainDto {
   @IsString()
   description: string;
 
-  @IsEnum(Priority)
-  priority: Priority;
+  @IsEnum(priority)
+  priority: priority;
 
-  @IsEnum(Complexity)
-  complexity: Complexity;
+  @IsEnum(complexity)
+  complexity: complexity;
 }
