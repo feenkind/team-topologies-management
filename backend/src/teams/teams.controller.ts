@@ -84,6 +84,12 @@ export class TeamsController {
           changeNote: 'Initial creation.',
         },
       },
+      DomainsOnTeamsHistory: {
+        create: createTeamDto.domainIds.map((domainId) => ({
+          domainId,
+          changeNote: 'Initial creation.',
+        })),
+      },
     });
   }
 

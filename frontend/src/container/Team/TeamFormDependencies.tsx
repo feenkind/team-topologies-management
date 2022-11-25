@@ -45,7 +45,7 @@ const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
   });
 
   return (
-    <FormGroupWrapper caption="Team Interactions">
+    <FormGroupWrapper caption="Team Dependencies">
       {dependencyFields.map((field, index) => (
         <FieldSet
           key={`dependencies.${index}`}
