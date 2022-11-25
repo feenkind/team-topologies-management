@@ -87,7 +87,7 @@ const ProjectForm: React.FC = () => {
           projectData ? `Edit project ${projectData.name}` : 'Add a new project'
         }
       />
-      <ContentWithHints hints={[projectHints.projectDescription]}>
+      <ContentWithHints isForm hints={[projectHints.projectDescription]}>
         <FormGroupWrapper caption="Basic Information">
           <Grid item xs={12} md={6}>
             <ControlledTextInput

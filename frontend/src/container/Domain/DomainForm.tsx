@@ -114,6 +114,7 @@ const DomainForm: React.FC = () => {
         }
       />
       <ContentWithHints
+        isForm
         hints={[domainHints.domainPriority, domainHints.domainComplexity]}
       >
         <FormGroupWrapper caption="Basic Information">
@@ -140,6 +141,7 @@ const DomainForm: React.FC = () => {
                 label: complexity,
                 value: complexity,
               }))}
+              required={true}
             />
           </Grid>
 
@@ -154,6 +156,7 @@ const DomainForm: React.FC = () => {
                 label: priority,
                 value: priority,
               }))}
+              required={true}
             />
           </Grid>
 

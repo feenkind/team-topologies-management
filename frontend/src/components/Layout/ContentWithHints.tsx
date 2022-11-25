@@ -8,6 +8,7 @@ import {
   Grid,
   Link,
   Paper,
+  Toolbar,
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -16,11 +17,13 @@ import { IHint } from '../../constants/hints';
 interface IContentWithHintsProps {
   children: React.ReactNode | React.ReactNode[];
   hints?: IHint[];
+  isForm?: boolean;
 }
 
 const ContentWithHints: React.FC<IContentWithHintsProps> = ({
   children,
   hints,
+  isForm,
 }: IContentWithHintsProps) => {
   const hintBox = (
     <Paper sx={{ backgroundColor: 'secondary.main', py: 3, px: 2, my: 3 }}>
@@ -74,6 +77,10 @@ const ContentWithHints: React.FC<IContentWithHintsProps> = ({
       <Grid item xs={12} md={3}>
         {hintBox}
       </Grid>
+      {
+        // forms have an action bar at the bottom and need more space
+        isForm && <Toolbar />
+      }
     </Grid>
   );
 };

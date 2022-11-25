@@ -74,7 +74,7 @@ const TeamForm: React.FC = () => {
   return (
     <>
       <PageHeadline text={`Add a new team to project ${currentProject.name}`} />
-      <ContentWithHints>
+      <ContentWithHints isForm>
         <Tabs
           tabContent={[
             {

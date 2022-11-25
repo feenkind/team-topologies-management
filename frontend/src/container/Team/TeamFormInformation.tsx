@@ -1,12 +1,5 @@
 import * as React from 'react';
-import {
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-} from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import {
@@ -22,6 +15,9 @@ import { useAppSelector } from '../../hooks';
 import { channelType } from '../../constants/teamApi';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../components/Form/ControlledSelect';
+import FieldRemoveButton from '../../components/Form/FieldRemoveButton';
+import FieldSet from '../../components/Form/FieldSet';
+import FieldAddButton from '../../components/Form/FieldAddButton';
 
 interface ITeamFormInformationProps {
   register: UseFormRegister<ITeamFormInput>;
@@ -195,8 +191,16 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
         <>
           {channelFields.map((field, index) => {
             return (
-              <React.Fragment key={`channels.${index}`}>
-                <Grid item xs={12} md={4}>
+              <FieldSet
+                key={`channels.${index}`}
+                removeButton={
+                  <FieldRemoveButton
+                    onClick={() => remove(index)}
+                    tooltipText="Remove channel"
+                  />
+                }
+              >
+                <Grid item xs={12} md={6}>
                   <ControlledSelect
                     error={
                       errors.channels
@@ -214,7 +218,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
                     }))}
                   />
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={6}>
                   <ControlledTextInput
                     error={
                       errors.channels
@@ -229,21 +233,16 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
                     placeholder="e.g. #platform-team-xy"
                   />
                 </Grid>
-                <Grid item xs={12} md={4}>
-                  <Button onClick={() => remove(index)}>Remove</Button>
-                </Grid>
-              </React.Fragment>
+              </FieldSet>
             );
           })}
           <Grid item xs={12} md={12}>
-            <Button
-              variant="outlined"
+            <FieldAddButton
               onClick={() => append({ channelType: '', channelName: '' })}
-            >
-              {`Add ${
+              label={`Add ${
                 channelFields.length === 0 ? 'a' : 'another'
               } contact channel`}
-            </Button>
+            />
           </Grid>
         </>
       </FormGroupWrapper>
