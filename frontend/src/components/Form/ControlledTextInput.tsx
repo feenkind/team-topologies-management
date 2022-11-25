@@ -16,7 +16,9 @@ interface IControlledTextInputProps {
   name: string;
   label: string;
   placeholder: string;
-  required: boolean;
+  required?: boolean;
+  multiline?: boolean;
+  isNumberField?: boolean;
 }
 
 const ControlledTextInput: React.FC<IControlledTextInputProps> = ({
@@ -27,6 +29,8 @@ const ControlledTextInput: React.FC<IControlledTextInputProps> = ({
   label,
   placeholder,
   required,
+  multiline,
+  isNumberField,
 }: IControlledTextInputProps) => {
   return (
     <Controller
@@ -40,13 +44,16 @@ const ControlledTextInput: React.FC<IControlledTextInputProps> = ({
             fullWidth
             margin="normal"
             variant="outlined"
+            multiline={multiline || false}
+            rows={multiline ? 4 : 1}
+            type={isNumberField ? 'number' : 'text'}
             label={label}
             placeholder={placeholder}
             error={!!error}
             {...field}
             {...register(name, {
               required: {
-                value: required,
+                value: required || false,
                 message: 'This field is required.',
               },
             })}

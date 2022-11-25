@@ -2,17 +2,17 @@ import * as React from 'react';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import { projectHints } from '../../constants/hints';
-import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import { Grid, TextField } from '@mui/material';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Grid } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useAppDispatch } from '../../hooks';
 import { IProject } from '../../store/slices/projectSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import axiosInstance from '../../axios';
 import { useEffect, useState } from 'react';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
 import FormActions from '../../components/Form/FormActions';
+import ControlledTextInput from '../../components/Form/ControlledTextInput';
 
 interface IProjectFormInput {
   name: string;
@@ -90,61 +90,27 @@ const ProjectForm: React.FC = () => {
       <ContentWithHints hints={[projectHints.projectDescription]}>
         <FormGroupWrapper caption="Basic Information">
           <Grid item xs={12} md={6}>
-            <Controller
-              name="name"
+            <ControlledTextInput
+              error={errors.name}
               control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <FormElementWrapper errors={errors.name}>
-                  <TextField
-                    required
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                    sx={{ maxWidth: '500px' }}
-                    label="Project name"
-                    placeholder="Please enter a project name"
-                    error={!!errors.name}
-                    {...field}
-                    {...register('name', {
-                      required: {
-                        value: true,
-                        message: 'Name is required for projects.',
-                      },
-                    })}
-                  />
-                </FormElementWrapper>
-              )}
+              register={register}
+              name="name"
+              label="Project name"
+              placeholder="The name of the project"
+              required={true}
             />
           </Grid>
 
           <Grid item xs={12} md={12}>
-            <Controller
-              name="description"
+            <ControlledTextInput
+              error={errors.description}
               control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <FormElementWrapper errors={errors.description}>
-                  <TextField
-                    required
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                    multiline
-                    rows={4}
-                    label="Project description"
-                    placeholder="Please enter a short project description to provide some context"
-                    error={!!errors.description}
-                    {...field}
-                    {...register('description', {
-                      required: {
-                        value: true,
-                        message: 'Description is required for projects.',
-                      },
-                    })}
-                  />
-                </FormElementWrapper>
-              )}
+              register={register}
+              name="description"
+              label="Project description"
+              placeholder="A short project description to provide some context"
+              required={true}
+              multiline={true}
             />
           </Grid>
         </FormGroupWrapper>

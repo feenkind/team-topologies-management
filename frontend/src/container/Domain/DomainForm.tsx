@@ -8,14 +8,7 @@ import { IProject } from '../../store/slices/projectSlice';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
-import {
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 import { complexity, priority } from '../../constants/categories';
 import axiosInstance from '../../axios';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
@@ -125,30 +118,14 @@ const DomainForm: React.FC = () => {
       >
         <FormGroupWrapper caption="Basic Information">
           <Grid item xs={12} md={6}>
-            <Controller
-              name="name"
+            <ControlledTextInput
+              error={errors.name}
               control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <FormElementWrapper errors={errors.name}>
-                  <TextField
-                    required
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                    label="Domain name"
-                    placeholder="Please enter a domain name"
-                    error={!!errors.name}
-                    {...field}
-                    {...register('name', {
-                      required: {
-                        value: true,
-                        message: 'Name is required for domains.',
-                      },
-                    })}
-                  />
-                </FormElementWrapper>
-              )}
+              register={register}
+              name="name"
+              label="Domain name"
+              placeholder="The name of the domain"
+              required={true}
             />
           </Grid>
 
@@ -229,32 +206,15 @@ const DomainForm: React.FC = () => {
           </Grid>
 
           <Grid item xs={12} md={12}>
-            <Controller
-              name="description"
+            <ControlledTextInput
+              error={errors.description}
               control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <FormElementWrapper errors={errors.description}>
-                  <TextField
-                    required
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                    multiline
-                    rows={4}
-                    label="Domain description"
-                    placeholder="Please enter a short domain description and technical responsible details"
-                    error={!!errors.description}
-                    {...field}
-                    {...register('description', {
-                      required: {
-                        value: true,
-                        message: 'Description is required for domains.',
-                      },
-                    })}
-                  />
-                </FormElementWrapper>
-              )}
+              register={register}
+              name="description"
+              label="Domain description"
+              placeholder="A short domain description and details to technical responsible person"
+              required={true}
+              multiline={true}
             />
           </Grid>
         </FormGroupWrapper>
