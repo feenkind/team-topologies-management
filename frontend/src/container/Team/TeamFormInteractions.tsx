@@ -13,6 +13,9 @@ import FieldSet from '../../components/Form/FieldSet';
 import FieldRemoveButton from '../../components/Form/FieldRemoveButton';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import ControlledDateInput from '../../components/Form/ControlleDateInput';
+import ControlledSelect from '../../components/Form/ControlledSelect';
+import { interactionMode } from '../../constants/categories';
+import { useAppSelector } from '../../hooks';
 
 interface ITeamFormInteractionsProps {
   register: UseFormRegister<ITeamFormInput>;
@@ -25,6 +28,14 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
   control,
   errors,
 }: ITeamFormInteractionsProps) => {
+  const currentProject = useAppSelector(
+    (state) => state.project.currentProject,
+  );
+  // TODO: exclude current team when editing
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
+
   const {
     fields: interactionFields,
     append: appendInteraction,
@@ -46,6 +57,50 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
             />
           }
         >
+          <Grid item xs={12} md={6}>
+            <ControlledSelect
+              error={
+                errors.interactions
+                  ? errors.interactions[index]?.otherTeamId
+                  : undefined
+              }
+              control={control}
+              register={register}
+              name={`interactions.${index}.otherTeamId`}
+              label="Interaction with"
+              required={true}
+              options={teams.map((team) => ({
+                label: team.name,
+                value: team.id,
+              }))}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <ControlledSelect
+              error={
+                errors.interactions
+                  ? errors.interactions[index]?.interactionMode
+                  : undefined
+              }
+              control={control}
+              register={register}
+              name={`interactions.${index}.interactionMode`}
+              label="Interaction mode"
+              required={true}
+              options={Object.values(interactionMode).map((mode) => {
+                let label = mode.toString();
+                if (mode === interactionMode.X_AS_A_SERVICE) {
+                  label = 'x-as-a-service';
+                }
+                return {
+                  label: label,
+                  value: mode,
+                };
+              })}
+            />
+          </Grid>
+
           <Grid item xs={12} md={6}>
             <ControlledDateInput
               error={
