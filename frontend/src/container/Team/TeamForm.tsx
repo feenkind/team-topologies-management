@@ -148,8 +148,6 @@ const TeamForm: React.FC = () => {
         : [],
     };
 
-    console.log(team);
-
     if (!teamData) {
       axiosInstance
         .post('/teams', team)

@@ -1,4 +1,10 @@
-import { channelType } from '../../../../frontend/src/constants/teamApi';
+import {
+  IsArray,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export enum teamType {
   STREAM_ALIGNED = 'stream_aligned',
@@ -46,31 +52,66 @@ export enum changeType {
 }
 
 export class CreateTeamDto {
+  @IsString()
   projectId: string;
+
+  @IsString()
   name: string;
+
+  @IsNumber()
   cognitiveLoad: number;
+
+  @IsNumber()
   fte: number;
+
+  @IsString()
   focus: string;
+
+  @IsEnum(teamType)
   type: teamType;
+
+  @IsOptional()
+  @IsString()
   platform?: string;
+
+  @IsOptional()
+  @IsArray()
   wikiSearchTearms: string[];
+
+  @IsOptional()
+  @IsArray()
   communicationChannels: {
-    type: channelType;
+    type: channelTypes;
     name: string;
   }[];
+
+  @IsOptional()
+  @IsArray()
   meetings: {
     day: meetingsDay;
     purpose: string;
     time: string;
     durationMinutes: number;
   }[];
+
+  @IsOptional()
+  @IsArray()
   services: {
     versioning: versioningType;
     name: string;
     url?: string;
     repository?: string;
   }[];
+
+  @IsOptional()
+  @IsArray()
   waysOfWorking: { name: string; url?: string }[];
+
+  @IsOptional()
+  @IsArray()
   domainIds: string[];
+
+  @IsOptional()
+  @IsArray()
   work: { summary: string; repository?: string }[];
 }

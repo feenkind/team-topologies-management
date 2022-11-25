@@ -76,6 +76,14 @@ export class TeamsController {
       DomainsOnTeams: {
         create: createTeamDto.domainIds.map((domainId) => ({ domainId })),
       },
+      TeamHistory: {
+        create: {
+          cognitiveLoad: createTeamDto.cognitiveLoad,
+          fte: createTeamDto.fte,
+          type: createTeamDto.type,
+          changeNote: 'Initial creation.',
+        },
+      },
     });
   }
 
