@@ -9,7 +9,6 @@ import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import {
-  Button,
   FormControl,
   Grid,
   InputLabel,
@@ -18,10 +17,11 @@ import {
   TextField,
 } from '@mui/material';
 import { complexity, priority } from '../../constants/categories';
-import ActionWrapperBottom from '../../components/Layout/ActionWrapperBottom';
 import axiosInstance from '../../axios';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
 import { domainHints } from '../../constants/hints';
+import FormActions from '../../components/Form/FormActions';
+import ControlledTextInput from '../../components/Form/ControlledTextInput';
 
 interface IDomainFormInput {
   name: string;
@@ -124,72 +124,70 @@ const DomainForm: React.FC = () => {
         hints={[domainHints.domainPriority, domainHints.domainComplexity]}
       >
         <FormGroupWrapper caption="Basic Information">
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6}>
+            <Controller
+              name="name"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <FormElementWrapper errors={errors.name}>
+                  <TextField
+                    required
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    label="Domain name"
+                    placeholder="Please enter a domain name"
+                    error={!!errors.name}
+                    {...field}
+                    {...register('name', {
+                      required: {
+                        value: true,
+                        message: 'Name is required for domains.',
+                      },
+                    })}
+                  />
+                </FormElementWrapper>
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <FormControl
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              error={!!errors.complexity}
+            >
+              <InputLabel id="complexity-select">Complexity</InputLabel>
               <Controller
-                name="name"
+                name="complexity"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
-                  <FormElementWrapper errors={errors.name}>
-                    <TextField
-                      required
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      label="Domain name"
-                      placeholder="Please enter a domain name"
-                      error={!!errors.name}
+                  <FormElementWrapper errors={errors.complexity}>
+                    <Select
                       {...field}
-                      {...register('name', {
+                      fullWidth
+                      labelId="complexity-select"
+                      label="Complexity"
+                      {...register('complexity', {
                         required: {
                           value: true,
-                          message: 'Name is required for domains.',
+                          message: 'Please choose a domain complexity.',
                         },
                       })}
-                    />
+                    >
+                      {Object.values(complexity).map((complexity) => (
+                        <MenuItem key={complexity} value={complexity}>
+                          {complexity}
+                        </MenuItem>
+                      ))}
+                    </Select>
                   </FormElementWrapper>
                 )}
               />
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <FormControl
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                error={!!errors.complexity}
-              >
-                <InputLabel id="complexity-select">Complexity</InputLabel>
-                <Controller
-                  name="complexity"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <FormElementWrapper errors={errors.complexity}>
-                      <Select
-                        {...field}
-                        fullWidth
-                        labelId="complexity-select"
-                        label="Complexity"
-                        {...register('complexity', {
-                          required: {
-                            value: true,
-                            message: 'Please choose a domain complexity.',
-                          },
-                        })}
-                      >
-                        {Object.values(complexity).map((complexity) => (
-                          <MenuItem key={complexity} value={complexity}>
-                            {complexity}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormElementWrapper>
-                  )}
-                />
-              </FormControl>
-            </Grid>
+            </FormControl>
           </Grid>
 
           <Grid item xs={12} md={6}>
@@ -261,62 +259,28 @@ const DomainForm: React.FC = () => {
           </Grid>
         </FormGroupWrapper>
 
-        <ActionWrapperBottom>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
-              {domainData && (
-                <Controller
-                  name="changeNote"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <FormElementWrapper errors={errors.changeNote}>
-                      <TextField
-                        required
-                        fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        multiline
-                        rows={1}
-                        label="Note"
-                        placeholder="Please enter a short description why you did those changes"
-                        sx={{
-                          mr: 9,
-                        }}
-                        error={!!errors.changeNote}
-                        {...field}
-                        {...register('changeNote', {
-                          required: {
-                            value: true,
-                            message: 'Please add a reason for your changes',
-                          },
-                        })}
-                      />
-                    </FormElementWrapper>
-                  )}
-                />
-              )}
-            </Grid>
-            <Grid item xs={12} md={6} textAlign="right">
-              <Button
-                onClick={() => {
-                  navigate(-1);
-                }}
-                variant="outlined"
-                sx={{ mr: 2 }}
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleSubmit(onSubmit)}
-                variant="contained"
-                sx={{ minWidth: '250px' }}
-              >
-                {domainData ? 'Save changes to domain' : 'Create new domain'}
-              </Button>
-            </Grid>
-          </Grid>
-        </ActionWrapperBottom>
+        <FormActions
+          onCancel={() => {
+            navigate(-1);
+          }}
+          onSubmit={handleSubmit(onSubmit)}
+          submitLabel={
+            domainData ? 'Save changes to domain' : 'Create new domain'
+          }
+          changeNote={
+            domainData && (
+              <ControlledTextInput
+                error={errors.changeNote}
+                control={control}
+                register={register}
+                name="changeNote"
+                label="Note"
+                placeholder="The reason for your changes"
+                required={true}
+              />
+            )
+          }
+        />
       </ContentWithHints>
     </>
   );

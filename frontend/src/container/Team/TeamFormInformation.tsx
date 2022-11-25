@@ -306,10 +306,9 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
         <Grid container spacing={2}>
           <>
             {channelFields.map((field, index) => {
-              console.log(index);
               return (
                 <React.Fragment key={`channels.${index}`}>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <FormControl
                       fullWidth
                       variant="outlined"
@@ -348,14 +347,46 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
                       />
                     </FormControl>
                   </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Controller
+                      name={`channels.${index}.channelName`}
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <FormElementWrapper errors={errors.channels}>
+                          <TextField
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            label="Channel name"
+                            placeholder="e.g. #platform-team-xy"
+                            error={!!errors.channels}
+                            {...field}
+                            {...register(`channels.${index}.channelName`, {
+                              required: {
+                                value: true,
+                                message: 'Channel name is required.',
+                              },
+                            })}
+                          />
+                        </FormElementWrapper>
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Button onClick={() => remove(index)}>Remove</Button>
+                  </Grid>
                 </React.Fragment>
               );
             })}
             <Grid item xs={12} md={12}>
               <Button
+                variant="outlined"
                 onClick={() => append({ channelType: '', channelName: '' })}
               >
-                Add contact channel
+                {`Add ${
+                  channelFields.length === 0 ? 'a' : 'another'
+                } contact channel`}
               </Button>
             </Grid>
           </>

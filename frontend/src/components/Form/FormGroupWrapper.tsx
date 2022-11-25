@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Paper, Typography } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 
 interface IFormGroupWrapperProps {
   caption: string;
@@ -36,7 +36,9 @@ const FormGroupWrapper: React.FC<IFormGroupWrapperProps> = ({
       >
         {caption}
       </Typography>
-      {children}
+      <Grid container spacing={2}>
+        {children}
+      </Grid>
     </Paper>
   );
 };
