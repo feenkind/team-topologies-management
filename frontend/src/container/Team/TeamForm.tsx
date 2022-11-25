@@ -3,16 +3,22 @@ import PageHeadline from '../../components/Layout/PageHeadline';
 import ContentWithHints from '../../components/Layout/ContentWithHints';
 import { useAppSelector } from '../../hooks';
 import { Button, Grid, TextField } from '@mui/material';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  Controller,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from 'react-hook-form';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import ActionWrapperBottom from '../../components/Layout/ActionWrapperBottom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IProject } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
 import Tabs from '../../components/Layout/Tabs';
 import TeamFormInformation from './TeamFormInformation';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TeamFormInteractions from './TeamFormInteractions';
+import { channelType } from '../../constants/teamApi';
 
 export interface ITeamFormInput {
   changeNote: string;
@@ -24,6 +30,7 @@ export interface ITeamFormInput {
   cognitiveLoad: number;
   platform: string;
   wikiSearchTerms: string;
+  channels: { channelType: string; channelName: string }[];
 
   expectedDuration: string;
 }
@@ -44,6 +51,10 @@ const TeamForm: React.FC = () => {
     setError,
     formState: { errors },
   } = useForm<ITeamFormInput>();
+
+  useEffect(() => {
+    // setValue(`channels.0.channelType`, channelType.SLACK);
+  }, [setValue]);
 
   const onSubmit: SubmitHandler<ITeamFormInput> = async (data) => {
     // custom validation needed, for some reason react hook form does not

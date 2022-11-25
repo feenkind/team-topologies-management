@@ -16,7 +16,7 @@ const FormGroupWrapper: React.FC<IFormGroupWrapperProps> = ({
       sx={{
         backgroundColor: 'white',
         p: 2,
-        my: 3,
+        my: 4,
         position: 'relative',
       }}
     >

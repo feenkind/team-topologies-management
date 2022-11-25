@@ -1,28 +1,26 @@
 import * as React from 'react';
 import {
+  Button,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
   Select,
   TextField,
-  Tooltip,
 } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import {
   Control,
   Controller,
-  FieldError,
   FieldErrors,
-  Merge,
+  useFieldArray,
   UseFormRegister,
 } from 'react-hook-form';
 import { ITeamFormInput } from './TeamForm';
 import { teamType } from '../../constants/categories';
 import { useAppSelector } from '../../hooks';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
-import { grey } from '@mui/material/colors';
+import { channelType } from '../../constants/teamApi';
 
 interface ITeamFormInformationProps {
   register: UseFormRegister<ITeamFormInput>;
@@ -41,6 +39,15 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
   const projectDomains = useAppSelector(
     (state) => state.domain.domains[currentProject.id] || [],
   );
+
+  const {
+    fields: channelFields,
+    append,
+    remove,
+  } = useFieldArray({
+    control,
+    name: 'channels',
+  });
 
   return (
     <>
@@ -65,7 +72,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
                     {...register('name', {
                       required: {
                         value: true,
-                        message: 'Name is required for teams.',
+                        message: 'Name is required.',
                       },
                     })}
                   />
@@ -137,7 +144,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
                     {...register('focus', {
                       required: {
                         value: true,
-                        message: 'Focus is required for teams.',
+                        message: 'Focus is required.',
                       },
                     })}
                   />
@@ -170,12 +177,6 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
                       labelId="domains-select"
                       label="Domains"
                       multiple
-                      {...register('domains', {
-                        required: {
-                          value: true,
-                          message: 'Please choose the domains for this team.',
-                        },
-                      })}
                     >
                       {projectDomains.map((domain) => (
                         <MenuItem key={domain.id} value={domain.id}>
@@ -193,7 +194,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             <Controller
               name="fte"
               control={control}
-              defaultValue={undefined}
+              defaultValue={0}
               render={({ field }) => (
                 <FormElementWrapper errors={errors.fte}>
                   <TextField
@@ -207,6 +208,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
                     error={!!errors.fte}
                     {...field}
                     {...register('fte', {
+                      valueAsNumber: true,
                       required: {
                         value: true,
                         message: 'Full time equivalent is required.',
@@ -222,7 +224,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             <Controller
               name="cognitiveLoad"
               control={control}
-              defaultValue={undefined}
+              defaultValue={0}
               render={({ field }) => (
                 <FormElementWrapper errors={errors.cognitiveLoad}>
                   <TextField
@@ -233,9 +235,10 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
                     label="Cognitive Load"
                     type="number"
                     placeholder="Cognitive load for this team"
-                    error={!!errors.fte}
+                    error={!!errors.cognitiveLoad}
                     {...field}
                     {...register('cognitiveLoad', {
+                      valueAsNumber: true,
                       required: {
                         value: true,
                         message: 'Cognitive load is required.',
@@ -301,9 +304,61 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
 
       <FormGroupWrapper caption="Contact">
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            Domain
-          </Grid>
+          <>
+            {channelFields.map((field, index) => {
+              console.log(index);
+              return (
+                <React.Fragment key={`channels.${index}`}>
+                  <Grid item xs={12} md={6}>
+                    <FormControl
+                      fullWidth
+                      variant="outlined"
+                      margin="normal"
+                      error={!!errors.channels}
+                    >
+                      <InputLabel id={`channels.${index}.channelType-select`}>
+                        Channel type
+                      </InputLabel>
+                      <Controller
+                        name={`channels.${index}.channelType`}
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => (
+                          <FormElementWrapper errors={errors.channels}>
+                            <Select
+                              {...field}
+                              fullWidth
+                              labelId={`channels.${index}.channelType-select`}
+                              label="Channel type"
+                              {...register(`channels.${index}.channelType`, {
+                                required: {
+                                  value: true,
+                                  message: 'Please choose a channel type.',
+                                },
+                              })}
+                            >
+                              {Object.values(channelType).map((type) => (
+                                <MenuItem key={type} value={type}>
+                                  {type}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormElementWrapper>
+                        )}
+                      />
+                    </FormControl>
+                  </Grid>
+                </React.Fragment>
+              );
+            })}
+            <Grid item xs={12} md={12}>
+              <Button
+                onClick={() => append({ channelType: '', channelName: '' })}
+              >
+                Add contact channel
+              </Button>
+            </Grid>
+          </>
         </Grid>
       </FormGroupWrapper>
     </>
