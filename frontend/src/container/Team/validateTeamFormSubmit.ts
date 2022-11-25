@@ -19,7 +19,7 @@ export const getInvalidFieldNames = (data: ITeamFormInput): string[] => {
     invalidFieldNames.push('cognitiveLoad');
   }
 
-  if (data.channels.length > 0) {
+  if (data.channels && data.channels.length > 0) {
     data.channels.forEach((channel, index) => {
       if (channel.channelType.length === 0) {
         invalidFieldNames.push(`channels.${index}.channelType`);
@@ -30,7 +30,7 @@ export const getInvalidFieldNames = (data: ITeamFormInput): string[] => {
     });
   }
 
-  if (data.meetings.length > 0) {
+  if (data.meetings && data.meetings.length > 0) {
     data.meetings.forEach((meeting, index) => {
       if (meeting.purpose.length === 0) {
         invalidFieldNames.push(`meetings.${index}.purpose`);
@@ -38,11 +38,38 @@ export const getInvalidFieldNames = (data: ITeamFormInput): string[] => {
       if (meeting.dayOfWeek.length === 0) {
         invalidFieldNames.push(`meetings.${index}.dayOfWeek`);
       }
-      if (meeting.duration.length === 0) {
+      if (isNaN(parseInt(meeting.duration))) {
         invalidFieldNames.push(`meetings.${index}.duration`);
       }
       if (meeting.time.length === 0) {
         invalidFieldNames.push(`meetings.${index}.time`);
+      }
+    });
+
+    if (data.services && data.services.length > 0) {
+      data.services.forEach((service, index) => {
+        if (service.serviceName.length === 0) {
+          invalidFieldNames.push(`services.${index}.serviceName`);
+        }
+        if (service.versioningType.length === 0) {
+          invalidFieldNames.push(`services.${index}.versioningType`);
+        }
+      });
+    }
+  }
+
+  if (data.wayOfWorking && data.wayOfWorking.length > 0) {
+    data.wayOfWorking.forEach((way, index) => {
+      if (way.wayOfWorkingName.length === 0) {
+        invalidFieldNames.push(`wayOfWorking.${index}.wayOfWorkingName`);
+      }
+    });
+  }
+
+  if (data.workInProgress && data.workInProgress.length > 0) {
+    data.workInProgress.forEach((work, index) => {
+      if (work.summary.length === 0) {
+        invalidFieldNames.push(`workInProgress.${index}.summary`);
       }
     });
   }

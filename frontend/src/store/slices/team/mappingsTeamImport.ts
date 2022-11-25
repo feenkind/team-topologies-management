@@ -45,7 +45,8 @@ export const createTeam = (teamData: ITeamImportWithHistory): ITeam => {
       summary: work.summary,
       repository: work.repository || '',
     })),
-    teamCreationDate: teamData.TeamHistory[0].createdAt,
+    teamCreationDate:
+      teamData.TeamHistory.length > 0 ? teamData.TeamHistory[0].createdAt : '',
   };
 };
 

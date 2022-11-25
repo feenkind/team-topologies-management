@@ -8,6 +8,7 @@ export class TeamsService {
   constructor(private prisma: PrismaService) {}
 
   create(createInput: Prisma.TeamCreateInput): Promise<Team> {
+    console.log(createInput);
     return this.prisma.team.create({ data: createInput });
   }
 

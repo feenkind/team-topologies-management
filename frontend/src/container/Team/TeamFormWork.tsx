@@ -50,7 +50,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
     remove: removeWayofWorking,
   } = useFieldArray({
     control,
-    name: 'wayofWorking',
+    name: 'wayOfWorking',
   });
 
   return (
@@ -212,7 +212,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
       <FormGroupWrapper caption="Ways of working">
         {wayofWorkingFields.map((field, index) => (
           <FieldSet
-            key={`wayofWorking.${index}`}
+            key={`wayOfWorking.${index}`}
             removeButton={
               <FieldRemoveButton
                 onClick={() => removeWayofWorking(index)}
@@ -223,14 +223,14 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
             <Grid item xs={12} md={6}>
               <ControlledTextInput
                 error={
-                  errors.wayofWorking
-                    ? errors.wayofWorking[index]?.wayofWorkingName
+                  errors.wayOfWorking
+                    ? errors.wayOfWorking[index]?.wayOfWorkingName
                     : undefined
                 }
                 required={true}
                 control={control}
                 register={register}
-                name={`wayofWorking.${index}.wayofWorkingName`}
+                name={`wayOfWorking.${index}.wayOfWorkingName`}
                 label="Type of working"
                 placeholder="e.g. Scrum"
               />
@@ -239,13 +239,13 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
             <Grid item xs={12} md={6}>
               <ControlledTextInput
                 error={
-                  errors.wayofWorking
-                    ? errors.wayofWorking[index]?.additionalInformation
+                  errors.wayOfWorking
+                    ? errors.wayOfWorking[index]?.additionalInformation
                     : undefined
                 }
                 control={control}
                 register={register}
-                name={`wayofWorking.${index}.additionalInformation`}
+                name={`wayOfWorking.${index}.additionalInformation`}
                 label="Additional information"
                 placeholder="URL to more information"
               />
@@ -257,7 +257,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
           <FieldAddButton
             onClick={() =>
               appendWayofWorking({
-                wayofWorkingName: '',
+                wayOfWorkingName: '',
                 additionalInformation: '',
               })
             }
