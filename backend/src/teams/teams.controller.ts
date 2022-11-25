@@ -29,8 +29,54 @@ export class TeamsController {
   ) {}
 
   @Post()
-  create(@Body() createTeamDto: CreateTeamDto) {
-    return this.teamsService.create(createTeamDto);
+  create(@Body() createTeamDto: CreateTeamDto): Promise<Team> {
+    return this.teamsService.create({
+      project: { connect: { id: createTeamDto.projectId } },
+      name: createTeamDto.name,
+      cognitiveLoad: createTeamDto.cognitiveLoad,
+      fte: createTeamDto.fte,
+      focus: createTeamDto.focus,
+      type: createTeamDto.type,
+      platform: createTeamDto.platform || null,
+      wikiSearchTerms: createTeamDto.wikiSearchTearms,
+      CommunicationChannel: {
+        create: createTeamDto.communicationChannels.map((channel) => ({
+          type: channel.type,
+          name: channel.name,
+        })),
+      },
+      Meeting: {
+        create: createTeamDto.meetings.map((meeting) => ({
+          day: meeting.day,
+          purpose: meeting.purpose,
+          time: meeting.time,
+          durationMinutes: meeting.durationMinutes,
+        })),
+      },
+      Service: {
+        create: createTeamDto.services.map((service) => ({
+          versioning: service.versioning,
+          name: service.name,
+          url: service.url || null,
+          repository: service.repository || null,
+        })),
+      },
+      WayOfWorking: {
+        create: createTeamDto.waysOfWorking.map((wayOfWorking) => ({
+          name: wayOfWorking.name,
+          url: wayOfWorking.url || null,
+        })),
+      },
+      Work: {
+        create: createTeamDto.work.map((work) => ({
+          summary: work.summary,
+          repository: work.repository || null,
+        })),
+      },
+      DomainsOnTeams: {
+        create: createTeamDto.domainIds.map((domainId) => ({ domainId })),
+      },
+    });
   }
 
   @Get()

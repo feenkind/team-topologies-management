@@ -14,6 +14,7 @@ import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import FormActions from '../../components/Form/FormActions';
 import TeamFormWork from './TeamFormWork';
 import TeamFormDependencies from './TeamFormDependencies';
+import { getInvalidFieldNames } from './validateTeamFormSubmit';
 
 export interface ITeamFormInput {
   changeNote: string;
@@ -21,8 +22,8 @@ export interface ITeamFormInput {
   teamType: string;
   focus: string;
   domains: string[];
-  fte: number;
-  cognitiveLoad: number;
+  fte: string;
+  cognitiveLoad: string;
   platform: string;
   wikiSearchTerms: string;
   channels: { channelType: string; channelName: string }[];
@@ -83,18 +84,13 @@ const TeamForm: React.FC = () => {
   const onSubmit: SubmitHandler<ITeamFormInput> = async (data) => {
     // custom validation needed, for some reason react hook form does not
     // validate on submit if a form is hidden in a tab
-    //TODO: extend also add number validation
-    let invalid = false;
-    if (data.name.length === 0) {
-      setError('name', { type: 'required' });
-      invalid = true;
-    }
-    if (data.teamType.length === 0) {
-      setError('teamType', { type: 'required' });
-      invalid = true;
-    }
-
-    if (invalid) {
+    const invalidFieldNames = getInvalidFieldNames(data);
+    if (invalidFieldNames.length > 0) {
+      // any because react hook form uses string literal types and will not
+      // match them to the strings of the array
+      invalidFieldNames.forEach((name: any) => {
+        setError(name, { type: 'required' });
+      });
       return;
     }
     console.log(data);

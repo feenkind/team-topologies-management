@@ -5,14 +5,14 @@ import {
   dependencyType,
   interactionMode,
   meetingsDay,
-  TeamType,
+  teamType,
   versioningType,
 } from '../../src/teams/dto/create-team.dto';
 
 const infrastructureTeam = {
   id: '',
   name: 'Infrastructure Team',
-  teamType: TeamType.PLATFORM,
+  teamType: teamType.PLATFORM,
   domains: ['Infrastructure'],
   fte: 4,
   cognitiveLoad: 18,
@@ -79,21 +79,21 @@ const infrastructureTeam = {
     {
       cognitiveLoad: 18,
       fte: 4,
-      type: TeamType.PLATFORM,
+      type: teamType.PLATFORM,
       changeNote: 'Jana joined the team as full time dev.',
       createdAt: new Date('2022-11-21'),
     },
     {
       cognitiveLoad: 18,
       fte: 3,
-      type: TeamType.PLATFORM,
+      type: teamType.PLATFORM,
       changeNote: 'Regular cognitive load check.',
       createdAt: new Date('2022-11-10'),
     },
     {
       cognitiveLoad: 23,
       fte: 3,
-      type: TeamType.PLATFORM,
+      type: teamType.PLATFORM,
       changeNote:
         'Changed team type to match responsibilities and got James' +
         ' as new developer for the team.',
@@ -102,7 +102,7 @@ const infrastructureTeam = {
     {
       cognitiveLoad: 23,
       fte: 2,
-      type: TeamType.UNDEFINED,
+      type: teamType.UNDEFINED,
       changeNote: 'Initial creation.',
       createdAt: new Date('2022-08-10'),
     },
@@ -119,7 +119,7 @@ const infrastructureTeam = {
 const appTeam = {
   id: '',
   name: 'Mobile Apps Team',
-  teamType: TeamType.STREAM_ALIGNED,
+  teamType: teamType.STREAM_ALIGNED,
   domains: ['Mobile App iOS', 'Mobile App Android'],
   fte: 8,
   cognitiveLoad: 19,
@@ -160,28 +160,28 @@ const appTeam = {
     {
       cognitiveLoad: 19,
       fte: 8,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Mira left the company.',
       createdAt: new Date('2022-11-19'),
     },
     {
       cognitiveLoad: 19,
       fte: 9,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Lena changed the project.',
       createdAt: new Date('2022-10-30'),
     },
     {
       cognitiveLoad: 19,
       fte: 10,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Regular cognitive load check.',
       createdAt: new Date('2022-10-17'),
     },
     {
       cognitiveLoad: 11,
       fte: 10,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Initial creation.',
       createdAt: new Date('2022-07-17'),
     },
@@ -203,7 +203,7 @@ const appTeam = {
 const productTeam = {
   id: '',
   name: 'Product Display Team',
-  teamType: TeamType.STREAM_ALIGNED,
+  teamType: teamType.STREAM_ALIGNED,
   domains: ['Product Catalogue'],
   fte: 5,
   cognitiveLoad: 21,
@@ -241,21 +241,21 @@ const productTeam = {
     {
       cognitiveLoad: 21,
       fte: 5,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Regular cognitive load check.',
       createdAt: new Date('2022-09-01'),
     },
     {
       cognitiveLoad: 10,
       fte: 5,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Lisa joined the team.',
       createdAt: new Date('2022-08-10'),
     },
     {
       cognitiveLoad: 10,
       fte: 4,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Initial creation.',
       createdAt: new Date('2022-06-01'),
     },
@@ -272,7 +272,7 @@ const productTeam = {
 const gpsTeam = {
   id: '',
   name: 'GPS Experts Team',
-  teamType: TeamType.COMPLICATED_SUBSYSTEM,
+  teamType: teamType.COMPLICATED_SUBSYSTEM,
   domains: ['Product Catalogue'],
   fte: 2,
   cognitiveLoad: 15,
@@ -311,7 +311,7 @@ const gpsTeam = {
     {
       cognitiveLoad: 15,
       fte: 2,
-      type: TeamType.COMPLICATED_SUBSYSTEM,
+      type: teamType.COMPLICATED_SUBSYSTEM,
       changeNote:
         'Changed team type since this team only works on one part' +
         ' of the system right now.',
@@ -320,14 +320,14 @@ const gpsTeam = {
     {
       cognitiveLoad: 15,
       fte: 2,
-      type: TeamType.ENABLING,
+      type: teamType.ENABLING,
       changeNote: 'Regular cognitive load check.',
       createdAt: new Date('2022-09-01'),
     },
     {
       cognitiveLoad: 9,
       fte: 4,
-      type: TeamType.ENABLING,
+      type: teamType.ENABLING,
       changeNote: 'Initial creation.',
       createdAt: new Date('2022-06-01'),
     },
@@ -349,7 +349,7 @@ const gpsTeam = {
 const orderTeam = {
   id: '',
   name: 'Customer Order Team',
-  teamType: TeamType.STREAM_ALIGNED,
+  teamType: teamType.STREAM_ALIGNED,
   domains: ['Orders', 'Shipping', 'Inventory'],
   fte: 6,
   platform: null,
@@ -396,28 +396,28 @@ const orderTeam = {
     {
       cognitiveLoad: 15,
       fte: 6,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Tom joined the team.',
       createdAt: new Date('2022-11-20'),
     },
     {
       cognitiveLoad: 15,
       fte: 5,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Regular cognitive load check.',
       createdAt: new Date('2022-11-13'),
     },
     {
       cognitiveLoad: 18,
       fte: 5,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Boris and Jonathan joined the team',
       createdAt: new Date('2022-09-10'),
     },
     {
       cognitiveLoad: 18,
       fte: 3,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Initial creation.',
       createdAt: new Date('2022-08-13'),
     },
@@ -439,7 +439,7 @@ const orderTeam = {
 const paymentUndefinedTeam = {
   id: '',
   name: 'Payment Team',
-  teamType: TeamType.UNDEFINED,
+  teamType: teamType.UNDEFINED,
   domains: ['Payment'],
   fte: 3,
   cognitiveLoad: 11,
@@ -477,7 +477,7 @@ const paymentUndefinedTeam = {
     {
       cognitiveLoad: 11,
       fte: 3,
-      type: TeamType.UNDEFINED,
+      type: teamType.UNDEFINED,
       changeNote:
         'Changed team type, since it is not sure if this team will' +
         ' continue as a stream-aligned team, as the domain changed.',
@@ -486,7 +486,7 @@ const paymentUndefinedTeam = {
     {
       cognitiveLoad: 10,
       fte: 3,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Initial creation',
       createdAt: new Date('2022-10-10'),
     },
@@ -508,7 +508,7 @@ const paymentUndefinedTeam = {
 const authTeam = {
   id: '',
   name: 'Auth Team',
-  teamType: TeamType.STREAM_ALIGNED,
+  teamType: teamType.STREAM_ALIGNED,
   domains: ['Authentication and Authorization', 'Customer Management'],
   fte: 2,
   cognitiveLoad: 19,
@@ -539,14 +539,14 @@ const authTeam = {
     {
       cognitiveLoad: 19,
       fte: 2,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Initial cognitive load assessment.',
       createdAt: new Date('2022-11-03'),
     },
     {
       cognitiveLoad: 0,
       fte: 2,
-      type: TeamType.STREAM_ALIGNED,
+      type: teamType.STREAM_ALIGNED,
       changeNote: 'Initial creation',
       createdAt: new Date('2022-11-02'),
     },
@@ -568,7 +568,7 @@ const authTeam = {
 const uxTeam = {
   id: '',
   name: 'UI/UX Team',
-  teamType: TeamType.ENABLING,
+  teamType: teamType.ENABLING,
   domains: ['Mobile App iOS', 'Mobile App Android', 'Product Catalogue'],
   fte: 3,
   cognitiveLoad: 10,
@@ -613,28 +613,28 @@ const uxTeam = {
     {
       cognitiveLoad: 10,
       fte: 3,
-      type: TeamType.ENABLING,
+      type: teamType.ENABLING,
       changeNote: 'Regular cognitive load assessment.',
       createdAt: new Date('2022-11-11'),
     },
     {
       cognitiveLoad: 15,
       fte: 3,
-      type: TeamType.ENABLING,
+      type: teamType.ENABLING,
       changeNote: 'Johnny left again...',
       createdAt: new Date('2022-09-10'),
     },
     {
       cognitiveLoad: 15,
       fte: 4,
-      type: TeamType.ENABLING,
+      type: teamType.ENABLING,
       changeNote: 'Johnny joined as a new UX Designer.',
       createdAt: new Date('2022-08-23'),
     },
     {
       cognitiveLoad: 15,
       fte: 3,
-      type: TeamType.ENABLING,
+      type: teamType.ENABLING,
       changeNote:
         'Changed team type to reflect the actual responsibility of' +
         ' the team, as its helping others.',
@@ -643,7 +643,7 @@ const uxTeam = {
     {
       cognitiveLoad: 15,
       fte: 3,
-      type: TeamType.COMPLICATED_SUBSYSTEM,
+      type: teamType.COMPLICATED_SUBSYSTEM,
       changeNote: 'Initial creation',
       createdAt: new Date('2022-07-02'),
     },

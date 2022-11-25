@@ -1,4 +1,6 @@
-export enum TeamType {
+import { channelType } from '../../../../frontend/src/constants/teamApi';
+
+export enum teamType {
   STREAM_ALIGNED = 'stream_aligned',
   PLATFORM = 'platform',
   ENABLING = 'enabling',
@@ -43,4 +45,32 @@ export enum changeType {
   REMOVED = 'removed',
 }
 
-export class CreateTeamDto {}
+export class CreateTeamDto {
+  projectId: string;
+  name: string;
+  cognitiveLoad: number;
+  fte: number;
+  focus: string;
+  type: teamType;
+  platform?: string;
+  wikiSearchTearms: string[];
+  communicationChannels: {
+    type: channelType;
+    name: string;
+  }[];
+  meetings: {
+    day: meetingsDay;
+    purpose: string;
+    time: string;
+    durationMinutes: number;
+  }[];
+  services: {
+    versioning: versioningType;
+    name: string;
+    url?: string;
+    repository?: string;
+  }[];
+  waysOfWorking: { name: string; url?: string }[];
+  domainIds: string[];
+  work: { summary: string; repository?: string }[];
+}

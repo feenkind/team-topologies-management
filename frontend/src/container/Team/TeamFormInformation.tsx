@@ -64,7 +64,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             name="name"
             label="Team name"
             placeholder="The name of the team"
-            required={true}
+            required
           />
         </Grid>
 
@@ -75,7 +75,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             register={register}
             name="teamType"
             label="Team Type"
-            required={true}
+            required
             options={Object.values(teamType).map((type) => {
               let label = type.toString();
               if (type === teamType.STREAM_ALIGNED) {
@@ -100,7 +100,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             name="focus"
             label="Focus"
             placeholder="The focus of this team"
-            required={true}
+            required
             multiline={true}
           />
         </Grid>
@@ -114,7 +114,6 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             register={register}
             name="domains"
             label="Domains"
-            required={true}
             options={projectDomains.map((domain) => ({
               label: domain.name,
               value: domain.id,
@@ -129,6 +128,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             control={control}
             register={register}
             name="fte"
+            required
             label="Full Time Equivalent"
             placeholder="Only full FTE allowed for now"
             isNumberField={true}
@@ -140,6 +140,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             error={errors.cognitiveLoad}
             control={control}
             register={register}
+            required
             name="cognitiveLoad"
             label="Cognitive Load"
             placeholder="Cognitive load of this team"

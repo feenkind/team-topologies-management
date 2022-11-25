@@ -11,42 +11,33 @@ import {
 import { DomainsService } from './domains.service';
 import { CreateDomainDto } from './dto/create-domain.dto';
 import { UpdateDomainDto } from './dto/update-domain.dto';
-import { ProjectsService } from '../projects/projects.service';
 import { Domain } from '@prisma/client';
 
 @Controller('domains')
 export class DomainsController {
-  constructor(
-    private readonly domainService: DomainsService,
-    private readonly projectService: ProjectsService,
-  ) {}
+  constructor(private readonly domainService: DomainsService) {}
 
   @Post()
   create(@Body() createDomainDto: CreateDomainDto): Promise<Domain> {
-    return this.projectService.findOne(createDomainDto.projectId).then(
-      (project) => {
-        return this.domainService.create({
-          name: createDomainDto.name,
-          description: createDomainDto.description,
-          priority: createDomainDto.priority,
-          complexity: createDomainDto.complexity,
-          project: { connect: { id: project.id } },
-          active: true,
-          DomainHistory: {
-            create: [
-              {
-                name: createDomainDto.name,
-                description: createDomainDto.description,
-                priority: createDomainDto.priority,
-                complexity: createDomainDto.complexity,
-                changeNote: 'Initial creation.',
-              },
-            ],
+    return this.domainService.create({
+      name: createDomainDto.name,
+      description: createDomainDto.description,
+      priority: createDomainDto.priority,
+      complexity: createDomainDto.complexity,
+      project: { connect: { id: createDomainDto.projectId } },
+      active: true,
+      DomainHistory: {
+        create: [
+          {
+            name: createDomainDto.name,
+            description: createDomainDto.description,
+            priority: createDomainDto.priority,
+            complexity: createDomainDto.complexity,
+            changeNote: 'Initial creation.',
           },
-        });
+        ],
       },
-      () => null,
-    );
+    });
   }
 
   @Get()

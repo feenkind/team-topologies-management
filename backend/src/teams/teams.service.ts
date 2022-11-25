@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { PrismaService } from '../prisma.service';
-import { Team } from '@prisma/client';
+import { Prisma, Team } from '@prisma/client';
 
 @Injectable()
 export class TeamsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createTeamDto: CreateTeamDto) {
-    return 'This action adds a new team';
+  create(createInput: Prisma.TeamCreateInput): Promise<Team> {
+    return this.prisma.team.create({ data: createInput });
   }
 
   findAll(includeHistory: boolean): Promise<Team[]> {
