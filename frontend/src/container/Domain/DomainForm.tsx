@@ -6,15 +6,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { IProject } from '../../store/slices/projectSlice';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import FormElementWrapper from '../../components/Form/FormElementWrapper';
-import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { Grid } from '@mui/material';
 import { complexity, priority } from '../../constants/categories';
 import axiosInstance from '../../axios';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
 import { domainHints } from '../../constants/hints';
 import FormActions from '../../components/Form/FormActions';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
+import ControlledSelect from '../../components/Form/ControlledSelect';
 
 interface IDomainFormInput {
   name: string;
@@ -130,79 +130,31 @@ const DomainForm: React.FC = () => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <FormControl
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              error={!!errors.complexity}
-            >
-              <InputLabel id="complexity-select">Complexity</InputLabel>
-              <Controller
-                name="complexity"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <FormElementWrapper errors={errors.complexity}>
-                    <Select
-                      {...field}
-                      fullWidth
-                      labelId="complexity-select"
-                      label="Complexity"
-                      {...register('complexity', {
-                        required: {
-                          value: true,
-                          message: 'Please choose a domain complexity.',
-                        },
-                      })}
-                    >
-                      {Object.values(complexity).map((complexity) => (
-                        <MenuItem key={complexity} value={complexity}>
-                          {complexity}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormElementWrapper>
-                )}
-              />
-            </FormControl>
+            <ControlledSelect
+              error={errors.complexity}
+              control={control}
+              register={register}
+              name="complexity"
+              label="Complexity"
+              options={Object.values(complexity).map((complexity) => ({
+                label: complexity,
+                value: complexity,
+              }))}
+            />
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <FormControl
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              error={!!errors.priority}
-            >
-              <InputLabel id="priority-select">Priority</InputLabel>
-              <Controller
-                name="priority"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <FormElementWrapper errors={errors.priority}>
-                    <Select
-                      {...field}
-                      fullWidth
-                      labelId="priority-select"
-                      label="Priority"
-                      {...register('priority', {
-                        required: {
-                          value: true,
-                          message: 'Please choose a domain priority.',
-                        },
-                      })}
-                    >
-                      {Object.values(priority).map((priority) => (
-                        <MenuItem key={priority} value={priority}>
-                          {priority}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormElementWrapper>
-                )}
-              />
-            </FormControl>
+            <ControlledSelect
+              error={errors.priority}
+              control={control}
+              register={register}
+              name="priority"
+              label="Priority"
+              options={Object.values(priority).map((priority) => ({
+                label: priority,
+                value: priority,
+              }))}
+            />
           </Grid>
 
           <Grid item xs={12} md={12}>

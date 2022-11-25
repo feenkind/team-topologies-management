@@ -3,13 +3,14 @@ import {
   Control,
   Controller,
   FieldError,
+  Merge,
   UseFormRegister,
 } from 'react-hook-form';
 import FormElementWrapper from './FormElementWrapper';
 import { TextField } from '@mui/material';
 
 interface IControlledTextInputProps {
-  error: FieldError | undefined;
+  error: FieldError | undefined | Merge<FieldError, undefined>;
   // for reusability, the control and register are not typed
   control: Control<any>;
   register: UseFormRegister<any>;

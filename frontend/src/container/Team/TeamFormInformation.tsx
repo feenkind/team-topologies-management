@@ -6,7 +6,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
 } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import FormElementWrapper from '../../components/Form/FormElementWrapper';
@@ -22,6 +21,7 @@ import { teamType } from '../../constants/categories';
 import { useAppSelector } from '../../hooks';
 import { channelType } from '../../constants/teamApi';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
+import ControlledSelect from '../../components/Form/ControlledSelect';
 
 interface ITeamFormInformationProps {
   register: UseFormRegister<ITeamFormInput>;
@@ -66,47 +66,26 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <FormControl
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            error={!!errors.teamType}
-          >
-            <InputLabel id="teamType-select">Team type</InputLabel>
-            <Controller
-              name="teamType"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <FormElementWrapper errors={errors.teamType}>
-                  <Select
-                    {...field}
-                    fullWidth
-                    labelId="teamType-select"
-                    label="Team type"
-                    {...register('teamType', {
-                      required: {
-                        value: true,
-                        message: 'Please choose a team type.',
-                      },
-                    })}
-                  >
-                    {Object.values(teamType).map((type) => (
-                      <MenuItem key={type} value={type}>
-                        {type === teamType.STREAM_ALIGNED &&
-                          'stream-aligned team'}
-                        {type === teamType.PLATFORM && 'platform team'}
-                        {type === teamType.COMPLICATED_SUBSYSTEM &&
-                          'complicated subsystem team'}
-                        {type === teamType.UNDEFINED && 'undefined type'}
-                        {type === teamType.ENABLING && 'enabling team'}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormElementWrapper>
-              )}
-            />
-          </FormControl>
+          <ControlledSelect
+            error={errors.teamType}
+            control={control}
+            register={register}
+            name="teamType"
+            label="Team Type"
+            options={Object.values(teamType).map((type) => {
+              let label = type.toString();
+              if (type === teamType.STREAM_ALIGNED) {
+                label = 'stream-aligned';
+              }
+              if (type === teamType.COMPLICATED_SUBSYSTEM) {
+                label = 'complicated subsystem';
+              }
+              return {
+                label: label,
+                value: type,
+              };
+            })}
+          />
         </Grid>
 
         <Grid item xs={12} md={12}>
@@ -218,68 +197,36 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             return (
               <React.Fragment key={`channels.${index}`}>
                 <Grid item xs={12} md={4}>
-                  <FormControl
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    error={!!errors.channels}
-                  >
-                    <InputLabel id={`channels.${index}.channelType-select`}>
-                      Channel type
-                    </InputLabel>
-                    <Controller
-                      name={`channels.${index}.channelType`}
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <FormElementWrapper errors={errors.channels}>
-                          <Select
-                            {...field}
-                            fullWidth
-                            labelId={`channels.${index}.channelType-select`}
-                            label="Channel type"
-                            {...register(`channels.${index}.channelType`, {
-                              required: {
-                                value: true,
-                                message: 'Please choose a channel type.',
-                              },
-                            })}
-                          >
-                            {Object.values(channelType).map((type) => (
-                              <MenuItem key={type} value={type}>
-                                {type}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormElementWrapper>
-                      )}
-                    />
-                  </FormControl>
+                  <ControlledSelect
+                    error={
+                      errors.channels
+                        ? errors.channels[index]?.channelType
+                        : undefined
+                    }
+                    required={true}
+                    control={control}
+                    register={register}
+                    name={`channels.${index}.channelType`}
+                    label="Channel type"
+                    options={Object.values(channelType).map((type) => ({
+                      label: type,
+                      value: type,
+                    }))}
+                  />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Controller
-                    name={`channels.${index}.channelName`}
+                  <ControlledTextInput
+                    error={
+                      errors.channels
+                        ? errors.channels[index]?.channelName
+                        : undefined
+                    }
+                    required={true}
                     control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <FormElementWrapper errors={errors.channels}>
-                        <TextField
-                          fullWidth
-                          margin="normal"
-                          variant="outlined"
-                          label="Channel name"
-                          placeholder="e.g. #platform-team-xy"
-                          error={!!errors.channels}
-                          {...field}
-                          {...register(`channels.${index}.channelName`, {
-                            required: {
-                              value: true,
-                              message: 'Channel name is required.',
-                            },
-                          })}
-                        />
-                      </FormElementWrapper>
-                    )}
+                    register={register}
+                    name={`channels.${index}.channelName`}
+                    label="Channel name"
+                    placeholder="e.g. #platform-team-xy"
                   />
                 </Grid>
                 <Grid item xs={12} md={4}>
