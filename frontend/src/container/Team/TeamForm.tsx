@@ -24,6 +24,12 @@ export interface ITeamFormInput {
   platform: string;
   wikiSearchTerms: string;
   channels: { channelType: string; channelName: string }[];
+  meetings: {
+    purpose: string;
+    dayOfWeek: string;
+    duration: string;
+    time: string;
+  }[];
 
   expectedDuration: string;
 }
@@ -52,6 +58,7 @@ const TeamForm: React.FC = () => {
   const onSubmit: SubmitHandler<ITeamFormInput> = async (data) => {
     // custom validation needed, for some reason react hook form does not
     // validate on submit if a form is hidden in a tab
+    //TODO: extend also add number validation
     let invalid = false;
     if (data.name.length === 0) {
       setError('name', { type: 'required' });
@@ -68,6 +75,7 @@ const TeamForm: React.FC = () => {
     console.log(data);
   };
 
+  // TODO: extend
   const informationError = !!errors.name && !!errors.teamType && !!errors.focus;
   const interactionsError = !!errors.expectedDuration;
 

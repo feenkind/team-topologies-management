@@ -12,7 +12,7 @@ import {
 import { ITeamFormInput } from './TeamForm';
 import { teamType } from '../../constants/categories';
 import { useAppSelector } from '../../hooks';
-import { channelType } from '../../constants/teamApi';
+import { channelType, meetingsDay } from '../../constants/teamApi';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../components/Form/ControlledSelect';
 import FieldRemoveButton from '../../components/Form/FieldRemoveButton';
@@ -39,11 +39,20 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
 
   const {
     fields: channelFields,
-    append,
-    remove,
+    append: appendChannel,
+    remove: removeChannel,
   } = useFieldArray({
     control,
     name: 'channels',
+  });
+
+  const {
+    fields: meetingFields,
+    append: appendMeeting,
+    remove: removeMeeting,
+  } = useFieldArray({
+    control,
+    name: 'meetings',
   });
 
   return (
@@ -68,6 +77,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             register={register}
             name="teamType"
             label="Team Type"
+            required={true}
             options={Object.values(teamType).map((type) => {
               let label = type.toString();
               if (type === teamType.STREAM_ALIGNED) {
@@ -180,71 +190,150 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
       </FormGroupWrapper>
 
       <FormGroupWrapper caption="Meetings">
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            Meetings
-          </Grid>
+        {meetingFields.map((field, index) => (
+          <FieldSet
+            key={`meetings.${index}`}
+            removeButton={
+              <FieldRemoveButton
+                onClick={() => removeMeeting(index)}
+                tooltipText="Remove meeting"
+              />
+            }
+          >
+            <Grid item xs={12} md={4}>
+              <ControlledTextInput
+                error={
+                  errors.meetings ? errors.meetings[index]?.purpose : undefined
+                }
+                required={true}
+                control={control}
+                register={register}
+                name={`meetings.${index}.purpose`}
+                label="Meeting purpose"
+                placeholder="The purpose of this meeting"
+              />
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <ControlledSelect
+                error={
+                  errors.meetings
+                    ? errors.meetings[index]?.dayOfWeek
+                    : undefined
+                }
+                required={true}
+                control={control}
+                register={register}
+                name={`meetings.${index}.dayOfWeek`}
+                label="Day of the week"
+                options={Object.values(meetingsDay).map((type) => ({
+                  label: type.charAt(0).toUpperCase() + type.slice(1),
+                  value: type,
+                }))}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <ControlledTextInput
+                error={
+                  errors.meetings ? errors.meetings[index]?.time : undefined
+                }
+                required={true}
+                control={control}
+                register={register}
+                name={`meetings.${index}.time`}
+                label="Time"
+                placeholder="The hour of the meeting"
+              />
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <ControlledTextInput
+                error={
+                  errors.meetings ? errors.meetings[index]?.duration : undefined
+                }
+                required={true}
+                control={control}
+                register={register}
+                name={`meetings.${index}.duration`}
+                label="Duration"
+                placeholder="The duration of this meeting"
+                isNumberField={true}
+              />
+            </Grid>
+          </FieldSet>
+        ))}
+        <Grid item xs={12} md={12}>
+          <FieldAddButton
+            onClick={() =>
+              appendMeeting({
+                purpose: '',
+                duration: '',
+                dayOfWeek: '',
+                time: '',
+              })
+            }
+            label={`Add ${
+              meetingFields.length === 0 ? 'a' : 'another'
+            } meeting`}
+          />
         </Grid>
       </FormGroupWrapper>
 
       <FormGroupWrapper caption="Contact">
-        <>
-          {channelFields.map((field, index) => {
-            return (
-              <FieldSet
-                key={`channels.${index}`}
-                removeButton={
-                  <FieldRemoveButton
-                    onClick={() => remove(index)}
-                    tooltipText="Remove channel"
-                  />
+        {channelFields.map((field, index) => (
+          <FieldSet
+            key={`channels.${index}`}
+            removeButton={
+              <FieldRemoveButton
+                onClick={() => removeChannel(index)}
+                tooltipText="Remove channel"
+              />
+            }
+          >
+            <Grid item xs={12} md={4}>
+              <ControlledSelect
+                error={
+                  errors.channels
+                    ? errors.channels[index]?.channelType
+                    : undefined
                 }
-              >
-                <Grid item xs={12} md={6}>
-                  <ControlledSelect
-                    error={
-                      errors.channels
-                        ? errors.channels[index]?.channelType
-                        : undefined
-                    }
-                    required={true}
-                    control={control}
-                    register={register}
-                    name={`channels.${index}.channelType`}
-                    label="Channel type"
-                    options={Object.values(channelType).map((type) => ({
-                      label: type,
-                      value: type,
-                    }))}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <ControlledTextInput
-                    error={
-                      errors.channels
-                        ? errors.channels[index]?.channelName
-                        : undefined
-                    }
-                    required={true}
-                    control={control}
-                    register={register}
-                    name={`channels.${index}.channelName`}
-                    label="Channel name"
-                    placeholder="e.g. #platform-team-xy"
-                  />
-                </Grid>
-              </FieldSet>
-            );
-          })}
-          <Grid item xs={12} md={12}>
-            <FieldAddButton
-              onClick={() => append({ channelType: '', channelName: '' })}
-              label={`Add ${
-                channelFields.length === 0 ? 'a' : 'another'
-              } contact channel`}
-            />
-          </Grid>
-        </>
+                required={true}
+                control={control}
+                register={register}
+                name={`channels.${index}.channelType`}
+                label="Channel type"
+                options={Object.values(channelType).map((type) => ({
+                  label: type,
+                  value: type,
+                }))}
+              />
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <ControlledTextInput
+                error={
+                  errors.channels
+                    ? errors.channels[index]?.channelName
+                    : undefined
+                }
+                required={true}
+                control={control}
+                register={register}
+                name={`channels.${index}.channelName`}
+                label="Channel name"
+                placeholder="e.g. #platform-team-xy"
+              />
+            </Grid>
+          </FieldSet>
+        ))}
+        <Grid item xs={12} md={12}>
+          <FieldAddButton
+            onClick={() => appendChannel({ channelType: '', channelName: '' })}
+            label={`Add ${
+              channelFields.length === 0 ? 'a' : 'another'
+            } contact channel`}
+          />
+        </Grid>
       </FormGroupWrapper>
     </>
   );

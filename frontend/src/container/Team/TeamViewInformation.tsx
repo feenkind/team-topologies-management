@@ -36,10 +36,11 @@ const TeamViewInformation: React.FC<ITeamViewInformationProps> = ({
             ? team.meetings.map((meeting, index) => (
                 <Box key={`meeting${index}`} pb={1}>
                   {meeting.purpose}
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                  >{`${meeting.day} at ${meeting.time} for ${meeting.durationMinutes} minutes`}</Typography>
+                  <Typography variant="body2" color="text.secondary">{`${
+                    meeting.day.charAt(0).toUpperCase() + meeting.day.slice(1)
+                  } at ${meeting.time} for ${
+                    meeting.durationMinutes
+                  } minutes`}</Typography>
                 </Box>
               ))
             : 'No meetings',

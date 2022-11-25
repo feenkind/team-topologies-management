@@ -4,11 +4,11 @@ export enum channelType {
 
 export enum meetingsDay {
   DAILY = 'daily',
-  MONDAY = 'Monday',
-  TUESDAY = 'Tuesday',
-  WEDNESDAY = 'Wednesday',
-  THURSDAY = 'Thursday',
-  FRIDAY = 'Friday',
+  MONDAY = 'monday',
+  TUESDAY = 'tuesday',
+  WEDNESDAY = 'wednesday',
+  THURSDAY = 'thursday',
+  FRIDAY = 'friday',
 }
 
 export enum versioningType {
