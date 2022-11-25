@@ -41,7 +41,7 @@ const ControlledTextInput: React.FC<IControlledTextInputProps> = ({
       render={({ field }) => (
         <FormElementWrapper errors={error}>
           <TextField
-            required
+            required={required || false}
             fullWidth
             margin="normal"
             variant="outlined"

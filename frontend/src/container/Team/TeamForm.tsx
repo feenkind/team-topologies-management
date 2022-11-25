@@ -12,6 +12,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TeamFormInteractions from './TeamFormInteractions';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import FormActions from '../../components/Form/FormActions';
+import TeamFormWork from './TeamFormWork';
 
 export interface ITeamFormInput {
   changeNote: string;
@@ -37,6 +38,8 @@ export interface ITeamFormInput {
     repository?: string;
     versioningType: string;
   }[];
+  workInProgress: { summary: string; repository?: string }[];
+  wayofWorking: { wayofWorkingName: string; additionalInformation?: string }[];
 
   expectedDuration: string;
 }
@@ -84,6 +87,7 @@ const TeamForm: React.FC = () => {
 
   // TODO: extend
   const informationError = !!errors.name && !!errors.teamType && !!errors.focus;
+  const workError = !!errors.services;
   const interactionsError = !!errors.expectedDuration;
 
   return (
@@ -105,7 +109,19 @@ const TeamForm: React.FC = () => {
                 />
               ),
             },
-            { tabName: 'Work', content: '' },
+            {
+              tabName: 'Work',
+              tabIcon: workError ? (
+                <ErrorOutlineIcon color="error" />
+              ) : undefined,
+              content: (
+                <TeamFormWork
+                  register={register}
+                  control={control}
+                  errors={errors}
+                />
+              ),
+            },
             {
               tabName: 'Interactions',
               tabIcon: interactionsError ? (
