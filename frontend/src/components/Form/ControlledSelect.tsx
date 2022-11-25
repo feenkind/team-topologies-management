@@ -17,6 +17,7 @@ interface IControlledSelectProps {
   name: string;
   label: string;
   required?: boolean;
+  multiple?: boolean;
   options: { label: string; value: string }[];
 }
 
@@ -28,6 +29,7 @@ const ControlledSelect: React.FC<IControlledSelectProps> = ({
   label,
   required,
   options,
+  multiple,
 }: IControlledSelectProps) => {
   return (
     <FormControl fullWidth variant="outlined" margin="normal" error={!!error}>
@@ -35,7 +37,7 @@ const ControlledSelect: React.FC<IControlledSelectProps> = ({
       <Controller
         name={name}
         control={control}
-        defaultValue=""
+        defaultValue={multiple ? [] : ''}
         render={({ field }) => (
           <FormElementWrapper errors={error}>
             <Select
@@ -43,6 +45,7 @@ const ControlledSelect: React.FC<IControlledSelectProps> = ({
               fullWidth
               labelId={`${name}-select`}
               label={label}
+              multiple={multiple || false}
               {...register(name, {
                 required: {
                   value: required || false,

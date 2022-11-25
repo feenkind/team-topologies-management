@@ -31,6 +31,13 @@ export interface ITeamFormInput {
     time: string;
   }[];
 
+  services: {
+    serviceName: string;
+    serviceUrl?: string;
+    repository?: string;
+    versioningType: string;
+  }[];
+
   expectedDuration: string;
 }
 

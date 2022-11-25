@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
+import { Grid } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
-import FormElementWrapper from '../../components/Form/FormElementWrapper';
 import {
   Control,
-  Controller,
   FieldErrors,
   useFieldArray,
   UseFormRegister,
@@ -109,37 +107,20 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
       </FormGroupWrapper>
 
       <FormGroupWrapper caption="Additional">
-        <Grid item xs={12} md={4}>
-          <FormControl
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            error={!!errors.domains}
-          >
-            <InputLabel id="domains-select">Domains</InputLabel>
-            <Controller
-              name="domains"
-              control={control}
-              defaultValue={[]}
-              render={({ field }) => (
-                <FormElementWrapper errors={errors.domains}>
-                  <Select
-                    {...field}
-                    fullWidth
-                    labelId="domains-select"
-                    label="Domains"
-                    multiple
-                  >
-                    {projectDomains.map((domain) => (
-                      <MenuItem key={domain.id} value={domain.id}>
-                        {domain.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormElementWrapper>
-              )}
-            />
-          </FormControl>
+        <Grid item xs={12} md={8}>
+          <ControlledSelect
+            error={errors.domains}
+            control={control}
+            register={register}
+            name="domains"
+            label="Domains"
+            required={true}
+            options={projectDomains.map((domain) => ({
+              label: domain.name,
+              value: domain.id,
+            }))}
+            multiple={true}
+          />
         </Grid>
 
         <Grid item xs={12} md={4}>
