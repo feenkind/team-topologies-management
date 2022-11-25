@@ -30,7 +30,6 @@ const ControlledDateInput: React.FC<IControlledDateInputProps> = ({
   label,
   required,
 }: IControlledDateInputProps) => {
-  console.log(error);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Controller

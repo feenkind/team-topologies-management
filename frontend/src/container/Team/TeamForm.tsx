@@ -35,12 +35,12 @@ export interface ITeamFormInput {
 
   services: {
     serviceName: string;
-    serviceUrl?: string;
-    repository?: string;
+    serviceUrl: string;
+    repository: string;
     versioningType: string;
   }[];
-  workInProgress: { summary: string; repository?: string }[];
-  wayofWorking: { wayofWorkingName: string; additionalInformation?: string }[];
+  workInProgress: { summary: string; repository: string }[];
+  wayofWorking: { wayofWorkingName: string; additionalInformation: string }[];
 
   interactions: {
     otherTeamId: string;
@@ -55,7 +55,7 @@ export interface ITeamFormInput {
     otherTeamId: string;
     dependencyType: string;
     dependencyDescription: string;
-    additionalInformation?: string;
+    additionalInformation: string;
   }[];
 }
 
@@ -100,9 +100,19 @@ const TeamForm: React.FC = () => {
     console.log(data);
   };
 
-  // TODO: extend
-  const informationError = !!errors.name && !!errors.teamType && !!errors.focus;
-  const workError = !!errors.services;
+  const informationError =
+    !!errors.name ||
+    !!errors.teamType ||
+    !!errors.focus ||
+    !!errors.domains ||
+    !!errors.fte ||
+    !!errors.cognitiveLoad ||
+    !!errors.platform ||
+    !!errors.wikiSearchTerms ||
+    !!errors.channels ||
+    !!errors.meetings;
+  const workError =
+    !!errors.services || !!errors.workInProgress || !!errors.wayofWorking;
   const interactionsError = !!errors.interactions;
   const dependenciesError = !!errors.dependencies;
 
