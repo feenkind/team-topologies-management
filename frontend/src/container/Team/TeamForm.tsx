@@ -41,7 +41,14 @@ export interface ITeamFormInput {
   workInProgress: { summary: string; repository?: string }[];
   wayofWorking: { wayofWorkingName: string; additionalInformation?: string }[];
 
-  expectedDuration: string;
+  interactions: {
+    otherTeamId: string;
+    interactionMode: string;
+    startDate: string;
+    expectedDuration: string;
+    interactionPurpose: string;
+    additionalInformation?: string;
+  }[];
 }
 
 const TeamForm: React.FC = () => {
@@ -88,7 +95,7 @@ const TeamForm: React.FC = () => {
   // TODO: extend
   const informationError = !!errors.name && !!errors.teamType && !!errors.focus;
   const workError = !!errors.services;
-  const interactionsError = !!errors.expectedDuration;
+  const interactionsError = !!errors.interactions;
 
   return (
     <>
