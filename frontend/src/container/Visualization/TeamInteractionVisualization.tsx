@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import ContentVisualization, {
   ILegend,
@@ -128,6 +128,12 @@ const TeamInteractionVisualization: React.FC = () => {
     projectId: currentProject.id,
     date: selectedDate,
   });
+
+  useEffect(() => {
+    if (selectedDateIndex != 0) {
+      setShowExpectedInteractions(false);
+    }
+  }, [selectedDateIndex, setShowExpectedInteractions]);
 
   if (historyChangeDates.length === 0) {
     return (
@@ -274,12 +280,21 @@ const TeamInteractionVisualization: React.FC = () => {
                   setShowExpectedInteractions(event.target.checked)
                 }
                 color="primary"
+                disabled={selectedDateIndex > 0}
               />
             }
             label="Also show expected interactions"
             labelPlacement="end"
           />
         </FormGroup>
+        {selectedDateIndex > 0 && (
+          <Tooltip title="The expected interactions can only be shown for the newest date.">
+            <HelpOutlineOutlinedIcon
+              fontSize="small"
+              sx={{ mr: 1, color: grey[400] }}
+            />
+          </Tooltip>
+        )}
       </VisualizationOptionsWrapper>
 
       {nodes.length === 0 && (
