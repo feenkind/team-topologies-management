@@ -129,7 +129,6 @@ const TeamForm: React.FC = () => {
 
   useEffect(() => {
     if (teamData) {
-      console.log(teamData);
       reset({
         name: teamData.name,
         teamType: teamData.type,
@@ -263,7 +262,7 @@ const TeamForm: React.FC = () => {
         : [],
       interactions: data.interactions
         ? data.interactions.map((interaction) => ({
-            teamTwo: interaction.otherTeamId,
+            teamIdTwo: interaction.otherTeamId,
             interactionMode: interaction.interactionMode,
             purpose: interaction.interactionPurpose,
             startDate: new Date(interaction.startDate),
