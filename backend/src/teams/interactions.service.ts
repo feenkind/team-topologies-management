@@ -57,6 +57,12 @@ export class InteractionsService {
     const interactionsToKeep: { teamIdOne: string; teamIdTwo: string }[] = [];
 
     newInteractions.forEach((newInteraction) => {
+      // keep these interactions
+      interactionsToKeep.push({
+        teamIdOne: newInteraction.teamIdOne,
+        teamIdTwo: newInteraction.teamIdTwo,
+      });
+
       const oldInteractionData = currentInteractions.find((current) =>
         interactionIsTheSame(current, newInteraction),
       );
@@ -74,33 +80,23 @@ export class InteractionsService {
           changeNote: changeNote,
           changeType: changeType.ADDED,
         });
-
-        interactionsToKeep.push({
-          teamIdOne: newInteraction.teamIdOne,
-          teamIdTwo: newInteraction.teamIdTwo,
-        });
       }
 
-      // existed already (and still exists)
-      if (oldInteractionData) {
-        // data changed, we need to track as changed
-        if (!interactionDataIsTheSame(oldInteractionData, newInteraction)) {
-          interactionHistoryCreateManyInput.push({
-            teamIdOne: oldInteractionData.teamIdOne,
-            teamIdTwo: oldInteractionData.teamIdTwo,
-            interactionMode: newInteraction.interactionMode,
-            purpose: newInteraction.purpose,
-            startDate: newInteraction.startDate,
-            expectedDuration: newInteraction.expectedDuration,
-            additionalInformation: newInteraction.additionalInformation || null,
-            changeNote: changeNote,
-            changeType: changeType.CHANGED,
-          });
-        }
-
-        interactionsToKeep.push({
+      // existed already (and still exists), but data changed
+      if (
+        oldInteractionData &&
+        !interactionDataIsTheSame(oldInteractionData, newInteraction)
+      ) {
+        interactionHistoryCreateManyInput.push({
           teamIdOne: oldInteractionData.teamIdOne,
           teamIdTwo: oldInteractionData.teamIdTwo,
+          interactionMode: newInteraction.interactionMode,
+          purpose: newInteraction.purpose,
+          startDate: newInteraction.startDate,
+          expectedDuration: newInteraction.expectedDuration,
+          additionalInformation: newInteraction.additionalInformation || null,
+          changeNote: changeNote,
+          changeType: changeType.CHANGED,
         });
       }
     });

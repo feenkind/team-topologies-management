@@ -11,7 +11,7 @@ const dependencyDataIsTheSame = (
   current.dependencyType === updated.dependencyType &&
   current.description === updated.description;
 
-const dependencyExists = (
+const dependencyIsTheSame = (
   current: Dependency,
   updated: UpdateDependencyDto,
 ): boolean =>
@@ -37,10 +37,10 @@ export class DependenciesService {
   async updateDependenciesForTeamFromId(
     teamIdFrom: string,
     changeNote: string,
-    updateDependencies: UpdateDependencyDto[],
+    newDependencies: UpdateDependencyDto[],
   ): Promise<Dependency[]> {
     // get current dependencies
-    const dependenciesCurrent = await this.prisma.dependency.findMany({
+    const currentDependencies = await this.prisma.dependency.findMany({
       where: { teamIdFrom: teamIdFrom },
     });
 
@@ -49,48 +49,48 @@ export class DependenciesService {
     const dependencyHistoryCreateManyInput: Prisma.DependencyHistoryCreateManyInput[] =
       [];
     const dependenciesToKeep: { teamIdFrom: string; teamIdTo: string }[] = [];
-    updateDependencies.forEach((updated) => {
-      for (let i = 0; i < dependenciesCurrent.length; i++) {
-        const current = dependenciesCurrent[i];
+    newDependencies.forEach((newDependency) => {
+      // all these dependencies should not be deleted later
+      dependenciesToKeep.push({
+        teamIdFrom: newDependency.teamIdFrom,
+        teamIdTo: newDependency.teamIdTo,
+      });
 
-        // all these depdenencies should not be deleted later
-        dependenciesToKeep.push({
-          teamIdFrom: updated.teamIdFrom,
-          teamIdTo: updated.teamIdTo,
-        });
+      const oldDependencyData = currentDependencies.find((current) =>
+        dependencyIsTheSame(current, newDependency),
+      );
 
-        // dependency already existed and continues existing, therefore
-        // check for changes
-        if (
-          dependencyExists(current, updated) &&
-          !dependencyDataIsTheSame(current, updated)
-        ) {
-          dependencyHistoryCreateManyInput.push({
-            teamIdFrom: updated.teamIdFrom,
-            teamIdTo: updated.teamIdTo,
-            dependencyType: updated.dependencyType,
-            description: updated.description,
-            changeNote: changeNote,
-            changeType: changeType.CHANGED,
-          });
-          continue;
-        }
-
-        // if already there, so it is newly added
+      // did not exist yet, we need to add
+      if (!oldDependencyData) {
         dependencyHistoryCreateManyInput.push({
-          teamIdFrom: updated.teamIdFrom,
-          teamIdTo: updated.teamIdTo,
-          dependencyType: updated.dependencyType,
-          description: updated.description,
+          teamIdFrom: newDependency.teamIdFrom,
+          teamIdTo: newDependency.teamIdTo,
+          dependencyType: newDependency.dependencyType,
+          description: newDependency.description,
           changeNote: changeNote,
           changeType: changeType.ADDED,
+        });
+      }
+
+      // did exist but changed
+      if (
+        oldDependencyData &&
+        !dependencyDataIsTheSame(oldDependencyData, newDependency)
+      ) {
+        dependencyHistoryCreateManyInput.push({
+          teamIdFrom: newDependency.teamIdFrom,
+          teamIdTo: newDependency.teamIdTo,
+          dependencyType: newDependency.dependencyType,
+          description: newDependency.description,
+          changeNote: changeNote,
+          changeType: changeType.CHANGED,
         });
       }
     });
 
     // check for each existing dependency, if it still exists
     // add as removed to history, if not
-    dependenciesCurrent.forEach((current) => {
+    currentDependencies.forEach((current) => {
       if (
         !dependenciesToKeep.find(
           ({ teamIdTo, teamIdFrom }) =>
@@ -118,7 +118,7 @@ export class DependenciesService {
       where: { teamIdFrom: teamIdFrom },
     });
     await this.prisma.dependency.createMany({
-      data: updateDependencies.map((dependency) => ({
+      data: newDependencies.map((dependency) => ({
         teamIdFrom: dependency.teamIdFrom,
         teamIdTo: dependency.teamIdTo,
         dependencyType: dependency.dependencyType,
