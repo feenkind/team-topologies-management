@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { PrismaService } from '../prisma.service';
-import { Prisma, Team } from '@prisma/client';
 import { DependenciesService } from './dependencies.service';
 import { InteractionsService } from './interactions.service';
 import { TeamDto } from './dto/team.dto';
 import {
+  changeType,
   channelTypes,
+  CreateTeamDto,
   meetingsDay,
   teamType,
   versioningType,
@@ -22,8 +23,135 @@ export class TeamsService {
     private readonly interactionsService: InteractionsService,
   ) {}
 
-  create(createInput: Prisma.TeamCreateInput): Promise<Team> {
-    return this.prisma.team.create({ data: createInput });
+  async create(createTeamDto: CreateTeamDto): Promise<TeamDto> {
+    const team = await this.prisma.team.create({
+      data: {
+        project: { connect: { id: createTeamDto.projectId } },
+        name: createTeamDto.name,
+        cognitiveLoad: createTeamDto.cognitiveLoad,
+        fte: createTeamDto.fte,
+        focus: createTeamDto.focus,
+        type: createTeamDto.type,
+        platform: createTeamDto.platform || null,
+        wikiSearchTerms: createTeamDto.wikiSearchTearms || [],
+        communicationChannel: {
+          create: createTeamDto.communicationChannels
+            ? createTeamDto.communicationChannels.map((channel) => ({
+                type: channel.type,
+                name: channel.name,
+              }))
+            : [],
+        },
+        meeting: {
+          create: createTeamDto.meetings
+            ? createTeamDto.meetings.map((meeting) => ({
+                day: meeting.day,
+                purpose: meeting.purpose,
+                time: meeting.time,
+                durationMinutes: meeting.durationMinutes,
+              }))
+            : [],
+        },
+        service: {
+          create: createTeamDto.services
+            ? createTeamDto.services.map((service) => ({
+                versioning: service.versioning,
+                name: service.name,
+                url: service.url || null,
+                repository: service.repository || null,
+              }))
+            : [],
+        },
+        wayOfWorking: {
+          create: createTeamDto.waysOfWorking
+            ? createTeamDto.waysOfWorking.map((wayOfWorking) => ({
+                name: wayOfWorking.name,
+                url: wayOfWorking.url || null,
+              }))
+            : [],
+        },
+        work: {
+          create: createTeamDto.work
+            ? createTeamDto.work.map((work) => ({
+                summary: work.summary,
+                repository: work.repository || null,
+              }))
+            : [],
+        },
+        domainsOnTeams: {
+          create: createTeamDto.domainIds
+            ? createTeamDto.domainIds.map((domainId) => ({ domainId }))
+            : [],
+        },
+        teamHistory: {
+          create: {
+            cognitiveLoad: createTeamDto.cognitiveLoad,
+            fte: createTeamDto.fte,
+            type: createTeamDto.type,
+            changeNote: 'Initial creation.',
+          },
+        },
+        domainsOnTeamsHistory: {
+          create: createTeamDto.domainIds
+            ? createTeamDto.domainIds.map((domainId) => ({
+                domainId,
+                changeNote: 'Initial creation.',
+              }))
+            : [],
+        },
+        dependency: {
+          create: createTeamDto.dependencies
+            ? createTeamDto.dependencies.map((dependeny) => ({
+                dependencyType: dependeny.dependencyType,
+                teamIdTo: dependeny.teamIdTo,
+                description: dependeny.description || null,
+              }))
+            : [],
+        },
+
+        dependencyHistory: {
+          create: createTeamDto.dependencies
+            ? createTeamDto.dependencies.map((dependeny) => ({
+                dependencyType: dependeny.dependencyType,
+                teamIdTo: dependeny.teamIdTo,
+                description: dependeny.description || null,
+                changeNote: 'Initial creation.',
+                changeType: changeType.ADDED,
+              }))
+            : [],
+        },
+        interactionTeamTwo: {
+          create: createTeamDto.interactions
+            ? createTeamDto.interactions.map((interaction) => ({
+                teamIdTwo: interaction.teamIdTwo,
+                interactionMode: interaction.interactionMode,
+                purpose: interaction.purpose,
+                startDate: interaction.startDate,
+                expectedDuration: interaction.expectedDuration,
+                additionalInformation:
+                  interaction.additionalInformation || null,
+              }))
+            : [],
+        },
+        interactionHistoryTeamTwo: {
+          create: createTeamDto.interactions
+            ? createTeamDto.interactions.map((interaction) => ({
+                teamIdTwo: interaction.teamIdTwo,
+                interactionMode: interaction.interactionMode,
+                purpose: interaction.purpose,
+                startDate: interaction.startDate,
+                expectedDuration: interaction.expectedDuration,
+                additionalInformation:
+                  interaction.additionalInformation || null,
+                changeNote: 'Initial creation.',
+                changeType: changeType.ADDED,
+              }))
+            : [],
+        },
+      },
+    });
+
+    return this.findOneWithAllData(team.id);
   }
 
   async findAll(): Promise<TeamDto[]> {

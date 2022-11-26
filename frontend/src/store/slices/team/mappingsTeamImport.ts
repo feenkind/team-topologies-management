@@ -3,8 +3,48 @@ import {
   IHistoricDomainResponsibility,
   IHistoricFTEValue,
   IHistoricTeamType,
+  ITeam,
 } from './teamSlice';
-import { ITeamHistoryImport } from '../../../types/teamTypes';
+import { ITeamHistoryImport, ITeamImport } from '../../../types/teamTypes';
+
+export const createTeam = (teamData: ITeamImport): ITeam => {
+  return {
+    channels: teamData.communicationChannels.map((channel) => ({
+      type: channel.type,
+      name: channel.name,
+    })),
+    cognitiveLoad: teamData.cognitiveLoad,
+    domains: teamData.domains,
+    focus: teamData.focus,
+    fte: teamData.fte,
+    id: teamData.id,
+    meetings: teamData.meetings.map((meeting) => ({
+      purpose: meeting.purpose,
+      day: meeting.day,
+      time: meeting.time,
+      durationMinutes: meeting.durationMinutes,
+    })),
+    name: teamData.name,
+    platform: teamData.platform || '',
+    services: teamData.services.map((service) => ({
+      versioning: service.versioning,
+      repository: service.repository,
+      name: service.name,
+      url: service.url,
+    })),
+    type: teamData.type,
+    wikiSearchTerms: teamData.wikiSearchTerms,
+    waysOfWorking: teamData.waysOfWorking.map((way) => ({
+      name: way.name,
+      url: way.url || '',
+    })),
+    workInProgress: teamData.works.map((work) => ({
+      summary: work.summary,
+      repository: work.repository || '',
+    })),
+    teamCreationDate: '',
+  };
+};
 
 export const createHistoricFteValue = (
   teamDataHistory: ITeamHistoryImport,

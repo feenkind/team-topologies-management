@@ -23,6 +23,7 @@ import {
   createHistoricDomainResponsibility,
   createHistoricFteValue,
   createHistoricTeamType,
+  createTeam,
 } from './mappingsTeamImport';
 
 export interface IChannel {
@@ -200,7 +201,7 @@ const teamSlice = createSlice({
           )
         ) {
           state.teams[teamData.projectId].push({
-            ...teamData,
+            ...createTeam(teamData),
             teamCreationDate: teamData.teamHistory
               ? teamData.teamHistory[0].createdAt
               : '',

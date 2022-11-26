@@ -157,7 +157,12 @@ const TeamForm: React.FC = () => {
         cognitiveLoad: teamData.cognitiveLoad.toString(),
         platform: teamData.platform || '',
         wikiSearchTerms: teamData.wikiSearchTerms.join(', '),
-        meetings: teamData.meetings,
+        meetings: teamData.meetings.map((meeting) => ({
+          purpose: meeting.purpose,
+          dayOfWeek: meeting.day,
+          time: meeting.time,
+          duration: meeting.durationMinutes.toString(),
+        })),
         channels: teamData.communicationChannels.map((channel) => ({
           channelName: channel.name,
           channelType: channel.type,
