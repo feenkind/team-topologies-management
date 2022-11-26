@@ -3,12 +3,14 @@ import { UpdateTeamDto } from './dto/update-team.dto';
 import { PrismaService } from '../prisma.service';
 import { Prisma, Team } from '@prisma/client';
 import { DependenciesService } from './dependencies.service';
+import { InteractionsService } from './interactions.service';
 
 @Injectable()
 export class TeamsService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly dependencies: DependenciesService,
+    private readonly dependenciesService: DependenciesService,
+    private readonly interactionsService: InteractionsService,
   ) {}
 
   create(createInput: Prisma.TeamCreateInput): Promise<Team> {
@@ -33,7 +35,7 @@ export class TeamsService {
     return this.prisma.team.findMany();
   }
 
-  findOne(id: string): Promise<Team> {
+  findOneWithAllData(id: string): Promise<Team> {
     return this.prisma.team.findUnique({
       where: { id },
       include: {
@@ -44,6 +46,7 @@ export class TeamsService {
         Work: true,
         DomainsOnTeams: true,
         dependency: true,
+        interactionTeamOne: true,
         interactionTeamTwo: true,
       },
     });
@@ -149,7 +152,7 @@ export class TeamsService {
       },
     });
 
-    await this.dependencies.updateDependenciesForTeamFromId(
+    await this.dependenciesService.updateDependenciesForTeamFromId(
       id,
       updateTeamDto.changeNote,
       updateTeamDto.dependencies.map((dependency) => ({
@@ -159,11 +162,17 @@ export class TeamsService {
       })),
     );
 
-    // return all updated values
-    return this.findOne(id);
-  }
+    await this.interactionsService.updateInteractionsForTeamId(
+      id,
+      updateTeamDto.changeNote,
+      updateTeamDto.interactions.map((interaction) => ({
+        ...interaction,
+        teamIdOne: id,
+        changeNote: updateTeamDto.changeNote,
+      })),
+    );
 
-  remove(id: number) {
-    return `This action removes a #${id} team`;
+    // return all updated values
+    return this.findOneWithAllData(id);
   }
 }

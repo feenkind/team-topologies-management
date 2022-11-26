@@ -119,7 +119,7 @@ export class TeamsController {
       interactionTeamTwo: {
         create: createTeamDto.interactions
           ? createTeamDto.interactions.map((interaction) => ({
-              teamIdTwo: interaction.teamTwo,
+              teamIdTwo: interaction.teamIdTwo,
               interactionMode: interaction.interactionMode,
               purpose: interaction.purpose,
               startDate: interaction.startDate,
@@ -131,7 +131,7 @@ export class TeamsController {
       interactionHistoryTeamTwo: {
         create: createTeamDto.interactions
           ? createTeamDto.interactions.map((interaction) => ({
-              teamIdTwo: interaction.teamTwo,
+              teamIdTwo: interaction.teamIdTwo,
               interactionMode: interaction.interactionMode,
               purpose: interaction.purpose,
               startDate: interaction.startDate,
@@ -172,7 +172,7 @@ export class TeamsController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Team> {
-    return this.teamsService.findOne(id);
+    return this.teamsService.findOneWithAllData(id);
   }
 
   @Put(':id')

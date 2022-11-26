@@ -15,7 +15,7 @@ export enum interactionMode {
 
 export class CreateInteractionDto {
   @IsString()
-  teamTwo: string;
+  teamIdTwo: string;
 
   @IsEnum(interactionMode)
   interactionMode: interactionMode;

@@ -62,6 +62,7 @@ export interface ITeamImportWithAllData extends ITeamImport {
   WayOfWorking: ITeamImportWayOfWorking[];
   Work: ITeamImportWork[];
   DomainsOnTeams: IDomainOnTeams[];
+  interactionTeamOne: IInteractionImport[];
   interactionTeamTwo: IInteractionImport[];
   dependency: IDepdencyImport[];
 }

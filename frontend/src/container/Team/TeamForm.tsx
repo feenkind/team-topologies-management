@@ -129,6 +129,7 @@ const TeamForm: React.FC = () => {
 
   useEffect(() => {
     if (teamData) {
+      console.log(teamData);
       reset({
         name: teamData.name,
         teamType: teamData.type,
@@ -166,14 +167,27 @@ const TeamForm: React.FC = () => {
           wayOfWorkingName: way.name,
           additionalInformation: way.url || '',
         })),
-        interactions: teamData.interactionTeamTwo.map((interaction) => ({
-          otherTeamId: interaction.teamIdTwo,
-          interactionMode: interaction.interactionMode,
-          startDate: interaction.startDate,
-          interactionPurpose: interaction.purpose,
-          expectedDuration: interaction.expectedDuration.toString(),
-          additionalInformation: interaction.additionalInformation || '',
-        })),
+        // interactions are not directed, so it does not matter if this team
+        // is one or two - display both relationships, but make sure, to
+        // have the correct team as relationship target
+        interactions: [
+          ...teamData.interactionTeamOne.map((interaction) => ({
+            otherTeamId: interaction.teamIdOne,
+            interactionMode: interaction.interactionMode,
+            startDate: interaction.startDate,
+            interactionPurpose: interaction.purpose,
+            expectedDuration: interaction.expectedDuration.toString(),
+            additionalInformation: interaction.additionalInformation || '',
+          })),
+          ...teamData.interactionTeamTwo.map((interaction) => ({
+            otherTeamId: interaction.teamIdTwo,
+            interactionMode: interaction.interactionMode,
+            startDate: interaction.startDate,
+            interactionPurpose: interaction.purpose,
+            expectedDuration: interaction.expectedDuration.toString(),
+            additionalInformation: interaction.additionalInformation || '',
+          })),
+        ],
         dependencies: teamData.dependency.map((dependeny) => ({
           otherTeamId: dependeny.teamIdTo,
           dependencyType: dependeny.dependencyType,
