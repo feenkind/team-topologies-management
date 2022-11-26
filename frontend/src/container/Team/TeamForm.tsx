@@ -68,6 +68,9 @@ const TeamForm: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
+  const teams = useAppSelector(
+    (state) => state.team.teams[currentProject.id] || [],
+  );
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -75,6 +78,8 @@ const TeamForm: React.FC = () => {
     projectId: string;
     teamId: string;
   }>();
+
+  const otherTeams = teams.filter((team) => team.id !== teamId);
 
   const [teamData, setTeamData] = useState<ITeamImportWithAllData>();
 
@@ -350,6 +355,7 @@ const TeamForm: React.FC = () => {
                   register={register}
                   control={control}
                   errors={errors}
+                  otherTeams={otherTeams}
                 />
               ),
             },
@@ -363,6 +369,7 @@ const TeamForm: React.FC = () => {
                   register={register}
                   control={control}
                   errors={errors}
+                  otherTeams={otherTeams}
                 />
               ),
             },

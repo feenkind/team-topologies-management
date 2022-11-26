@@ -14,27 +14,21 @@ import FieldRemoveButton from '../../components/Form/FieldRemoveButton';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../components/Form/ControlledSelect';
 import { dependencyType } from '../../constants/categories';
-import { useAppSelector } from '../../hooks';
+import { ITeam } from '../../store/slices/team/teamSlice';
 
 interface ITeamFormDependenciesProps {
   register: UseFormRegister<ITeamFormInput>;
   control: Control<ITeamFormInput>;
   errors: FieldErrors<ITeamFormInput>;
+  otherTeams: ITeam[];
 }
 
 const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
   register,
   control,
   errors,
+  otherTeams,
 }: ITeamFormDependenciesProps) => {
-  const currentProject = useAppSelector(
-    (state) => state.project.currentProject,
-  );
-  // TODO: exclude current team when editing
-  const teams = useAppSelector(
-    (state) => state.team.teams[currentProject.id] || [],
-  );
-
   const {
     fields: dependencyFields,
     append: appendDependency,
@@ -68,7 +62,7 @@ const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
               name={`dependencies.${index}.otherTeamId`}
               label="Dependency to"
               required={true}
-              options={teams.map((team) => ({
+              options={otherTeams.map((team) => ({
                 label: team.name,
                 value: team.id,
               }))}

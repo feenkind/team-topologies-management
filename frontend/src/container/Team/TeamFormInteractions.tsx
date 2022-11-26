@@ -15,27 +15,21 @@ import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import ControlledDateInput from '../../components/Form/ControlleDateInput';
 import ControlledSelect from '../../components/Form/ControlledSelect';
 import { interactionMode } from '../../constants/categories';
-import { useAppSelector } from '../../hooks';
+import { ITeam } from '../../store/slices/team/teamSlice';
 
 interface ITeamFormInteractionsProps {
   register: UseFormRegister<ITeamFormInput>;
   control: Control<ITeamFormInput>;
   errors: FieldErrors<ITeamFormInput>;
+  otherTeams: ITeam[];
 }
 
 const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
   register,
   control,
   errors,
+  otherTeams,
 }: ITeamFormInteractionsProps) => {
-  const currentProject = useAppSelector(
-    (state) => state.project.currentProject,
-  );
-  // TODO: exclude current team when editing
-  const teams = useAppSelector(
-    (state) => state.team.teams[currentProject.id] || [],
-  );
-
   const {
     fields: interactionFields,
     append: appendInteraction,
@@ -69,7 +63,7 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
               name={`interactions.${index}.otherTeamId`}
               label="Interaction with"
               required={true}
-              options={teams.map((team) => ({
+              options={otherTeams.map((team) => ({
                 label: team.name,
                 value: team.id,
               }))}
