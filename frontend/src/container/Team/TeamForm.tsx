@@ -87,7 +87,6 @@ const TeamForm: React.FC = () => {
     register,
     control,
     handleSubmit,
-    setValue,
     setError,
     reset,
     formState: { errors },
@@ -126,7 +125,7 @@ const TeamForm: React.FC = () => {
       });
       setTeamData(undefined);
     }
-  }, [teamId, setValue, setTeamData, teamData, dispatch, reset]);
+  }, [teamId, setTeamData, teamData, dispatch, reset]);
 
   useEffect(() => {
     if (teamData) {
@@ -182,7 +181,7 @@ const TeamForm: React.FC = () => {
         })),
       });
     }
-  }, [setValue, setTeamData, teamData, dispatch, reset]);
+  }, [teamData, reset]);
 
   const onSubmit: SubmitHandler<ITeamFormInput> = async (data) => {
     // custom validation needed, for some reason react hook form does not

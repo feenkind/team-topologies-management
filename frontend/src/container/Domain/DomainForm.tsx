@@ -4,7 +4,6 @@ import ContentWithHints from '../../components/Layout/ContentWithHints';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { IProject } from '../../store/slices/projectSlice';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Grid } from '@mui/material';
@@ -15,6 +14,7 @@ import { domainHints } from '../../constants/hints';
 import FormActions from '../../components/Form/FormActions';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../components/Form/ControlledSelect';
+import { IDomain } from '../../store/slices/domain/domainSlice';
 
 interface IDomainFormInput {
   name: string;
@@ -35,13 +35,12 @@ const DomainForm: React.FC = () => {
     domainId: string;
   }>();
 
-  const [domainData, setDomainData] = useState<IProject>();
+  const [domainData, setDomainData] = useState<IDomain>();
 
   const {
     register,
     control,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors },
   } = useForm<IDomainFormInput>();
@@ -53,19 +52,27 @@ const DomainForm: React.FC = () => {
         .get(`/domains/${domainId}`)
         .then((response) => {
           setDomainData(response.data);
-          setValue('name', response.data.name);
-          setValue('description', response.data.description);
-          setValue('priority', response.data.priority);
-          setValue('complexity', response.data.complexity);
         })
         .catch(() => dispatch(setNetworkError(true)));
-    } else {
+    }
+    if (!domainId) {
       // needed if component does not unmount between edit and add, e.g.
       // if a user edits a domain and clicks on add domain directly after
       setDomainData(undefined);
       reset({ name: '', description: '', complexity: '', priority: '' });
     }
-  }, [domainId, domainData, setDomainData, setValue, dispatch, reset]);
+  }, [domainId, domainData, setDomainData, dispatch, reset]);
+
+  useEffect(() => {
+    if (domainData) {
+      reset({
+        name: domainData.name,
+        description: domainData.description,
+        priority: domainData.priority,
+        complexity: domainData.complexity,
+      });
+    }
+  }, [domainData, reset]);
 
   const onSubmit: SubmitHandler<IDomainFormInput> = (data) => {
     const domain = {

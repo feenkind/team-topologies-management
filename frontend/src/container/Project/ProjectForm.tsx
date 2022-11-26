@@ -31,23 +31,30 @@ const ProjectForm: React.FC = () => {
     register,
     control,
     handleSubmit,
-    setValue,
+    reset,
     formState: { errors },
   } = useForm<IProjectFormInput>();
 
   useEffect(() => {
     // make sure to always work with the newest data when editing
-    if (projectId) {
+    if (projectId && !projectData) {
       axiosInstance
         .get(`/projects/${projectId}`)
         .then((response) => {
           setProjectData(response.data);
-          setValue('name', response.data.name);
-          setValue('description', response.data.description);
         })
         .catch(() => dispatch(setNetworkError(true)));
     }
-  }, [projectId, setProjectData, setValue, dispatch]);
+  }, [projectId, projectData, setProjectData, dispatch]);
+
+  useEffect(() => {
+    if (projectData) {
+      reset({
+        name: projectData.name,
+        description: projectData.description,
+      });
+    }
+  }, [reset, projectData]);
 
   const onSubmit: SubmitHandler<IProjectFormInput> = (data) => {
     const project = {
