@@ -32,7 +32,7 @@ const ControlledSelect: React.FC<IControlledSelectProps> = ({
   multiple,
 }: IControlledSelectProps) => {
   return (
-    <FormControl fullWidth variant="outlined" margin="normal" error={!!error}>
+    <FormControl fullWidth variant="outlined" error={!!error}>
       <InputLabel id={`${name}-select`}>{label}</InputLabel>
       <Controller
         name={name}

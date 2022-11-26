@@ -15,7 +15,11 @@ const FormElementWrapper: React.FC<IFormElementWrapperProps> = ({
   return (
     <>
       {children}
-      {errors && <FormHelperText error>{errors.message}</FormHelperText>}
+      {errors && (
+        <FormHelperText error sx={{ ml: 1 }}>
+          {errors.message}
+        </FormHelperText>
+      )}
     </>
   );
 };

@@ -43,7 +43,7 @@ const ControlledTextInput: React.FC<IControlledTextInputProps> = ({
           <TextField
             required={required || false}
             fullWidth
-            margin="normal"
+            margin="none"
             variant="outlined"
             multiline={multiline || false}
             rows={multiline ? 4 : 1}

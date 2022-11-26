@@ -54,7 +54,7 @@ const ControlledDateInput: React.FC<IControlledDateInputProps> = ({
                   },
                 })}
                 id={name}
-                margin="normal"
+                margin="none"
                 variant="outlined"
                 fullWidth
                 helperText={error?.message || null}
