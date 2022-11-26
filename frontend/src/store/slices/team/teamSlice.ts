@@ -9,14 +9,6 @@ import {
   meetingsDay,
   versioningType,
 } from '../../../constants/teamApi';
-import { ITeamImportWithHistory } from './interfacesTeamImport';
-import {
-  createHistoricCognitiveLoadValue,
-  createHistoricDomainResponsibility,
-  createHistoricFteValue,
-  createHistoricTeamType,
-  createTeam,
-} from './mappingsTeamImport';
 import {
   IDepdencyHistoryImport,
   IDepdencyImport,
@@ -25,6 +17,13 @@ import {
   IInteractionHistoryImport,
   IInteractionImport,
 } from './interfacesInteractionImport';
+import { ITeamImport } from '../../../types/teamTypes';
+import {
+  createHistoricCognitiveLoadValue,
+  createHistoricDomainResponsibility,
+  createHistoricFteValue,
+  createHistoricTeamType,
+} from './mappingsTeamImport';
 
 export interface IChannel {
   type: channelType;
@@ -177,19 +176,19 @@ const teamSlice = createSlice({
   reducers: {
     addAllTeamDataWithHistory: (
       state,
-      { payload }: PayloadAction<ITeamImportWithHistory[]>,
+      { payload }: PayloadAction<ITeamImport[]>,
     ) => {
       payload.forEach((teamData) => {
         // order team history values asc by date
-        teamData.TeamHistory.sort((a, b) =>
-          new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
-        );
+        teamData.teamHistory &&
+          teamData.teamHistory.sort((a, b) =>
+            new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
+          );
         // order team domain history values asc by date
-        teamData.DomainsOnTeamsHistory.sort((a, b) =>
-          new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
-        );
-
-        const team = createTeam(teamData);
+        teamData.domainHistory &&
+          teamData.domainHistory.sort((a, b) =>
+            new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
+          );
 
         if (!state.teams[teamData.projectId]) {
           state.teams = { ...state.teams, [teamData.projectId]: [] };
@@ -200,11 +199,18 @@ const teamSlice = createSlice({
             (team) => team.id === teamData.id,
           )
         ) {
-          state.teams[teamData.projectId].push(team);
+          state.teams[teamData.projectId].push({
+            ...teamData,
+            teamCreationDate: teamData.teamHistory
+              ? teamData.teamHistory[0].createdAt
+              : '',
+          });
         }
 
-        for (let i = 0; i < teamData.TeamHistory.length; i++) {
-          const currentHistory = teamData.TeamHistory[i];
+        const teamDataHistory = teamData.teamHistory || [];
+
+        for (let i = 0; i < teamDataHistory.length; i++) {
+          const currentHistory = teamDataHistory[i];
           // first history value is always relevant
           if (i === 0) {
             state.historyFte = {
@@ -235,7 +241,7 @@ const teamSlice = createSlice({
 
           // check if current history values are different than previous and
           // save only, if so
-          const previousHistory = teamData.TeamHistory[i - 1];
+          const previousHistory = teamDataHistory[i - 1];
           if (previousHistory.fte !== currentHistory.fte) {
             state.historyFte[teamData.id].push(
               createHistoricFteValue(currentHistory),
@@ -258,8 +264,9 @@ const teamSlice = createSlice({
         const domainHistoryByDateInitial: {
           [keys: string]: { domains: string[]; changeNote: string };
         } = {};
+        const teamDataDomainHistory = teamData.domainHistory || [];
         // create object with domain ids ordered by date
-        const domainHistoryByDate = teamData.DomainsOnTeamsHistory.reduce(
+        const domainHistoryByDate = teamDataDomainHistory.reduce(
           (historyByDate, currentHistory) => {
             if (historyByDate[currentHistory.createdAt]) {
               historyByDate[currentHistory.createdAt] = {

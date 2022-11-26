@@ -1,6 +1,6 @@
-import { ITeamImport } from './interfacesTeamImport';
 import { dependencyType } from '../../../constants/categories';
 import { changeType } from './teamSlice';
+import { ITeamImport } from './interfacesTeamImport';
 
 export interface IDepdencyImport {
   teamIdFrom: string;

@@ -4,6 +4,15 @@ import { PrismaService } from '../prisma.service';
 import { Prisma, Team } from '@prisma/client';
 import { DependenciesService } from './dependencies.service';
 import { InteractionsService } from './interactions.service';
+import { TeamDto } from './dto/team.dto';
+import {
+  channelTypes,
+  meetingsDay,
+  teamType,
+  versioningType,
+} from './dto/create-team.dto';
+import { interactionMode } from './dto/create-interaction.dto';
+import { dependencyType } from './dto/create-dependency.dto';
 
 @Injectable()
 export class TeamsService {
@@ -17,42 +26,149 @@ export class TeamsService {
     return this.prisma.team.create({ data: createInput });
   }
 
-  findAll(includeHistory: boolean): Promise<Team[]> {
-    if (includeHistory) {
-      return this.prisma.team.findMany({
-        include: {
-          TeamHistory: true,
-          CommunicationChannel: true,
-          Meeting: true,
-          Service: true,
-          WayOfWorking: true,
-          Work: true,
-          DomainsOnTeams: true,
-          DomainsOnTeamsHistory: true,
-        },
-      });
-    }
-    return this.prisma.team.findMany();
+  async findAll(): Promise<TeamDto[]> {
+    const teams = await this.prisma.team.findMany({
+      include: {
+        teamHistory: true,
+        communicationChannel: true,
+        meeting: true,
+        service: true,
+        wayOfWorking: true,
+        work: true,
+        domainsOnTeams: true,
+        domainsOnTeamsHistory: true,
+      },
+    });
+
+    return teams.map((team) => ({
+      id: team.id,
+      projectId: team.projectId,
+      name: team.name,
+      cognitiveLoad: team.cognitiveLoad,
+      fte: team.fte,
+      focus: team.focus,
+      type: team.type as teamType,
+      platform: team.platform,
+      wikiSearchTerms: team.wikiSearchTerms,
+      communicationChannels: team.communicationChannel.map((channel) => ({
+        type: channel.type as channelTypes,
+        name: channel.name,
+      })),
+      meetings: team.meeting.map((meeting) => ({
+        purpose: meeting.purpose,
+        day: meeting.day as meetingsDay,
+        time: meeting.time,
+        durationMinutes: meeting.durationMinutes,
+      })),
+      services: team.service.map((service) => ({
+        name: service.name,
+        url: service.url,
+        repository: service.repository,
+        versioning: service.versioning as versioningType,
+      })),
+      waysOfWorking: team.wayOfWorking.map((way) => ({
+        name: way.name,
+        url: way.url,
+      })),
+      works: team.work.map((work) => ({
+        summary: work.summary,
+        repository: work.repository,
+      })),
+      domains: team.domainsOnTeams.map((domain) => domain.domainId),
+      teamHistory: team.teamHistory.map((history) => ({
+        createdAt: history.createdAt.toDateString(),
+        changeNote: history.changeNote,
+        fte: history.fte,
+        type: history.type as teamType,
+        cognitiveLoad: history.cognitiveLoad,
+      })),
+      domainHistory: team.domainsOnTeamsHistory.map((history) => ({
+        createdAt: history.createdAt.toDateString(),
+        changeNote: history.changeNote,
+        domainId: history.domainId,
+      })),
+    }));
   }
 
-  findOneWithAllData(id: string): Promise<Team> {
-    return this.prisma.team.findUnique({
+  async findOneWithAllData(id: string): Promise<TeamDto> {
+    const team = await this.prisma.team.findUnique({
       where: { id },
       include: {
-        CommunicationChannel: true,
-        Meeting: true,
-        Service: true,
-        WayOfWorking: true,
-        Work: true,
-        DomainsOnTeams: true,
+        communicationChannel: true,
+        meeting: true,
+        service: true,
+        wayOfWorking: true,
+        work: true,
+        domainsOnTeams: true,
         dependency: true,
         interactionTeamOne: true,
         interactionTeamTwo: true,
       },
     });
+
+    return {
+      id: team.id,
+      projectId: team.projectId,
+      name: team.name,
+      cognitiveLoad: team.cognitiveLoad,
+      fte: team.fte,
+      focus: team.focus,
+      type: team.type as teamType,
+      platform: team.platform,
+      wikiSearchTerms: team.wikiSearchTerms,
+      communicationChannels: team.communicationChannel.map((channel) => ({
+        type: channel.type as channelTypes,
+        name: channel.name,
+      })),
+      meetings: team.meeting.map((meeting) => ({
+        purpose: meeting.purpose,
+        day: meeting.day as meetingsDay,
+        time: meeting.time,
+        durationMinutes: meeting.durationMinutes,
+      })),
+      services: team.service.map((service) => ({
+        name: service.name,
+        url: service.url,
+        repository: service.repository,
+        versioning: service.versioning as versioningType,
+      })),
+      waysOfWorking: team.wayOfWorking.map((way) => ({
+        name: way.name,
+        url: way.url,
+      })),
+      works: team.work.map((work) => ({
+        summary: work.summary,
+        repository: work.repository,
+      })),
+      domains: team.domainsOnTeams.map((domain) => domain.domainId),
+      interactionsAsTeamOne: team.interactionTeamOne.map((interaction) => ({
+        teamIdOne: interaction.teamIdOne,
+        teamIdTwo: interaction.teamIdTwo,
+        interactionMode: interaction.interactionMode as interactionMode,
+        purpose: interaction.purpose,
+        startDate: interaction.startDate.toDateString(),
+        expectedDuration: interaction.expectedDuration,
+        additionalInformation: interaction.additionalInformation,
+      })),
+      interactionsAsTeamTwo: team.interactionTeamTwo.map((interaction) => ({
+        teamIdOne: interaction.teamIdOne,
+        teamIdTwo: interaction.teamIdTwo,
+        interactionMode: interaction.interactionMode as interactionMode,
+        purpose: interaction.purpose,
+        startDate: interaction.startDate.toDateString(),
+        expectedDuration: interaction.expectedDuration,
+        additionalInformation: interaction.additionalInformation,
+      })),
+      dependencies: team.dependency.map((dependency) => ({
+        teamIdFrom: dependency.teamIdFrom,
+        teamIdTo: dependency.teamIdTo,
+        dependencyType: dependency.dependencyType as dependencyType,
+        description: dependency.description,
+      })),
+    };
   }
 
-  async update(id: string, updateTeamDto: UpdateTeamDto): Promise<Team> {
+  async update(id: string, updateTeamDto: UpdateTeamDto): Promise<TeamDto> {
     // delete relations without history
     await this.prisma.communicationChannel.deleteMany({
       where: { teamId: id },
@@ -84,7 +200,7 @@ export class TeamsService {
         type: updateTeamDto.type,
         platform: updateTeamDto.platform || null,
         wikiSearchTerms: updateTeamDto.wikiSearchTearms || [],
-        CommunicationChannel: {
+        communicationChannel: {
           create: updateTeamDto.communicationChannels
             ? updateTeamDto.communicationChannels.map((channel) => ({
                 type: channel.type,
@@ -92,7 +208,7 @@ export class TeamsService {
               }))
             : [],
         },
-        Meeting: {
+        meeting: {
           create: updateTeamDto.meetings
             ? updateTeamDto.meetings.map((meeting) => ({
                 day: meeting.day,
@@ -102,7 +218,7 @@ export class TeamsService {
               }))
             : [],
         },
-        Service: {
+        service: {
           create: updateTeamDto.services
             ? updateTeamDto.services.map((service) => ({
                 versioning: service.versioning,
@@ -112,7 +228,7 @@ export class TeamsService {
               }))
             : [],
         },
-        WayOfWorking: {
+        wayOfWorking: {
           create: updateTeamDto.waysOfWorking
             ? updateTeamDto.waysOfWorking.map((wayOfWorking) => ({
                 name: wayOfWorking.name,
@@ -120,7 +236,7 @@ export class TeamsService {
               }))
             : [],
         },
-        Work: {
+        work: {
           create: updateTeamDto.work
             ? updateTeamDto.work.map((work) => ({
                 summary: work.summary,
@@ -128,12 +244,12 @@ export class TeamsService {
               }))
             : [],
         },
-        DomainsOnTeams: {
+        domainsOnTeams: {
           create: updateTeamDto.domainIds
             ? updateTeamDto.domainIds.map((domainId) => ({ domainId }))
             : [],
         },
-        TeamHistory: {
+        teamHistory: {
           create: {
             cognitiveLoad: updateTeamDto.cognitiveLoad,
             fte: updateTeamDto.fte,
@@ -141,7 +257,7 @@ export class TeamsService {
             changeNote: updateTeamDto.changeNote,
           },
         },
-        DomainsOnTeamsHistory: {
+        domainsOnTeamsHistory: {
           create: updateTeamDto.domainIds
             ? updateTeamDto.domainIds.map((domainId) => ({
                 domainId,

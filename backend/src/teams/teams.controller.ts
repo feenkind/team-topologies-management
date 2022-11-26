@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Query, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { changeType, CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
@@ -10,6 +10,7 @@ import {
 } from '@prisma/client';
 import { DependenciesService } from './dependencies.service';
 import { InteractionsService } from './interactions.service';
+import { TeamDto } from './dto/team.dto';
 
 @Controller('teams')
 export class TeamsController {
@@ -30,7 +31,7 @@ export class TeamsController {
       type: createTeamDto.type,
       platform: createTeamDto.platform || null,
       wikiSearchTerms: createTeamDto.wikiSearchTearms || [],
-      CommunicationChannel: {
+      communicationChannel: {
         create: createTeamDto.communicationChannels
           ? createTeamDto.communicationChannels.map((channel) => ({
               type: channel.type,
@@ -38,7 +39,7 @@ export class TeamsController {
             }))
           : [],
       },
-      Meeting: {
+      meeting: {
         create: createTeamDto.meetings
           ? createTeamDto.meetings.map((meeting) => ({
               day: meeting.day,
@@ -48,7 +49,7 @@ export class TeamsController {
             }))
           : [],
       },
-      Service: {
+      service: {
         create: createTeamDto.services
           ? createTeamDto.services.map((service) => ({
               versioning: service.versioning,
@@ -58,7 +59,7 @@ export class TeamsController {
             }))
           : [],
       },
-      WayOfWorking: {
+      wayOfWorking: {
         create: createTeamDto.waysOfWorking
           ? createTeamDto.waysOfWorking.map((wayOfWorking) => ({
               name: wayOfWorking.name,
@@ -66,7 +67,7 @@ export class TeamsController {
             }))
           : [],
       },
-      Work: {
+      work: {
         create: createTeamDto.work
           ? createTeamDto.work.map((work) => ({
               summary: work.summary,
@@ -74,12 +75,12 @@ export class TeamsController {
             }))
           : [],
       },
-      DomainsOnTeams: {
+      domainsOnTeams: {
         create: createTeamDto.domainIds
           ? createTeamDto.domainIds.map((domainId) => ({ domainId }))
           : [],
       },
-      TeamHistory: {
+      teamHistory: {
         create: {
           cognitiveLoad: createTeamDto.cognitiveLoad,
           fte: createTeamDto.fte,
@@ -87,7 +88,7 @@ export class TeamsController {
           changeNote: 'Initial creation.',
         },
       },
-      DomainsOnTeamsHistory: {
+      domainsOnTeamsHistory: {
         create: createTeamDto.domainIds
           ? createTeamDto.domainIds.map((domainId) => ({
               domainId,
@@ -146,8 +147,8 @@ export class TeamsController {
   }
 
   @Get()
-  findAll(@Query() query: { includeHistory: boolean }): Promise<Team[]> {
-    return this.teamsService.findAll(query.includeHistory);
+  findAll(): Promise<TeamDto[]> {
+    return this.teamsService.findAll();
   }
 
   @Get('dependencies')
@@ -171,7 +172,7 @@ export class TeamsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Team> {
+  findOne(@Param('id') id: string): Promise<TeamDto> {
     return this.teamsService.findOneWithAllData(id);
   }
 

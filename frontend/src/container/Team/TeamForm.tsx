@@ -16,11 +16,8 @@ import TeamFormDependencies from './TeamFormDependencies';
 import { getInvalidFieldNames } from './validateTeamFormSubmit';
 import axiosInstance from '../../axios';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
-import {
-  IDomainOnTeams,
-  ITeamImportWithAllData,
-} from '../../store/slices/team/interfacesTeamImport';
 import { teamHints } from '../../constants/hints';
+import { ITeamImport } from '../../types/teamTypes';
 
 export interface ITeamFormInput {
   changeNote: string;
@@ -82,7 +79,7 @@ const TeamForm: React.FC = () => {
 
   const otherTeams = teams.filter((team) => team.id !== teamId);
 
-  const [teamData, setTeamData] = useState<ITeamImportWithAllData>();
+  const [teamData, setTeamData] = useState<ITeamImport>();
 
   const {
     register,
@@ -99,7 +96,7 @@ const TeamForm: React.FC = () => {
       axiosInstance
         .get(`/teams/${teamId}`)
         .then((response) => {
-          const data: ITeamImportWithAllData = response.data;
+          const data: ITeamImport = response.data;
           setTeamData(data);
         })
         .catch(() => {
@@ -130,69 +127,66 @@ const TeamForm: React.FC = () => {
 
   useEffect(() => {
     if (teamData) {
-      reset({
-        name: teamData.name,
-        teamType: teamData.type,
-        focus: teamData.focus,
-        domains: teamData.DomainsOnTeams
-          ? teamData.DomainsOnTeams.map(
-              (domain: IDomainOnTeams) => domain.domainId,
-            )
-          : [],
-        fte: teamData.fte.toString(),
-        cognitiveLoad: teamData.cognitiveLoad.toString(),
-        platform: teamData.platform || '',
-        wikiSearchTerms: teamData.wikiSearchTerms.join(', '),
-        meetings: teamData.Meeting.map((meeting) => ({
-          purpose: meeting.purpose,
-          dayOfWeek: meeting.day,
-          duration: meeting.durationMinutes.toString(),
-          time: meeting.time,
-        })),
-        channels: teamData.CommunicationChannel.map((channel) => ({
-          channelName: channel.name,
-          channelType: channel.type,
-        })),
-        services: teamData.Service.map((service) => ({
-          serviceName: service.name,
-          serviceUrl: service.url || '',
-          repository: service.repository || '',
-          versioningType: service.versioning,
-        })),
-        workInProgress: teamData.Work.map((work) => ({
-          summary: work.summary,
-          repository: work.repository || '',
-        })),
-        wayOfWorking: teamData.WayOfWorking.map((way) => ({
-          wayOfWorkingName: way.name,
-          additionalInformation: way.url || '',
-        })),
-        // interactions are not directed, so it does not matter if this team
-        // is one or two - display both relationships, but make sure, to
-        // have the correct team as relationship target
-        interactions: [
-          ...teamData.interactionTeamOne.map((interaction) => ({
+      const interactionsAsTeamOne = teamData.interactionsAsTeamOne
+        ? teamData.interactionsAsTeamOne.map((interaction) => ({
             otherTeamId: interaction.teamIdOne,
             interactionMode: interaction.interactionMode,
             startDate: interaction.startDate,
             interactionPurpose: interaction.purpose,
             expectedDuration: interaction.expectedDuration.toString(),
             additionalInformation: interaction.additionalInformation || '',
-          })),
-          ...teamData.interactionTeamTwo.map((interaction) => ({
+          }))
+        : [];
+      const interactionsAsTeamTwo = teamData.interactionsAsTeamTwo
+        ? teamData.interactionsAsTeamTwo.map((interaction) => ({
             otherTeamId: interaction.teamIdTwo,
             interactionMode: interaction.interactionMode,
             startDate: interaction.startDate,
             interactionPurpose: interaction.purpose,
             expectedDuration: interaction.expectedDuration.toString(),
             additionalInformation: interaction.additionalInformation || '',
-          })),
-        ],
-        dependencies: teamData.dependency.map((dependeny) => ({
-          otherTeamId: dependeny.teamIdTo,
-          dependencyType: dependeny.dependencyType,
-          dependencyDescription: dependeny.description,
+          }))
+        : [];
+
+      reset({
+        name: teamData.name,
+        teamType: teamData.type,
+        focus: teamData.focus,
+        domains: teamData.domains,
+        fte: teamData.fte.toString(),
+        cognitiveLoad: teamData.cognitiveLoad.toString(),
+        platform: teamData.platform || '',
+        wikiSearchTerms: teamData.wikiSearchTerms.join(', '),
+        meetings: teamData.meetings,
+        channels: teamData.communicationChannels.map((channel) => ({
+          channelName: channel.name,
+          channelType: channel.type,
         })),
+        services: teamData.services.map((service) => ({
+          serviceName: service.name,
+          serviceUrl: service.url || '',
+          repository: service.repository || '',
+          versioningType: service.versioning,
+        })),
+        workInProgress: teamData.works.map((work) => ({
+          summary: work.summary,
+          repository: work.repository || '',
+        })),
+        wayOfWorking: teamData.waysOfWorking.map((way) => ({
+          wayOfWorkingName: way.name,
+          additionalInformation: way.url || '',
+        })),
+        // interactions are not directed, so it does not matter if this team
+        // is one or two - display both relationships, but make sure, to
+        // have the correct team as relationship target
+        interactions: [...interactionsAsTeamOne, ...interactionsAsTeamTwo],
+        dependencies: teamData.dependencies
+          ? teamData.dependencies.map((dependeny) => ({
+              otherTeamId: dependeny.teamIdTo,
+              dependencyType: dependeny.dependencyType,
+              dependencyDescription: dependeny.description,
+            }))
+          : [],
       });
     }
   }, [teamData, reset]);

@@ -728,16 +728,16 @@ const createTeams = async (prisma: PrismaClient) => {
         type: team.teamType,
         platform: team.platform,
         wikiSearchTerms: team.wikiSearchTerms,
-        DomainsOnTeams: {
+        domainsOnTeams: {
           create: domainsForTeam.map((domain) => ({ domainId: domain.id })),
         },
-        CommunicationChannel: {
+        communicationChannel: {
           create: team.channels.map((channel) => ({
             type: channel.type,
             name: channel.name,
           })),
         },
-        Meeting: {
+        meeting: {
           create: team.meetings.map((meeting) => ({
             day: meeting.day,
             purpose: meeting.purpose,
@@ -745,7 +745,7 @@ const createTeams = async (prisma: PrismaClient) => {
             durationMinutes: meeting.durationMinutes,
           })),
         },
-        Service: {
+        service: {
           create: team.services.map((service) => ({
             versioning: service.versioningType,
             url: service.url,
@@ -753,13 +753,13 @@ const createTeams = async (prisma: PrismaClient) => {
             repository: service.repository,
           })),
         },
-        WayOfWorking: {
+        wayOfWorking: {
           create: team.waysOfWorking.map((way) => ({
             name: way.name,
             url: way.url,
           })),
         },
-        Work: {
+        work: {
           create: team.workInProgress.map((work) => ({
             summary: work.summary,
             repository: work.repository,

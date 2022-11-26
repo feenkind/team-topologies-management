@@ -6,8 +6,6 @@ import {
   IWorkInProgress,
 } from './teamSlice';
 import { teamType } from '../../../constants/categories';
-import { IInteractionImport } from './interfacesInteractionImport';
-import { IDepdencyImport } from './interfacesDependencyImport';
 
 interface ITeamImportHistoryBase {
   id: string;
@@ -53,18 +51,6 @@ export interface ITeamImport {
   type: teamType;
   platform?: string;
   wikiSearchTerms: string[];
-}
-
-export interface ITeamImportWithAllData extends ITeamImport {
-  CommunicationChannel: ITeamImportChannel[];
-  Meeting: ITeamImportMeeting[];
-  Service: ITeamImportService[];
-  WayOfWorking: ITeamImportWayOfWorking[];
-  Work: ITeamImportWork[];
-  DomainsOnTeams: IDomainOnTeams[];
-  interactionTeamOne: IInteractionImport[];
-  interactionTeamTwo: IInteractionImport[];
-  dependency: IDepdencyImport[];
 }
 
 export interface ITeamImportWithHistory extends ITeamImport {

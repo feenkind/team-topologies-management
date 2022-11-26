@@ -50,7 +50,7 @@ model Team {
   id                        String                  @id @default(cuid())
   project                   Project                 @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId                 String                  @db.Text
-  TeamHistory               TeamHistory[]
+  teamHistory               TeamHistory[]
   name                      String
   cognitiveLoad             Int                     @db.SmallInt
   fte                       Int                     @db.SmallInt
@@ -58,13 +58,13 @@ model Team {
   type                      TeamType
   platform                  String?
   wikiSearchTerms           String[]
-  CommunicationChannel      CommunicationChannel[]
-  Meeting                   Meeting[]
-  Service                   Service[]
-  WayOfWorking              WayOfWorking[]
-  DomainsOnTeams            DomainsOnTeams[]
-  DomainsOnTeamsHistory     DomainsOnTeamsHistory[]
-  Work                      Work[]
+  communicationChannel      CommunicationChannel[]
+  meeting                   Meeting[]
+  service                   Service[]
+  wayOfWorking              WayOfWorking[]
+  domainsOnTeams            DomainsOnTeams[]
+  domainsOnTeamsHistory     DomainsOnTeamsHistory[]
+  work                      Work[]
   dependency                Dependency[]            @relation("teamFrom")
   dependingTeam             Dependency[]            @relation("teamTo")
   dependencyHistory         DependencyHistory[]     @relation("historyTeamFrom")

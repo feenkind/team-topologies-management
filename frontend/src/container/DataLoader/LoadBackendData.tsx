@@ -13,6 +13,7 @@ import {
   addAllInteractions,
   addAllTeamDataWithHistory,
 } from '../../store/slices/team/teamSlice';
+import { ITeamImport } from '../../types/teamTypes';
 
 const LoadBackendData: React.FC = () => {
   const isDataLoaded = useAppSelector((state) => state.global.dataLoaded);
@@ -24,11 +25,11 @@ const LoadBackendData: React.FC = () => {
       const requests = [
         axiosInstance.get('/projects'),
         axiosInstance.get('/domains?includeHistory=true'),
-        axiosInstance.get('/teams?includeHistory=true'),
-        axiosInstance.get('/teams/dependencies'),
-        axiosInstance.get('/teams/dependencies/history'),
-        axiosInstance.get('/teams/interactions'),
-        axiosInstance.get('/teams/interactions/history'),
+        axiosInstance.get('/teams'),
+        // axiosInstance.get('/teams/dependencies'),
+        // axiosInstance.get('/teams/dependencies/history'),
+        // axiosInstance.get('/teams/interactions'),
+        // axiosInstance.get('/teams/interactions/history'),
       ];
 
       axios
@@ -36,19 +37,19 @@ const LoadBackendData: React.FC = () => {
         .then((responses) => {
           const projectData = responses[0].data;
           const domainData = responses[1].data;
-          const teamData = responses[2].data;
-          const dependencies = responses[3].data;
-          const dependencyHistory = responses[4].data;
-          const interactions = responses[5].data;
-          const interactionHistory = responses[6].data;
+          const teamData: ITeamImport[] = responses[2].data;
+          // const dependencies = responses[3].data;
+          // const dependencyHistory = responses[4].data;
+          // const interactions = responses[5].data;
+          // const interactionHistory = responses[6].data;
 
           dispatch(addAllProjects(projectData));
           dispatch(addAllDomainsWithHistory(domainData));
           dispatch(addAllTeamDataWithHistory(teamData));
-          dispatch(addAllDependencies(dependencies));
-          dispatch(addAllDependencyHistory(dependencyHistory));
-          dispatch(addAllInteractions(interactions));
-          dispatch(addAllInteractionHistory(interactionHistory));
+          // dispatch(addAllDependencies(dependencies));
+          // dispatch(addAllDependencyHistory(dependencyHistory));
+          // dispatch(addAllInteractions(interactions));
+          // dispatch(addAllInteractionHistory(interactionHistory));
 
           dispatch(setDataLoaded(true));
           dispatch(setNetworkError(false));
