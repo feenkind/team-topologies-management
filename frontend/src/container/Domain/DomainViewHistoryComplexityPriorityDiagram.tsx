@@ -139,10 +139,10 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
           labels: { fontSize: 6, color: theme.palette.primary.main },
         }}
         labels={({ index }) =>
-          // do not show last value, since it is not a real change
+          // for last value the change notes are the same as the previous one
           index < sortedComplexityHistoryValues.length - 1
             ? createComplexityTooltip(index)
-            : ''
+            : createComplexityTooltip(index - 1)
         }
         labelComponent={
           <VictoryTooltip
@@ -166,10 +166,10 @@ const DomainViewHistoryComplexityPriorityDiagram: React.FC<
           labels: { fontSize: 6, color: theme.palette.warning.main },
         }}
         labels={({ index }) =>
-          // do not show last value, since it is not a real change
+          // for last value the change notes are the same as the previous one
           index < sortedPriorityHistoryValues.length - 1
             ? createPriorityTooltip(index)
-            : ''
+            : createPriorityTooltip(index - 1)
         }
         labelComponent={
           <VictoryTooltip

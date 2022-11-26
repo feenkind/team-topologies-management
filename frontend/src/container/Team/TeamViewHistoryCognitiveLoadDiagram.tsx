@@ -183,8 +183,10 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
           labels: { fontSize: 6, color: theme.palette.primary.main },
         }}
         labels={({ index }) =>
-          // do not show last value, since it is not a real change
-          index < sortedFteValues.length - 1 ? createFteTooltip(index) : ''
+          // for last value the change notes are the same as the previous one
+          index < sortedFteValues.length - 1
+            ? createFteTooltip(index)
+            : createFteTooltip(index - 1)
         }
         labelComponent={
           <VictoryTooltip
@@ -209,10 +211,10 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
           labels: { fontSize: 6, color: theme.palette.warning.main },
         }}
         labels={({ index }) =>
-          // do not show last value, since it is not a real change
+          // for last value the change notes are the same as the previous one
           index < sortedCognitiveLoadValues.length - 1
             ? createCognitiveLoadTooltip(index)
-            : ''
+            : createCognitiveLoadTooltip(index - 1)
         }
         labelComponent={
           <VictoryTooltip
@@ -238,10 +240,10 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
           labels: { fontSize: 6, color: theme.palette.success.main },
         }}
         labels={({ index }) =>
-          // do not show last value, since it is not a real change
+          // for last value the change notes are the same as the previous one
           index < dataDomainResponsibilities.length - 1
             ? createdDomainResponsibilityTooltip(index)
-            : ''
+            : createdDomainResponsibilityTooltip(index - 1)
         }
         labelComponent={
           <VictoryTooltip
