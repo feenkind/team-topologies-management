@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { PrismaService } from '../prisma.service';
 import { Prisma, Team } from '@prisma/client';
+import { DependenciesService } from './dependencies.service';
 
 @Injectable()
 export class TeamsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly dependencies: DependenciesService,
+  ) {}
 
   create(createInput: Prisma.TeamCreateInput): Promise<Team> {
-    console.log(createInput);
     return this.prisma.team.create({ data: createInput });
   }
 
@@ -68,7 +71,7 @@ export class TeamsService {
     });
 
     // create new, but also update history tables
-    return this.prisma.team.update({
+    await this.prisma.team.update({
       where: { id: id },
       data: {
         name: updateTeamDto.name,
@@ -145,6 +148,19 @@ export class TeamsService {
         },
       },
     });
+
+    await this.dependencies.updateDependenciesForTeamFromId(
+      id,
+      updateTeamDto.changeNote,
+      updateTeamDto.dependencies.map((dependency) => ({
+        ...dependency,
+        teamIdFrom: id,
+        changeNote: updateTeamDto.changeNote,
+      })),
+    );
+
+    // return all updated values
+    return this.findOne(id);
   }
 
   remove(id: number) {

@@ -4,7 +4,7 @@ import { Domain, Prisma } from '@prisma/client';
 
 @Injectable()
 export class DomainsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   create(createInput: Prisma.DomainCreateInput): Promise<Domain> {
     return this.prisma.domain.create({ data: createInput });

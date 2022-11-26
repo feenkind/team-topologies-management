@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  Query,
-  Put,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Put } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { changeType, CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
@@ -187,10 +178,5 @@ export class TeamsController {
   @Put(':id')
   update(@Param('id') id: string, @Body() updateTeamDto: UpdateTeamDto) {
     return this.teamsService.update(id, updateTeamDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.teamsService.remove(+id);
   }
 }
