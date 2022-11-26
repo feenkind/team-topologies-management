@@ -20,6 +20,7 @@ import {
   IDomainOnTeams,
   ITeamImportWithAllData,
 } from '../../store/slices/team/interfacesTeamImport';
+import { teamHints } from '../../constants/hints';
 
 export interface ITeamFormInput {
   changeNote: string;
@@ -328,7 +329,7 @@ const TeamForm: React.FC = () => {
             : `Add a new new team to project ${currentProject.name}`
         }
       />
-      <ContentWithHints isForm>
+      <ContentWithHints isForm hints={[teamHints.cognitiveLoadAssessment]}>
         <Tabs
           tabContent={[
             {

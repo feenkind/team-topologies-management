@@ -30,6 +30,17 @@ export const teamHints: IHintMapping = {
     linkUrl: '',
     linkLabel: 'Lern more about team topologies',
   },
+  cognitiveLoadAssessment: {
+    summary: 'How to calculate the Cognitive Load?',
+    description:
+      'The cognitive load assessment can help teams understand' +
+      ' their cognitive load. In this application, 5 is a very low' +
+      ' and 25 is a very high cognitive load. For more' +
+      ' information on calculating the load, the book Team Topologies by' +
+      ' Matthew Skelton and Manuel Pais is recommended.',
+    linkUrl: 'https://github.com/TeamTopologies/Team-Cognitive-Load-Assessment',
+    linkLabel: 'Cognitive Load Assessment Template',
+  },
 };
 
 export const domainHints: IHintMapping = {
