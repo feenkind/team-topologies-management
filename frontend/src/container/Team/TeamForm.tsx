@@ -4,7 +4,6 @@ import ContentWithHints from '../../components/Layout/ContentWithHints';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { IProject } from '../../store/slices/projectSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import Tabs from '../../components/Layout/Tabs';
 import TeamFormInformation from './TeamFormInformation';
@@ -17,6 +16,10 @@ import TeamFormDependencies from './TeamFormDependencies';
 import { getInvalidFieldNames } from './validateTeamFormSubmit';
 import axiosInstance from '../../axios';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
+import {
+  IDomainOnTeams,
+  ITeamImportWithAllData,
+} from '../../store/slices/team/interfacesTeamImport';
 
 export interface ITeamFormInput {
   changeNote: string;
@@ -73,7 +76,7 @@ const TeamForm: React.FC = () => {
     teamId: string;
   }>();
 
-  const [teamData, setTeamData] = useState<IProject>();
+  const [teamData, setTeamData] = useState<ITeamImportWithAllData>();
 
   const {
     register,
@@ -81,12 +84,94 @@ const TeamForm: React.FC = () => {
     handleSubmit,
     setValue,
     setError,
+    reset,
     formState: { errors },
   } = useForm<ITeamFormInput>();
 
   useEffect(() => {
-    // setValue(`channels.0.channelType`, channelType.SLACK);
-  }, [setValue]);
+    // make sure to always work with the newest data when editing
+    if (teamId) {
+      axiosInstance
+        .get(`/teams/${teamId}`)
+        .then((response) => {
+          const data: ITeamImportWithAllData = response.data;
+          setTeamData(data);
+          reset({
+            name: data.name,
+            teamType: data.type,
+            focus: data.focus,
+            domains: data.DomainsOnTeams
+              ? data.DomainsOnTeams.map(
+                  (domain: IDomainOnTeams) => domain.domainId,
+                )
+              : [],
+            fte: data.fte.toString(),
+            cognitiveLoad: data.cognitiveLoad.toString(),
+            platform: data.platform || '',
+            wikiSearchTerms: data.wikiSearchTerms.join(', '),
+            meetings: data.Meeting.map((meeting) => ({
+              purpose: meeting.purpose,
+              dayOfWeek: meeting.day,
+              duration: meeting.durationMinutes.toString(),
+              time: meeting.time,
+            })),
+            channels: data.CommunicationChannel.map((channel) => ({
+              channelName: channel.name,
+              channelType: channel.type,
+            })),
+            services: data.Service.map((service) => ({
+              serviceName: service.name,
+              serviceUrl: service.url || '',
+              repository: service.repository || '',
+              versioningType: service.versioning,
+            })),
+            workInProgress: data.Work.map((work) => ({
+              summary: work.summary,
+              repository: work.repository || '',
+            })),
+            wayOfWorking: data.WayOfWorking.map((way) => ({
+              wayOfWorkingName: way.name,
+              additionalInformation: way.url || '',
+            })),
+            interactions: data.interactionTeamTwo.map((interaction) => ({
+              otherTeamId: interaction.teamIdTwo,
+              interactionMode: interaction.interactionMode,
+              startDate: interaction.startDate,
+              interactionPurpose: interaction.purpose,
+              expectedDuration: interaction.expectedDuration.toString(),
+              additionalInformation: interaction.additionalInformation || '',
+            })),
+            dependencies: data.dependency.map((dependeny) => ({
+              otherTeamId: dependeny.teamIdTo,
+              dependencyType: dependeny.dependencyType,
+              dependencyDescription: dependeny.description,
+            })),
+          });
+        })
+        .catch(() => {
+          dispatch(setNetworkError(true));
+        });
+    } else {
+      reset({
+        name: '',
+        teamType: '',
+        focus: '',
+        domains: [],
+        fte: '',
+        cognitiveLoad: '',
+        platform: '',
+        wikiSearchTerms: '',
+        meetings: [],
+        channels: [],
+        services: [],
+        workInProgress: [],
+        wayOfWorking: [],
+        interactions: [],
+        dependencies: [],
+      });
+      setTeamData(undefined);
+    }
+  }, [teamId, setValue, setTeamData, teamData, dispatch, reset]);
 
   const onSubmit: SubmitHandler<ITeamFormInput> = async (data) => {
     // custom validation needed, for some reason react hook form does not
@@ -197,7 +282,13 @@ const TeamForm: React.FC = () => {
 
   return (
     <>
-      <PageHeadline text={`Add a new team to project ${currentProject.name}`} />
+      <PageHeadline
+        text={
+          teamData
+            ? `Edit team ${teamData.name}`
+            : `Add a new new team to project ${currentProject.name}`
+        }
+      />
       <ContentWithHints isForm>
         <Tabs
           tabContent={[

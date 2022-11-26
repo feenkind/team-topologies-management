@@ -48,7 +48,7 @@ const DomainForm: React.FC = () => {
 
   useEffect(() => {
     // make sure to always work with the newest data when editing
-    if (domainId) {
+    if (domainId && !domainData) {
       axiosInstance
         .get(`/domains/${domainId}`)
         .then((response) => {
@@ -65,7 +65,7 @@ const DomainForm: React.FC = () => {
       setDomainData(undefined);
       reset({ name: '', description: '', complexity: '', priority: '' });
     }
-  }, [domainId, setDomainData, setValue, dispatch, reset]);
+  }, [domainId, domainData, setDomainData, setValue, dispatch, reset]);
 
   const onSubmit: SubmitHandler<IDomainFormInput> = (data) => {
     const domain = {

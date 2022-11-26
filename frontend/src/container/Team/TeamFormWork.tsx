@@ -246,7 +246,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
                 control={control}
                 register={register}
                 name={`wayOfWorking.${index}.additionalInformation`}
-                label="Additional information"
+                label="Additional information (URL)"
                 placeholder="URL to more information"
               />
             </Grid>

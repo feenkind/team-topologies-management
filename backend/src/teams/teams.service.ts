@@ -31,7 +31,19 @@ export class TeamsService {
   }
 
   findOne(id: string): Promise<Team> {
-    return this.prisma.team.findUnique({ where: { id } });
+    return this.prisma.team.findUnique({
+      where: { id },
+      include: {
+        CommunicationChannel: true,
+        Meeting: true,
+        Service: true,
+        WayOfWorking: true,
+        Work: true,
+        DomainsOnTeams: true,
+        dependency: true,
+        interactionTeamTwo: true,
+      },
+    });
   }
 
   update(id: number, updateTeamDto: UpdateTeamDto) {
