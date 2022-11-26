@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { TeamsService } from './teams.service';
-import { CreateTeamDto } from './dto/create-team.dto';
+import { changeType, CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import {
   Dependency,
@@ -38,43 +38,55 @@ export class TeamsController {
       focus: createTeamDto.focus,
       type: createTeamDto.type,
       platform: createTeamDto.platform || null,
-      wikiSearchTerms: createTeamDto.wikiSearchTearms,
+      wikiSearchTerms: createTeamDto.wikiSearchTearms || [],
       CommunicationChannel: {
-        create: createTeamDto.communicationChannels.map((channel) => ({
-          type: channel.type,
-          name: channel.name,
-        })),
+        create: createTeamDto.communicationChannels
+          ? createTeamDto.communicationChannels.map((channel) => ({
+              type: channel.type,
+              name: channel.name,
+            }))
+          : [],
       },
       Meeting: {
-        create: createTeamDto.meetings.map((meeting) => ({
-          day: meeting.day,
-          purpose: meeting.purpose,
-          time: meeting.time,
-          durationMinutes: meeting.durationMinutes,
-        })),
+        create: createTeamDto.meetings
+          ? createTeamDto.meetings.map((meeting) => ({
+              day: meeting.day,
+              purpose: meeting.purpose,
+              time: meeting.time,
+              durationMinutes: meeting.durationMinutes,
+            }))
+          : [],
       },
       Service: {
-        create: createTeamDto.services.map((service) => ({
-          versioning: service.versioning,
-          name: service.name,
-          url: service.url || null,
-          repository: service.repository || null,
-        })),
+        create: createTeamDto.services
+          ? createTeamDto.services.map((service) => ({
+              versioning: service.versioning,
+              name: service.name,
+              url: service.url || null,
+              repository: service.repository || null,
+            }))
+          : [],
       },
       WayOfWorking: {
-        create: createTeamDto.waysOfWorking.map((wayOfWorking) => ({
-          name: wayOfWorking.name,
-          url: wayOfWorking.url || null,
-        })),
+        create: createTeamDto.waysOfWorking
+          ? createTeamDto.waysOfWorking.map((wayOfWorking) => ({
+              name: wayOfWorking.name,
+              url: wayOfWorking.url || null,
+            }))
+          : [],
       },
       Work: {
-        create: createTeamDto.work.map((work) => ({
-          summary: work.summary,
-          repository: work.repository || null,
-        })),
+        create: createTeamDto.work
+          ? createTeamDto.work.map((work) => ({
+              summary: work.summary,
+              repository: work.repository || null,
+            }))
+          : [],
       },
       DomainsOnTeams: {
-        create: createTeamDto.domainIds.map((domainId) => ({ domainId })),
+        create: createTeamDto.domainIds
+          ? createTeamDto.domainIds.map((domainId) => ({ domainId }))
+          : [],
       },
       TeamHistory: {
         create: {
@@ -85,10 +97,33 @@ export class TeamsController {
         },
       },
       DomainsOnTeamsHistory: {
-        create: createTeamDto.domainIds.map((domainId) => ({
-          domainId,
-          changeNote: 'Initial creation.',
-        })),
+        create: createTeamDto.domainIds
+          ? createTeamDto.domainIds.map((domainId) => ({
+              domainId,
+              changeNote: 'Initial creation.',
+            }))
+          : [],
+      },
+      dependency: {
+        create: createTeamDto.dependencies
+          ? createTeamDto.dependencies.map((dependeny) => ({
+              dependencyType: dependeny.dependencyType,
+              teamIdTo: dependeny.teamIdTo,
+              description: dependeny.description || null,
+            }))
+          : [],
+      },
+
+      dependencyHistory: {
+        create: createTeamDto.dependencies
+          ? createTeamDto.dependencies.map((dependeny) => ({
+              dependencyType: dependeny.dependencyType,
+              teamIdTo: dependeny.teamIdTo,
+              description: dependeny.description || null,
+              changeNote: 'Initial creation.',
+              changeType: changeType.ADDED,
+            }))
+          : [],
       },
     });
   }

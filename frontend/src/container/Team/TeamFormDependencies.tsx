@@ -110,23 +110,6 @@ const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
               multiline
             />
           </Grid>
-
-          <Grid item xs={12} md={6}>
-            <ControlledTextInput
-              error={
-                errors.dependencies
-                  ? errors.dependencies[index]?.additionalInformation
-                  : undefined
-              }
-              required={true}
-              control={control}
-              register={register}
-              name={`dependencies.${index}.additionalInformation`}
-              label="Additional information"
-              placeholder="Additional notes to this dependency"
-              multiline
-            />
-          </Grid>
         </FieldSet>
       ))}
 
@@ -137,7 +120,6 @@ const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
               otherTeamId: '',
               dependencyType: '',
               dependencyDescription: '',
-              additionalInformation: '',
             })
           }
           label={`Add ${

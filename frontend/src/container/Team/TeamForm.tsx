@@ -58,7 +58,6 @@ export interface ITeamFormInput {
     otherTeamId: string;
     dependencyType: string;
     dependencyDescription: string;
-    additionalInformation: string;
   }[];
 }
 
@@ -144,6 +143,13 @@ const TeamForm: React.FC = () => {
         ? data.workInProgress.map((work) => ({
             summary: work.summary,
             repository: work.repository || null,
+          }))
+        : [],
+      dependencies: data.dependencies
+        ? data.dependencies.map((dependency) => ({
+            teamIdTo: dependency.otherTeamId,
+            dependencyType: dependency.dependencyType,
+            description: dependency.dependencyDescription || null,
           }))
         : [],
     };

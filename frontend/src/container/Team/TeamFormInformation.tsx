@@ -238,7 +238,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
                 control={control}
                 register={register}
                 name={`meetings.${index}.duration`}
-                label="Duration"
+                label="Duration (in minutes)"
                 placeholder="The duration of this meeting"
                 isNumberField={true}
               />

@@ -74,5 +74,21 @@ export const getInvalidFieldNames = (data: ITeamFormInput): string[] => {
     });
   }
 
+  if (data.dependencies && data.dependencies.length > 0) {
+    data.dependencies.forEach((dependency, index) => {
+      if (dependency.otherTeamId.length === 0) {
+        invalidFieldNames.push(`dependencies.${index}.otherTeamId`);
+      }
+
+      if (dependency.dependencyType.length === 0) {
+        invalidFieldNames.push(`dependencies.${index}.dependencyType`);
+      }
+
+      if (dependency.dependencyDescription.length === 0) {
+        invalidFieldNames.push(`dependencies.${index}.dependencyDescription`);
+      }
+    });
+  }
+
   return invalidFieldNames;
 };
