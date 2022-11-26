@@ -18,6 +18,9 @@ export const getInvalidFieldNames = (data: ITeamFormInput): string[] => {
   if (isNaN(parseInt(data.cognitiveLoad))) {
     invalidFieldNames.push('cognitiveLoad');
   }
+  if (data.domains.length === 0) {
+    invalidFieldNames.push('domains');
+  }
 
   if (data.channels && data.channels.length > 0) {
     data.channels.forEach((channel, index) => {

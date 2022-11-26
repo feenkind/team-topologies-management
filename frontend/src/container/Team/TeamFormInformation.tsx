@@ -114,6 +114,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             register={register}
             name="domains"
             label="Domains"
+            required
             options={projectDomains.map((domain) => ({
               label: domain.name,
               value: domain.id,
