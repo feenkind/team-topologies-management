@@ -42,6 +42,10 @@ const TeamListForProject: React.FC = () => {
     );
   }
 
+  const sortedTeamsByName = teams
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   const tableHeaderItems = [
     'Name',
     'Type',
@@ -49,7 +53,7 @@ const TeamListForProject: React.FC = () => {
     'FTE',
     'Cognitive Load',
   ];
-  const tableContentItems = teams.map((team) => [
+  const tableContentItems = sortedTeamsByName.map((team) => [
     <TableLinkText
       key={team.id}
       label={team.name}
@@ -72,7 +76,7 @@ const TeamListForProject: React.FC = () => {
     team.cognitiveLoad,
   ]);
 
-  const actions = teams.map((team) => ({
+  const actions = sortedTeamsByName.map((team) => ({
     basePath: `/project/${currentProject.id}/team/${team.id}`,
     view: true,
     edit: true,
