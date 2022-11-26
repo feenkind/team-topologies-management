@@ -90,68 +90,18 @@ const TeamForm: React.FC = () => {
 
   useEffect(() => {
     // make sure to always work with the newest data when editing
-    if (teamId) {
+    if (teamId && !teamData) {
       axiosInstance
         .get(`/teams/${teamId}`)
         .then((response) => {
           const data: ITeamImportWithAllData = response.data;
           setTeamData(data);
-          reset({
-            name: data.name,
-            teamType: data.type,
-            focus: data.focus,
-            domains: data.DomainsOnTeams
-              ? data.DomainsOnTeams.map(
-                  (domain: IDomainOnTeams) => domain.domainId,
-                )
-              : [],
-            fte: data.fte.toString(),
-            cognitiveLoad: data.cognitiveLoad.toString(),
-            platform: data.platform || '',
-            wikiSearchTerms: data.wikiSearchTerms.join(', '),
-            meetings: data.Meeting.map((meeting) => ({
-              purpose: meeting.purpose,
-              dayOfWeek: meeting.day,
-              duration: meeting.durationMinutes.toString(),
-              time: meeting.time,
-            })),
-            channels: data.CommunicationChannel.map((channel) => ({
-              channelName: channel.name,
-              channelType: channel.type,
-            })),
-            services: data.Service.map((service) => ({
-              serviceName: service.name,
-              serviceUrl: service.url || '',
-              repository: service.repository || '',
-              versioningType: service.versioning,
-            })),
-            workInProgress: data.Work.map((work) => ({
-              summary: work.summary,
-              repository: work.repository || '',
-            })),
-            wayOfWorking: data.WayOfWorking.map((way) => ({
-              wayOfWorkingName: way.name,
-              additionalInformation: way.url || '',
-            })),
-            interactions: data.interactionTeamTwo.map((interaction) => ({
-              otherTeamId: interaction.teamIdTwo,
-              interactionMode: interaction.interactionMode,
-              startDate: interaction.startDate,
-              interactionPurpose: interaction.purpose,
-              expectedDuration: interaction.expectedDuration.toString(),
-              additionalInformation: interaction.additionalInformation || '',
-            })),
-            dependencies: data.dependency.map((dependeny) => ({
-              otherTeamId: dependeny.teamIdTo,
-              dependencyType: dependeny.dependencyType,
-              dependencyDescription: dependeny.description,
-            })),
-          });
         })
         .catch(() => {
           dispatch(setNetworkError(true));
         });
-    } else {
+    }
+    if (!teamId) {
       reset({
         name: '',
         teamType: '',
@@ -172,6 +122,62 @@ const TeamForm: React.FC = () => {
       setTeamData(undefined);
     }
   }, [teamId, setValue, setTeamData, teamData, dispatch, reset]);
+
+  useEffect(() => {
+    if (teamData) {
+      reset({
+        name: teamData.name,
+        teamType: teamData.type,
+        focus: teamData.focus,
+        domains: teamData.DomainsOnTeams
+          ? teamData.DomainsOnTeams.map(
+              (domain: IDomainOnTeams) => domain.domainId,
+            )
+          : [],
+        fte: teamData.fte.toString(),
+        cognitiveLoad: teamData.cognitiveLoad.toString(),
+        platform: teamData.platform || '',
+        wikiSearchTerms: teamData.wikiSearchTerms.join(', '),
+        meetings: teamData.Meeting.map((meeting) => ({
+          purpose: meeting.purpose,
+          dayOfWeek: meeting.day,
+          duration: meeting.durationMinutes.toString(),
+          time: meeting.time,
+        })),
+        channels: teamData.CommunicationChannel.map((channel) => ({
+          channelName: channel.name,
+          channelType: channel.type,
+        })),
+        services: teamData.Service.map((service) => ({
+          serviceName: service.name,
+          serviceUrl: service.url || '',
+          repository: service.repository || '',
+          versioningType: service.versioning,
+        })),
+        workInProgress: teamData.Work.map((work) => ({
+          summary: work.summary,
+          repository: work.repository || '',
+        })),
+        wayOfWorking: teamData.WayOfWorking.map((way) => ({
+          wayOfWorkingName: way.name,
+          additionalInformation: way.url || '',
+        })),
+        interactions: teamData.interactionTeamTwo.map((interaction) => ({
+          otherTeamId: interaction.teamIdTwo,
+          interactionMode: interaction.interactionMode,
+          startDate: interaction.startDate,
+          interactionPurpose: interaction.purpose,
+          expectedDuration: interaction.expectedDuration.toString(),
+          additionalInformation: interaction.additionalInformation || '',
+        })),
+        dependencies: teamData.dependency.map((dependeny) => ({
+          otherTeamId: dependeny.teamIdTo,
+          dependencyType: dependeny.dependencyType,
+          dependencyDescription: dependeny.description,
+        })),
+      });
+    }
+  }, [setValue, setTeamData, teamData, dispatch, reset]);
 
   const onSubmit: SubmitHandler<ITeamFormInput> = async (data) => {
     // custom validation needed, for some reason react hook form does not
@@ -248,6 +254,22 @@ const TeamForm: React.FC = () => {
           }))
         : [],
     };
+
+    //update
+    if (teamData) {
+      axiosInstance
+        .put(`/teams/${teamData.id}`, {
+          ...team,
+          changeNote: data.changeNote,
+        })
+        .then(() => {
+          // trigger new data loading from backend to refresh all data
+          dispatch(setDataLoaded(false));
+          // go to detail view after editing
+          navigate(`/project/${projectId}/team/${teamData.id}`);
+        })
+        .catch(() => dispatch(setNetworkError(true)));
+    }
 
     if (!teamData) {
       axiosInstance
