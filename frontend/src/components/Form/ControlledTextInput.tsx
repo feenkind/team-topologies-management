@@ -48,6 +48,7 @@ const ControlledTextInput: React.FC<IControlledTextInputProps> = ({
             multiline={multiline || false}
             rows={multiline ? 4 : 1}
             type={isNumberField ? 'number' : 'text'}
+            {...(isNumberField && { inputProps: { ...{ min: 0 } } })}
             label={label}
             placeholder={placeholder}
             error={!!error}

@@ -2,12 +2,12 @@ import { Domain, Team, PrismaClient } from '@prisma/client';
 import {
   changeType,
   channelTypes,
-  interactionMode,
   meetingsDay,
   teamType,
   versioningType,
 } from '../../src/teams/dto/create-team.dto';
 import { dependencyType } from '../../src/teams/dto/create-dependency.dto';
+import { interactionMode } from '../../src/teams/dto/create-interaction.dto';
 
 const infrastructureTeam = {
   id: '',

@@ -149,7 +149,17 @@ const TeamForm: React.FC = () => {
         ? data.dependencies.map((dependency) => ({
             teamIdTo: dependency.otherTeamId,
             dependencyType: dependency.dependencyType,
-            description: dependency.dependencyDescription || null,
+            description: dependency.dependencyDescription,
+          }))
+        : [],
+      interactions: data.interactions
+        ? data.interactions.map((interaction) => ({
+            teamTwo: interaction.otherTeamId,
+            interactionMode: interaction.interactionMode,
+            purpose: interaction.interactionPurpose,
+            startDate: new Date(interaction.startDate),
+            expectedDuration: parseInt(interaction.expectedDuration),
+            additionalInformation: interaction.additionalInformation || null,
           }))
         : [],
     };

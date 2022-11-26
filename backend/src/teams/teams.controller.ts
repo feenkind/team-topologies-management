@@ -125,6 +125,32 @@ export class TeamsController {
             }))
           : [],
       },
+      interactionTeamTwo: {
+        create: createTeamDto.interactions
+          ? createTeamDto.interactions.map((interaction) => ({
+              teamIdTwo: interaction.teamTwo,
+              interactionMode: interaction.interactionMode,
+              purpose: interaction.purpose,
+              startDate: interaction.startDate,
+              expectedDuration: interaction.expectedDuration,
+              additionalInformation: interaction.additionalInformation || null,
+            }))
+          : [],
+      },
+      interactionHistoryTeamTwo: {
+        create: createTeamDto.interactions
+          ? createTeamDto.interactions.map((interaction) => ({
+              teamIdTwo: interaction.teamTwo,
+              interactionMode: interaction.interactionMode,
+              purpose: interaction.purpose,
+              startDate: interaction.startDate,
+              expectedDuration: interaction.expectedDuration,
+              additionalInformation: interaction.additionalInformation || null,
+              changeNote: 'Initial creation.',
+              changeType: changeType.ADDED,
+            }))
+          : [],
+      },
     });
   }
 

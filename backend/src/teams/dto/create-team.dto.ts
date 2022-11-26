@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 import { CreateDependencyDto } from './create-dependency.dto';
-import { OmitType } from '@nestjs/mapped-types';
+import { CreateInteractionDto } from './create-interaction.dto';
 
 export enum teamType {
   STREAM_ALIGNED = 'stream_aligned',
@@ -34,22 +34,11 @@ export enum versioningType {
   SEQUENTIAL = 'sequential',
 }
 
-export enum interactionMode {
-  COLLABORATION = 'collaboration',
-  X_AS_A_SERVICE = 'x_as_a_service',
-  FACILITATING = 'facilitating',
-  UNDEFINED = 'undefined',
-}
-
 export enum changeType {
   ADDED = 'added',
   CHANGED = 'changed',
   REMOVED = 'removed',
 }
-
-class CreateTeamDependency extends OmitType(CreateDependencyDto, [
-  'teamIdFrom',
-] as const) {}
 
 export class CreateTeamDto {
   @IsString()
@@ -117,5 +106,9 @@ export class CreateTeamDto {
 
   @IsOptional()
   @IsArray()
-  dependencies: CreateTeamDependency[];
+  dependencies: CreateDependencyDto[];
+
+  @IsOptional()
+  @IsArray()
+  interactions: CreateInteractionDto[];
 }

@@ -127,7 +127,7 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
               control={control}
               register={register}
               name={`interactions.${index}.expectedDuration`}
-              label="Expected duration"
+              label="Expected duration (in weeks)"
               placeholder="Expected interaction duration"
               isNumberField
             />
@@ -157,7 +157,6 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
                   ? errors.interactions[index]?.additionalInformation
                   : undefined
               }
-              required={true}
               control={control}
               register={register}
               name={`interactions.${index}.additionalInformation`}

@@ -8,9 +8,6 @@ export enum dependencyType {
 
 export class CreateDependencyDto {
   @IsString()
-  teamIdFrom: string;
-
-  @IsString()
   teamIdTo: string;
 
   @IsEnum(dependencyType)

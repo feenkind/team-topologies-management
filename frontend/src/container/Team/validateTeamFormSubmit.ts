@@ -90,5 +90,29 @@ export const getInvalidFieldNames = (data: ITeamFormInput): string[] => {
     });
   }
 
+  if (data.interactions && data.interactions.length > 0) {
+    data.interactions.forEach((interaction, index) => {
+      if (interaction.otherTeamId.length === 0) {
+        invalidFieldNames.push(`interactions.${index}.otherTeamId`);
+      }
+
+      if (interaction.interactionMode.length === 0) {
+        invalidFieldNames.push(`interactions.${index}.interactionMode`);
+      }
+
+      if (interaction.interactionPurpose.length === 0) {
+        invalidFieldNames.push(`interactions.${index}.interactionPurpose`);
+      }
+
+      if (interaction.startDate.length === 0) {
+        invalidFieldNames.push(`interactions.${index}.startDate`);
+      }
+
+      if (interaction.expectedDuration.length === 0) {
+        invalidFieldNames.push(`interactions.${index}.expectedDuration`);
+      }
+    });
+  }
+
   return invalidFieldNames;
 };
