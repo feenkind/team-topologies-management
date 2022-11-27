@@ -67,19 +67,26 @@ export const domainHints: IHintMapping = {
     linkLabel: 'Learn more',
   },
   domainPriority: {
-    summary: 'Domain Priority',
+    summary: 'How to calculate the domain priority?',
     description:
-      'Core, supporting or generic? -> Link to questions of core domain' +
-      ' chart?',
-    linkUrl:
-      'https://github.com/ddd-crew/core-domain-charts#suggestions-for-measuring-complexity-and-differentiation',
-    linkLabel: 'Learn more',
+      'To know about the strategic position of a domain is important. To get' +
+      ' a better understanding, using a core domain chart can help. The' +
+      ' domain priority in this application can either be generic,' +
+      ' supporting or core.',
+    linkUrl: 'https://github.com/ddd-crew/core-domain-charts',
+    linkLabel: 'Learn more about core domain charts',
   },
   domainComplexity: {
-    summary: 'What is the domain complexity?',
-    description: 'TODO',
-    linkUrl: '',
-    linkLabel: 'Learn more',
+    summary: 'How to calculate the domain complexity?',
+    description:
+      'The complexity of a domain influences the cognitive load of the team' +
+      " responsibible for it. Always consider the team's opinion on the" +
+      ' domain complexity, e.g. using the cognitive load assessment. For' +
+      ' some suggestions to assess the complexity visit the core domain' +
+      ' chart repository of the DDDCrew.',
+    linkUrl:
+      'https://github.com/ddd-crew/core-domain-charts#suggestions-for-measuring-complexity-and-differentiation',
+    linkLabel: 'See clues for complexity',
   },
   domainStorytelling: {
     summary: 'Domain Storytelling',

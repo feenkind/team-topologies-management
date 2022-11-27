@@ -123,7 +123,7 @@ const DomainForm: React.FC = () => {
       />
       <ContentWithHints
         isForm
-        hints={[domainHints.domainPriority, domainHints.domainComplexity]}
+        hints={[domainHints.domainComplexity, domainHints.domainPriority]}
       >
         <FormGroupWrapper caption="Basic Information">
           <Grid item xs={12} md={6}>
