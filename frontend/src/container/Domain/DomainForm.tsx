@@ -14,7 +14,7 @@ import { domainHints } from '../../constants/hints';
 import FormActions from '../../components/Form/FormActions';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../components/Form/ControlledSelect';
-import { IDomain } from '../../store/slices/domain/domainSlice';
+import { IDomainImport } from '../../types/domainTypes';
 
 interface IDomainFormInput {
   name: string;
@@ -35,7 +35,7 @@ const DomainForm: React.FC = () => {
     domainId: string;
   }>();
 
-  const [domainData, setDomainData] = useState<IDomain>();
+  const [domainData, setDomainData] = useState<IDomainImport>();
 
   const {
     register,

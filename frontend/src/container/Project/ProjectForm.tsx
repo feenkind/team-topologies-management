@@ -6,13 +6,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Grid } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useAppDispatch } from '../../hooks';
-import { IProject } from '../../store/slices/projectSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import { useEffect, useState } from 'react';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
 import FormActions from '../../components/Form/FormActions';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
+import { IProjectImport } from '../../types/projectTypes';
 
 interface IProjectFormInput {
   name: string;
@@ -25,7 +25,7 @@ const ProjectForm: React.FC = () => {
   const { projectId } = useParams<{
     projectId: string;
   }>();
-  const [projectData, setProjectData] = useState<IProject>();
+  const [projectData, setProjectData] = useState<IProjectImport>();
 
   const {
     register,

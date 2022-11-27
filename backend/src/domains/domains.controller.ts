@@ -5,14 +5,13 @@ import {
   Body,
   Param,
   Put,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 import { DomainsService } from './domains.service';
 import { CreateDomainDto } from './dto/create-domain.dto';
 import { UpdateDomainDto } from './dto/update-domain.dto';
-import { Domain } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
+import { DomainDto } from './dto/domain.dto';
 
 @Controller('domains')
 export class DomainsController {
@@ -20,62 +19,25 @@ export class DomainsController {
 
   @UseGuards(AuthGuard('basic'))
   @Post()
-  create(@Body() createDomainDto: CreateDomainDto): Promise<Domain> {
-    return this.domainService.create({
-      name: createDomainDto.name,
-      description: createDomainDto.description,
-      priority: createDomainDto.priority,
-      complexity: createDomainDto.complexity,
-      project: { connect: { id: createDomainDto.projectId } },
-      active: true,
-      DomainHistory: {
-        create: [
-          {
-            name: createDomainDto.name,
-            description: createDomainDto.description,
-            priority: createDomainDto.priority,
-            complexity: createDomainDto.complexity,
-            changeNote: 'Initial creation.',
-          },
-        ],
-      },
-    });
+  create(@Body() createDomainDto: CreateDomainDto): Promise<DomainDto> {
+    return this.domainService.create(createDomainDto);
   }
 
   @UseGuards(AuthGuard('basic'))
   @Get()
-  findAll(@Query() query: { includeHistory: boolean }): Promise<Domain[]> {
-    return this.domainService.findAll(query.includeHistory);
+  findAll(): Promise<DomainDto[]> {
+    return this.domainService.findAll();
   }
 
   @UseGuards(AuthGuard('basic'))
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<DomainDto> {
     return this.domainService.findOne(id);
   }
 
   @UseGuards(AuthGuard('basic'))
   @Put(':id')
   update(@Param('id') id: string, @Body() updateDomainDto: UpdateDomainDto) {
-    return this.domainService.update({
-      data: {
-        name: updateDomainDto.name,
-        description: updateDomainDto.description,
-        priority: updateDomainDto.priority,
-        complexity: updateDomainDto.complexity,
-        DomainHistory: {
-          create: [
-            {
-              name: updateDomainDto.name,
-              description: updateDomainDto.description,
-              priority: updateDomainDto.priority,
-              complexity: updateDomainDto.complexity,
-              changeNote: updateDomainDto.changeNote,
-            },
-          ],
-        },
-      },
-      where: { id: id },
-    });
+    return this.domainService.update(id, updateDomainDto);
   }
 }

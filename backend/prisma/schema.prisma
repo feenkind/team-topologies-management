@@ -29,9 +29,9 @@ model Domain {
   priority              Priority
   complexity            Complexity
   active                Boolean
-  DomainHistory         DomainHistory[]
-  DomainsOnTeams        DomainsOnTeams[]
-  DomainsOnTeamsHistory DomainsOnTeamsHistory[]
+  domainHistory         DomainHistory[]
+  domainsOnTeams        DomainsOnTeams[]
+  domainsOnTeamsHistory DomainsOnTeamsHistory[]
 }
 
 model DomainHistory {

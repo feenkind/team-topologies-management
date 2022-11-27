@@ -21,6 +21,7 @@ import {
   ITeamImport,
 } from '../../types/teamTypes';
 import { IProjectImport } from '../../types/projectTypes';
+import { IDomainImport } from '../../types/domainTypes';
 
 const LoadBackendData: React.FC = () => {
   const isDataLoaded = useAppSelector((state) => state.global.dataLoaded);
@@ -31,7 +32,7 @@ const LoadBackendData: React.FC = () => {
     if (!isDataLoaded) {
       const requests = [
         axiosInstance.get('/projects'),
-        axiosInstance.get('/domains?includeHistory=true'),
+        axiosInstance.get('/domains'),
         axiosInstance.get('/teams'),
         axiosInstance.get('/teams/dependencies'),
         axiosInstance.get('/teams/dependencies/history'),
@@ -43,7 +44,7 @@ const LoadBackendData: React.FC = () => {
         .all(requests)
         .then((responses) => {
           const projectData: IProjectImport[] = responses[0].data;
-          const domainData = responses[1].data;
+          const domainData: IDomainImport[] = responses[1].data;
           const teamData: ITeamImport[] = responses[2].data;
           const dependencies: IDependencyImport[] = responses[3].data;
           const dependencyHistory: IDependencyHistoryImport[] =

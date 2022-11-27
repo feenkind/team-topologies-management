@@ -1,10 +1,10 @@
 import { IDomain, IHistoricValue } from './domainSlice';
 import {
-  IDomainImportWithHistory,
-  IDomainImportHistory,
-} from './interfacesDomainImport';
+  IDomainHistoryImport,
+  IDomainImport,
+} from '../../../types/domainTypes';
 
-export const createDomain = (domainData: IDomainImportWithHistory): IDomain => {
+export const createDomain = (domainData: IDomainImport): IDomain => {
   return {
     id: domainData.id,
     name: domainData.name,
@@ -15,7 +15,7 @@ export const createDomain = (domainData: IDomainImportWithHistory): IDomain => {
 };
 
 export const createHistoricPriorityValue = (
-  domainHistory: IDomainImportHistory,
+  domainHistory: IDomainHistoryImport,
 ): IHistoricValue => {
   return {
     value: domainHistory.priority,
@@ -25,7 +25,7 @@ export const createHistoricPriorityValue = (
 };
 
 export const createHistoricComplexityValue = (
-  domainHistory: IDomainImportHistory,
+  domainHistory: IDomainHistoryImport,
 ): IHistoricValue => {
   return {
     value: domainHistory.complexity,

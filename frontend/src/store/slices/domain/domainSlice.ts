@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { complexity, priority } from '../../../constants/categories';
-import { IDomainImportWithHistory } from './interfacesDomainImport';
 import {
   createDomain,
   createHistoricComplexityValue,
   createHistoricPriorityValue,
 } from './mappingsDomainImport';
+import { IDomainImport } from '../../../types/domainTypes';
 
 export interface IDomain {
   id: string;
@@ -47,7 +47,7 @@ const domainSlice = createSlice({
   reducers: {
     addAllDomainsWithHistory: (
       state,
-      { payload }: PayloadAction<IDomainImportWithHistory[]>,
+      { payload }: PayloadAction<IDomainImport[]>,
     ) => {
       payload.forEach((domainData) => {
         const domain = createDomain(domainData);
@@ -65,12 +65,14 @@ const domainSlice = createSlice({
         }
 
         // order historic values asc by date
-        domainData.DomainHistory.sort((a, b) =>
-          new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
-        );
+        domainData.domainHistory &&
+          domainData.domainHistory.sort((a, b) =>
+            new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1,
+          );
+        const domainDataHistory = domainData.domainHistory || [];
 
-        for (let i = 0; i < domainData.DomainHistory.length; i++) {
-          const currentHistory = domainData.DomainHistory[i];
+        for (let i = 0; i < domainDataHistory.length; i++) {
+          const currentHistory = domainDataHistory[i];
 
           // first history value is always relevant
           if (i === 0) {
@@ -94,7 +96,7 @@ const domainSlice = createSlice({
             continue;
           }
 
-          const previousHistory = domainData.DomainHistory[i - 1];
+          const previousHistory = domainDataHistory[i - 1];
           // check if complexity value changed and save to history, if so
           if (previousHistory.complexity !== currentHistory.complexity) {
             state.historyComplexity[domainData.id].push(
