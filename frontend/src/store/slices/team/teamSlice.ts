@@ -172,6 +172,12 @@ const teamSlice = createSlice({
       state,
       { payload }: PayloadAction<ITeamImport[]>,
     ) => {
+      // reset in the beginning to not keep any old data
+      state.teams = {};
+      state.historyCognitiveLoad = {};
+      state.historyFte = {};
+      state.historyDomains = {};
+
       payload.forEach((teamData) => {
         // order team history values asc by date
         teamData.teamHistory &&

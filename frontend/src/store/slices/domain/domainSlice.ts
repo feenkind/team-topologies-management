@@ -49,6 +49,11 @@ const domainSlice = createSlice({
       state,
       { payload }: PayloadAction<IDomainImport[]>,
     ) => {
+      // reset in the beginning to not keep any old data
+      state.domains = {};
+      state.historyComplexity = {};
+      state.historyPriority = {};
+
       payload.forEach((domainData) => {
         const domain = createDomain(domainData);
 
