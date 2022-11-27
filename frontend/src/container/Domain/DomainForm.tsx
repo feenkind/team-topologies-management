@@ -16,6 +16,7 @@ import ControlledSelect from '../../components/Form/ControlledSelect';
 import { IDomainImport } from '../../types/domainTypes';
 import { complexity } from '../../types/complexityTypes';
 import { priority } from '../../types/priorityTypes';
+import Page404 from '../../components/Page404';
 
 interface IDomainFormInput {
   name: string;
@@ -29,12 +30,19 @@ const DomainForm: React.FC = () => {
   const currentProject = useAppSelector(
     (state) => state.project.currentProject,
   );
+  const domains = useAppSelector(
+    (state) => state.domain.domains[currentProject.id] || [],
+  );
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { projectId, domainId } = useParams<{
     projectId: string;
     domainId: string;
   }>();
+
+  const requestedDomainExists =
+    domains.find((domain) => domain.id === domainId) !== undefined;
 
   const [domainData, setDomainData] = useState<IDomainImport>();
 
@@ -48,7 +56,7 @@ const DomainForm: React.FC = () => {
 
   useEffect(() => {
     // make sure to always work with the newest data when editing
-    if (domainId && !domainData) {
+    if (domainId && requestedDomainExists && !domainData) {
       axiosInstance
         .get(`/domains/${domainId}`)
         .then((response) => {
@@ -62,7 +70,14 @@ const DomainForm: React.FC = () => {
       setDomainData(undefined);
       reset({ name: '', description: '', complexity: '', priority: '' });
     }
-  }, [domainId, domainData, setDomainData, dispatch, reset]);
+  }, [
+    domainId,
+    domainData,
+    setDomainData,
+    dispatch,
+    reset,
+    requestedDomainExists,
+  ]);
 
   useEffect(() => {
     if (domainData) {
@@ -114,97 +129,102 @@ const DomainForm: React.FC = () => {
 
   return (
     <>
-      <PageHeadline
-        text={
-          domainData
-            ? `Edit domain ${domainData.name}`
-            : `Add a new domain to project ${currentProject.name}`
-        }
-      />
-      <ContentWithHints
-        isForm
-        hints={[domainHints.domainComplexity, domainHints.domainPriority]}
-      >
-        <FormGroupWrapper caption="Basic Information">
-          <Grid item xs={12} md={6}>
-            <ControlledTextInput
-              error={errors.name}
-              control={control}
-              register={register}
-              name="name"
-              label="Domain name"
-              placeholder="The name of the domain"
-              required={true}
-            />
-          </Grid>
+      {!requestedDomainExists && <Page404 />}
+      {requestedDomainExists && (
+        <>
+          <PageHeadline
+            text={
+              domainData
+                ? `Edit domain ${domainData.name}`
+                : `Add a new domain to project ${currentProject.name}`
+            }
+          />
+          <ContentWithHints
+            isForm
+            hints={[domainHints.domainComplexity, domainHints.domainPriority]}
+          >
+            <FormGroupWrapper caption="Basic Information">
+              <Grid item xs={12} md={6}>
+                <ControlledTextInput
+                  error={errors.name}
+                  control={control}
+                  register={register}
+                  name="name"
+                  label="Domain name"
+                  placeholder="The name of the domain"
+                  required={true}
+                />
+              </Grid>
 
-          <Grid item xs={12} md={6}>
-            <ControlledSelect
-              error={errors.complexity}
-              control={control}
-              register={register}
-              name="complexity"
-              label="Complexity"
-              options={Object.values(complexity).map((complexity) => ({
-                label: complexity,
-                value: complexity,
-              }))}
-              required={true}
-            />
-          </Grid>
+              <Grid item xs={12} md={6}>
+                <ControlledSelect
+                  error={errors.complexity}
+                  control={control}
+                  register={register}
+                  name="complexity"
+                  label="Complexity"
+                  options={Object.values(complexity).map((complexity) => ({
+                    label: complexity,
+                    value: complexity,
+                  }))}
+                  required={true}
+                />
+              </Grid>
 
-          <Grid item xs={12} md={6}>
-            <ControlledSelect
-              error={errors.priority}
-              control={control}
-              register={register}
-              name="priority"
-              label="Priority"
-              options={Object.values(priority).map((priority) => ({
-                label: priority,
-                value: priority,
-              }))}
-              required={true}
-            />
-          </Grid>
+              <Grid item xs={12} md={6}>
+                <ControlledSelect
+                  error={errors.priority}
+                  control={control}
+                  register={register}
+                  name="priority"
+                  label="Priority"
+                  options={Object.values(priority).map((priority) => ({
+                    label: priority,
+                    value: priority,
+                  }))}
+                  required={true}
+                />
+              </Grid>
 
-          <Grid item xs={12} md={12}>
-            <ControlledTextInput
-              error={errors.description}
-              control={control}
-              register={register}
-              name="description"
-              label="Domain description"
-              placeholder="A short domain description and details to technical responsible person"
-              required={true}
-              multiline={true}
-            />
-          </Grid>
-        </FormGroupWrapper>
+              <Grid item xs={12} md={12}>
+                <ControlledTextInput
+                  error={errors.description}
+                  control={control}
+                  register={register}
+                  name="description"
+                  label="Domain description"
+                  placeholder="A short domain description and details to technical responsible person"
+                  required={true}
+                  multiline={true}
+                />
+              </Grid>
+            </FormGroupWrapper>
 
-        <FormActions
-          onCancel={() => {
-            navigate(-1);
-          }}
-          onSubmit={handleSubmit(onSubmit)}
-          submitLabel={
-            domainData ? 'Save changes to domain' : 'Create new domain'
-          }
-          changeNote={
-            domainData && (
-              <ControlledTextInput
-                error={errors.changeNote}
-                control={control}
-                register={register}
-                name="changeNote"
-                label="Note"
-                placeholder="The reason for your changes"
-                required={true}
-              />
-            )
-          }
-        />
-      </ContentWithHints>
+            <FormActions
+              onCancel={() => {
+                navigate(-1);
+              }}
+              onSubmit={handleSubmit(onSubmit)}
+              submitLabel={
+                domainData ? 'Save changes to domain' : 'Create new domain'
+              }
+              changeNote={
+                domainData && (
+                  <ControlledTextInput
+                    error={errors.changeNote}
+                    control={control}
+                    register={register}
+                    name="changeNote"
+                    label="Note"
+                    placeholder="The reason for your changes"
+                    required={true}
+                  />
+                )
+              }
+            />
+          </ContentWithHints>
+        </>
+      )}
     </>
   );
 };

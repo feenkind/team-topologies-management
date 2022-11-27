@@ -21,6 +21,7 @@ import {
 } from '../../../store/slices/globalSlice';
 import { teamHints } from '../../../constants/hints';
 import { ITeamImport } from '../../../types/teamTypes';
+import Page404 from '../../../components/Page404';
 
 export interface ITeamFormInput {
   changeNote: string;
@@ -80,6 +81,9 @@ const TeamForm: React.FC = () => {
     teamId: string;
   }>();
 
+  const requestedTeamExists =
+    teams.find((team) => team.id === teamId) !== undefined;
+
   const otherTeams = teams.filter((team) => team.id !== teamId);
 
   const [teamData, setTeamData] = useState<ITeamImport>();
@@ -96,7 +100,7 @@ const TeamForm: React.FC = () => {
 
   useEffect(() => {
     // make sure to always work with the newest data when editing
-    if (teamId && !teamData) {
+    if (teamId && requestedTeamExists && !teamData) {
       axiosInstance
         .get(`/teams/${teamId}`)
         .then((response) => {
@@ -127,7 +131,7 @@ const TeamForm: React.FC = () => {
       });
       setTeamData(undefined);
     }
-  }, [teamId, setTeamData, teamData, dispatch, reset]);
+  }, [teamId, setTeamData, teamData, dispatch, reset, requestedTeamExists]);
 
   useEffect(() => {
     if (teamData) {
@@ -325,95 +329,102 @@ const TeamForm: React.FC = () => {
 
   return (
     <>
-      <PageHeadline
-        text={
-          teamData
-            ? `Edit team ${teamData.name}`
-            : `Add a new new team to project ${currentProject.name}`
-        }
-      />
-      <ContentWithHints isForm hints={[teamHints.cognitiveLoadAssessment]}>
-        <Tabs
-          tabContent={[
-            {
-              tabName: 'Information',
-              tabIcon: informationError ? (
-                <ErrorOutlineIcon color="error" />
-              ) : undefined,
-              content: (
-                <TeamFormInformation
-                  register={register}
-                  control={control}
-                  errors={errors}
-                />
-              ),
-            },
-            {
-              tabName: 'Work',
-              tabIcon: workError ? (
-                <ErrorOutlineIcon color="error" />
-              ) : undefined,
-              content: (
-                <TeamFormWork
-                  register={register}
-                  control={control}
-                  errors={errors}
-                />
-              ),
-            },
-            {
-              tabName: 'Interactions',
-              tabIcon: interactionsError ? (
-                <ErrorOutlineIcon color="error" />
-              ) : undefined,
-              content: (
-                <TeamFormInteractions
-                  register={register}
-                  control={control}
-                  errors={errors}
-                  getValues={getValues}
-                  otherTeams={otherTeams}
-                />
-              ),
-            },
-            {
-              tabName: 'Dependencies',
-              tabIcon: dependenciesError ? (
-                <ErrorOutlineIcon color="error" />
-              ) : undefined,
-              content: (
-                <TeamFormDependencies
-                  register={register}
-                  control={control}
-                  errors={errors}
-                  getValues={getValues}
-                  otherTeams={otherTeams}
-                />
-              ),
-            },
-          ]}
-        />
-        <FormActions
-          onCancel={() => {
-            navigate(-1);
-          }}
-          onSubmit={handleSubmit(onSubmit)}
-          submitLabel={teamData ? 'Save changes to team' : 'Create new team'}
-          changeNote={
-            teamData && (
-              <ControlledTextInput
-                error={errors.changeNote}
-                control={control}
-                register={register}
-                name="changeNote"
-                label="Note"
-                placeholder="The reason for your changes"
-                required={true}
-              />
-            )
-          }
-        />
-      </ContentWithHints>
+      {!requestedTeamExists && <Page404 />}
+      {requestedTeamExists && (
+        <>
+          <PageHeadline
+            text={
+              teamData
+                ? `Edit team ${teamData.name}`
+                : `Add a new new team to project ${currentProject.name}`
+            }
+          />
+          <ContentWithHints isForm hints={[teamHints.cognitiveLoadAssessment]}>
+            <Tabs
+              tabContent={[
+                {
+                  tabName: 'Information',
+                  tabIcon: informationError ? (
+                    <ErrorOutlineIcon color="error" />
+                  ) : undefined,
+                  content: (
+                    <TeamFormInformation
+                      register={register}
+                      control={control}
+                      errors={errors}
+                    />
+                  ),
+                },
+                {
+                  tabName: 'Work',
+                  tabIcon: workError ? (
+                    <ErrorOutlineIcon color="error" />
+                  ) : undefined,
+                  content: (
+                    <TeamFormWork
+                      register={register}
+                      control={control}
+                      errors={errors}
+                    />
+                  ),
+                },
+                {
+                  tabName: 'Interactions',
+                  tabIcon: interactionsError ? (
+                    <ErrorOutlineIcon color="error" />
+                  ) : undefined,
+                  content: (
+                    <TeamFormInteractions
+                      register={register}
+                      control={control}
+                      errors={errors}
+                      getValues={getValues}
+                      otherTeams={otherTeams}
+                    />
+                  ),
+                },
+                {
+                  tabName: 'Dependencies',
+                  tabIcon: dependenciesError ? (
+                    <ErrorOutlineIcon color="error" />
+                  ) : undefined,
+                  content: (
+                    <TeamFormDependencies
+                      register={register}
+                      control={control}
+                      errors={errors}
+                      getValues={getValues}
+                      otherTeams={otherTeams}
+                    />
+                  ),
+                },
+              ]}
+            />
+            <FormActions
+              onCancel={() => {
+                navigate(-1);
+              }}
+              onSubmit={handleSubmit(onSubmit)}
+              submitLabel={
+                teamData ? 'Save changes to team' : 'Create new team'
+              }
+              changeNote={
+                teamData && (
+                  <ControlledTextInput
+                    error={errors.changeNote}
+                    control={control}
+                    register={register}
+                    name="changeNote"
+                    label="Note"
+                    placeholder="The reason for your changes"
+                    required={true}
+                  />
+                )
+              }
+            />
+          </ContentWithHints>
+        </>
+      )}
     </>
   );
 };

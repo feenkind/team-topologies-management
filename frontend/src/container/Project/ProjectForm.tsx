@@ -5,7 +5,7 @@ import { projectHints } from '../../constants/hints';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Grid } from '@mui/material';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import { useEffect, useState } from 'react';
@@ -20,11 +20,15 @@ interface IProjectFormInput {
 }
 
 const ProjectForm: React.FC = () => {
+  const projects = useAppSelector((state) => state.project.projects);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { projectId } = useParams<{
     projectId: string;
   }>();
+  const requestedProjectExists =
+    projects.find((project) => project.id === projectId) !== undefined;
+
   const [projectData, setProjectData] = useState<IProjectImport>();
 
   const {
@@ -37,7 +41,7 @@ const ProjectForm: React.FC = () => {
 
   useEffect(() => {
     // make sure to always work with the newest data when editing
-    if (projectId && !projectData) {
+    if (projectId && requestedProjectExists && !projectData) {
       axiosInstance
         .get(`/projects/${projectId}`)
         .then((response) => {
@@ -45,7 +49,13 @@ const ProjectForm: React.FC = () => {
         })
         .catch(() => dispatch(setNetworkError(true)));
     }
-  }, [projectId, projectData, setProjectData, dispatch]);
+  }, [
+    projectId,
+    projectData,
+    setProjectData,
+    dispatch,
+    requestedProjectExists,
+  ]);
 
   useEffect(() => {
     if (projectData) {
