@@ -72,6 +72,7 @@ export interface IDependencyHistoryImport extends IDependencyImport {
 }
 
 export interface IInteractionImport {
+  projectId: string;
   teamIdOne: string;
   teamIdTwo: string;
   interactionMode: interactionMode;
@@ -79,4 +80,10 @@ export interface IInteractionImport {
   startDate: string;
   expectedDuration: number;
   additionalInformation: string;
+}
+
+export interface IInteractionHistoryImport extends IInteractionImport {
+  createdAt: string;
+  changeNote: string;
+  changeType: changeType;
 }

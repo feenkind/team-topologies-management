@@ -2,12 +2,13 @@ import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
-import { Interaction, InteractionHistory } from '@prisma/client';
+import { InteractionHistory } from '@prisma/client';
 import { DependenciesService } from './dependencies.service';
 import { InteractionsService } from './interactions.service';
 import { TeamDto } from './dto/team.dto';
 import { DependencyDto } from './dto/dependency.dto';
 import { DependencyHistoryDto } from './dto/dependency-history.dto';
+import { InteractionDto } from './dto/interaction.dto';
 
 @Controller('teams')
 export class TeamsController {
@@ -38,7 +39,7 @@ export class TeamsController {
   }
 
   @Get('interactions')
-  findAllInteractions(): Promise<Interaction[]> {
+  findAllInteractions(): Promise<InteractionDto[]> {
     return this.interactionsService.findAll();
   }
 

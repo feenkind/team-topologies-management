@@ -270,6 +270,7 @@ export class TeamsService {
       })),
       domains: team.domainsOnTeams.map((domain) => domain.domainId),
       interactionsAsTeamOne: team.interactionTeamOne.map((interaction) => ({
+        projectId: team.projectId,
         teamIdOne: interaction.teamIdOne,
         teamIdTwo: interaction.teamIdTwo,
         interactionMode: interaction.interactionMode as interactionMode,
@@ -279,6 +280,7 @@ export class TeamsService {
         additionalInformation: interaction.additionalInformation,
       })),
       interactionsAsTeamTwo: team.interactionTeamTwo.map((interaction) => ({
+        projectId: team.projectId,
         teamIdOne: interaction.teamIdOne,
         teamIdTwo: interaction.teamIdTwo,
         interactionMode: interaction.interactionMode as interactionMode,

@@ -1,6 +1,7 @@
 import { interactionMode } from './create-interaction.dto';
 
 export class InteractionDto {
+  projectId: string;
   teamIdOne: string;
   teamIdTwo: string;
   interactionMode: interactionMode;

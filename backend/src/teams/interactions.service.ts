@@ -3,6 +3,8 @@ import { PrismaService } from '../prisma.service';
 import { Interaction, InteractionHistory, Prisma } from '@prisma/client';
 import { UpdateInteractionDto } from './dto/update-interaction.dto';
 import { changeType } from './dto/create-team.dto';
+import { InteractionDto } from './dto/interaction.dto';
+import { interactionMode } from './dto/create-interaction.dto';
 
 const interactionDataIsTheSame = (
   current: Interaction,
@@ -28,10 +30,23 @@ const interactionIsTheSame = (
 export class InteractionsService {
   constructor(private prisma: PrismaService) {}
 
-  findAll(): Promise<Interaction[]> {
-    return this.prisma.interaction.findMany({
+  async findAll(): Promise<InteractionDto[]> {
+    const interactions = await this.prisma.interaction.findMany({
       include: { teamOne: true, teamTwo: true },
     });
+
+    return interactions.map((interaction) => ({
+      // right now interactions can only exist over one project, so we can
+      // take the project id of any team
+      projectId: interaction.teamOne.projectId,
+      teamIdOne: interaction.teamIdOne,
+      teamIdTwo: interaction.teamIdTwo,
+      interactionMode: interaction.interactionMode as interactionMode,
+      purpose: interaction.purpose,
+      startDate: interaction.startDate.toString(),
+      expectedDuration: interaction.expectedDuration,
+      additionalInformation: interaction.additionalInformation,
+    }));
   }
 
   findAllHistoric(): Promise<InteractionHistory[]> {
