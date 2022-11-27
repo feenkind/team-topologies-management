@@ -86,3 +86,9 @@ export const dependencyColor = {
   [dependencyType.SLOWING]: amber[600],
   [dependencyType.BLOCKING]: deepOrange[900],
 };
+
+export enum changeType {
+  ADDED = 'added',
+  REMOVED = 'removed',
+  CHANGED = 'changed',
+}

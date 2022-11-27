@@ -2,6 +2,7 @@ import {
   teamType,
   dependencyType,
   interactionMode,
+  changeType,
 } from '../constants/categories';
 import { channelType, meetingsDay, versioningType } from '../constants/teamApi';
 
@@ -62,6 +63,12 @@ export interface IDependencyImport {
   teamIdTo: string;
   dependencyType: dependencyType;
   description: string;
+}
+
+export interface IDependencyHistoryImport extends IDependencyImport {
+  createdAt: string;
+  changeNote: string;
+  changeType: changeType;
 }
 
 export interface IInteractionImport {

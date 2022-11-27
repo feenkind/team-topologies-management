@@ -1,5 +1,4 @@
-import { interactionMode } from '../../../constants/categories';
-import { changeType } from './teamSlice';
+import { interactionMode, changeType } from '../../../constants/categories';
 import { ITeamImport } from './interfacesTeamImport';
 
 export interface IInteractionImport {

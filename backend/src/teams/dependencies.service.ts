@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { Dependency, DependencyHistory, Prisma } from '@prisma/client';
+import { Dependency, Prisma } from '@prisma/client';
 import { UpdateDependencyDto } from './dto/update-dependency.dto';
 import { changeType } from './dto/create-team.dto';
 import { DependencyDto } from './dto/dependency.dto';
 import { dependencyType } from './dto/create-dependency.dto';
+import { DependencyHistoryDto } from './dto/dependency-history.dto';
 
 const dependencyDataIsTheSame = (
   current: Dependency,
@@ -40,10 +41,21 @@ export class DependenciesService {
     }));
   }
 
-  findAllHistoric(): Promise<DependencyHistory[]> {
-    return this.prisma.dependencyHistory.findMany({
+  async findAllHistoric(): Promise<DependencyHistoryDto[]> {
+    const histories = await this.prisma.dependencyHistory.findMany({
       include: { teamFrom: true, teamTo: true },
     });
+
+    return histories.map((history) => ({
+      projectId: history.teamFrom.projectId,
+      teamIdFrom: history.teamIdFrom,
+      teamIdTo: history.teamIdTo,
+      dependencyType: history.dependencyType as dependencyType,
+      description: history.description,
+      createdAt: history.createdAt.toString(),
+      changeNote: history.changeNote,
+      changeType: history.changeType as changeType,
+    }));
   }
 
   async updateDependenciesForTeamFromId(

@@ -1,5 +1,6 @@
-import { changeType, IInteraction } from '../../store/slices/team/teamSlice';
+import { IInteraction } from '../../store/slices/team/teamSlice';
 import { useAppSelector } from '../../hooks';
+import { changeType } from '../../constants/categories';
 
 export const useInteractionsHistory = ({
   projectId,

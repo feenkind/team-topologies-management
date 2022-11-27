@@ -3,18 +3,22 @@ import {
   dependencyType,
   interactionMode,
   teamType,
+  changeType,
 } from '../../../constants/categories';
 import {
   channelType,
   meetingsDay,
   versioningType,
 } from '../../../constants/teamApi';
-import { IDepdencyHistoryImport } from './interfacesDependencyImport';
 import {
   IInteractionHistoryImport,
   IInteractionImport,
 } from './interfacesInteractionImport';
-import { IDependencyImport, ITeamImport } from '../../../types/teamTypes';
+import {
+  IDependencyHistoryImport,
+  IDependencyImport,
+  ITeamImport,
+} from '../../../types/teamTypes';
 import {
   createHistoricCognitiveLoadValue,
   createHistoricDomainResponsibility,
@@ -85,12 +89,6 @@ export interface IInteraction {
   startDate: string;
   expectedDuration: number;
   additionalInformation?: string;
-}
-
-export enum changeType {
-  ADDED = 'added',
-  REMOVED = 'removed',
-  CHANGED = 'changed',
 }
 
 interface IHistoricValue {
@@ -366,7 +364,7 @@ const teamSlice = createSlice({
 
     addAllDependencyHistory: (
       state,
-      { payload }: PayloadAction<IDepdencyHistoryImport[]>,
+      { payload }: PayloadAction<IDependencyHistoryImport[]>,
     ) => {
       const historyDependencies: { [keys: string]: IHistoricDependency[] } = {};
       payload.forEach((dependencyHistory) => {
@@ -384,7 +382,7 @@ const teamSlice = createSlice({
         // check project id of any team to see connected dependency project
         // this needs to be changed as soon as teams can have dependencies
         // over different projects
-        const projectId = dependencyHistory.teamFrom.projectId;
+        const projectId = dependencyHistory.projectId;
         // append dependency or create new
         if (historyDependencies[projectId]) {
           historyDependencies[projectId].push(importedHistory);
