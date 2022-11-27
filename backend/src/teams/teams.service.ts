@@ -288,6 +288,7 @@ export class TeamsService {
         additionalInformation: interaction.additionalInformation,
       })),
       dependencies: team.dependency.map((dependency) => ({
+        projectId: team.projectId,
         teamIdFrom: dependency.teamIdFrom,
         teamIdTo: dependency.teamIdTo,
         dependencyType: dependency.dependencyType as dependencyType,

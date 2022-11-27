@@ -9,15 +9,12 @@ import {
   meetingsDay,
   versioningType,
 } from '../../../constants/teamApi';
-import {
-  IDepdencyHistoryImport,
-  IDepdencyImport,
-} from './interfacesDependencyImport';
+import { IDepdencyHistoryImport } from './interfacesDependencyImport';
 import {
   IInteractionHistoryImport,
   IInteractionImport,
 } from './interfacesInteractionImport';
-import { ITeamImport } from '../../../types/teamTypes';
+import { IDependencyImport, ITeamImport } from '../../../types/teamTypes';
 import {
   createHistoricCognitiveLoadValue,
   createHistoricDomainResponsibility,
@@ -345,7 +342,7 @@ const teamSlice = createSlice({
 
     addAllDependencies: (
       state,
-      { payload }: PayloadAction<IDepdencyImport[]>,
+      { payload }: PayloadAction<IDependencyImport[]>,
     ) => {
       const dependencies: { [keys: string]: IDependency[] } = {};
       payload.forEach((dependency) => {
@@ -355,10 +352,7 @@ const teamSlice = createSlice({
           dependencyType: dependency.dependencyType,
           description: dependency.description,
         };
-        // check project id of any team to see connected dependency project
-        // this needs to be changed as soon as teams can have dependencies
-        // over different projects
-        const projectId = dependency.teamFrom.projectId;
+        const projectId = dependency.projectId;
         // append dependency or create new
         if (dependencies[projectId]) {
           dependencies[projectId].push(importedDependency);

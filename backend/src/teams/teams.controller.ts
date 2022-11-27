@@ -6,6 +6,7 @@ import { Dependency, Interaction, InteractionHistory } from '@prisma/client';
 import { DependenciesService } from './dependencies.service';
 import { InteractionsService } from './interactions.service';
 import { TeamDto } from './dto/team.dto';
+import { DependencyDto } from './dto/dependency.dto';
 
 @Controller('teams')
 export class TeamsController {
@@ -26,7 +27,7 @@ export class TeamsController {
   }
 
   @Get('dependencies')
-  findAllDependencies(): Promise<Dependency[]> {
+  findAllDependencies(): Promise<DependencyDto[]> {
     return this.depdendencyService.findAll();
   }
 

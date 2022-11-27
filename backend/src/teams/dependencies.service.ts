@@ -3,6 +3,8 @@ import { PrismaService } from '../prisma.service';
 import { Dependency, DependencyHistory, Prisma } from '@prisma/client';
 import { UpdateDependencyDto } from './dto/update-dependency.dto';
 import { changeType } from './dto/create-team.dto';
+import { DependencyDto } from './dto/dependency.dto';
+import { dependencyType } from './dto/create-dependency.dto';
 
 const dependencyDataIsTheSame = (
   current: Dependency,
@@ -22,10 +24,20 @@ const dependencyIsTheSame = (
 export class DependenciesService {
   constructor(private prisma: PrismaService) {}
 
-  findAll(): Promise<Dependency[]> {
-    return this.prisma.dependency.findMany({
+  async findAll(): Promise<DependencyDto[]> {
+    const dependencies = await this.prisma.dependency.findMany({
       include: { teamFrom: true, teamTo: true },
     });
+
+    return dependencies.map((dependency) => ({
+      // right now dependencies can only exist over one project, so we can
+      // take the project id of any team
+      projectId: dependency.teamFrom.projectId,
+      teamIdFrom: dependency.teamIdFrom,
+      teamIdTo: dependency.teamIdTo,
+      dependencyType: dependency.dependencyType as dependencyType,
+      description: dependency.description,
+    }));
   }
 
   findAllHistoric(): Promise<DependencyHistory[]> {

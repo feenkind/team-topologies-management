@@ -57,6 +57,7 @@ export interface ITeamHistoryImport {
 }
 
 export interface IDependencyImport {
+  projectId: string;
   teamIdFrom: string;
   teamIdTo: string;
   dependencyType: dependencyType;
