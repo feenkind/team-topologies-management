@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AppBar, Box, Drawer, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Outlet } from 'react-router-dom';
 import Logo from '../Header/Logo';
 import { useState } from 'react';
 import { sidebarWidth } from '../../constants/sizes';
@@ -10,12 +9,14 @@ interface ILayoutProps {
   header: React.ReactNode;
   sidebar: React.ReactNode;
   errorDisplay: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
 }
 
 const Layout: React.FC<ILayoutProps> = ({
   header,
   sidebar,
   errorDisplay,
+  children,
 }: ILayoutProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -126,7 +127,7 @@ const Layout: React.FC<ILayoutProps> = ({
       >
         <Toolbar />
         {errorDisplay}
-        <Outlet />
+        {children}
       </Box>
     </Box>
   );

@@ -1,7 +1,6 @@
 import React from 'react';
 import Dashboard from './container/Dashboard';
 import ProjectList from './container/Project/ProjectList';
-import Layout from './components/Layout/Layout';
 import ProjectOverview from './container/Project/ProjectOverview';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TeamList from './container/Team/TeamList';
@@ -20,6 +19,7 @@ import TeamForm from './container/Team/form/TeamForm';
 import DomainForm from './container/Domain/DomainForm';
 import ProjectForm from './container/Project/ProjectForm';
 import ErrorDisplay from './container/ErrorDisplay';
+import Layout from './container/Layout';
 
 const App: React.FC = () => {
   return (
