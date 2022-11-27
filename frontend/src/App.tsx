@@ -20,6 +20,7 @@ import DomainForm from './container/Domain/DomainForm';
 import ProjectForm from './container/Project/ProjectForm';
 import ErrorDisplay from './container/ErrorDisplay';
 import Layout from './container/Layout';
+import ProjectDeleteConfirmation from './container/Project/ProjectDeleteConfirmation';
 
 const App: React.FC = () => {
   return (
@@ -69,6 +70,10 @@ const App: React.FC = () => {
           <Route
             path="project/:projectId/visualization"
             element={<Visualization />}
+          />
+          <Route
+            path="project/:projectId/delete"
+            element={<ProjectDeleteConfirmation />}
           />
           <Route path="project/:projectId/edit" element={<ProjectForm />} />
           <Route path="project/:projectId" element={<ProjectOverview />} />

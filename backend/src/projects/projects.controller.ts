@@ -6,6 +6,7 @@ import {
   Param,
   UseGuards,
   Put,
+  Delete,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -42,5 +43,11 @@ export class ProjectsController {
     @Body() updateProjectDto: UpdateProjectDto,
   ): Promise<ProjectDto> {
     return this.projectsService.update(id, updateProjectDto);
+  }
+
+  @UseGuards(AuthGuard('basic'))
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    this.projectsService.delete(id);
   }
 }

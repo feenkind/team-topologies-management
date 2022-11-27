@@ -161,6 +161,14 @@ const ProjectOverview: React.FC = () => {
               >
                 Edit project details
               </Button>
+              <Button
+                component={Link}
+                to={`/project/${currentProject.id}/delete`}
+                variant="outlined"
+                color="warning"
+              >
+                Delete project
+              </Button>
             </CardActions>
           </Card>
         </Grid>
