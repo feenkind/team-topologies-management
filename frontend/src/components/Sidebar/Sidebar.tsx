@@ -6,6 +6,7 @@ import GroupsSharpIcon from '@mui/icons-material/GroupsSharp';
 import GroupAddSharpIcon from '@mui/icons-material/GroupAddSharp';
 import DomainSharpIcon from '@mui/icons-material/DomainSharp';
 import DomainAddSharpIcon from '@mui/icons-material/DomainAddSharp';
+import LogoutIcon from '@mui/icons-material/Logout';
 import {
   sidebarMenuItemLabels,
   sidebarMenuItems,
@@ -13,17 +14,20 @@ import {
 import SidebarNavItem from './SidebarNavItem';
 import SidebarNavHeadline from './SidebarNavHeadline';
 import Logo from '../Header/Logo';
+import SidebarNavButton from './SidebarNavButton';
 
 interface ISidebarProps {
   activeMenuItem?: sidebarMenuItems;
   currentProjectId: string;
   projectSelect: React.ReactNode;
+  logoutAction: () => void;
 }
 
 const Sidebar: React.FC<ISidebarProps> = ({
   activeMenuItem,
   currentProjectId,
   projectSelect,
+  logoutAction,
 }: ISidebarProps) => {
   return (
     <>
@@ -77,6 +81,17 @@ const Sidebar: React.FC<ISidebarProps> = ({
           label={sidebarMenuItemLabels[sidebarMenuItems.ADD_DOMAIN]}
           url={`/project/${currentProjectId}/domain/add`}
           active={activeMenuItem === sidebarMenuItems.ADD_DOMAIN}
+        />
+      </List>
+
+      <Divider sx={{ backgroundColor: 'background.paper' }} />
+
+      <List>
+        <SidebarNavHeadline text="Settings" />
+        <SidebarNavButton
+          icon={<LogoutIcon />}
+          label="Logout"
+          onClick={logoutAction}
         />
       </List>
     </>

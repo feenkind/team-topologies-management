@@ -11,10 +11,8 @@ Install all node module with `npm i`.
 The application can be started with navigating to the frontend folder and 
 running `npm run start`.
 
-For basic authentication and backend connection, copy the `.env.example` and 
-rename it
-to `.env`.
-Add all needed values.
+For working backend connection, copy the `.env.example` and rename it to `.env`.
+Add the url to your local backend.
 
 
 # Backend application

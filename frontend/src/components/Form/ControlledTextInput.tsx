@@ -20,6 +20,7 @@ interface IControlledTextInputProps {
   required?: boolean;
   multiline?: boolean;
   isNumberField?: boolean;
+  isPasswordField?: boolean;
 }
 
 const ControlledTextInput: React.FC<IControlledTextInputProps> = ({
@@ -32,7 +33,16 @@ const ControlledTextInput: React.FC<IControlledTextInputProps> = ({
   required,
   multiline,
   isNumberField,
+  isPasswordField,
 }: IControlledTextInputProps) => {
+  let type = 'text';
+  if (isNumberField) {
+    type = 'number';
+  }
+  if (isPasswordField) {
+    type = 'password';
+  }
+
   return (
     <Controller
       name={name}
@@ -47,7 +57,7 @@ const ControlledTextInput: React.FC<IControlledTextInputProps> = ({
             variant="outlined"
             multiline={multiline || false}
             rows={multiline ? 4 : 1}
-            type={isNumberField ? 'number' : 'text'}
+            type={type}
             {...(isNumberField && { inputProps: { ...{ min: 0 } } })}
             label={label}
             placeholder={placeholder}
