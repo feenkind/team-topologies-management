@@ -20,6 +20,7 @@ import {
   IInteractionImport,
   ITeamImport,
 } from '../../types/teamTypes';
+import { IProjectImport } from '../../types/projectTypes';
 
 const LoadBackendData: React.FC = () => {
   const isDataLoaded = useAppSelector((state) => state.global.dataLoaded);
@@ -41,7 +42,7 @@ const LoadBackendData: React.FC = () => {
       axios
         .all(requests)
         .then((responses) => {
-          const projectData = responses[0].data;
+          const projectData: IProjectImport[] = responses[0].data;
           const domainData = responses[1].data;
           const teamData: ITeamImport[] = responses[2].data;
           const dependencies: IDependencyImport[] = responses[3].data;

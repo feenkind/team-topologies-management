@@ -4,19 +4,21 @@ import {
   Post,
   Body,
   Param,
-  Delete,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { DomainsService } from './domains.service';
 import { CreateDomainDto } from './dto/create-domain.dto';
 import { UpdateDomainDto } from './dto/update-domain.dto';
 import { Domain } from '@prisma/client';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('domains')
 export class DomainsController {
   constructor(private readonly domainService: DomainsService) {}
 
+  @UseGuards(AuthGuard('basic'))
   @Post()
   create(@Body() createDomainDto: CreateDomainDto): Promise<Domain> {
     return this.domainService.create({
@@ -40,16 +42,19 @@ export class DomainsController {
     });
   }
 
+  @UseGuards(AuthGuard('basic'))
   @Get()
   findAll(@Query() query: { includeHistory: boolean }): Promise<Domain[]> {
     return this.domainService.findAll(query.includeHistory);
   }
 
+  @UseGuards(AuthGuard('basic'))
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.domainService.findOne(id);
   }
 
+  @UseGuards(AuthGuard('basic'))
   @Put(':id')
   update(@Param('id') id: string, @Body() updateDomainDto: UpdateDomainDto) {
     return this.domainService.update({
@@ -72,10 +77,5 @@ export class DomainsController {
       },
       where: { id: id },
     });
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.domainService.remove(+id);
   }
 }

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IProjectImport } from '../../types/projectTypes';
 
 export interface IProject {
   id: string;
@@ -33,8 +34,12 @@ const projectSlice = createSlice({
       );
       state.currentProject.name = currentProject ? currentProject.name : '';
     },
-    addAllProjects: (state, { payload }: PayloadAction<IProject[]>) => {
-      state.projects = payload;
+    addAllProjects: (state, { payload }: PayloadAction<IProjectImport[]>) => {
+      state.projects = payload.map((project) => ({
+        id: project.id,
+        name: project.name,
+        description: project.description,
+      }));
       state.currentProject.id = payload[0].id || '';
       state.currentProject.name = payload[0].name || '';
     },

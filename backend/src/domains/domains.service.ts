@@ -31,8 +31,4 @@ export class DomainsService {
   }): Promise<Domain> {
     return this.prisma.domain.update({ data, where });
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} domain`;
-  }
 }
