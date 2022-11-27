@@ -320,7 +320,6 @@ export class TeamsService {
       where: { teamId: id },
     });
 
-    // create new, but also update history tables
     await this.prisma.team.update({
       where: { id: id },
       data: {
