@@ -86,13 +86,13 @@ const TeamViewHistoryCognitiveLoadDiagram: React.FC<
   const dataCognitiveLoad = sortedCognitiveLoadValues.map(
     (cognitiveLoadValue) => ({
       x: new Date(cognitiveLoadValue.date),
-      y: cognitiveLoadValue.value,
+      y: cognitiveLoadValue.value + 0.2,
     }),
   );
   const dataDomainResponsibilities = sortedDomainResponsibilities.map(
     (domainResponsibility) => ({
       x: new Date(domainResponsibility.date),
-      y: domainResponsibility.domains.length,
+      y: domainResponsibility.domains.length + 0.2,
     }),
   );
 
