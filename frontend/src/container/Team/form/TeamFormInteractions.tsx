@@ -5,6 +5,7 @@ import {
   Control,
   FieldErrors,
   useFieldArray,
+  UseFormGetValues,
   UseFormRegister,
 } from 'react-hook-form';
 import { ITeamFormInput } from './TeamForm';
@@ -16,11 +17,13 @@ import ControlledDateInput from '../../../components/Form/ControlleDateInput';
 import ControlledSelect from '../../../components/Form/ControlledSelect';
 import { interactionMode } from '../../../constants/categories';
 import { ITeam } from '../../../store/slices/team/teamSlice';
+import { useEffect, useState } from 'react';
 
 interface ITeamFormInteractionsProps {
   register: UseFormRegister<ITeamFormInput>;
   control: Control<ITeamFormInput>;
   errors: FieldErrors<ITeamFormInput>;
+  getValues: UseFormGetValues<ITeamFormInput>;
   otherTeams: ITeam[];
 }
 
@@ -28,6 +31,7 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
   register,
   control,
   errors,
+  getValues,
   otherTeams,
 }: ITeamFormInteractionsProps) => {
   const {
@@ -39,6 +43,45 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
     name: 'interactions',
   });
 
+  const [availableTeams, setAvailableTeams] = useState<ITeam[]>(otherTeams);
+  const [
+    selectedInteractionOptionForInteractionField,
+    setSelectedInteractionOptionForInteractionField,
+  ] = useState<{ label: string; value: string }[][]>([]);
+  const [recalculateTeamOptions, setRecalculateTeamOptions] =
+    useState<boolean>(true);
+
+  useEffect(() => {
+    if (recalculateTeamOptions) {
+      const selectedTeams = getValues().interactions.map(
+        (interaction) => interaction.otherTeamId,
+      );
+      setAvailableTeams(
+        otherTeams.filter((team) => !selectedTeams.includes(team.id)),
+      );
+
+      setSelectedInteractionOptionForInteractionField(
+        getValues().interactions.map((values) => {
+          const teamId = values.otherTeamId;
+          const team = otherTeams.find((team) => team.id === teamId);
+          if (team) {
+            return [{ label: team.name, value: teamId }];
+          }
+          return [];
+        }),
+      );
+
+      setRecalculateTeamOptions(false);
+    }
+  }, [
+    recalculateTeamOptions,
+    setRecalculateTeamOptions,
+    setAvailableTeams,
+    setSelectedInteractionOptionForInteractionField,
+    otherTeams,
+    getValues,
+  ]);
+
   return (
     <FormGroupWrapper caption="Team Interactions">
       {interactionFields.map((field, index) => (
@@ -46,13 +89,21 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
           key={`interactions.${index}`}
           removeButton={
             <FieldRemoveButton
-              onClick={() => removeInteraction(index)}
+              onClick={() => {
+                // set available teams to all other teams is needed to prevent
+                // out of range warnings - available teams will be filtered
+                // again directly after removing
+                setAvailableTeams(otherTeams);
+                removeInteraction(index);
+                setRecalculateTeamOptions(true);
+              }}
               tooltipText="Remove interaction"
             />
           }
         >
           <Grid item xs={12} md={6}>
             <ControlledSelect
+              key={field.id}
               error={
                 errors.interactions
                   ? errors.interactions[index]?.otherTeamId
@@ -63,15 +114,22 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
               name={`interactions.${index}.otherTeamId`}
               label="Interaction with"
               required={true}
-              options={otherTeams.map((team) => ({
-                label: team.name,
-                value: team.id,
-              }))}
+              options={[
+                ...availableTeams.map((team) => ({
+                  label: team.name,
+                  value: team.id,
+                })),
+                ...(selectedInteractionOptionForInteractionField[index] || []),
+              ]}
+              additionalOnSelect={() => {
+                setRecalculateTeamOptions(true);
+              }}
             />
           </Grid>
 
           <Grid item xs={12} md={6}>
             <ControlledSelect
+              key={field.id}
               error={
                 errors.interactions
                   ? errors.interactions[index]?.interactionMode
@@ -97,6 +155,7 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
 
           <Grid item xs={12} md={6}>
             <ControlledDateInput
+              key={field.id}
               error={
                 errors.interactions
                   ? errors.interactions[index]?.startDate
@@ -112,6 +171,7 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
 
           <Grid item xs={12} md={6}>
             <ControlledTextInput
+              key={field.id}
               error={
                 errors.interactions
                   ? errors.interactions[index]?.expectedDuration
@@ -129,6 +189,7 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
 
           <Grid item xs={12} md={6}>
             <ControlledTextInput
+              key={field.id}
               error={
                 errors.interactions
                   ? errors.interactions[index]?.interactionPurpose
@@ -146,6 +207,7 @@ const TeamFormInteractions: React.FC<ITeamFormInteractionsProps> = ({
 
           <Grid item xs={12} md={6}>
             <ControlledTextInput
+              key={field.id}
               error={
                 errors.interactions
                   ? errors.interactions[index]?.additionalInformation
