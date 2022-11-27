@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { Chip } from '@mui/material';
-import {
-  teamType as teamTypeEnum,
-  teamTypeColor,
-} from '../../constants/categories';
+import { teamType as teamTypeEnum, teamTypeColor } from '../../types/teamTypes';
 
 interface ITeamTypeCategoryProps {
   teamType: teamTypeEnum;

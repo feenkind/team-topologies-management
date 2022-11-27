@@ -14,9 +14,10 @@ import Page404 from '../../components/Page404';
 import { Link } from 'react-router-dom';
 import ButtonLink from '../../components/Buttons/ButtonLink';
 import TeamLink from '../../components/Buttons/TeamLink';
-import { dependencyType, interactionMode } from '../../constants/categories';
 import DependencyCategory from '../../components/Categories/DependencyCategory';
 import TeamInteractionModeCategory from '../../components/Categories/TeamInteractionModeCategory';
+import { interactionMode } from '../../types/interactionTypes';
+import { dependencyType } from '../../types/dependencyType';
 
 const getDependencyPluralization = (dependencyLength: number): string =>
   dependencyLength === 1 ? 'dependency' : 'dependencies';

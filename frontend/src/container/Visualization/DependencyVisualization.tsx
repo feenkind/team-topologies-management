@@ -4,12 +4,6 @@ import { useAppSelector } from '../../hooks';
 import ContentVisualization, {
   ILegend,
 } from '../../components/Layout/ContentVisualization';
-import {
-  dependencyColor,
-  dependencyType,
-  teamType,
-  teamTypeColor,
-} from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
 import {
   Alert,
@@ -32,6 +26,8 @@ import { useDependencyHistory } from './useDependencyHistory';
 import { grey } from '@mui/material/colors';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import { useTeamTypeHistory } from './useTeamTypeHistory';
+import { dependencyColor, dependencyType } from '../../types/dependencyType';
+import { teamType, teamTypeColor } from '../../types/teamTypes';
 
 interface INode extends NodeObject {
   name?: string;

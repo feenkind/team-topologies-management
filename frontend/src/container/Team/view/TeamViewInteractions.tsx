@@ -7,7 +7,7 @@ import TeamLink from '../../../components/Buttons/TeamLink';
 import TeamInteractionModeCategory from '../../../components/Categories/TeamInteractionModeCategory';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { filterTeamInteractions } from './filterTeamInteractions';
-import { interactionMode } from '../../../constants/categories';
+import { interactionMode } from '../../../types/interactionTypes';
 
 interface ITeamViewInteractionsProps {
   team: ITeam;

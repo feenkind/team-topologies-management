@@ -1,7 +1,3 @@
-export enum channelType {
-  SLACK = 'slack',
-}
-
 export enum meetingsDay {
   DAILY = 'daily',
   MONDAY = 'monday',
@@ -9,9 +5,4 @@ export enum meetingsDay {
   WEDNESDAY = 'wednesday',
   THURSDAY = 'thursday',
   FRIDAY = 'friday',
-}
-
-export enum versioningType {
-  SEMANTIC = 'semantic',
-  SEQUENTIAL = 'sequential',
 }

@@ -4,10 +4,11 @@ import ContentVisualization, {
 } from '../../components/Layout/ContentVisualization';
 import { VictoryAxis, VictoryChart, VictoryScatter } from 'victory';
 import { useAppSelector } from '../../hooks';
-import { complexity, priority } from '../../constants/categories';
 import theme from '../../theme';
 import CircleIcon from '@mui/icons-material/Circle';
 import { Alert } from '@mui/material';
+import { complexity } from '../../types/complexityTypes';
+import { priority } from '../../types/priorityTypes';
 
 const getNodeColorFromFte = (fteAmount: number): string => {
   if (fteAmount < 5) {

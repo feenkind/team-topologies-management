@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Chip } from '@mui/material';
-import { priority as priorityEnum } from '../../constants/categories';
 import { deepPurple, grey, teal } from '@mui/material/colors';
+import { priority as priorityEnum } from '../../types/priorityTypes';
 
 interface IPriorityCategoryProps {
   priority: priorityEnum;

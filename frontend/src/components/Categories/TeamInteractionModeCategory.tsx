@@ -3,7 +3,7 @@ import { Chip } from '@mui/material';
 import {
   interactionMode as interactionModeEnum,
   interactionModeColor,
-} from '../../constants/categories';
+} from '../../types/interactionTypes';
 
 interface ITeamInteractionModeCategoryProps {
   interactionMode: interactionModeEnum;

@@ -15,9 +15,9 @@ import FieldRemoveButton from '../../../components/Form/FieldRemoveButton';
 import ControlledTextInput from '../../../components/Form/ControlledTextInput';
 import ControlledDateInput from '../../../components/Form/ControlledDateInput';
 import ControlledSelect from '../../../components/Form/ControlledSelect';
-import { interactionMode } from '../../../constants/categories';
 import { ITeam } from '../../../store/slices/team/teamSlice';
 import { useEffect, useState } from 'react';
+import { interactionMode } from '../../../types/interactionTypes';
 
 interface ITeamFormInteractionsProps {
   register: UseFormRegister<ITeamFormInput>;

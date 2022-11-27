@@ -1,4 +1,5 @@
-import { priority, complexity } from '../constants/categories';
+import { complexity } from './complexityTypes';
+import { priority } from './priorityTypes';
 
 export interface IDomainImport {
   id: string;

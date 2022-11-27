@@ -20,12 +20,6 @@ import {
 } from '@mui/material';
 import VisualizationGraph from './VisualizationGraph';
 import { LinkObject, NodeObject } from 'react-force-graph-2d';
-import {
-  interactionMode,
-  interactionModeColor,
-  teamType,
-  teamTypeColor,
-} from '../../constants/categories';
 import { useNavigate } from 'react-router-dom';
 import TeamShape from '../../components/TeamShape';
 import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOptionsWrapper';
@@ -35,6 +29,11 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useTeamTypeHistory } from './useTeamTypeHistory';
 import { useInteractionsHistory } from './useInteractionsHistory';
+import {
+  interactionMode,
+  interactionModeColor,
+} from '../../types/interactionTypes';
+import { teamType, teamTypeColor } from '../../types/teamTypes';
 
 interface INode extends NodeObject {
   name?: string;

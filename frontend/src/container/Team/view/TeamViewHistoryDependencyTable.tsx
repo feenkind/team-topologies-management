@@ -4,7 +4,7 @@ import { ITeam } from '../../../store/slices/team/teamSlice';
 import { Alert } from '@mui/material';
 import Table from '../../../components/Table/Table';
 import DependencyCategory from '../../../components/Categories/DependencyCategory';
-import { changeType } from '../../../constants/categories';
+import { changeType } from '../../../types/changeTypes';
 
 interface ITeamViewHistoryDependencyTableProps {
   team: ITeam;

@@ -14,9 +14,9 @@ import FieldSet from '../../../components/Form/FieldSet';
 import FieldRemoveButton from '../../../components/Form/FieldRemoveButton';
 import ControlledTextInput from '../../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../../components/Form/ControlledSelect';
-import { dependencyType } from '../../../constants/categories';
 import { ITeam } from '../../../store/slices/team/teamSlice';
 import { useEffect, useState } from 'react';
+import { dependencyType } from '../../../types/dependencyType';
 
 interface ITeamFormDependenciesProps {
   register: UseFormRegister<ITeamFormInput>;

@@ -5,12 +5,13 @@ import Table from '../../../components/Table/Table';
 import { useAppSelector } from '../../../hooks';
 import { Alert } from '@mui/material';
 import TeamInteractionModeCategory from '../../../components/Categories/TeamInteractionModeCategory';
-import { changeType } from '../../../constants/categories';
+import { changeType } from '../../../types/changeTypes';
 
 interface ITeamViewHistoryInteractionsTableProps {
   team: ITeam;
   otherTeam: ITeam;
 }
+
 const TeamViewHistoryInteractionsTable: React.FC<
   ITeamViewHistoryInteractionsTableProps
 > = ({ team, otherTeam }: ITeamViewHistoryInteractionsTableProps) => {

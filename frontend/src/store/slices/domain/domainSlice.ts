@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { complexity, priority } from '../../../constants/categories';
 import {
   createDomain,
   createHistoricComplexityValue,
   createHistoricPriorityValue,
 } from './mappingsDomainImport';
 import { IDomainImport } from '../../../types/domainTypes';
+import { complexity } from '../../../types/complexityTypes';
+import { priority } from '../../../types/priorityTypes';
 
 export interface IDomain {
   id: string;

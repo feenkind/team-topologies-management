@@ -1,21 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  dependencyType,
-  interactionMode,
-  teamType,
-  changeType,
-} from '../../../constants/categories';
-import {
-  channelType,
-  meetingsDay,
-  versioningType,
-} from '../../../constants/teamApi';
-import {
   IDependencyHistoryImport,
   IDependencyImport,
   IInteractionHistoryImport,
   IInteractionImport,
   ITeamImport,
+  teamType,
 } from '../../../types/teamTypes';
 import {
   createHistoricCognitiveLoadValue,
@@ -24,6 +14,12 @@ import {
   createHistoricTeamType,
   createTeam,
 } from './mappingsTeamImport';
+import { interactionMode } from '../../../types/interactionTypes';
+import { dependencyType } from '../../../types/dependencyType';
+import { changeType } from '../../../types/changeTypes';
+import { versioningType } from '../../../types/versioningTypes';
+import { meetingsDay } from '../../../types/meetingTypes';
+import { channelType } from '../../../types/channelTypes';
 
 export interface IChannel {
   type: channelType;

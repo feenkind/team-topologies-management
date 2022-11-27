@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import {
   teamType as teamTopologyEnum,
   teamTypeColor,
-} from '../constants/categories';
+} from '../types/teamTypes';
 
 interface ITeamShapeProps {
   label: string;

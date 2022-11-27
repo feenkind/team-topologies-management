@@ -8,14 +8,15 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 import { ITeamFormInput } from './TeamForm';
-import { teamType } from '../../../constants/categories';
 import { useAppSelector } from '../../../hooks';
-import { channelType, meetingsDay } from '../../../constants/teamApi';
 import ControlledTextInput from '../../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../../components/Form/ControlledSelect';
 import FieldRemoveButton from '../../../components/Form/FieldRemoveButton';
 import FieldSet from '../../../components/Form/FieldSet';
 import FieldAddButton from '../../../components/Form/FieldAddButton';
+import { teamType } from '../../../types/teamTypes';
+import { meetingsDay } from '../../../types/meetingTypes';
+import { channelType } from '../../../types/channelTypes';
 
 interface ITeamFormInformationProps {
   register: UseFormRegister<ITeamFormInput>;

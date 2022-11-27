@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../../hooks';
 import { ITeam } from '../../../store/slices/team/teamSlice';
-import { complexity } from '../../../constants/categories';
+import { complexity } from '../../../types/complexityTypes';
 
 export const useCognitiveLoad = ({
   team,

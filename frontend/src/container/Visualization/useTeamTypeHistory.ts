@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../hooks';
-import { teamType } from '../../constants/categories';
 import { ITeam } from '../../store/slices/team/teamSlice';
+import { teamType } from '../../types/teamTypes';
 
 interface ITeamTypesByTeamId {
   [keys: string]: teamType;

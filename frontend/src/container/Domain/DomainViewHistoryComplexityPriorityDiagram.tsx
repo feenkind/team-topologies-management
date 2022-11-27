@@ -8,7 +8,8 @@ import {
   VictoryTooltip,
   VictoryScatter,
 } from 'victory';
-import { complexity, priority } from '../../constants/categories';
+import { complexity } from '../../types/complexityTypes';
+import { priority } from '../../types/priorityTypes';
 
 interface IDomainViewHistoryComplexityPriorityDiagramProps {
   complexityValues: IHistoricValue[];

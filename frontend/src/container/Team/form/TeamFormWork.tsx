@@ -13,7 +13,7 @@ import FieldRemoveButton from '../../../components/Form/FieldRemoveButton';
 import FieldSet from '../../../components/Form/FieldSet';
 import ControlledTextInput from '../../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../../components/Form/ControlledSelect';
-import { versioningType } from '../../../constants/teamApi';
+import { versioningType } from '../../../types/versioningTypes';
 
 interface ITeamFormWorkProps {
   register: UseFormRegister<ITeamFormInput>;

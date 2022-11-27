@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { teamType as teamTopologyEnum } from '../../constants/categories';
 import { Box, Typography } from '@mui/material';
 import TeamShape from '../TeamShape';
+import { teamType as teamTopologyEnum } from '../../types/teamTypes';
 
 interface ITeamPageHeadlineProps {
   teamName: string;

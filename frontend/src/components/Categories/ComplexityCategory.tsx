@@ -3,7 +3,7 @@ import { Chip } from '@mui/material';
 import {
   complexity as complexityEnum,
   complexityColor,
-} from '../../constants/categories';
+} from '../../types/complexityTypes';
 
 interface IComplexityCategoryProps {
   complexity: complexityEnum;

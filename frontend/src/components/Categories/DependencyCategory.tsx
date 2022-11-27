@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import {
   dependencyColor,
   dependencyType as dependencyTypeEnum,
-} from '../../constants/categories';
+} from '../../types/dependencyType';
 
 interface IDependencyCategoryProps {
   dependencyType: dependencyTypeEnum;

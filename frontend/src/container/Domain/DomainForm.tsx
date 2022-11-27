@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Grid } from '@mui/material';
-import { complexity, priority } from '../../constants/categories';
 import axiosInstance from '../../axios';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
 import { domainHints } from '../../constants/hints';
@@ -15,6 +14,8 @@ import FormActions from '../../components/Form/FormActions';
 import ControlledTextInput from '../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../components/Form/ControlledSelect';
 import { IDomainImport } from '../../types/domainTypes';
+import { complexity } from '../../types/complexityTypes';
+import { priority } from '../../types/priorityTypes';
 
 interface IDomainFormInput {
   name: string;
