@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { ITeam } from '../../store/slices/team/teamSlice';
+import { ITeam } from '../../../store/slices/team/teamSlice';
 import { Alert, Link, Paper, Typography } from '@mui/material';
-import Table from '../../components/Table/Table';
+import Table from '../../../components/Table/Table';
 
 interface ITeamViewWorkProps {
   team: ITeam;

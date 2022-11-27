@@ -1,13 +1,13 @@
 import * as React from 'react';
-import Table from '../../components/Table/Table';
+import Table from '../../../components/Table/Table';
 import { Alert, Box, Paper, Tooltip, Typography } from '@mui/material';
-import { useAppSelector } from '../../hooks';
-import { IInteraction, ITeam } from '../../store/slices/team/teamSlice';
-import TeamLink from '../../components/Buttons/TeamLink';
-import TeamInteractionModeCategory from '../../components/Categories/TeamInteractionModeCategory';
+import { useAppSelector } from '../../../hooks';
+import { IInteraction, ITeam } from '../../../store/slices/team/teamSlice';
+import TeamLink from '../../../components/Buttons/TeamLink';
+import TeamInteractionModeCategory from '../../../components/Categories/TeamInteractionModeCategory';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { filterTeamInteractions } from './filterTeamInteractions';
-import { interactionMode } from '../../constants/categories';
+import { interactionMode } from '../../../constants/categories';
 
 interface ITeamViewInteractionsProps {
   team: ITeam;

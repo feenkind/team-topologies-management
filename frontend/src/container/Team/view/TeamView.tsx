@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Page404 from '../../components/Page404';
-import { useAppSelector } from '../../hooks';
-import ContentWithHints from '../../components/Layout/ContentWithHints';
-import Tabs from '../../components/Layout/Tabs';
+import Page404 from '../../../components/Page404';
+import { useAppSelector } from '../../../hooks';
+import ContentWithHints from '../../../components/Layout/ContentWithHints';
+import Tabs from '../../../components/Layout/Tabs';
 import TeamViewDependencies from './TeamViewDependencies';
 import TeamViewInformation from './TeamViewInformation';
-import TeamPageHeadline from '../../components/Layout/TeamPageHeadline';
+import TeamPageHeadline from '../../../components/Layout/TeamPageHeadline';
 import TeamViewWork from './TeamViewWork';
 import TeamViewInteractions from './TeamViewInteractions';
 import TeamViewCognitiveLoad from './TeamViewCognitiveLoad';

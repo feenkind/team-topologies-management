@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { ITeam } from '../../store/slices/team/teamSlice';
+import { ITeam } from '../../../store/slices/team/teamSlice';
 
-import Table from '../../components/Table/Table';
-import { useAppSelector } from '../../hooks';
+import Table from '../../../components/Table/Table';
+import { useAppSelector } from '../../../hooks';
 import { Alert } from '@mui/material';
-import TeamInteractionModeCategory from '../../components/Categories/TeamInteractionModeCategory';
-import { changeType } from '../../constants/categories';
+import TeamInteractionModeCategory from '../../../components/Categories/TeamInteractionModeCategory';
+import { changeType } from '../../../constants/categories';
 
 interface ITeamViewHistoryInteractionsTableProps {
   team: ITeam;

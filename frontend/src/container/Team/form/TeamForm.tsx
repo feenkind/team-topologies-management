@@ -1,23 +1,26 @@
 import * as React from 'react';
-import PageHeadline from '../../components/Layout/PageHeadline';
-import ContentWithHints from '../../components/Layout/ContentWithHints';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import PageHeadline from '../../../components/Layout/PageHeadline';
+import ContentWithHints from '../../../components/Layout/ContentWithHints';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Tabs from '../../components/Layout/Tabs';
+import Tabs from '../../../components/Layout/Tabs';
 import TeamFormInformation from './TeamFormInformation';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TeamFormInteractions from './TeamFormInteractions';
-import ControlledTextInput from '../../components/Form/ControlledTextInput';
-import FormActions from '../../components/Form/FormActions';
+import ControlledTextInput from '../../../components/Form/ControlledTextInput';
+import FormActions from '../../../components/Form/FormActions';
 import TeamFormWork from './TeamFormWork';
 import TeamFormDependencies from './TeamFormDependencies';
 import { getInvalidFieldNames } from './validateTeamFormSubmit';
-import axiosInstance from '../../axios';
-import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
-import { teamHints } from '../../constants/hints';
-import { ITeamImport } from '../../types/teamTypes';
+import axiosInstance from '../../../axios';
+import {
+  setDataLoaded,
+  setNetworkError,
+} from '../../../store/slices/globalSlice';
+import { teamHints } from '../../../constants/hints';
+import { ITeamImport } from '../../../types/teamTypes';
 
 export interface ITeamFormInput {
   changeNote: string;

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { useAppSelector } from '../../hooks';
-import { ITeam } from '../../store/slices/team/teamSlice';
+import { useAppSelector } from '../../../hooks';
+import { ITeam } from '../../../store/slices/team/teamSlice';
 import { Alert } from '@mui/material';
-import Table from '../../components/Table/Table';
-import DependencyCategory from '../../components/Categories/DependencyCategory';
-import { changeType } from '../../constants/categories';
+import Table from '../../../components/Table/Table';
+import DependencyCategory from '../../../components/Categories/DependencyCategory';
+import { changeType } from '../../../constants/categories';
 
 interface ITeamViewHistoryDependencyTableProps {
   team: ITeam;

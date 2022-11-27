@@ -1,4 +1,4 @@
-import { IInteraction } from '../../store/slices/team/teamSlice';
+import { IInteraction } from '../../../store/slices/team/teamSlice';
 
 export const filterTeamInteractions = ({
   interactions,

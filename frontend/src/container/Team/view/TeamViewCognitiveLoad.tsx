@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { ITeam } from '../../store/slices/team/teamSlice';
-import InformationGrid from '../../components/Layout/InformationGrid';
+import { ITeam } from '../../../store/slices/team/teamSlice';
+import InformationGrid from '../../../components/Layout/InformationGrid';
 import { Alert, Box, Paper, Tooltip, Typography } from '@mui/material';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import { grey } from '@mui/material/colors';
-import Table from '../../components/Table/Table';
-import ComplexityCategory from '../../components/Categories/ComplexityCategory';
-import { complexity } from '../../constants/categories';
-import { useAppSelector } from '../../hooks';
-import ButtonLink from '../../components/Buttons/ButtonLink';
+import Table from '../../../components/Table/Table';
+import ComplexityCategory from '../../../components/Categories/ComplexityCategory';
+import { complexity } from '../../../constants/categories';
+import { useAppSelector } from '../../../hooks';
+import ButtonLink from '../../../components/Buttons/ButtonLink';
 import { useCognitiveLoad } from './useCognitiveLoadHook';
 
 interface ITeamViewCognitiveLoadProps {

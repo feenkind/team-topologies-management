@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Grid } from '@mui/material';
-import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
+import FormGroupWrapper from '../../../components/Form/FormGroupWrapper';
 import {
   Control,
   FieldErrors,
@@ -8,14 +8,14 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 import { ITeamFormInput } from './TeamForm';
-import { teamType } from '../../constants/categories';
-import { useAppSelector } from '../../hooks';
-import { channelType, meetingsDay } from '../../constants/teamApi';
-import ControlledTextInput from '../../components/Form/ControlledTextInput';
-import ControlledSelect from '../../components/Form/ControlledSelect';
-import FieldRemoveButton from '../../components/Form/FieldRemoveButton';
-import FieldSet from '../../components/Form/FieldSet';
-import FieldAddButton from '../../components/Form/FieldAddButton';
+import { teamType } from '../../../constants/categories';
+import { useAppSelector } from '../../../hooks';
+import { channelType, meetingsDay } from '../../../constants/teamApi';
+import ControlledTextInput from '../../../components/Form/ControlledTextInput';
+import ControlledSelect from '../../../components/Form/ControlledSelect';
+import FieldRemoveButton from '../../../components/Form/FieldRemoveButton';
+import FieldSet from '../../../components/Form/FieldSet';
+import FieldAddButton from '../../../components/Form/FieldAddButton';
 
 interface ITeamFormInformationProps {
   register: UseFormRegister<ITeamFormInput>;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import VisualizationOptionsWrapper from '../../components/Layout/VisualizationOptionsWrapper';
+import VisualizationOptionsWrapper from '../../../components/Layout/VisualizationOptionsWrapper';
 import {
   Alert,
   Checkbox,
@@ -12,10 +12,10 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { ITeam } from '../../store/slices/team/teamSlice';
+import { ITeam } from '../../../store/slices/team/teamSlice';
 import TeamViewHistoryCognitiveLoadDiagram from './TeamViewHistoryCognitiveLoadDiagram';
 import TeamViewHistoryDependencyTable from './TeamViewHistoryDependencyTable';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../../hooks';
 import TeamViewHistoryTeamTypeTable from './TeamViewHistoryTeamTypeTable';
 import TeamViewHistoryInteractionsTable from './TeamViewHistoryInteractionsTable';
 

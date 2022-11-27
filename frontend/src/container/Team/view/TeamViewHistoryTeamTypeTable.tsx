@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { ITeam } from '../../store/slices/team/teamSlice';
-import { useAppSelector } from '../../hooks';
+import { ITeam } from '../../../store/slices/team/teamSlice';
+import { useAppSelector } from '../../../hooks';
 import { Alert } from '@mui/material';
-import Table from '../../components/Table/Table';
-import TeamTypeCategory from '../../components/Categories/TeamTypeCategory';
+import Table from '../../../components/Table/Table';
+import TeamTypeCategory from '../../../components/Categories/TeamTypeCategory';
 
 interface ITeamViewHistoryTeamTypeTableProps {
   team: ITeam;

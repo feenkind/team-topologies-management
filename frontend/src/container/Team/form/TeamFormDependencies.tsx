@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Grid } from '@mui/material';
-import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
+import FormGroupWrapper from '../../../components/Form/FormGroupWrapper';
 import {
   Control,
   FieldErrors,
@@ -8,13 +8,13 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 import { ITeamFormInput } from './TeamForm';
-import FieldAddButton from '../../components/Form/FieldAddButton';
-import FieldSet from '../../components/Form/FieldSet';
-import FieldRemoveButton from '../../components/Form/FieldRemoveButton';
-import ControlledTextInput from '../../components/Form/ControlledTextInput';
-import ControlledSelect from '../../components/Form/ControlledSelect';
-import { dependencyType } from '../../constants/categories';
-import { ITeam } from '../../store/slices/team/teamSlice';
+import FieldAddButton from '../../../components/Form/FieldAddButton';
+import FieldSet from '../../../components/Form/FieldSet';
+import FieldRemoveButton from '../../../components/Form/FieldRemoveButton';
+import ControlledTextInput from '../../../components/Form/ControlledTextInput';
+import ControlledSelect from '../../../components/Form/ControlledSelect';
+import { dependencyType } from '../../../constants/categories';
+import { ITeam } from '../../../store/slices/team/teamSlice';
 
 interface ITeamFormDependenciesProps {
   register: UseFormRegister<ITeamFormInput>;

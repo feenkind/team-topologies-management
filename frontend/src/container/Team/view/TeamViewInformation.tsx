@@ -1,7 +1,7 @@
 import * as React from 'react';
-import TeamTypeCategory from '../../components/Categories/TeamTypeCategory';
-import InformationGrid from '../../components/Layout/InformationGrid';
-import { ITeam } from '../../store/slices/team/teamSlice';
+import TeamTypeCategory from '../../../components/Categories/TeamTypeCategory';
+import InformationGrid from '../../../components/Layout/InformationGrid';
+import { ITeam } from '../../../store/slices/team/teamSlice';
 import { Box, Typography } from '@mui/material';
 
 interface ITeamViewInformationProps {

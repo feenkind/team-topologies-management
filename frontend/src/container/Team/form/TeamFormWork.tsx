@@ -6,14 +6,14 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 import { ITeamFormInput } from './TeamForm';
-import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
-import FieldAddButton from '../../components/Form/FieldAddButton';
+import FormGroupWrapper from '../../../components/Form/FormGroupWrapper';
+import FieldAddButton from '../../../components/Form/FieldAddButton';
 import { Grid } from '@mui/material';
-import FieldRemoveButton from '../../components/Form/FieldRemoveButton';
-import FieldSet from '../../components/Form/FieldSet';
-import ControlledTextInput from '../../components/Form/ControlledTextInput';
-import ControlledSelect from '../../components/Form/ControlledSelect';
-import { versioningType } from '../../constants/teamApi';
+import FieldRemoveButton from '../../../components/Form/FieldRemoveButton';
+import FieldSet from '../../../components/Form/FieldSet';
+import ControlledTextInput from '../../../components/Form/ControlledTextInput';
+import ControlledSelect from '../../../components/Form/ControlledSelect';
+import { versioningType } from '../../../constants/teamApi';
 
 interface ITeamFormWorkProps {
   register: UseFormRegister<ITeamFormInput>;
