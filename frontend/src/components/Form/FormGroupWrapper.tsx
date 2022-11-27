@@ -15,7 +15,8 @@ const FormGroupWrapper: React.FC<IFormGroupWrapperProps> = ({
       variant="outlined"
       sx={{
         backgroundColor: 'white',
-        p: 2,
+        px: 2,
+        py: 3,
         my: 4,
         position: 'relative',
       }}

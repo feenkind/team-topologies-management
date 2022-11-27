@@ -19,6 +19,7 @@ interface IControlledSelectProps {
   required?: boolean;
   multiple?: boolean;
   options: { label: string; value: string }[];
+  additionalOnSelect?: () => void;
 }
 
 const ControlledSelect: React.FC<IControlledSelectProps> = ({
@@ -30,6 +31,7 @@ const ControlledSelect: React.FC<IControlledSelectProps> = ({
   required,
   options,
   multiple,
+  additionalOnSelect,
 }: IControlledSelectProps) => {
   return (
     <FormControl fullWidth variant="outlined" error={!!error}>
@@ -52,9 +54,13 @@ const ControlledSelect: React.FC<IControlledSelectProps> = ({
                   message: 'Please choose an option.',
                 },
               })}
+              onChange={(event) => {
+                field.onChange(event);
+                additionalOnSelect && additionalOnSelect();
+              }}
             >
-              {options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
+              {options.map((option, index) => (
+                <MenuItem key={`${index}_${option.value}`} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}

@@ -90,6 +90,7 @@ const TeamForm: React.FC = () => {
     handleSubmit,
     setError,
     reset,
+    getValues,
     formState: { errors },
   } = useForm<ITeamFormInput>();
 
@@ -370,6 +371,7 @@ const TeamForm: React.FC = () => {
                   register={register}
                   control={control}
                   errors={errors}
+                  getValues={getValues}
                   otherTeams={otherTeams}
                 />
               ),
@@ -384,6 +386,7 @@ const TeamForm: React.FC = () => {
                   register={register}
                   control={control}
                   errors={errors}
+                  getValues={getValues}
                   otherTeams={otherTeams}
                 />
               ),

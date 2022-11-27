@@ -185,6 +185,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
           >
             <Grid item xs={12} md={4}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.meetings ? errors.meetings[index]?.purpose : undefined
                 }
@@ -199,6 +200,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
 
             <Grid item xs={12} md={4}>
               <ControlledSelect
+                key={field.id}
                 error={
                   errors.meetings
                     ? errors.meetings[index]?.dayOfWeek
@@ -218,6 +220,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
 
             <Grid item xs={12} md={4}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.meetings ? errors.meetings[index]?.time : undefined
                 }
@@ -232,6 +235,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
 
             <Grid item xs={12} md={4}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.meetings ? errors.meetings[index]?.duration : undefined
                 }
@@ -276,6 +280,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
           >
             <Grid item xs={12} md={4}>
               <ControlledSelect
+                key={field.id}
                 error={
                   errors.channels
                     ? errors.channels[index]?.channelType
@@ -294,6 +299,7 @@ const TeamFormInformation: React.FC<ITeamFormInformationProps> = ({
             </Grid>
             <Grid item xs={12} md={8}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.channels
                     ? errors.channels[index]?.channelName

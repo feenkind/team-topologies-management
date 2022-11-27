@@ -5,6 +5,7 @@ import {
   Control,
   FieldErrors,
   useFieldArray,
+  UseFormGetValues,
   UseFormRegister,
 } from 'react-hook-form';
 import { ITeamFormInput } from './TeamForm';
@@ -15,11 +16,13 @@ import ControlledTextInput from '../../../components/Form/ControlledTextInput';
 import ControlledSelect from '../../../components/Form/ControlledSelect';
 import { dependencyType } from '../../../constants/categories';
 import { ITeam } from '../../../store/slices/team/teamSlice';
+import { useEffect, useState } from 'react';
 
 interface ITeamFormDependenciesProps {
   register: UseFormRegister<ITeamFormInput>;
   control: Control<ITeamFormInput>;
   errors: FieldErrors<ITeamFormInput>;
+  getValues: UseFormGetValues<ITeamFormInput>;
   otherTeams: ITeam[];
 }
 
@@ -27,6 +30,7 @@ const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
   register,
   control,
   errors,
+  getValues,
   otherTeams,
 }: ITeamFormDependenciesProps) => {
   const {
@@ -38,6 +42,45 @@ const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
     name: 'dependencies',
   });
 
+  const [availableTeams, setAvailableTeams] = useState<ITeam[]>(otherTeams);
+  const [
+    selectedDependencyOptionForDependencyField,
+    setSelectedDependencyOptionForDependencyField,
+  ] = useState<{ label: string; value: string }[][]>([]);
+  const [recalculateTeamOptions, setRecalculateTeamOptions] =
+    useState<boolean>(true);
+
+  useEffect(() => {
+    if (recalculateTeamOptions) {
+      const selectedTeams = getValues().dependencies.map(
+        (dependency) => dependency.otherTeamId,
+      );
+      setAvailableTeams(
+        otherTeams.filter((team) => !selectedTeams.includes(team.id)),
+      );
+
+      setSelectedDependencyOptionForDependencyField(
+        getValues().dependencies.map((values) => {
+          const teamId = values.otherTeamId;
+          const team = otherTeams.find((team) => team.id === teamId);
+          if (team) {
+            return [{ label: team.name, value: teamId }];
+          }
+          return [];
+        }),
+      );
+
+      setRecalculateTeamOptions(false);
+    }
+  }, [
+    recalculateTeamOptions,
+    setRecalculateTeamOptions,
+    setAvailableTeams,
+    setSelectedDependencyOptionForDependencyField,
+    otherTeams,
+    getValues,
+  ]);
+
   return (
     <FormGroupWrapper caption="Team Dependencies">
       {dependencyFields.map((field, index) => (
@@ -45,13 +88,21 @@ const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
           key={`dependencies.${index}`}
           removeButton={
             <FieldRemoveButton
-              onClick={() => removeDependency(index)}
+              onClick={() => {
+                // set available teams to all other teams is needed to prevent
+                // out of range warnings - available teams will be filtered
+                // again directly after removing
+                setAvailableTeams(otherTeams);
+                removeDependency(index);
+                setRecalculateTeamOptions(true);
+              }}
               tooltipText="Remove dependency"
             />
           }
         >
           <Grid item xs={12} md={6}>
             <ControlledSelect
+              key={field.id}
               error={
                 errors.dependencies
                   ? errors.dependencies[index]?.otherTeamId
@@ -62,15 +113,22 @@ const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
               name={`dependencies.${index}.otherTeamId`}
               label="Dependency to"
               required={true}
-              options={otherTeams.map((team) => ({
-                label: team.name,
-                value: team.id,
-              }))}
+              options={[
+                ...availableTeams.map((team) => ({
+                  label: team.name,
+                  value: team.id,
+                })),
+                ...(selectedDependencyOptionForDependencyField[index] || []),
+              ]}
+              additionalOnSelect={() => {
+                setRecalculateTeamOptions(true);
+              }}
             />
           </Grid>
 
           <Grid item xs={12} md={6}>
             <ControlledSelect
+              key={field.id}
               error={
                 errors.dependencies
                   ? errors.dependencies[index]?.dependencyType
@@ -90,6 +148,7 @@ const TeamFormDependencies: React.FC<ITeamFormDependenciesProps> = ({
 
           <Grid item xs={12} md={6}>
             <ControlledTextInput
+              key={field.id}
               error={
                 errors.dependencies
                   ? errors.dependencies[index]?.dependencyDescription

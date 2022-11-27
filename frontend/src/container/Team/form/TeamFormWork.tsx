@@ -68,6 +68,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
           >
             <Grid item xs={12} md={6}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.services
                     ? errors.services[index]?.serviceName
@@ -84,6 +85,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
 
             <Grid item xs={12} md={6}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.services
                     ? errors.services[index]?.serviceUrl
@@ -99,6 +101,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
 
             <Grid item xs={12} md={6}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.services
                     ? errors.services[index]?.repository
@@ -114,6 +117,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
 
             <Grid item xs={12} md={6}>
               <ControlledSelect
+                key={field.id}
                 error={
                   errors.services
                     ? errors.services[index]?.versioningType
@@ -163,6 +167,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
           >
             <Grid item xs={12} md={6}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.workInProgress
                     ? errors.workInProgress[index]?.summary
@@ -179,6 +184,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
 
             <Grid item xs={12} md={6}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.workInProgress
                     ? errors.workInProgress[index]?.repository
@@ -222,6 +228,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
           >
             <Grid item xs={12} md={6}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.wayOfWorking
                     ? errors.wayOfWorking[index]?.wayOfWorkingName
@@ -238,6 +245,7 @@ const TeamFormWork: React.FC<ITeamFormWorkProps> = ({
 
             <Grid item xs={12} md={6}>
               <ControlledTextInput
+                key={field.id}
                 error={
                   errors.wayOfWorking
                     ? errors.wayOfWorking[index]?.additionalInformation
