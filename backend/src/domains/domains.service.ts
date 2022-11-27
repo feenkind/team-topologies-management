@@ -51,7 +51,7 @@ export class DomainsService {
         description: history.description,
         priority: history.priority as priority,
         complexity: history.complexity as complexity,
-        createdAt: history.createdAt.toString(),
+        createdAt: history.createdAt.toUTCString(),
         changeNote: history.changeNote,
       })),
     }));

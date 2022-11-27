@@ -44,7 +44,7 @@ export class InteractionsService {
       teamIdTwo: interaction.teamIdTwo,
       interactionMode: interaction.interactionMode as interactionMode,
       purpose: interaction.purpose,
-      startDate: interaction.startDate.toString(),
+      startDate: interaction.startDate.toUTCString(),
       expectedDuration: interaction.expectedDuration,
       additionalInformation: interaction.additionalInformation,
     }));
@@ -61,10 +61,10 @@ export class InteractionsService {
       teamIdTwo: history.teamIdTwo,
       interactionMode: history.interactionMode as interactionMode,
       purpose: history.purpose,
-      startDate: history.startDate.toString(),
+      startDate: history.startDate.toUTCString(),
       expectedDuration: history.expectedDuration,
       additionalInformation: history.additionalInformation,
-      createdAt: history.createdAt.toString(),
+      createdAt: history.createdAt.toUTCString(),
       changeNote: history.changeNote,
       changeType: history.changeType as changeType,
     }));

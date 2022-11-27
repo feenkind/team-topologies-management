@@ -52,7 +52,7 @@ export class DependenciesService {
       teamIdTo: history.teamIdTo,
       dependencyType: history.dependencyType as dependencyType,
       description: history.description,
-      createdAt: history.createdAt.toString(),
+      createdAt: history.createdAt.toUTCString(),
       changeNote: history.changeNote,
       changeType: history.changeType as changeType,
     }));

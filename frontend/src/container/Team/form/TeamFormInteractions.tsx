@@ -13,7 +13,7 @@ import FieldAddButton from '../../../components/Form/FieldAddButton';
 import FieldSet from '../../../components/Form/FieldSet';
 import FieldRemoveButton from '../../../components/Form/FieldRemoveButton';
 import ControlledTextInput from '../../../components/Form/ControlledTextInput';
-import ControlledDateInput from '../../../components/Form/ControlleDateInput';
+import ControlledDateInput from '../../../components/Form/ControlledDateInput';
 import ControlledSelect from '../../../components/Form/ControlledSelect';
 import { interactionMode } from '../../../constants/categories';
 import { ITeam } from '../../../store/slices/team/teamSlice';
