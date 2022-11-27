@@ -64,7 +64,8 @@ const LoadBackendData: React.FC = () => {
           dispatch(setDataLoaded(true));
           dispatch(setNetworkError(false));
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error);
           dispatch(setDataLoaded(false));
           dispatch(setNetworkError(true));
         });

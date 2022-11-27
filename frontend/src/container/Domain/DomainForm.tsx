@@ -42,7 +42,7 @@ const DomainForm: React.FC = () => {
   }>();
 
   const requestedDomainExists =
-    domains.find((domain) => domain.id === domainId) !== undefined;
+    !domainId || domains.find((domain) => domain.id === domainId) !== undefined;
 
   const [domainData, setDomainData] = useState<IDomainImport>();
 

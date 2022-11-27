@@ -82,7 +82,7 @@ const TeamForm: React.FC = () => {
   }>();
 
   const requestedTeamExists =
-    teams.find((team) => team.id === teamId) !== undefined;
+    !teamId || teams.find((team) => team.id === teamId) !== undefined;
 
   const otherTeams = teams.filter((team) => team.id !== teamId);
 

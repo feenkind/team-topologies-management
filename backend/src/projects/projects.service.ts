@@ -34,11 +34,13 @@ export class ProjectsService {
 
   async findOne(id: string): Promise<ProjectDto> {
     const project = await this.prisma.project.findUnique({ where: { id } });
-    return {
-      id: project.id,
-      name: project.name,
-      description: project.description,
-    };
+    return project
+      ? {
+          id: project.id,
+          name: project.name,
+          description: project.description,
+        }
+      : null;
   }
 
   async update(

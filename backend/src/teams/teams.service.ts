@@ -234,69 +234,71 @@ export class TeamsService {
       },
     });
 
-    return {
-      id: team.id,
-      projectId: team.projectId,
-      name: team.name,
-      cognitiveLoad: team.cognitiveLoad,
-      fte: team.fte,
-      focus: team.focus,
-      type: team.type as teamType,
-      platform: team.platform,
-      wikiSearchTerms: team.wikiSearchTerms,
-      communicationChannels: team.communicationChannel.map((channel) => ({
-        type: channel.type as channelTypes,
-        name: channel.name,
-      })),
-      meetings: team.meeting.map((meeting) => ({
-        purpose: meeting.purpose,
-        day: meeting.day as meetingsDay,
-        time: meeting.time,
-        durationMinutes: meeting.durationMinutes,
-      })),
-      services: team.service.map((service) => ({
-        name: service.name,
-        url: service.url,
-        repository: service.repository,
-        versioning: service.versioning as versioningType,
-      })),
-      waysOfWorking: team.wayOfWorking.map((way) => ({
-        name: way.name,
-        url: way.url,
-      })),
-      works: team.work.map((work) => ({
-        summary: work.summary,
-        repository: work.repository,
-      })),
-      domains: team.domainsOnTeams.map((domain) => domain.domainId),
-      interactionsAsTeamOne: team.interactionTeamOne.map((interaction) => ({
-        projectId: team.projectId,
-        teamIdOne: interaction.teamIdOne,
-        teamIdTwo: interaction.teamIdTwo,
-        interactionMode: interaction.interactionMode as interactionMode,
-        purpose: interaction.purpose,
-        startDate: interaction.startDate.toUTCString(),
-        expectedDuration: interaction.expectedDuration,
-        additionalInformation: interaction.additionalInformation,
-      })),
-      interactionsAsTeamTwo: team.interactionTeamTwo.map((interaction) => ({
-        projectId: team.projectId,
-        teamIdOne: interaction.teamIdOne,
-        teamIdTwo: interaction.teamIdTwo,
-        interactionMode: interaction.interactionMode as interactionMode,
-        purpose: interaction.purpose,
-        startDate: interaction.startDate.toUTCString(),
-        expectedDuration: interaction.expectedDuration,
-        additionalInformation: interaction.additionalInformation,
-      })),
-      dependencies: team.dependency.map((dependency) => ({
-        projectId: team.projectId,
-        teamIdFrom: dependency.teamIdFrom,
-        teamIdTo: dependency.teamIdTo,
-        dependencyType: dependency.dependencyType as dependencyType,
-        description: dependency.description,
-      })),
-    };
+    return team
+      ? {
+          id: team.id,
+          projectId: team.projectId,
+          name: team.name,
+          cognitiveLoad: team.cognitiveLoad,
+          fte: team.fte,
+          focus: team.focus,
+          type: team.type as teamType,
+          platform: team.platform,
+          wikiSearchTerms: team.wikiSearchTerms,
+          communicationChannels: team.communicationChannel.map((channel) => ({
+            type: channel.type as channelTypes,
+            name: channel.name,
+          })),
+          meetings: team.meeting.map((meeting) => ({
+            purpose: meeting.purpose,
+            day: meeting.day as meetingsDay,
+            time: meeting.time,
+            durationMinutes: meeting.durationMinutes,
+          })),
+          services: team.service.map((service) => ({
+            name: service.name,
+            url: service.url,
+            repository: service.repository,
+            versioning: service.versioning as versioningType,
+          })),
+          waysOfWorking: team.wayOfWorking.map((way) => ({
+            name: way.name,
+            url: way.url,
+          })),
+          works: team.work.map((work) => ({
+            summary: work.summary,
+            repository: work.repository,
+          })),
+          domains: team.domainsOnTeams.map((domain) => domain.domainId),
+          interactionsAsTeamOne: team.interactionTeamOne.map((interaction) => ({
+            projectId: team.projectId,
+            teamIdOne: interaction.teamIdOne,
+            teamIdTwo: interaction.teamIdTwo,
+            interactionMode: interaction.interactionMode as interactionMode,
+            purpose: interaction.purpose,
+            startDate: interaction.startDate.toUTCString(),
+            expectedDuration: interaction.expectedDuration,
+            additionalInformation: interaction.additionalInformation,
+          })),
+          interactionsAsTeamTwo: team.interactionTeamTwo.map((interaction) => ({
+            projectId: team.projectId,
+            teamIdOne: interaction.teamIdOne,
+            teamIdTwo: interaction.teamIdTwo,
+            interactionMode: interaction.interactionMode as interactionMode,
+            purpose: interaction.purpose,
+            startDate: interaction.startDate.toUTCString(),
+            expectedDuration: interaction.expectedDuration,
+            additionalInformation: interaction.additionalInformation,
+          })),
+          dependencies: team.dependency.map((dependency) => ({
+            projectId: team.projectId,
+            teamIdFrom: dependency.teamIdFrom,
+            teamIdTo: dependency.teamIdTo,
+            dependencyType: dependency.dependencyType as dependencyType,
+            description: dependency.description,
+          })),
+        }
+      : null;
   }
 
   async update(id: string, updateTeamDto: UpdateTeamDto): Promise<TeamDto> {

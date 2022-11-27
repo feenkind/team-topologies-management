@@ -40,8 +40,8 @@ const projectSlice = createSlice({
         name: project.name,
         description: project.description,
       }));
-      state.currentProject.id = payload[0].id || '';
-      state.currentProject.name = payload[0].name || '';
+      state.currentProject.id = payload[0] ? payload[0].id : '';
+      state.currentProject.name = payload[0] ? payload[0].name : '';
     },
   },
 });

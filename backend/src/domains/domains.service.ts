@@ -59,14 +59,16 @@ export class DomainsService {
 
   async findOne(id: string): Promise<DomainDto> {
     const domain = await this.prisma.domain.findUnique({ where: { id } });
-    return {
-      id: domain.id,
-      projectId: domain.projectId,
-      name: domain.name,
-      description: domain.description,
-      priority: domain.priority as priority,
-      complexity: domain.complexity as complexity,
-    };
+    return domain
+      ? {
+          id: domain.id,
+          projectId: domain.projectId,
+          name: domain.name,
+          description: domain.description,
+          priority: domain.priority as priority,
+          complexity: domain.complexity as complexity,
+        }
+      : null;
   }
 
   async update(
