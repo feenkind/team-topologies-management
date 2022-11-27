@@ -16,6 +16,7 @@ import {
 import {
   IDependencyHistoryImport,
   IDependencyImport,
+  IInteractionHistoryImport,
   IInteractionImport,
   ITeamImport,
 } from '../../types/teamTypes';
@@ -34,7 +35,7 @@ const LoadBackendData: React.FC = () => {
         axiosInstance.get('/teams/dependencies'),
         axiosInstance.get('/teams/dependencies/history'),
         axiosInstance.get('/teams/interactions'),
-        // axiosInstance.get('/teams/interactions/history'),
+        axiosInstance.get('/teams/interactions/history'),
       ];
 
       axios
@@ -47,7 +48,8 @@ const LoadBackendData: React.FC = () => {
           const dependencyHistory: IDependencyHistoryImport[] =
             responses[4].data;
           const interactions: IInteractionImport[] = responses[5].data;
-          // const interactionHistory = responses[6].data;
+          const interactionHistory: IInteractionHistoryImport[] =
+            responses[6].data;
 
           dispatch(addAllProjects(projectData));
           dispatch(addAllDomainsWithHistory(domainData));
@@ -55,7 +57,7 @@ const LoadBackendData: React.FC = () => {
           dispatch(addAllDependencies(dependencies));
           dispatch(addAllDependencyHistory(dependencyHistory));
           dispatch(addAllInteractions(interactions));
-          // dispatch(addAllInteractionHistory(interactionHistory));
+          dispatch(addAllInteractionHistory(interactionHistory));
 
           dispatch(setDataLoaded(true));
           dispatch(setNetworkError(false));

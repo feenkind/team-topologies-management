@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { Interaction, InteractionHistory, Prisma } from '@prisma/client';
+import { Interaction, Prisma } from '@prisma/client';
 import { UpdateInteractionDto } from './dto/update-interaction.dto';
 import { changeType } from './dto/create-team.dto';
 import { InteractionDto } from './dto/interaction.dto';
 import { interactionMode } from './dto/create-interaction.dto';
+import { InteractionHistoryDto } from './dto/interaction-history.dto';
 
 const interactionDataIsTheSame = (
   current: Interaction,
@@ -49,10 +50,24 @@ export class InteractionsService {
     }));
   }
 
-  findAllHistoric(): Promise<InteractionHistory[]> {
-    return this.prisma.interactionHistory.findMany({
+  async findAllHistoric(): Promise<InteractionHistoryDto[]> {
+    const histories = await this.prisma.interactionHistory.findMany({
       include: { teamOne: true, teamTwo: true },
     });
+
+    return histories.map((history) => ({
+      projectId: history.teamOne.projectId,
+      teamIdOne: history.teamIdOne,
+      teamIdTwo: history.teamIdTwo,
+      interactionMode: history.interactionMode as interactionMode,
+      purpose: history.purpose,
+      startDate: history.startDate.toString(),
+      expectedDuration: history.expectedDuration,
+      additionalInformation: history.additionalInformation,
+      createdAt: history.createdAt.toString(),
+      changeNote: history.changeNote,
+      changeType: history.changeType as changeType,
+    }));
   }
 
   async updateInteractionsForTeamId(

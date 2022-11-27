@@ -10,10 +10,10 @@ import {
   meetingsDay,
   versioningType,
 } from '../../../constants/teamApi';
-import { IInteractionHistoryImport } from './interfacesInteractionImport';
 import {
   IDependencyHistoryImport,
   IDependencyImport,
+  IInteractionHistoryImport,
   IInteractionImport,
   ITeamImport,
 } from '../../../types/teamTypes';
@@ -446,7 +446,7 @@ const teamSlice = createSlice({
         // check project id of any team to see connected interactions project
         // this needs to be changed as soon as teams can have interactions
         // over different projects
-        const projectId = history.teamOne.projectId;
+        const projectId = history.projectId;
         // append interaction or create new
         if (historyInteractions[projectId]) {
           historyInteractions[projectId].push(importedHistory);
