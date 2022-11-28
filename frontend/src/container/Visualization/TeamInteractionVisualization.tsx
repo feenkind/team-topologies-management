@@ -336,7 +336,12 @@ const TeamInteractionVisualization: React.FC = () => {
           nodeSize={nodeRelSize}
           nodes={nodes}
           nodeCanvasObjectCallback={(node: INode, ctx, globalScale) => {
-            if (!node.name || !node.x || !node.y || !node.teamType) {
+            if (
+              !node.name ||
+              node.x === undefined ||
+              node.y === undefined ||
+              !node.teamType
+            ) {
               return;
             }
 

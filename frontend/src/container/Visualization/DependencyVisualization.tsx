@@ -238,7 +238,7 @@ const DependencyVisualization: React.FC = () => {
           nodeSize={nodeRelSize}
           nodes={nodes}
           nodeCanvasObjectCallback={(node: INode, ctx, globalScale) => {
-            if (!node.name || !node.x || !node.y) {
+            if (!node.name || node.x === undefined || node.y === undefined) {
               return;
             }
             // border for nodes

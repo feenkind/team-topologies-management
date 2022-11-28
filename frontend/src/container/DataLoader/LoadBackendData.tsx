@@ -3,7 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import axiosInstance from '../../axios';
 import axios from 'axios';
-import { addAllProjects } from '../../store/slices/projectSlice';
+import {
+  addAllProjects,
+  setCurrentProject,
+} from '../../store/slices/projectSlice';
 import { addAllDomainsWithHistory } from '../../store/slices/domain/domainSlice';
 import { setDataLoaded, setNetworkError } from '../../store/slices/globalSlice';
 import {
@@ -22,10 +25,15 @@ import {
 } from '../../types/teamTypes';
 import { IProjectImport } from '../../types/projectTypes';
 import { IDomainImport } from '../../types/domainTypes';
+import { useParams } from 'react-router-dom';
 
 const LoadBackendData: React.FC = () => {
   const isDataLoaded = useAppSelector((state) => state.global.dataLoaded);
   const dispatch = useAppDispatch();
+
+  const { projectId } = useParams<{
+    projectId: string;
+  }>();
 
   // load all data if not already done
   useEffect(() => {
@@ -54,6 +62,15 @@ const LoadBackendData: React.FC = () => {
             responses[6].data;
 
           dispatch(addAllProjects(projectData));
+          // if project url is loaded directly, set current project to avoid
+          // any false display or unneccessary re-renderings
+          if (
+            projectId &&
+            projectData.find((project) => project.id === projectId)
+          ) {
+            dispatch(setCurrentProject(projectId));
+          }
+
           dispatch(addAllDomainsWithHistory(domainData));
           dispatch(addAllTeamDataWithHistory(teamData));
           dispatch(addAllDependencies(dependencies));
@@ -64,13 +81,12 @@ const LoadBackendData: React.FC = () => {
           dispatch(setDataLoaded(true));
           dispatch(setNetworkError(false));
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
           dispatch(setDataLoaded(false));
           dispatch(setNetworkError(true));
         });
     }
-  }, [isDataLoaded, dispatch]);
+  }, [isDataLoaded, dispatch, projectId]);
   return <></>;
 };
 
