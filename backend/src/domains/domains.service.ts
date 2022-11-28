@@ -16,7 +16,6 @@ export class DomainsService {
         priority: createDomainDto.priority,
         complexity: createDomainDto.complexity,
         project: { connect: { id: createDomainDto.projectId } },
-        active: true,
         domainHistory: {
           create: [
             {
