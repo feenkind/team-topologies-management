@@ -28,7 +28,6 @@ model Domain {
   description           String
   priority              Priority
   complexity            Complexity
-  active                Boolean
   domainHistory         DomainHistory[]
   domainsOnTeams        DomainsOnTeams[]
   domainsOnTeamsHistory DomainsOnTeamsHistory[]
