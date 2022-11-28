@@ -6,10 +6,6 @@ import createTeams from './teamSeed';
 const prisma = new PrismaClient();
 
 async function main() {
-  if (process.env.NODE_ENV !== 'development') {
-    return;
-  }
-
   await createProjects(prisma);
   await createDomains(prisma);
   await createTeams(prisma);

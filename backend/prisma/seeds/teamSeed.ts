@@ -1,13 +1,49 @@
 import { Domain, Team, PrismaClient } from '@prisma/client';
-import {
-  changeType,
-  channelTypes,
-  meetingsDay,
-  teamType,
-  versioningType,
-} from '../../src/teams/dto/create-team.dto';
-import { dependencyType } from '../../src/teams/dto/create-dependency.dto';
-import { interactionMode } from '../../src/teams/dto/create-interaction.dto';
+
+enum teamType {
+  STREAM_ALIGNED = 'stream_aligned',
+  PLATFORM = 'platform',
+  ENABLING = 'enabling',
+  COMPLICATED_SUBSYSTEM = 'complicated_subsystem',
+  UNDEFINED = 'undefined',
+}
+
+enum channelTypes {
+  SLACK = 'slack',
+}
+
+enum meetingsDay {
+  DAILY = 'daily',
+  MONDAY = 'monday',
+  TUESDAY = 'tuesday',
+  WEDNESDAY = 'wednesday',
+  THURSDAY = 'thursday',
+  FRIDAY = 'friday',
+}
+
+enum versioningType {
+  SEMANTIC = 'semantic',
+  SEQUENTIAL = 'sequential',
+}
+
+enum changeType {
+  ADDED = 'added',
+  CHANGED = 'changed',
+  REMOVED = 'removed',
+}
+
+enum dependencyType {
+  OK = 'ok',
+  SLOWING = 'slowing',
+  BLOCKING = 'blocking',
+}
+
+enum interactionMode {
+  COLLABORATION = 'collaboration',
+  X_AS_A_SERVICE = 'x_as_a_service',
+  FACILITATING = 'facilitating',
+  UNDEFINED = 'undefined',
+}
 
 const infrastructureTeam = {
   id: '',
@@ -598,6 +634,7 @@ const uxTeam = {
   waysOfWorking: [
     {
       name: 'Kanban',
+      url: '',
     },
   ],
   workInProgress: [
@@ -607,6 +644,7 @@ const uxTeam = {
     },
     {
       summary: 'Preparing internal UI/UX Workshops',
+      repository: '',
     },
   ],
   history: [
@@ -715,7 +753,9 @@ const createTeams = async (prisma: PrismaClient) => {
     const domainsForTeam = [];
     for (let j = 0; j < domainNames.length; j++) {
       const retrievedDomain = await findDomain(domainNames[j]);
-      domainsForTeam.push(retrievedDomain);
+      if (retrievedDomain) {
+        domainsForTeam.push(retrievedDomain);
+      }
     }
 
     const createdTeam = await prisma.team.create({
@@ -756,7 +796,7 @@ const createTeams = async (prisma: PrismaClient) => {
         wayOfWorking: {
           create: team.waysOfWorking.map((way) => ({
             name: way.name,
-            url: way.url,
+            url: way.url || '',
           })),
         },
         work: {
@@ -783,7 +823,9 @@ const createTeams = async (prisma: PrismaClient) => {
       const historyDomainIds = [];
       for (let l = 0; l < team.historyDomains[k].domains.length; l++) {
         const domain = await findDomain(team.historyDomains[k].domains[l]);
-        historyDomainIds.push(domain.id);
+        if (domain) {
+          historyDomainIds.push(domain.id);
+        }
       }
 
       await prisma.domainsOnTeamsHistory.createMany({

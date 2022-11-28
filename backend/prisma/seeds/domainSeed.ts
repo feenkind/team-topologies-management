@@ -1,5 +1,16 @@
 import { Prisma, PrismaClient, Project } from '@prisma/client';
-import { complexity, priority } from '../../src/domains/dto/create-domain.dto';
+
+enum priority {
+  GENERIC = 'generic',
+  SUPPORTING = 'supporting',
+  CORE = 'core',
+}
+
+enum complexity {
+  SIMPLE = 'simple',
+  COMPLICATED = 'complicated',
+  COMPLEX = 'complex',
+}
 
 const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
   return [
