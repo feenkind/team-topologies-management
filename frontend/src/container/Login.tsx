@@ -1,13 +1,13 @@
 import * as React from 'react';
 import PageHeadline from '../components/Layout/PageHeadline';
-import { Button, Grid, Typography } from '@mui/material';
+import { Alert, Button, Grid, Typography } from '@mui/material';
 import ControlledTextInput from '../components/Form/ControlledTextInput';
 import FormGroupWrapper from '../components/Form/FormGroupWrapper';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { setBasicAuthData } from '../store/slices/globalSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { LOCAL_PASSWORD, LOCAL_USERNAME } from '../constants/basicAuth';
 import axiosInstance from '../axios';
 
@@ -22,6 +22,9 @@ const Login: React.FC = () => {
   const basicAuthDataSet = useAppSelector(
     (state) => state.global.basicAuthDataSet,
   );
+
+  const [basicAuthError, setBasicAuthError] = useState<boolean>(false);
+
   const {
     register,
     control,
@@ -45,13 +48,24 @@ const Login: React.FC = () => {
       username: data.username,
       password: data.password,
     };
+    // try to get projects as a test if the data is correct
+    axiosInstance
+      .get('/projects')
+      .then(() => {
+        // set data needed for basic auth requests
+        localStorage.setItem(LOCAL_USERNAME, data.username);
+        localStorage.setItem(LOCAL_PASSWORD, data.password);
 
-    // set data needed for basic auth requests
-    localStorage.setItem(LOCAL_USERNAME, data.username);
-    localStorage.setItem(LOCAL_PASSWORD, data.password);
-
-    dispatch(setBasicAuthData(true));
-    navigate('/');
+        dispatch(setBasicAuthData(true));
+        navigate('/');
+      })
+      .catch((reason) => {
+        console.log(reason);
+        if (reason.response.status === 401) {
+          setBasicAuthError(true);
+          return;
+        }
+      });
   };
 
   return (
@@ -62,6 +76,13 @@ const Login: React.FC = () => {
         this application. You only need to do that once.
       </Typography>
       <FormGroupWrapper caption="Login">
+        {basicAuthError && (
+          <Grid item xs={12} md={12}>
+            <Alert severity="error">
+              The credentials you provided are not correct.
+            </Alert>
+          </Grid>
+        )}
         <Grid item xs={12} md={4}>
           <ControlledTextInput
             error={errors.username}
