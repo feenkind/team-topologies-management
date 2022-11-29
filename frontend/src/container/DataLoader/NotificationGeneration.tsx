@@ -11,8 +11,10 @@ const NotificationGeneration: React.FC = () => {
   const [token, setToken] = useState<string>();
 
   const getRealtimeData = useCallback(
-    (notification: INotificationImport) => {
-      dispatch(addNotification(notification));
+    (notifications: INotificationImport[]) => {
+      notifications.forEach((notification) => {
+        dispatch(addNotification(notification));
+      });
     },
     [dispatch],
   );

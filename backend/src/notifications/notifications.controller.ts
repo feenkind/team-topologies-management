@@ -46,9 +46,9 @@ export class NotificationsController {
     return interval(60000).pipe(
       switchMap(() => this.notificationsService.triggerNotifications()),
       map(
-        (notification) =>
+        (notifications) =>
           ({
-            data: notification,
+            data: notifications,
           } as MessageEvent),
       ),
     );
