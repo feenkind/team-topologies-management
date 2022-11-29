@@ -21,7 +21,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' Technical responsibles are John and Paula.',
       priority: priority.SUPPORTING,
       complexity: complexity.COMPLICATED,
-      active: true,
       projectId: project.id,
     },
     {
@@ -31,7 +30,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' responsible is Eric.',
       priority: priority.SUPPORTING,
       complexity: complexity.COMPLICATED,
-      active: true,
       projectId: project.id,
     },
     {
@@ -42,7 +40,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' Adrian and Tom',
       priority: priority.CORE,
       complexity: complexity.COMPLEX,
-      active: true,
       projectId: project.id,
     },
     {
@@ -52,7 +49,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' orders in the shopping system. Contact person is Janine.',
       priority: priority.SUPPORTING,
       complexity: complexity.COMPLICATED,
-      active: true,
       projectId: project.id,
     },
     {
@@ -63,7 +59,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' methods will be accepted. Contact person: Alfred.',
       priority: priority.GENERIC,
       complexity: complexity.COMPLICATED,
-      active: true,
       projectId: project.id,
     },
     {
@@ -74,7 +69,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' Technical responsibles: Jan and Thomas.',
       priority: priority.GENERIC,
       complexity: complexity.SIMPLE,
-      active: true,
       projectId: project.id,
     },
     {
@@ -84,7 +78,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' inventory status. Responsibles: Jana and Clara.',
       priority: priority.GENERIC,
       complexity: complexity.SIMPLE,
-      active: true,
       projectId: project.id,
     },
     {
@@ -95,7 +88,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' approach the team.',
       priority: priority.SUPPORTING,
       complexity: complexity.COMPLICATED,
-      active: true,
       projectId: project.id,
     },
     {
@@ -107,7 +99,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' more information.',
       priority: priority.GENERIC,
       complexity: complexity.COMPLEX,
-      active: true,
       projectId: project.id,
     },
     {
@@ -118,7 +109,6 @@ const createDomainData = (project: Project): Prisma.DomainCreateManyInput[] => {
         ' responsible: Hannah and Julia.',
       priority: priority.SUPPORTING,
       complexity: complexity.COMPLEX,
-      active: true,
       projectId: project.id,
     },
   ];
