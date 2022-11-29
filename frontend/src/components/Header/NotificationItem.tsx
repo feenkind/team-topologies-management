@@ -4,7 +4,10 @@ import { INotificationItem } from './Notifications';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import AccessAlarmOutlinedIcon from '@mui/icons-material/AccessAlarmOutlined';
 import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
-import { notificationType } from '../../constants/notifications';
+import {
+  notificationArea as notificationAreaEnum,
+  notificationType,
+} from '../../constants/notifications';
 
 interface INotificationItemProps {
   item: INotificationItem;
@@ -20,6 +23,10 @@ const NotificationItem: React.FC<INotificationItemProps> = ({
   if (item.type === notificationType.WARNING) {
     notificationIcon = <WarningAmberOutlinedIcon color="warning" />;
   }
+  let areaDisplay = item.area.toString();
+  if (item.area === notificationAreaEnum.TEAM_INTERACTIONS) {
+    areaDisplay = 'Team interactions';
+  }
 
   return (
     <ListItem sx={{ p: 2 }} divider>
@@ -27,7 +34,7 @@ const NotificationItem: React.FC<INotificationItemProps> = ({
         <Box sx={{ mr: 2 }}>{notificationIcon}</Box>
         <Box>
           <Typography variant="overline" color="text.secondary">
-            {`${item.type} for ${item.area}`}
+            {`${item.type} for ${areaDisplay}`}
           </Typography>
           <Typography variant="subtitle2">{item.summary}</Typography>
         </Box>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import PageHeadline from '../../components/Layout/PageHeadline';
 import Table from '../../components/Table/Table';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -6,7 +7,7 @@ import { Alert, IconButton, Typography } from '@mui/material';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { markRead } from '../../store/slices/notificationSlice';
 import axiosInstance from '../../axios';
-import { useState } from 'react';
+import { notificationArea as notificationAreaEnum } from '../../constants/notifications';
 
 const NotificationList: React.FC = () => {
   const notifications = useAppSelector(
@@ -45,12 +46,24 @@ const NotificationList: React.FC = () => {
           const variant = !notification.read ? 'subtitle2' : 'body2';
           const color = !notification.read ? 'text.primary' : 'text.secondary';
 
+          // display area correctly
+          let areaDisplay =
+            notification.area.toString().charAt(0).toUpperCase() +
+            notification.area.toString().slice(1);
+          if (notification.area === notificationAreaEnum.TEAM_INTERACTIONS) {
+            areaDisplay = 'Team interactions';
+          }
+          // display type correctly
+          const typeDisplay =
+            notification.type.toString().charAt(0).toUpperCase() +
+            notification.type.toString().slice(1);
+
           return [
             <Typography key={notification.id} variant={variant} color={color}>
-              {notification.type}
+              {typeDisplay}
             </Typography>,
             <Typography key={notification.id} variant={variant} color={color}>
-              {notification.area}
+              {areaDisplay}
             </Typography>,
             <Typography key={notification.id} variant={variant} color={color}>
               {notification.summary}
