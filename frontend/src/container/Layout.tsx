@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { default as LayoutComponent } from '../components/Layout/Layout';
 import { useAppSelector } from '../hooks';
 import { CircularProgress } from '@mui/material';
@@ -21,11 +21,22 @@ const Layout: React.FC<ILayoutProps> = ({
     (state) => state.global.basicAuthDataSet,
   );
 
+  const location = useLocation();
+  const { projectId } = useParams<{
+    projectId: string;
+  }>();
+  let bgColor = false;
+
+  if (projectId && location.pathname.endsWith(projectId)) {
+    bgColor = true;
+  }
+
   return (
     <LayoutComponent
       header={header}
       sidebar={sidebar}
       errorDisplay={errorDisplay}
+      bgColor={bgColor}
     >
       {!basicAuthDataSet && <Login />}
       {!dataLoaded && basicAuthDataSet && <CircularProgress />}

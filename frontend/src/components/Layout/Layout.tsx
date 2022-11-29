@@ -4,12 +4,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Logo from '../Header/Logo';
 import { useState } from 'react';
 import { sidebarWidth } from '../../constants/sizes';
+import { grey } from '@mui/material/colors';
 
 interface ILayoutProps {
   header: React.ReactNode;
   sidebar: React.ReactNode;
   errorDisplay: React.ReactNode;
   children: React.ReactNode | React.ReactNode[];
+  bgColor?: boolean;
 }
 
 const Layout: React.FC<ILayoutProps> = ({
@@ -17,6 +19,7 @@ const Layout: React.FC<ILayoutProps> = ({
   sidebar,
   errorDisplay,
   children,
+  bgColor,
 }: ILayoutProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -97,7 +100,12 @@ const Layout: React.FC<ILayoutProps> = ({
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        backgroundColor: bgColor ? grey[50] : 'white',
+      }}
+    >
       <AppBar
         position="fixed"
         sx={{

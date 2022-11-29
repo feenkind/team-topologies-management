@@ -96,139 +96,6 @@ const ProjectOverview: React.FC = () => {
                 color="text.secondary"
                 gutterBottom
               >
-                Domains
-              </Typography>
-              {!domains && (
-                <Typography>{currentProject.name} has no domains.</Typography>
-              )}
-              {domains && (
-                <>
-                  <Typography>
-                    Number of domains in the project:{' '}
-                    <Typography component="span" variant="h6">
-                      {domains.length}
-                    </Typography>
-                  </Typography>
-                  <Typography mt={2}>List of domains:</Typography>
-                  <Box sx={{ mb: 2, mt: 1 }}>
-                    {domains.map((domain) => (
-                      <ButtonLink
-                        key={domain.id}
-                        label={domain.name}
-                        url={`/project/${currentProject.id}/domain/${domain.id}`}
-                      />
-                    ))}
-                  </Box>
-                </>
-              )}
-            </CardContent>
-            <CardActions sx={{ alignItems: 'center' }}>
-              <Button
-                component={Link}
-                to={`/project/${currentProject.id}/domains`}
-                variant="contained"
-                color="secondary"
-              >
-                See domain details for this project
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <Card sx={{ backgroundColor: 'secondary.main', p: 1 }} elevation={4}>
-            <CardContent>
-              <Typography
-                variant="overline"
-                color="text.secondary"
-                gutterBottom
-              >
-                Project information for
-              </Typography>
-              <Typography variant="h5" sx={{ mb: 3 }}>
-                {currentProject.name}
-              </Typography>
-              <Typography variant="body2">
-                {currentProjectData.description}
-              </Typography>
-            </CardContent>
-            <CardActions sx={{ alignItems: 'center' }}>
-              <Button
-                component={Link}
-                to={`/project/${currentProject.id}/edit`}
-                variant="outlined"
-                color="primary"
-              >
-                Edit project details
-              </Button>
-              <Button
-                component={Link}
-                to={`/project/${currentProject.id}/delete`}
-                variant="outlined"
-                color="warning"
-              >
-                Delete project
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <Card sx={{ backgroundColor: 'secondary.light', p: 1 }} elevation={4}>
-            <CardContent>
-              <Typography
-                variant="overline"
-                color="text.secondary"
-                gutterBottom
-              >
-                Teams
-              </Typography>
-              {teams.length === 0 && (
-                <Typography>{currentProject.name} has no teams.</Typography>
-              )}
-              {teams.length > 0 && (
-                <>
-                  <Typography>
-                    Number of teams working on project the project:{' '}
-                    <Typography component="span" variant="h6">
-                      {teams.length}
-                    </Typography>
-                  </Typography>
-                  <Typography mt={2}>List of teams:</Typography>
-                  <Box sx={{ mb: 2 }}>
-                    {teams.map((team) => (
-                      <TeamLink
-                        key={team.id}
-                        label={team.name}
-                        teamType={team.type}
-                        url={`/project/${currentProject.id}/team/${team.id}`}
-                      />
-                    ))}
-                  </Box>
-                </>
-              )}
-            </CardContent>
-            <CardActions sx={{ alignItems: 'center' }}>
-              <Button
-                component={Link}
-                to={`/project/${currentProject.id}/teams`}
-                variant="contained"
-                color="secondary"
-              >
-                See team details for this project
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <Card sx={{ backgroundColor: 'secondary.light', p: 1 }} elevation={4}>
-            <CardContent>
-              <Typography
-                variant="overline"
-                color="text.secondary"
-                gutterBottom
-              >
                 Interactions & Dependencies
               </Typography>
               {currentInteractions.length === 0 && (
@@ -367,6 +234,139 @@ const ProjectOverview: React.FC = () => {
                 color="secondary"
               >
                 See visualization for interactions and dependencies
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Card sx={{ backgroundColor: 'secondary.main', p: 1 }} elevation={4}>
+            <CardContent>
+              <Typography
+                variant="overline"
+                color="text.secondary"
+                gutterBottom
+              >
+                Project information for
+              </Typography>
+              <Typography variant="h5" sx={{ mb: 3 }}>
+                {currentProject.name}
+              </Typography>
+              <Typography variant="body2">
+                {currentProjectData.description}
+              </Typography>
+            </CardContent>
+            <CardActions sx={{ alignItems: 'center' }}>
+              <Button
+                component={Link}
+                to={`/project/${currentProject.id}/edit`}
+                variant="outlined"
+                color="primary"
+              >
+                Edit project details
+              </Button>
+              <Button
+                component={Link}
+                to={`/project/${currentProject.id}/delete`}
+                variant="outlined"
+                color="warning"
+              >
+                Delete project
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={12}>
+          <Card sx={{ backgroundColor: 'secondary.light', p: 1 }} elevation={4}>
+            <CardContent>
+              <Typography
+                variant="overline"
+                color="text.secondary"
+                gutterBottom
+              >
+                Domains
+              </Typography>
+              {!domains && (
+                <Typography>{currentProject.name} has no domains.</Typography>
+              )}
+              {domains && (
+                <>
+                  <Typography>
+                    Number of domains in the project:{' '}
+                    <Typography component="span" variant="h6">
+                      {domains.length}
+                    </Typography>
+                  </Typography>
+                  <Typography mt={2}>List of domains:</Typography>
+                  <Box sx={{ mb: 2, mt: 1 }}>
+                    {domains.map((domain) => (
+                      <ButtonLink
+                        key={domain.id}
+                        label={domain.name}
+                        url={`/project/${currentProject.id}/domain/${domain.id}`}
+                      />
+                    ))}
+                  </Box>
+                </>
+              )}
+            </CardContent>
+            <CardActions sx={{ alignItems: 'center' }}>
+              <Button
+                component={Link}
+                to={`/project/${currentProject.id}/domains`}
+                variant="contained"
+                color="secondary"
+              >
+                See domain details for this project
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={12}>
+          <Card sx={{ backgroundColor: 'secondary.light', p: 1 }} elevation={4}>
+            <CardContent>
+              <Typography
+                variant="overline"
+                color="text.secondary"
+                gutterBottom
+              >
+                Teams
+              </Typography>
+              {teams.length === 0 && (
+                <Typography>{currentProject.name} has no teams.</Typography>
+              )}
+              {teams.length > 0 && (
+                <>
+                  <Typography>
+                    Number of teams working on project the project:{' '}
+                    <Typography component="span" variant="h6">
+                      {teams.length}
+                    </Typography>
+                  </Typography>
+                  <Typography mt={2}>List of teams:</Typography>
+                  <Box sx={{ mb: 2 }}>
+                    {teams.map((team) => (
+                      <TeamLink
+                        key={team.id}
+                        label={team.name}
+                        teamType={team.type}
+                        url={`/project/${currentProject.id}/team/${team.id}`}
+                      />
+                    ))}
+                  </Box>
+                </>
+              )}
+            </CardContent>
+            <CardActions sx={{ alignItems: 'center' }}>
+              <Button
+                component={Link}
+                to={`/project/${currentProject.id}/teams`}
+                variant="contained"
+                color="secondary"
+              >
+                See team details for this project
               </Button>
             </CardActions>
           </Card>
