@@ -2,10 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Dependency, Prisma } from '@prisma/client';
 import { UpdateDependencyDto } from './dto/update-dependency.dto';
-import { changeType } from './dto/create-team.dto';
-import { DependencyDto } from './dto/dependency.dto';
-import { dependencyType } from './dto/create-dependency.dto';
+import { DependencyDto, dependencyType } from './dto/dependency.dto';
 import { DependencyHistoryDto } from './dto/dependency-history.dto';
+import { changeType } from './dto/team.dto';
 
 const dependencyDataIsTheSame = (
   current: Dependency,

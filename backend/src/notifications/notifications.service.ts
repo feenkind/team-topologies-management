@@ -6,7 +6,7 @@ import {
   notificationType,
 } from './dto/notification.dto';
 import { DomainHistory, Interaction, Notification, Team } from '@prisma/client';
-import { interactionMode } from '../teams/dto/create-interaction.dto';
+import { interactionMode } from '../teams/dto/interaction.dto';
 
 const generateDomainReminderReason = () =>
   'A regular check of the domain complexity and priority is recommended.';

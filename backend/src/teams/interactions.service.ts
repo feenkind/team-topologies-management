@@ -2,10 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Interaction, Prisma } from '@prisma/client';
 import { UpdateInteractionDto } from './dto/update-interaction.dto';
-import { changeType } from './dto/create-team.dto';
-import { InteractionDto } from './dto/interaction.dto';
-import { interactionMode } from './dto/create-interaction.dto';
+import { InteractionDto, interactionMode } from './dto/interaction.dto';
 import { InteractionHistoryDto } from './dto/interaction-history.dto';
+import { changeType } from './dto/team.dto';
 
 const interactionDataIsTheSame = (
   current: Interaction,

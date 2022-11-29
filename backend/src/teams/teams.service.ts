@@ -3,17 +3,17 @@ import { UpdateTeamDto } from './dto/update-team.dto';
 import { PrismaService } from '../prisma.service';
 import { DependenciesService } from './dependencies.service';
 import { InteractionsService } from './interactions.service';
-import { TeamDto } from './dto/team.dto';
 import {
   changeType,
   channelTypes,
-  CreateTeamDto,
   meetingsDay,
+  TeamDto,
   teamType,
   versioningType,
-} from './dto/create-team.dto';
-import { interactionMode } from './dto/create-interaction.dto';
-import { dependencyType } from './dto/create-dependency.dto';
+} from './dto/team.dto';
+import { CreateTeamDto } from './dto/create-team.dto';
+import { dependencyType } from './dto/dependency.dto';
+import { interactionMode } from './dto/interaction.dto';
 
 @Injectable()
 export class TeamsService {

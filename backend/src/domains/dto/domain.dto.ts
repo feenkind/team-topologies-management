@@ -1,4 +1,14 @@
-import { priority, complexity } from './create-domain.dto';
+export enum priority {
+  GENERIC = 'generic',
+  SUPPORTING = 'supporting',
+  CORE = 'core',
+}
+
+export enum complexity {
+  SIMPLE = 'simple',
+  COMPLICATED = 'complicated',
+  COMPLEX = 'complex',
+}
 
 export class DomainDto {
   id: string;

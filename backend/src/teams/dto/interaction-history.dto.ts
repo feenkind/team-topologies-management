@@ -1,5 +1,5 @@
-import { changeType } from './create-team.dto';
 import { InteractionDto } from './interaction.dto';
+import { changeType } from './team.dto';
 
 export class InteractionHistoryDto extends InteractionDto {
   createdAt: string;

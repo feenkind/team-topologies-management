@@ -1,10 +1,5 @@
 import { IsEnum, IsOptional, IsString } from 'class-validator';
-
-export enum dependencyType {
-  OK = 'ok',
-  SLOWING = 'slowing',
-  BLOCKING = 'blocking',
-}
+import { dependencyType } from './dependency.dto';
 
 export class CreateDependencyDto {
   @IsString()

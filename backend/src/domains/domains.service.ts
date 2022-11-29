@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { DomainDto } from './dto/domain.dto';
-import { complexity, CreateDomainDto, priority } from './dto/create-domain.dto';
+import { complexity, DomainDto, priority } from './dto/domain.dto';
+import { CreateDomainDto } from './dto/create-domain.dto';
 import { UpdateDomainDto } from './dto/update-domain.dto';
 
 @Injectable()

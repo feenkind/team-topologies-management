@@ -1,5 +1,5 @@
 import { DependencyDto } from './dependency.dto';
-import { changeType } from './create-team.dto';
+import { changeType } from './team.dto';
 
 export class DependencyHistoryDto extends DependencyDto {
   createdAt: string;

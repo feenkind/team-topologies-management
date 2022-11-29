@@ -1,11 +1,37 @@
-import {
-  meetingsDay,
-  teamType,
-  versioningType,
-  channelTypes,
-} from './create-team.dto';
 import { InteractionDto } from './interaction.dto';
 import { DependencyDto } from './dependency.dto';
+
+export enum teamType {
+  STREAM_ALIGNED = 'stream_aligned',
+  PLATFORM = 'platform',
+  ENABLING = 'enabling',
+  COMPLICATED_SUBSYSTEM = 'complicated_subsystem',
+  UNDEFINED = 'undefined',
+}
+
+export enum channelTypes {
+  SLACK = 'slack',
+}
+
+export enum meetingsDay {
+  DAILY = 'daily',
+  MONDAY = 'monday',
+  TUESDAY = 'tuesday',
+  WEDNESDAY = 'wednesday',
+  THURSDAY = 'thursday',
+  FRIDAY = 'friday',
+}
+
+export enum versioningType {
+  SEMANTIC = 'semantic',
+  SEQUENTIAL = 'sequential',
+}
+
+export enum changeType {
+  ADDED = 'added',
+  CHANGED = 'changed',
+  REMOVED = 'removed',
+}
 
 export class TeamDto {
   id: string;

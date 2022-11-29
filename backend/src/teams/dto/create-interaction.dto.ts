@@ -5,13 +5,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-
-export enum interactionMode {
-  COLLABORATION = 'collaboration',
-  X_AS_A_SERVICE = 'x_as_a_service',
-  FACILITATING = 'facilitating',
-  UNDEFINED = 'undefined',
-}
+import { interactionMode } from './interaction.dto';
 
 export class CreateInteractionDto {
   @IsString()
