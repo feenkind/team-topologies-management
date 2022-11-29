@@ -202,6 +202,16 @@ model InteractionHistory {
   additionalInformation String?
 }
 
+model Notification {
+  id        String           @id @default(cuid())
+  createdAt DateTime         @default(now())
+  type      NotificationType
+  area      NotificationArea
+  summary   String
+  reason    String
+  read      Boolean
+}
+
 enum Priority {
   generic
   supporting
@@ -257,4 +267,15 @@ enum ChangeType {
   added
   removed
   changed
+}
+
+enum NotificationType {
+  information
+  reminder
+  warning
+}
+
+enum NotificationArea {
+  team_interactions
+  domain
 }

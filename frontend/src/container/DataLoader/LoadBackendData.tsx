@@ -26,6 +26,8 @@ import {
 import { IProjectImport } from '../../types/projectTypes';
 import { IDomainImport } from '../../types/domainTypes';
 import { useParams } from 'react-router-dom';
+import { INotificationImport } from '../../types/notificationTypes';
+import { addAllNotifications } from '../../store/slices/notificationSlice';
 
 const LoadBackendData: React.FC = () => {
   const isDataLoaded = useAppSelector((state) => state.global.dataLoaded);
@@ -46,6 +48,7 @@ const LoadBackendData: React.FC = () => {
         axiosInstance.get('/teams/dependencies/history'),
         axiosInstance.get('/teams/interactions'),
         axiosInstance.get('/teams/interactions/history'),
+        axiosInstance.get('/notifications'),
       ];
 
       axios
@@ -60,6 +63,7 @@ const LoadBackendData: React.FC = () => {
           const interactions: IInteractionImport[] = responses[5].data;
           const interactionHistory: IInteractionHistoryImport[] =
             responses[6].data;
+          const notifications: INotificationImport[] = responses[7].data;
 
           dispatch(addAllProjects(projectData));
           // if project url is loaded directly, set current project to avoid
@@ -77,6 +81,7 @@ const LoadBackendData: React.FC = () => {
           dispatch(addAllDependencyHistory(dependencyHistory));
           dispatch(addAllInteractions(interactions));
           dispatch(addAllInteractionHistory(interactionHistory));
+          dispatch(addAllNotifications(notifications));
 
           dispatch(setDataLoaded(true));
           dispatch(setNetworkError(false));

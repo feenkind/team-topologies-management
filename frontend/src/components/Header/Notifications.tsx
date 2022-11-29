@@ -38,6 +38,8 @@ const Notifications: React.FC<INotificationsProps> = ({
   const handleClose = () => {
     setAnchorElement(null);
   };
+  // only display last 5
+  const notificationsToDisplay = notificationItems.slice(0, 5);
 
   return (
     <>
@@ -87,7 +89,7 @@ const Notifications: React.FC<INotificationsProps> = ({
         )}
 
         {notificationItems.length > 0 &&
-          notificationItems.map((notification) => (
+          notificationsToDisplay.map((notification) => (
             <NotificationItem key={notification.id} item={notification} />
           ))}
 

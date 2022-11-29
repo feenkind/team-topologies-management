@@ -14,6 +14,7 @@ const NotificationMenu: React.FC = () => {
       notificationItems={unreadNotifications
         // sort by date
         .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
+        // only display the last 5 in the menu
         .map((notification) => ({
           id: notification.id,
           type: notification.type,

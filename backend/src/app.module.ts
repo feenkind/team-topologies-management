@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { DomainsModule } from './domains/domains.module';
 import { TeamsModule } from './teams/teams.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { TeamsModule } from './teams/teams.module';
     AuthModule,
     DomainsModule,
     TeamsModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
 })

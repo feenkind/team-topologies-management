@@ -1,25 +1,52 @@
 import * as React from 'react';
 import { addNotification } from '../../store/slices/notificationSlice';
-import {
-  notificationArea,
-  notificationType,
-} from '../../constants/notifications';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useCallback, useEffect, useState } from 'react';
+import { INotificationImport } from '../../types/notificationTypes';
+import axiosInstance from '../../axios';
 
 const NotificationGeneration: React.FC = () => {
+  const dataLoaded = useAppSelector((state) => state.global.dataLoaded);
   const dispatch = useAppDispatch();
+  const [token, setToken] = useState<string>();
 
-  dispatch(
-    addNotification({
-      id: new Date().toString(),
-      type: notificationType.REMINDER,
-      area: notificationArea.DOMAIN,
-      summary: 'Generic reminder',
-      reason: 'Regulary check your domains',
-      date: new Date().toDateString(),
-      read: false,
-    }),
+  const getRealtimeData = useCallback(
+    (notification: INotificationImport) => {
+      dispatch(addNotification(notification));
+    },
+    [dispatch],
   );
+
+  useEffect(() => {
+    axiosInstance
+      .get('notifications/token')
+      .then((response) => {
+        setToken(response.data);
+      })
+      .catch(() => {
+        setToken(undefined);
+      });
+
+    const sse = new EventSource(
+      `${process.env.REACT_APP_BACKEND_URL}/notifications/sse?token=${token}`,
+      {
+        withCredentials: false,
+      },
+    );
+
+    if (!dataLoaded || !token) {
+      sse.close();
+    }
+
+    sse.onmessage = (e) => getRealtimeData(JSON.parse(e.data));
+    sse.onerror = () => {
+      sse.close();
+    };
+
+    return () => {
+      sse.close();
+    };
+  }, [dataLoaded, setToken, getRealtimeData, token]);
 
   return <></>;
 };

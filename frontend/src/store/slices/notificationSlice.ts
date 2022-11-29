@@ -3,6 +3,7 @@ import {
   notificationArea,
   notificationType,
 } from '../../constants/notifications';
+import { INotificationImport } from '../../types/notificationTypes';
 
 interface INotification {
   id: string;
@@ -19,50 +20,7 @@ interface IInitialState {
 }
 
 export const initialState: IInitialState = {
-  notifications: [
-    {
-      id: '1',
-      type: notificationType.REMINDER,
-      area: notificationArea.TEAM_INTERACTIONS,
-      summary: 'Check the priority of domain "registration"',
-      reason:
-        'The priority of a domain should be checked at least every 6 months. ',
-      date: '2022-03-29',
-      read: true,
-    },
-    {
-      id: '2',
-      type: notificationType.REMINDER,
-      area: notificationArea.TEAM_INTERACTIONS,
-      summary:
-        'Check the interaction mode between AwesomeTeam and SomeRandomTeam',
-      reason:
-        'The interaction mode “facilitating” already exists for more than 3' +
-        ' weeks.',
-      date: '2022-05-21',
-      read: false,
-    },
-    {
-      id: '3',
-      type: notificationType.WARNING,
-      area: notificationArea.TEAM_INTERACTIONS,
-      summary:
-        'Check the interaction mode between AwesomeTeam and SomeRandomTeam',
-      reason:
-        'The interaction mode “facilitating” already exists for more than 6 months.',
-      date: '2022-11-01',
-      read: false,
-    },
-    {
-      id: '4',
-      type: notificationType.REMINDER,
-      area: notificationArea.DOMAIN,
-      summary: 'Check the complexity of domain "registration"',
-      reason: 'A regular complexity check of domains is recommended.',
-      date: '2022-10-07',
-      read: false,
-    },
-  ],
+  notifications: [],
 };
 
 const notificationSlice = createSlice({
@@ -77,11 +35,42 @@ const notificationSlice = createSlice({
         }
       });
     },
-    addNotification: (state, { payload }: PayloadAction<INotification>) => {
-      state.notifications = [...state.notifications, payload];
+
+    addAllNotifications: (
+      state,
+      { payload }: PayloadAction<INotificationImport[]>,
+    ) => {
+      state.notifications = payload.map((notification) => ({
+        id: notification.id,
+        type: notification.type,
+        area: notification.area,
+        summary: notification.summary,
+        reason: notification.reason,
+        date: notification.createdAt,
+        read: notification.read,
+      }));
+    },
+
+    addNotification: (
+      state,
+      { payload }: PayloadAction<INotificationImport>,
+    ) => {
+      state.notifications = [
+        ...state.notifications,
+        {
+          id: payload.id,
+          type: payload.type,
+          area: payload.area,
+          summary: payload.summary,
+          reason: payload.reason,
+          date: payload.createdAt,
+          read: payload.read,
+        },
+      ];
     },
   },
 });
 
 export const notificationReducer = notificationSlice.reducer;
-export const { markRead, addNotification } = notificationSlice.actions;
+export const { markRead, addNotification, addAllNotifications } =
+  notificationSlice.actions;
