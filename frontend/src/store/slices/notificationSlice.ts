@@ -77,8 +77,11 @@ const notificationSlice = createSlice({
         }
       });
     },
+    addNotification: (state, { payload }: PayloadAction<INotification>) => {
+      state.notifications = [...state.notifications, payload];
+    },
   },
 });
 
 export const notificationReducer = notificationSlice.reducer;
-export const { markRead } = notificationSlice.actions;
+export const { markRead, addNotification } = notificationSlice.actions;

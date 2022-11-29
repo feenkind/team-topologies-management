@@ -3,6 +3,7 @@ import LoadBackendData from './LoadBackendData';
 import SetCurrentProject from './SetCurrentProject';
 import ValidateUrl from './ValidateUrl';
 import { useAppSelector } from '../../hooks';
+import NotificationGeneration from './NotificationGeneration';
 
 interface IDataLoaderProps {
   children: React.ReactNode | React.ReactNode[];
@@ -20,6 +21,7 @@ const DataLoader: React.FC<IDataLoaderProps> = ({
       {basicAuthDataSet && <LoadBackendData />}
       {basicAuthDataSet && <ValidateUrl />}
       {basicAuthDataSet && <SetCurrentProject />}
+      {basicAuthDataSet && <NotificationGeneration />}
       {children}
     </>
   );
