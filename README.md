@@ -42,6 +42,8 @@ Alternatively you can run the backend application with docker.
 ```bash
 $ docker-compose --env-file backend/.env up app
 ````
+Make sure to change `localhost` in the DATABASE_URL in your `.env` with 
+`team-management-postgres`.
 
 ## Database
 Start the postgres database in docker with

@@ -7,7 +7,7 @@ import { Alert, IconButton, Typography } from '@mui/material';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { markRead } from '../../store/slices/notificationSlice';
 import axiosInstance from '../../axios';
-import { notificationArea as notificationAreaEnum } from '../../constants/notifications';
+import { notificationArea as notificationAreaEnum } from '../../types/notificationTypes';
 
 const NotificationList: React.FC = () => {
   const notifications = useAppSelector(

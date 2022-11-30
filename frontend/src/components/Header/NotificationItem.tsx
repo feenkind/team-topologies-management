@@ -7,7 +7,7 @@ import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
 import {
   notificationArea as notificationAreaEnum,
   notificationType,
-} from '../../constants/notifications';
+} from '../../types/notificationTypes';
 
 interface INotificationItemProps {
   item: INotificationItem;

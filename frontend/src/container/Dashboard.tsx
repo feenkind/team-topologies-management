@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const Dashboard: React.FC = () => {
   // What is this application about
   // Short tutorial
+  // What is a project? What is a domain? How big is a team ideally?
   // Highlights
   // More information links
   return (

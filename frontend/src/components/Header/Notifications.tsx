@@ -9,11 +9,11 @@ import {
 } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from 'react-router-dom';
+import NotificationItem from './NotificationItem';
 import {
   notificationArea,
   notificationType,
-} from '../../constants/notifications';
-import NotificationItem from './NotificationItem';
+} from '../../types/notificationTypes';
 
 export interface INotificationItem {
   id: string;

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  INotificationImport,
   notificationArea,
   notificationType,
-} from '../../constants/notifications';
-import { INotificationImport } from '../../types/notificationTypes';
+} from '../../types/notificationTypes';
 
 interface INotification {
   id: string;
