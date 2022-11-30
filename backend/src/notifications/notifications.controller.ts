@@ -11,11 +11,14 @@ import { NotificationsService } from './notifications.service';
 import { AuthGuard } from '@nestjs/passport';
 import { interval, map, Observable, switchMap } from 'rxjs';
 import { NotificationDto } from './dto/notification.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('notifications')
 export class NotificationsController {
-  private sseToken = 'eUyke98qYI8oZNbihzliRy4tI93fEaEk';
-  constructor(private readonly notificationsService: NotificationsService) {}
+  constructor(
+    private readonly notificationsService: NotificationsService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @UseGuards(AuthGuard('basic'))
   @Get()
@@ -34,12 +37,15 @@ export class NotificationsController {
   getToken(): string {
     // this will need to be replaced with a real token, for the prototype a
     // fixed string is sufficient though
-    return this.sseToken;
+    return this.configService.get<string>('SSE_TOKEN');
   }
 
   @Sse('sse')
   sse(@Query() query: { token: string }): Observable<MessageEvent> {
-    if (!query.token || query.token !== this.sseToken) {
+    if (
+      !query.token ||
+      query.token !== this.configService.get<string>('SSE_TOKEN')
+    ) {
       return;
     }
     // trigger notifications every minute

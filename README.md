@@ -37,6 +37,12 @@ For basic authentication and database, copy the `.env.example` and rename it
 to `.env`.
 Add all needed values.
 
+### Running the backend application with docker
+Alternatively you can run the backend application with docker.
+```bash
+$ docker-compose --env-file backend/.env up app
+````
+
 ## Database
 Start the postgres database in docker with
 ```bash

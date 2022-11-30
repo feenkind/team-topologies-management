@@ -3,6 +3,10 @@ import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
+  // What is this application about
+  // Short tutorial
+  // Highlights
+  // More information links
   return (
     <>
       <Typography variant="body2" component="div" sx={{ my: 5 }}>
