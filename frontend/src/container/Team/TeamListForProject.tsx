@@ -8,6 +8,7 @@ import TeamTypeCategory from '../../components/Categories/TeamTypeCategory';
 import ButtonLink from '../../components/Buttons/ButtonLink';
 import { Alert, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { teamHints } from '../../constants/hints';
 
 const TeamListForProject: React.FC = () => {
   const currentProject = useAppSelector(
@@ -86,7 +87,7 @@ const TeamListForProject: React.FC = () => {
   return (
     <>
       <PageHeadline text={`All teams in ${currentProject.name}`} />
-      <ContentWithHints>
+      <ContentWithHints hints={[teamHints.userNeedsMapping]}>
         <Table
           headerItems={tableHeaderItems}
           contentItems={tableContentItems}

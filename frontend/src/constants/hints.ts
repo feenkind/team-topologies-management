@@ -31,7 +31,9 @@ export const teamHints: IHintMapping = {
     linkLabel: 'Lern more about team topologies',
   },
   cognitiveLoadAssessment: {
-    summary: 'How to calculate the Cognitive Load?',
+    summary:
+      'How to calculate the Cognitive Load with the Cognitive Load' +
+      ' Assessment?',
     description:
       'The cognitive load assessment can help teams understand' +
       ' their cognitive load. In this application, 5 is a very low' +
@@ -41,30 +43,58 @@ export const teamHints: IHintMapping = {
     linkUrl: 'https://github.com/TeamTopologies/Team-Cognitive-Load-Assessment',
     linkLabel: 'Cognitive Load Assessment Template',
   },
+  userNeedsMapping: {
+    summary: 'Define team boundaries with the User Needs Mapping',
+    description:
+      'The User Needs Mapping can help to define the needed teams and team' +
+      ' boundaries to fullfill user needs. While doing so, potential' +
+      ' dependencies between the teams can be detected.',
+    linkUrl:
+      'https://teamtopologies.com/key-concepts-content/exploring-team-and-service-boundaries-with-user-needs-mapping',
+    linkLabel: 'Learn more about the User Needs Mapping',
+  },
 };
 
 export const domainHints: IHintMapping = {
   eventStorming: {
-    summary: 'Event Storming',
+    summary: 'Exploring the domains with Event Storming',
     description:
-      'Event Storming is a very useful method to get to know your' +
-      ' domain and to define bounded contexts.',
+      'To get a better understanding of a domain, (re-)evaluate' +
+      ' processes or (re-)define bounded contexts, Event Storming can be a' +
+      ' very powerful tool. Its application is flexible and it can be' +
+      ' used for new or existing domains.',
     linkUrl: 'https://github.com/ddd-crew/eventstorming-glossary-cheat-sheet',
     linkLabel: 'Go to the cheatsheet',
   },
-  eventStormingRemote: {
-    summary: 'Remote Event Storming',
-    description: 'Remote event storming...',
-    linkUrl: '',
-    linkLabel: 'Go to the article',
+  independentServiceHeuristics: {
+    summary: 'Identify domain boundaries with ISH',
+    description:
+      'Independent Service Heuristics (ISH) can help with identifying domain' +
+      ' boundaries by answering a set of questions and discussing the' +
+      ' outcome. It can also be used in combination, before or after the' +
+      ' Event Storming process.',
+    linkUrl: 'https://github.com/TeamTopologies/Independent-Service-Heuristics',
+    linkLabel: 'Go to the checklist',
+  },
+  domainStorytelling: {
+    summary: 'Exploring the domains with Domain Storytelling',
+    description:
+      'Similar to event storming, the Domain Storytelling' +
+      ' technique can be used to get to know a domain better and' +
+      ' understand the requirements in this domain.',
+    linkUrl: 'https://domainstorytelling.org',
+    linkLabel: 'Learn about Domain Storytelling',
   },
   coreDomainChart: {
-    summary: 'Core Domain Chart',
+    summary: 'Prioritize domains with a Core Domain Chart',
     description:
       'A core domain chart can help you prioritize and align your' +
-      ' domains strategically.',
+      ' domains strategically. Especially when used with the display of the' +
+      ' team interaction modes between the bounded contexts and the team' +
+      ' size display, this tool can be very helpful in discovering any' +
+      ' misalignments.',
     linkUrl: 'https://github.com/ddd-crew/core-domain-charts',
-    linkLabel: 'Learn more',
+    linkLabel: 'Learn more about core domain charts',
   },
   domainPriority: {
     summary: 'How to calculate the domain priority?',
@@ -87,12 +117,6 @@ export const domainHints: IHintMapping = {
     linkUrl:
       'https://github.com/ddd-crew/core-domain-charts#suggestions-for-measuring-complexity-and-differentiation',
     linkLabel: 'See clues for complexity',
-  },
-  domainStorytelling: {
-    summary: 'Domain Storytelling',
-    description: '',
-    linkUrl: '',
-    linkLabel: 'Learn more',
   },
 };
 

@@ -15,6 +15,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TeamViewHistory from './TeamViewHistory';
 import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { teamHints } from '../../../constants/hints';
 
 const TeamView: React.FC = () => {
   const { teamId } = useParams<{
@@ -49,7 +50,7 @@ const TeamView: React.FC = () => {
         </IconButton>
       </TeamPageHeadline>
 
-      <ContentWithHints>
+      <ContentWithHints hints={[teamHints.userNeedsMapping]}>
         <Tabs
           tabContent={[
             {

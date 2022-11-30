@@ -9,6 +9,7 @@ import DomainViewInformation from './DomainViewInformation';
 import DomainViewHistory from './DomainViewHistory';
 import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { domainHints } from '../../constants/hints';
 
 const DomainView: React.FC = () => {
   const { domainId } = useParams<{
@@ -39,7 +40,14 @@ const DomainView: React.FC = () => {
         </IconButton>
       </PageHeadline>
 
-      <ContentWithHints>
+      <ContentWithHints
+        hints={[
+          domainHints.eventStorming,
+          domainHints.domainStorytelling,
+          domainHints.independentServiceHeuristics,
+          domainHints.coreDomainChart,
+        ]}
+      >
         <Tabs
           tabContent={[
             {

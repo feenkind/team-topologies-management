@@ -87,7 +87,12 @@ const DomainListForProject: React.FC = () => {
     <>
       <PageHeadline text={`All domains in ${currentProject.name}`} />
       <ContentWithHints
-        hints={[domainHints['eventStorming'], domainHints['coreDomainChart']]}
+        hints={[
+          domainHints.eventStorming,
+          domainHints.domainStorytelling,
+          domainHints.independentServiceHeuristics,
+          domainHints.coreDomainChart,
+        ]}
       >
         <Table
           headerItems={tableHeaderItems}

@@ -8,6 +8,7 @@ const Dashboard: React.FC = () => {
   // What is a project? What is a domain? How big is a team ideally?
   // Highlights
   // More information links
+  // view all hints (accordeon?) alphabetically?
   return (
     <>
       <Typography variant="body2" component="div" sx={{ my: 5 }}>
