@@ -45,7 +45,7 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
         otherTeam &&
         otherTeam.domains?.filter((otherTeamDomain) =>
           team.domains?.includes(otherTeamDomain),
-        ).length === 0;
+        ).length !== 0;
 
       return otherTeam
         ? [
