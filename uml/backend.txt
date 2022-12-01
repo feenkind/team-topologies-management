@@ -1,0 +1,80 @@
+@startuml
+
+skinparam linetype ortho
+skinparam componentStyle rectangle
+skinparam DefaultTextAlignment center
+skinparam ranksep 100
+skinparam nodesep 50
+
+
+[Root Module] as R
+[Prisma Service] as PrS
+
+node "Auth Module" as Auth {
+}
+
+node "Domains Module" as Domains {
+   [Domains Controller] as DC
+   [Domains Service] as DS
+}
+
+node "Notifications Module" as Notifications {
+   [Notifications Controller] as NC
+   [Notifications Service] as NS
+}
+
+node "Projects Module" as Projects {
+   [Projects Controller] as PC
+   [Projects Service] as PS
+}
+
+node "Teams Module" as Teams {
+   [Teams Controller] as TC
+   [Teams Service] as TS
+   [Dependencies Service] as DS
+   [Interactions Service] as IS
+}
+
+
+[Prisma ORM] as Prisma
+
+database "PostgreSQL\n" {
+    [Project]
+    [Team]
+    ["..."]
+}
+
+
+R --> Auth
+R --> Projects
+R --> Domains
+R --> Teams
+R --> Notifications
+
+DC --> DS
+DS --> PrS
+
+NC --> NS
+NS --> PrS
+
+PC --> PS
+PC --> PrS
+
+
+TC --> DS
+TC --> IS
+TC --> TS
+TS --> DS
+TS --> IS
+TS --> PrS
+DS --> PrS
+IS --> PrS
+
+PrS --> Prisma
+
+Prisma --> Project
+Prisma --> Team
+Prisma --> "..."
+
+
+@enduml
