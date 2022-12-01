@@ -1,0 +1,101 @@
+@startuml
+
+left to right direction
+skinparam actorStyle awesome
+skinparam linetype ortho
+
+
+rectangle {
+    (Projekt anlegen)
+    (Projekt bearbeiten)
+    (Projekt löschen)
+    (Projekt ansehen)
+
+    (Domäne anlegen)
+    (Domäne bearbeiten)
+    (Domäne löschen)
+    (Domäne ansehen)
+    (Komplexität angeben)
+    (Komplexität ändern)
+    (Priorisierung angeben)
+    (Priorisierung ändern)
+    (Entwicklungsdokumentation für Domäne hinzufügen)
+
+    (Team anlegen)
+    (Team bearbeiten)
+    (Team löschen)
+    (Team ansehen)
+    (Zuordnung von Team zu Domäne angeben)
+    (Zuordnung von Team zu Domäne ändern)
+    (Basisinformationen angeben)
+    (Basisinformationen ändern)
+    (Entwicklungsdokumentation für Team hinzufügen)
+
+    (Teaminteraktion anlegen)
+    (Teaminteraktion anlegen, ändern oder löschen)
+    (Abhängigkeit angeben)
+    (Abhängigkeit angeben, ändern oder löschen)
+    (Kognitive Belastung angeben)
+    (Kognitive Belastung ändern)
+    (FTE angeben)
+    (FTE ändern)
+
+    (Visualisierungen ansehen)
+}
+
+
+:Organisationsmitglied:
+:Teammitglied: as T
+:Projektverantwortliche Person: as P
+
+:Organisationsmitglied: <|-- T
+:Organisationsmitglied: <|-- P
+
+
+P -- (Projekt anlegen)
+P -- (Projekt bearbeiten)
+P -- (Projekt löschen)
+P -- (Projekt ansehen)
+P -- (Domäne anlegen)
+P -- (Domäne bearbeiten)
+P -- (Domäne löschen)
+P -- (Domäne ansehen)
+P -- (Team anlegen)
+P -- (Team löschen)
+P -- (Team ansehen)
+P -- (Visualisierungen ansehen)
+
+T -- (Team anlegen)
+T -- (Team bearbeiten)
+T -- (Team ansehen)
+T -- (Projekt ansehen)
+T -- (Domäne ansehen)
+T -- (Visualisierungen ansehen)
+
+
+(Projekt löschen) ..> (Domäne löschen) : include
+(Projekt löschen)..> (Team löschen) : include
+
+(Domäne anlegen) ..> (Komplexität angeben) : include
+(Domäne anlegen) ..> (Priorisierung angeben) : include
+(Domäne bearbeiten) ..> (Komplexität ändern) : include
+(Domäne bearbeiten) ..> (Priorisierung ändern) : include
+(Domäne bearbeiten) ..>  (Entwicklungsdokumentation für Domäne hinzufügen) : include
+
+(Team anlegen) ..> (Zuordnung von Team zu Domäne angeben) : include
+(Team anlegen) ..> (Basisinformationen angeben) : include
+(Team anlegen) ..> (Teaminteraktion anlegen) : include
+(Team anlegen) ..> (Abhängigkeit angeben) : include
+(Team anlegen) ..> (Kognitive Belastung angeben) : include
+(Team anlegen) ..> (FTE angeben) : include
+
+(Team bearbeiten) ..> (Zuordnung von Team zu Domäne ändern) : include
+(Team bearbeiten) ..> (Basisinformationen ändern) : include
+(Team bearbeiten) ..> (Teaminteraktion anlegen, ändern oder löschen) : include
+(Team bearbeiten) ..> (Abhängigkeit angeben, ändern oder löschen) : include
+(Team bearbeiten) ..> (Kognitive Belastung ändern) : include
+(Team bearbeiten) ..> (FTE ändern) : include
+(Team bearbeiten) ..> (Entwicklungsdokumentation für Team hinzufügen) : include
+
+
+@enduml

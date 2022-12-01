@@ -1,0 +1,287 @@
+@startuml
+
+hide circle
+skinparam linetype ortho
+left to right direction
+
+entity Project {
+  * id: String
+  --
+  * createdAt: DateTime
+  * updatedAt: DateTime
+  * name: String
+  * description: String
+}
+
+entity Domain {
+  * id: String
+  --
+  * projectId: String <<FK>>
+  * name: String
+  * description: String
+  * complexity: Complexity
+}
+
+entity DomainHistory {
+  * id: String
+  --
+  * domainId: String <<FK>>
+  * createdAt: DateTime
+  * changeNote:  String
+  * name: String
+  * description: String
+  * complexity: Complexity
+}
+
+entity Team {
+  * id: String
+  --
+  * projectId: String <<FK>>
+  * name: String
+  * cognitiveLoad: Int
+  * fte: Int
+  * focus: String
+  * type: TeamType
+  platform: String
+  wikiSearchTerms: String[]
+}
+
+entity TeamHistory {
+  * id: String
+  --
+  * teamId: String <<FK>>
+  * createdAt: DateTime
+  * changeNote    String
+  * cognitiveLoad: Int
+  * fte: Int
+  * type: TeamType
+}
+
+entity DomainsOnTeams {
+  * domainId: String <<FK>>
+  * teamId: String <<FK>>
+  --
+}
+
+entity DomainsOnTeamsHistory {
+  * id: String
+  --
+  * domainId: String <<FK>>
+  * teamId: String <<FK>>
+  * createdAt:DateTime
+  * changeNote: String
+}
+
+entity CommunicationChannel {
+  * id: String
+  --
+  * teamId: String <<FK>>
+  * type: ChannelType
+  * name: String
+}
+
+entity Meeting {
+  * id: String
+  --
+  * teamId: String <<FK>>
+  * day : MeetingDay
+  * purpose: String
+  * time: String
+  * durationMinutes: Int
+}
+
+entity Service {
+  * id: String
+  --
+  * teamId: String <<FK>>
+  * versioning: VersioningType
+  * name: String
+  url: String
+  repository: String
+}
+
+entity WayOfWorking {
+  * id: String
+  --
+  * teamId: String <<FK>>
+  * name: String
+  url: String
+}
+
+entity Work {
+  * id: String
+  --
+  * teamId: String <<FK>>
+  * summary: String
+  repository: String
+}
+
+entity Dependency {
+  * teamIdFrom: String <<FK>>
+  * teamIdTo: String <<FK>>
+  --
+  * dependencyType: DependencyType
+  description: String
+}
+
+entity DependencyHistory {
+  * id: String
+  --
+  * teamIdFrom: String <<FK>>
+  * teamIdTo: String <<FK>>
+  * createdAt: DateTime
+  * changeNote: String
+  * changeType: ChangeType
+  * dependencyType: DependencyType
+  description: String
+}
+
+entity Interaction {
+  * teamIdOne: String <<FK>>
+  * teamIdTwo: String <<FK>>
+  --
+  * interactionMode: InteractionMode
+  * purpose: String
+  * startDate: DateTime
+  * expectedDuration: Int
+  additionalInformation: String
+}
+
+entity InteractionHistory {
+  * id: String
+  ---
+  * teamIdOne: String <<FK>>
+  * teamIdTwo: String <<FK>>
+  * createdAt: DateTime
+  * changeNote: String
+  * changeType: ChangeType
+  * interactionMode: InteractionMode
+  * purpose: String
+  * startDate: DateTime
+  * expectedDuration: Int
+  additionalInformation: String
+}
+
+entity Notification {
+  * id: String
+  --
+  * createdAt: DateTime
+  * type: NotificationType
+  * area: NotificationArea
+  * summary: String
+  * reason: String
+  * read: Boolean
+}
+
+
+enum Priority {
+  generic
+  supporting
+  core
+}
+
+enum Complexity {
+  simple
+  complicated
+  complex
+}
+
+enum TeamType {
+  stream_aligned
+  platform
+  enabling
+  complicated_subsystem
+  undefined
+}
+
+enum ChannelType {
+  slack
+}
+
+enum MeetingDay {
+  daily
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+}
+
+enum VersioningType {
+  semantic
+  sequential
+}
+
+enum DependencyType {
+  ok
+  slowing
+  blocking
+}
+
+enum InteractionMode {
+  collaboration
+  x_as_a_service
+  facilitating
+  undefined
+}
+
+enum ChangeType {
+  added
+  removed
+  changed
+}
+
+enum NotificationType {
+  information
+  reminder
+  warning
+}
+
+enum NotificationArea {
+  team_interactions
+  domain
+}
+
+
+Project ||--o{ Domain
+Project ||--o{ Team
+
+Domain ||--|| Complexity
+Domain ||--|| Priority
+Domain ||--o{ DomainHistory
+Domain ||--o{ DomainsOnTeams
+Domain ||--o{ DomainsOnTeamsHistory
+
+DomainHistory ||--|| Complexity
+DomainHistory ||--|| Priority
+
+Team ||--|| TeamType
+Team ||--o{ TeamHistory
+Team ||--o{ CommunicationChannel
+Team ||--o{ Meeting
+Team ||--o{ Service
+Team ||--o{ WayOfWorking
+Team ||--o{ DomainsOnTeams
+Team ||--o{ DomainsOnTeamsHistory
+Team ||--o{ Work
+Team ||--o{ Dependency
+Team ||--o{ DependencyHistory
+Team ||--o{ Interaction
+Team ||--o{ InteractionHistory
+
+TeamHistory ||--|| TeamType
+CommunicationChannel ||--|| ChannelType
+Meeting ||--|| MeetingDay
+Service ||--|| VersioningType
+Dependency ||--|| DependencyType
+Interaction ||--|| InteractionMode
+
+DependencyHistory ||--|| DependencyType
+DependencyHistory ||--|| ChangeType
+InteractionHistory ||--|| InteractionMode
+InteractionHistory ||--|| ChangeType
+
+Notification ||--|| NotificationType
+Notification ||--|| NotificationArea
+
+@enduml
