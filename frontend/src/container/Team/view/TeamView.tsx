@@ -50,7 +50,15 @@ const TeamView: React.FC = () => {
         </IconButton>
       </TeamPageHeadline>
 
-      <ContentWithHints hints={[teamHints.userNeedsMapping]}>
+      <ContentWithHints
+        hints={[
+          teamHints.teamType,
+          teamHints.interactionModes,
+          teamHints.cognitiveLoad,
+          teamHints.userNeedsMapping,
+          teamHints.evolutionTrigger,
+        ]}
+      >
         <Tabs
           tabContent={[
             {

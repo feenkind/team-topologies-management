@@ -339,7 +339,14 @@ const TeamForm: React.FC = () => {
                 : `Add a new new team to project ${currentProject.name}`
             }
           />
-          <ContentWithHints isForm hints={[teamHints.cognitiveLoadAssessment]}>
+          <ContentWithHints
+            isForm
+            hints={[
+              teamHints.teamType,
+              teamHints.interactionModes,
+              teamHints.cognitiveLoadAssessment,
+            ]}
+          >
             <Tabs
               tabContent={[
                 {

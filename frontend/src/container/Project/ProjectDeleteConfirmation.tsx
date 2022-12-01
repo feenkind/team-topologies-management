@@ -41,7 +41,8 @@ const ProjectDeleteConfirmation: React.FC = () => {
         This action can not be undone.
       </Alert>
       <Typography variant="body1">
-        Please confirm you want to delete project
+        Deleting the project will also delete all domains and teams connected to
+        it. Please confirm you really want to delete project.
       </Typography>
       <Typography fontWeight="bold" sx={{ my: 2 }}>
         {projectToDelete.name}

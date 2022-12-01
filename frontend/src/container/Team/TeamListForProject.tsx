@@ -87,7 +87,14 @@ const TeamListForProject: React.FC = () => {
   return (
     <>
       <PageHeadline text={`All teams in ${currentProject.name}`} />
-      <ContentWithHints hints={[teamHints.userNeedsMapping]}>
+      <ContentWithHints
+        hints={[
+          teamHints.teamType,
+          teamHints.interactionModes,
+          teamHints.userNeedsMapping,
+          teamHints.evolutionTrigger,
+        ]}
+      >
         <Table
           headerItems={tableHeaderItems}
           contentItems={tableContentItems}

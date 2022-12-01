@@ -10,35 +10,67 @@ interface IHintMapping {
 }
 
 export const teamHints: IHintMapping = {
-  teamSize: {
-    summary: 'Team Size',
-    description: 'The perfect team consists of 7 to 9 members.',
-    linkUrl: '',
-    linkLabel: '',
-  },
-  cognitiveLoad: {
-    summary: 'Cognitive Load',
+  teamType: {
+    summary: 'Teams are assigned to a team type',
     description:
-      '... ideally 2-3 simple domains, not more than 1' +
-      ' complicated and if one complex, no other...',
-    linkUrl: '',
-    linkLabel: 'Lern more about team topologies',
+      'The team topologies concept distinguishes between four' +
+      ' different team types: stream-aligned teams, that are aligned to a' +
+      ' value stream, platform teams, that work on the platform' +
+      ' and support stream-aligned teams with services to use the platform,' +
+      ' enabling teams, that help other teams to overcome obstacles and' +
+      ' complicated subsystem teams, that work on a specialized part of the' +
+      ' system and are not always necessary.',
+    linkUrl: 'https://teamtopologies.com/book',
+    linkLabel: 'Learn more about team topologies',
   },
   interactionModes: {
-    summary: 'Interaction Modes',
-    description: 'What do they mean?',
-    linkUrl: '',
-    linkLabel: 'Lern more about team topologies',
+    summary: 'Teams relationships can have different interaction modes',
+    description:
+      'According to the team topologies concept, an interaction' +
+      ' between two teams should  match one of three interaction modes: the' +
+      ' collaboration mode, where two teams work together intensively to' +
+      ' solve a problem, the x-as-a-service mode, where one team consumes a' +
+      ' service provided by the other team and the facilitating mode, where' +
+      ' one team helps the other team to learn or overcome obstacles.',
+    linkUrl: 'https://teamtopologies.com/book',
+    linkLabel: 'Learn more about team topologies',
+  },
+  cognitiveLoad: {
+    summary: 'Limit the team cognitive load',
+    description:
+      'The teams first approach of the team topologies concept strongly' +
+      ' recommends to limit the cognitive load of a team in order to' +
+      ' maintain an effective and efficient software development process.' +
+      ' For assessing the cognitive load of a team, the Cognitive Load' +
+      ' Assessment and the amount of domain responsibilities can be used. For' +
+      ' more information  about cognitive load' +
+      ' on teams please refer to the book Team Topologies by Matthew' +
+      ' Skelton and Manuel Pais.',
+    linkUrl: 'https://github.com/TeamTopologies/Team-Cognitive-Load-Assessment',
+    linkLabel: 'Cognitive Load Assessment Template',
+  },
+  evolutionTrigger: {
+    summary: 'Team structures should evolve',
+    description:
+      'Team structures should evolve over time. Good triggers to' +
+      ' re-evaluate the current team structures are for example if a system' +
+      ' has grown to  big for one team or the delivery cadence is' +
+      ' decreasing. For more information on this topic, please refer to page' +
+      ' 242 to 257 of' +
+      ' of the book Team Topologies by Matthew' +
+      ' Skelton and Manuel Pais.',
+    linkUrl: 'https://teamtopologies.com/book',
+    linkLabel: 'Learn more about team topologies',
   },
   cognitiveLoadAssessment: {
     summary:
-      'How to calculate the Cognitive Load with the Cognitive Load' +
-      ' Assessment?',
+      'Calculating the Cognitive Load with the Cognitive Load Assessment',
     description:
       'The cognitive load assessment can help teams understand' +
       ' their cognitive load. In this application, 5 is a very low' +
       ' and 25 is a very high cognitive load. For more' +
-      ' information on calculating the load, the book Team Topologies by' +
+      ' information on calculating the load, the Remote Team Interactions' +
+      ' Workbook by' +
       ' Matthew Skelton and Manuel Pais is recommended.',
     linkUrl: 'https://github.com/TeamTopologies/Team-Cognitive-Load-Assessment',
     linkLabel: 'Cognitive Load Assessment Template',
@@ -97,7 +129,7 @@ export const domainHints: IHintMapping = {
     linkLabel: 'Learn more about core domain charts',
   },
   domainPriority: {
-    summary: 'How to calculate the domain priority?',
+    summary: 'Calculating the domain priority',
     description:
       'To know about the strategic position of a domain is important. To get' +
       ' a better understanding, using a core domain chart can help. The' +
@@ -107,7 +139,7 @@ export const domainHints: IHintMapping = {
     linkLabel: 'Learn more about core domain charts',
   },
   domainComplexity: {
-    summary: 'How to calculate the domain complexity?',
+    summary: 'Calculating the domain complexity',
     description:
       'The complexity of a domain influences the cognitive load of the team' +
       " responsibible for it. Always consider the team's opinion on the" +
@@ -125,7 +157,7 @@ export const projectHints: IHintMapping = {
     summary: 'What is a project?',
     description:
       'A project is a logical container around your domains. It can be a' +
-      ' value stream or a product or something completely different.' +
-      ' After creation you can add domains and teams to your project.',
+      ' bigger value stream, a business domain or a product or something completely' +
+      ' different. After creation you can add domains and teams to your project.',
   },
 };
