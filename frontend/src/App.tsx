@@ -4,8 +4,8 @@ import ProjectList from './container/Project/ProjectList';
 import ProjectOverview from './container/Project/ProjectOverview';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TeamList from './container/Team/TeamList';
-import Header from './container/Header/Header';
-import Sidebar from './container/Sidebar';
+import Header from './container/Page/Header/Header';
+import Sidebar from './container/Page/Sidebar';
 import Visualization from './container/Visualization/Visualization';
 import DomainListForProject from './container/Domain/DomainListForProject';
 import TeamListForProject from './container/Team/TeamListForProject';
@@ -18,8 +18,8 @@ import ProjectNotFound from './container/Project/ProjectNotFound';
 import TeamForm from './container/Team/form/TeamForm';
 import DomainForm from './container/Domain/DomainForm';
 import ProjectForm from './container/Project/ProjectForm';
-import ErrorDisplay from './container/ErrorDisplay';
-import Layout from './container/Layout';
+import ErrorDisplay from './container/Page/ErrorDisplay';
+import Layout from './container/Page/Layout';
 import ProjectDeleteConfirmation from './container/Project/ProjectDeleteConfirmation';
 
 const App: React.FC = () => {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
-import { headerMenuItems } from '../../constants/navigation';
-import HeaderNavigation from '../../components/Header/HeaderNavigation';
+import { headerMenuItems } from '../../../constants/navigation';
+import HeaderNavigation from '../../../components/Header/HeaderNavigation';
 
 const MainNavigation: React.FC = () => {
   const location = useLocation();

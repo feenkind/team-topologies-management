@@ -1,15 +1,15 @@
 import * as React from 'react';
-import PageHeadline from '../components/Layout/PageHeadline';
+import PageHeadline from '../../components/Layout/PageHeadline';
 import { Alert, Button, Grid, Typography } from '@mui/material';
-import ControlledTextInput from '../components/Form/ControlledTextInput';
-import FormGroupWrapper from '../components/Form/FormGroupWrapper';
+import ControlledTextInput from '../../components/Form/ControlledTextInput';
+import FormGroupWrapper from '../../components/Form/FormGroupWrapper';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { setBasicAuthData } from '../store/slices/globalSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setBasicAuthData } from '../../store/slices/globalSlice';
 import { useEffect, useState } from 'react';
-import { LOCAL_PASSWORD, LOCAL_USERNAME } from '../constants/basicAuth';
-import axiosInstance from '../axios';
+import { LOCAL_PASSWORD, LOCAL_USERNAME } from '../../constants/basicAuth';
+import axiosInstance from '../../axios';
 
 interface ILoginFormInput {
   username: string;

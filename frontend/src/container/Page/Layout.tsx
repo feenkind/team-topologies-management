@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import { default as LayoutComponent } from '../components/Layout/Layout';
-import { useAppSelector } from '../hooks';
+import { default as LayoutComponent } from '../../components/Layout/Layout';
+import { useAppSelector } from '../../hooks';
 import { CircularProgress } from '@mui/material';
 import Login from './Login';
 
