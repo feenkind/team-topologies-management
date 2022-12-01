@@ -1,0 +1,56 @@
+@startuml
+
+skinparam linetype ortho
+skinparam componentStyle rectangle
+skinparam DefaultTextAlignment center
+
+
+[Root App] as App
+
+node "Components" {
+    [Buttons]
+    [Categories]
+    [Form]
+    [Header]
+    [Layout]
+    [Sidebar]
+    [Table]
+    [...]
+}
+
+node "Container" {
+  [Data Loading]
+  [Domain]
+  [Notification]
+  [Project]
+  [Team]
+  [Visualization]
+  [Dashboard]
+  [Page]
+}
+
+  [Constants]
+  [Types]
+  [Axios Instance]
+
+node "Redux Store" as Store {
+  node "Slices"{
+    [Domain]
+    [Team]
+    [Global]
+    [Notication]
+    [Project]
+  }
+}
+
+App --> Container
+Container --> Components
+Container --> Store
+Container --> Constants
+Container --> "Axios Instance"
+Components --> Constants
+Container --> Types
+Components --> Types
+Store --> Types
+
+@enduml
