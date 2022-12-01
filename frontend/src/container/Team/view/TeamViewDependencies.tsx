@@ -59,7 +59,13 @@ const TeamViewDependencies: React.FC<ITeamViewDependenciesProps> = ({
               key={`dependency${dependency.fromTeamId}${dependency.toTeamId}`}
               dependencyType={dependency.dependencyType}
             />,
-            teamsHaveDomainsInCommon ? 'no' : 'yes',
+            teamsHaveDomainsInCommon ? (
+              'no'
+            ) : (
+              <Typography component="span" fontWeight={600}>
+                yes
+              </Typography>
+            ),
             dependency.description,
           ]
         : [];
