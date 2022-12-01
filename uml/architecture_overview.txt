@@ -1,0 +1,74 @@
+@startuml
+
+skinparam linetype ortho
+skinparam componentStyle rectangle
+skinparam DefaultTextAlignment center
+left to right direction
+skinparam ranksep 100
+skinparam nodesep 50
+
+
+node "Web Client" as FE {
+    [React Web Application] as GUI
+}
+
+node "Application Server" {
+    node "Web Server"{
+      component "NestJS Application" as BE {
+          [Projects]
+          [Domains]
+          [Notifications]
+          [Auth]
+          [Teams]
+      }
+    }
+
+    database "PostgreSQL\n" {
+        [Project]
+        [DomainHistory]
+        [Domain]
+        [Notification]
+        [Interaction]
+        [InteractionHistory]
+        [TeamHistory]
+        [Team]
+        [DomainsOnTeamsHistory]
+        [DomainsOnTeams]
+        [CommunicationChannel]
+        [Meeting]
+        [Service]
+        [WayOfWorking]
+        [Work]
+        [Dependency]
+        [DependencyHistory]
+    }
+}
+
+
+GUI <---> BE: <<HTTP>>
+
+Domains --> DomainHistory
+Domains --> Domain
+
+
+Teams --> Team
+Teams --> TeamHistory
+Teams --> DomainsOnTeams
+Teams --> DomainsOnTeamsHistory
+Teams --> CommunicationChannel
+Teams --> Meeting
+Teams --> Service
+Teams --> WayOfWorking
+Teams --> Work
+Teams --> Dependency
+Teams --> DependencyHistory
+Teams --> Interaction
+Teams --> InteractionHistory
+
+Notifications --> Notification
+Notifications --> DomainHistory
+Notifications --> Interaction
+
+Projects --> Project
+
+@enduml
