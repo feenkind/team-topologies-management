@@ -31,6 +31,10 @@ const Layout: React.FC<ILayoutProps> = ({
     bgColor = true;
   }
 
+  if (location.pathname === '/') {
+    bgColor = true;
+  }
+
   return (
     <LayoutComponent
       header={header}

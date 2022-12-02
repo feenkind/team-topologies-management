@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
   Box,
   Button,
-  Card,
   CardActions,
   CardContent,
   Grid,
@@ -18,6 +17,9 @@ import DependencyCategory from '../../components/Categories/DependencyCategory';
 import TeamInteractionModeCategory from '../../components/Categories/TeamInteractionModeCategory';
 import { interactionMode } from '../../types/interactionTypes';
 import { dependencyType } from '../../types/dependencyType';
+import CardLight from '../../components/Card/CardLight';
+import CardRegular from '../../components/Card/CardRegular';
+import CardCategory from '../../components/Card/CardCategory';
 
 const getDependencyPluralization = (dependencyLength: number): string =>
   dependencyLength === 1 ? 'dependency' : 'dependencies';
@@ -89,15 +91,9 @@ const ProjectOverview: React.FC = () => {
       <PageHeadline text="Project overview" />
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ backgroundColor: 'secondary.light', p: 1 }} elevation={4}>
+          <CardLight>
             <CardContent>
-              <Typography
-                variant="overline"
-                color="text.secondary"
-                gutterBottom
-              >
-                Interactions & Dependencies
-              </Typography>
+              <CardCategory>Interactions & Dependencies</CardCategory>
               {currentInteractions.length === 0 && (
                 <Typography>
                   {currentProject.name} has currently no interactions between
@@ -236,19 +232,13 @@ const ProjectOverview: React.FC = () => {
                 See visualization for interactions and dependencies
               </Button>
             </CardActions>
-          </Card>
+          </CardLight>
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Card sx={{ backgroundColor: 'secondary.main', p: 1 }} elevation={4}>
+          <CardRegular>
             <CardContent>
-              <Typography
-                variant="overline"
-                color="text.secondary"
-                gutterBottom
-              >
-                Project information for
-              </Typography>
+              <CardCategory>Project information for</CardCategory>
               <Typography variant="h5" sx={{ mb: 3 }}>
                 {currentProject.name}
               </Typography>
@@ -274,19 +264,13 @@ const ProjectOverview: React.FC = () => {
                 Delete project
               </Button>
             </CardActions>
-          </Card>
+          </CardRegular>
         </Grid>
 
         <Grid item xs={12} md={12}>
-          <Card sx={{ backgroundColor: 'secondary.light', p: 1 }} elevation={4}>
+          <CardLight>
             <CardContent>
-              <Typography
-                variant="overline"
-                color="text.secondary"
-                gutterBottom
-              >
-                Domains
-              </Typography>
+              <CardCategory>Domains</CardCategory>
               {!domains && (
                 <Typography>{currentProject.name} has no domains.</Typography>
               )}
@@ -321,19 +305,13 @@ const ProjectOverview: React.FC = () => {
                 See domain details for this project
               </Button>
             </CardActions>
-          </Card>
+          </CardLight>
         </Grid>
 
         <Grid item xs={12} md={12}>
-          <Card sx={{ backgroundColor: 'secondary.light', p: 1 }} elevation={4}>
+          <CardLight>
             <CardContent>
-              <Typography
-                variant="overline"
-                color="text.secondary"
-                gutterBottom
-              >
-                Teams
-              </Typography>
+              <CardCategory>Teams</CardCategory>
               {teams.length === 0 && (
                 <Typography>{currentProject.name} has no teams.</Typography>
               )}
@@ -369,7 +347,7 @@ const ProjectOverview: React.FC = () => {
                 See team details for this project
               </Button>
             </CardActions>
-          </Card>
+          </CardLight>
         </Grid>
       </Grid>
     </>
