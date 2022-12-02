@@ -35,11 +35,11 @@ node "Container" {
 
 node "Redux Store" as Store {
   node "Slices"{
-    [Domain]
-    [Team]
+    [Domain] as SliceDomain
+    [Team] as SliceTeam
     [Global]
     [Notication]
-    [Project]
+    [Project] as SliceProject
   }
 }
 
