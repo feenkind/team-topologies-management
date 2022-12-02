@@ -31,7 +31,7 @@ node "Projects Module" as Projects {
 node "Teams Module" as Teams {
    [Teams Controller] as TC
    [Teams Service] as TS
-   [Dependencies Service] as DS
+   [Dependencies Service] as DeS
    [Interactions Service] as IS
 }
 
@@ -61,10 +61,10 @@ PC --> PS
 PC --> PrS
 
 
-TC --> DS
+TC --> DeS
 TC --> IS
 TC --> TS
-TS --> DS
+TS --> DeS
 TS --> IS
 TS --> PrS
 DS --> PrS
