@@ -1,0 +1,43 @@
+@startuml
+start
+
+
+:Laden der React-Komponente "Visualization";
+:Laden des Tab-Inhalts für die Teamvisualisierung;
+:Selektieren des aktuell ausgewählten Projekts aus dem Redux Store;
+:Selektieren aller historischen Team- und Teaminteraktionsinformationen für das ausgewählte Projekt aus dem Redux Store;
+:Zusammenführen der Datumsanzeige aller Änderungen zu einem sortierten Array;
+
+
+:Setzen des Datums zur Anzeige der Visualisierung auf das neueste Änderungsdatum;
+:Aktivieren der Checkbox zur Anzeige von geplanten Interaktionen;
+
+if (Projekt hat historische Team- oder Teaminteraktionsdaten?) then (nein)
+  :Anzeige einer Benachrichtigung;
+  stop
+  else (ja)
+endif
+
+repeat
+:Darstellung des ausgewählten Datums in einer Selectbox;
+:Berechnung der historischen Teamdaten des ausgewählten Datums aus den selektierten Informationen;
+:Berechnung der historischen Teaminteraktionsdaten des ausgewählten Datums aus den selektierten Informationen;
+
+if (Ausgewähltes Datum ist aktuellestes Änderungsdatum?) then (nein)
+  :Deaktivieren der Checkbox zur Anzeige von geplanten Interaktionen;
+  else (ja)
+  if (Checkbox zur Anzeige von geplanten Interaktionen ist aktiv?) then (nein)
+  :Filtern der Team- und Teaminteraktionsdaten und Entfernen nicht gestarteter Interaktionen;
+  else (ja)
+  endif
+endif
+
+:Darstellung des Graphen mit den berechneten Team- und Teaminteraktionsdaten;
+repeat while (Ändern des Datums zur Anzeige der Visualsierung in der Selectbox) is (ja) not (nein)
+
+stop
+
+
+
+
+@enduml
