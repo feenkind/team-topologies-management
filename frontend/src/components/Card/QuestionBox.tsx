@@ -17,11 +17,11 @@ const QuestionBox: React.FC<IQuestionBoxProps> = ({
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <HelpIcon
           fontSize="small"
-          sx={{ color: theme.palette.secondary.dark, mr: 1 }}
+          sx={{ color: theme.palette.primary.main, mr: 1 }}
         />
         <Typography
           variant="button"
-          sx={{ color: theme.palette.secondary.dark }}
+          sx={{ color: theme.palette.primary.light }}
         >
           {headline}
         </Typography>
