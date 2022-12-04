@@ -1,0 +1,106 @@
+@startuml
+
+|Frontend|
+start
+:Laden der React-Komponente "TeamForm";
+:Selektieren des aktuellen Projekts aus dem Redux Store;
+:Abrufen der Team ID aus der URL;
+
+if (Team mit der Team ID existiert für das aktuelle Projekt?) then (nein)
+  :Anzeige der 404-Not-Found Seite;
+  stop
+  else (ja)
+endif;
+
+:GET-Anfrage an das Backend um die Informationen für das Team (inklusive Interaktionen und Abhängigkeiten) zu laden;
+
+
+|#AntiqueWhite|Backend|
+if (Anfrage valide?) then (nein)
+  :Rückgabe einer Fehlermeldung;
+else (ja)
+  :Rückgabe der aktuellen Daten für das Team;
+endif
+
+|Frontend|
+if (Anfrage erfolgreich) then (nein)
+  :Anzeige einer Netzwerk-Fehlermeldung;
+  stop
+else (ja)
+endif;
+
+:Befüllen der Eingabefelder mit den aktuellen Teamdaten;
+
+
+:Ändern von einzelnen Teamdaten;
+:Klick auf Submit;
+
+if (Validierung aller erforderlichen Felder erfolgreich?) then (nein)
+  repeat
+  :Anzeige einer Fehlermeldung im Formular;
+  :Befüllen von Eingabefelder;
+  :Klick auf Submit;
+  repeat while (Validierung erfolgreich?) is (nein) not (ja)
+  else (ja)
+endif;
+
+:PUT-Anfrage an das Backend mit den geänderten Teamdaten;
+
+|Backend|
+if (Anfrage valide?) then (nein)
+  :Rückgabe einer Fehlermeldung;
+else (ja)
+  :Löschen aller verknüpften Daten zu diesem Team;
+  :Update der Teambasisdaten und Anlegen neuer verknüpfter Daten zu diesem Team;
+
+  :Abfrage der letzten aktuellen Abhängigkeit dieses Teams;
+  if (Abhängigkeit hat vor der Aktualisierung existiert?) then (nein)
+    :Anlegen der aktualisierten Abhängigkeit in der Historie mit dem Status ADDED;
+  else (ja)
+    if (Abhängigkeit hat vor der Aktualisierung mit anderen Daten existiert?) then (ja)
+      :Anlegen der aktualisierten Abhängigkeit in der Historie mit dem Status CHANGED;
+    else (nein)
+    endif;
+  endif;
+
+  if (Abhängigkeit existiert in der Aktualisierung?) then (nein)
+    :Anlegen der alten Abhängigkeit in der Historie mit dem Status REMOVED;
+    else (ja)
+  endif;
+
+  :Löschen der aktuellen Abhängigkeiten dieses Teams;
+  :Anlegen der neuen Abhängigkeiten für dieses Team;
+
+  :Abfrage der letzten aktuellen Interaktionen dieses Teams;
+  if (Interaktion hat vor der Aktualisierung existiert?) then (nein)
+    :Anlegen der aktualisierten Interaktion in der Historie mit dem Status ADDED;
+  else (ja)
+    if (Interaktion hat vor der Aktualisierung mit anderen Daten existiert?) then (ja)
+      :Anlegen der aktualisierten Interaktion in der Historie mit dem Status CHANGED;
+    else (nein)
+    endif;
+  endif;
+
+  if (Interaktion existiert in der Aktualisierung?) then (nein)
+    :Anlegen der alten Interaktion in der Historie mit dem Status REMOVED;
+    else (ja)
+  endif;
+
+  :Löschen der aktuellen Interaktionen dieses Teams;
+  :Anlegen der neuen Interaktionen für dieses Team;
+
+endif
+
+|Frontend|
+if (Anfrage erfolgreich) then (nein)
+  :Anzeige einer Netzwerk-Fehlermeldung;
+  stop
+else (ja)
+endif;
+
+:Auslösen eines Neuladens aller Daten in der Anwendung;
+:Weiterleitung zur Teamansicht;
+
+stop
+
+@enduml

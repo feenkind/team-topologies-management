@@ -37,7 +37,4 @@ repeat while (Ändern des Datums zur Anzeige der Visualsierung in der Selectbox)
 
 stop
 
-
-
-
 @enduml

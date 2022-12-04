@@ -18,7 +18,9 @@ import CardCategory from '../components/Card/CardCategory';
 
 const Dashboard: React.FC = () => {
   // What is this application about
-  // Short tutorial
+  // Short tutorial, how to add a project, domain, team, how to see what,
+  // when will there be a warning (domain, team), etc.
+  // what are notifications and where are they displayed?
   // What is a project? What is a domain? How big is a team ideally?
   // Highlights
   // More information links
