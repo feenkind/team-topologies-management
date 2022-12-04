@@ -60,7 +60,6 @@ const Login: React.FC = () => {
         navigate('/');
       })
       .catch((reason) => {
-        console.log(reason);
         if (reason.response.status === 401) {
           setBasicAuthError(true);
           return;

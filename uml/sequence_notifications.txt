@@ -1,0 +1,30 @@
+@startuml
+
+participant NotificationMenu << React FunctionComponent >>
+participant notificationSlice << Redux Store >>
+participant NotificationGeneration << React FunctionComponent >>
+participant NotificationsController << NestJS Controller >>
+participant NotificationsService << NestJS Service >>
+
+
+NotificationGeneration -> NotificationsController : GET /notifications/token
+NotificationsController -> NotificationGeneration: Return notification token <TOKEN>
+NotificationGeneration -> NotificationsController: new EventSource with /notifications/sse?token=<TOKEN>
+NotificationsController -> NotificationsService: triggerNotifications()
+NotificationsService -> NotificationsController: Return generated notifications or empty array
+NotificationsController -> NotificationGeneration: Push notifications or empty array as events
+NotificationGeneration -> notificationSlice: addNotification()
+NotificationMenu -> notificationSlice : Listen for changes
+notificationSlice -> NotificationMenu: Update display with newest data
+
+NotificationsController -> NotificationsService: triggerNotifications()
+NotificationsService -> NotificationsController: Return generated notifications or empty array
+NotificationsController -> NotificationGeneration: Push notifications or empty array as events
+NotificationGeneration -> notificationSlice: addNotification()
+NotificationMenu -> notificationSlice : Listen for changes
+notificationSlice -> NotificationMenu: Update display with newest data
+
+NotificationsController -> NotificationsService: [...]
+
+
+@enduml
