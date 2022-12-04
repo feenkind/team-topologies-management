@@ -1,0 +1,73 @@
+@startuml
+start
+
+
+:triggerNotifications() im NotificationsService;
+:Erstellen eines leeren Notifications Array;
+:Datenbankabfrage der letzten Historie für jede Domäne;
+:Iteration über die Domänenhistorien;
+
+repeat
+if (Historie wurde vor weniger als 4 Wochen erstellt?) then (ja)
+  stop
+  else (nein)
+endif
+
+:Abfrage der neuesten Notification für genau diesen Datensatz;
+if (Nofitication existiert bereits?) then (nein)
+  :Generieren einer Notification mit dem Status Reminder in der Datenbank;
+  :Hinzufügen der Notification in das Notifications Array;
+  stop
+  else (ja)
+endif
+
+if (Nofitication schon gelesen?) then (nein)
+  stop
+  else (ja)
+endif
+
+if (Nofitication wurde vor weniger als 4 Wochen erstellt?) then (ja)
+  stop
+  else (nein)
+endif
+
+:Generieren einer Notification mit dem Status Reminder in der Datenbank;
+:Hinzufügen der Notification in das Notifications Array;
+repeat while (Weitere Historie verfügbar?) is (ja) not (nein)
+
+:Datenbankabfrage der aktuellen Teaminteraktionen im Modus "Facilitating";
+:Iteration über die Interaktionen;
+
+repeat
+if (Interaktion wurde vor weniger als 2 Wochen angelegt?) then (ja)
+  stop
+  else (nein)
+endif
+
+if (Interaktion wurde vor mehr als 6 Wochen angelegt?) then (ja)
+  :Abfrage der neuesten Notification für genau diesen Datensatz mit Status Warning;
+  if (Nofitication existiert bereits?) then (nein)
+    :Generieren einer Notification mit dem Status Warning in der Datenbank;
+    :Hinzufügen der Notification in das Notifications Array;
+    stop
+    else (ja)
+    stop
+  endif
+  else (nein)
+endif
+
+:Abfrage der neuesten Notification für genau diesen Datensatz mit Status Reminder;
+if (Nofitication existiert bereits?) then (nein)
+  :Generieren einer Notification mit dem Status Reminder in der Datenbank;
+  :Hinzufügen der Notification in das Notifications Array;
+  stop
+  else (ja)
+  stop
+endif
+repeat while (Weitere Interaktion verfügbar?) is (ja) not (nein)
+
+:Rückgabe des Notifications Array;
+stop
+
+
+@enduml

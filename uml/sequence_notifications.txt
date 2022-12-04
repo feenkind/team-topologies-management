@@ -8,21 +8,21 @@ participant NotificationsService << NestJS Service >>
 
 
 NotificationGeneration -> NotificationsController : GET /notifications/token
-NotificationsController -> NotificationGeneration: Return notification token <TOKEN>
-NotificationGeneration -> NotificationsController: new EventSource with /notifications/sse?token=<TOKEN>
+NotificationsController -> NotificationGeneration: Zurückgeben des Notification Token <TOKEN>
+NotificationGeneration -> NotificationsController: new EventSource mit /notifications/sse?token=<TOKEN>
 NotificationsController -> NotificationsService: triggerNotifications()
-NotificationsService -> NotificationsController: Return generated notifications or empty array
-NotificationsController -> NotificationGeneration: Push notifications or empty array as events
+NotificationsService -> NotificationsController: Zurückgeben der generierten Notifications oder eines leeren Arrays
+NotificationsController -> NotificationGeneration: Push der Notifications oder des leeren Arrays als Events
 NotificationGeneration -> notificationSlice: addNotification()
-NotificationMenu -> notificationSlice : Listen for changes
-notificationSlice -> NotificationMenu: Update display with newest data
+NotificationMenu -> notificationSlice : Horchen auf Änderungen
+notificationSlice -> NotificationMenu: Aktualisieren der Ansicht mit den neuesten Daten
 
 NotificationsController -> NotificationsService: triggerNotifications()
-NotificationsService -> NotificationsController: Return generated notifications or empty array
-NotificationsController -> NotificationGeneration: Push notifications or empty array as events
+NotificationsService -> NotificationsController: Zurückgeben der generierten Notifications oder eines leeren Arrays
+NotificationsController -> NotificationGeneration: Push der Notifications oder des leeren Arrays als Events
 NotificationGeneration -> notificationSlice: addNotification()
-NotificationMenu -> notificationSlice : Listen for changes
-notificationSlice -> NotificationMenu: Update display with newest data
+NotificationMenu -> notificationSlice : Horchen auf Änderungen
+notificationSlice -> NotificationMenu: Aktualisieren der Ansicht mit den neuesten Daten
 
 NotificationsController -> NotificationsService: [...]
 
