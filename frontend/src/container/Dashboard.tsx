@@ -122,7 +122,7 @@ const Dashboard: React.FC = () => {
                 the sidebar.
                 <br />
                 The Project Overview displays a summary of the most important
-                project data.
+                project data. Here, a project can also be edited and deleted.
                 <br />
                 Visualization shows 3 different kind of visualizations for
                 teams, dependencies and domains.
