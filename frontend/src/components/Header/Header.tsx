@@ -5,17 +5,19 @@ import UserMenu from './UserMenu';
 interface IHeaderProps {
   navigation: React.ReactNode;
   notifications: React.ReactNode;
+  logoutAction: () => void;
 }
 
 const Header: React.FC<IHeaderProps> = ({
   navigation,
   notifications,
+  logoutAction,
 }: IHeaderProps) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       {navigation}
       {notifications}
-      <UserMenu />
+      <UserMenu logoutAction={logoutAction} />
     </Box>
   );
 };

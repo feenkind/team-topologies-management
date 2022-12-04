@@ -1,9 +1,16 @@
 import * as React from 'react';
-import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
+import { Avatar, IconButton, ListItem, Menu, MenuItem } from '@mui/material';
 import { yellow } from '@mui/material/colors';
 import Face4SharpIcon from '@mui/icons-material/Face4Sharp';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-const UserMenu: React.FC = () => {
+interface IUserMenuProps {
+  logoutAction: () => void;
+}
+
+const UserMenu: React.FC<IUserMenuProps> = ({
+  logoutAction,
+}: IUserMenuProps) => {
   const [anchorElement, setAnchorElement] = React.useState<null | HTMLElement>(
     null,
   );
@@ -49,7 +56,18 @@ const UserMenu: React.FC = () => {
         onClose={handleClose}
         sx={{ mt: '40px' }}
       >
-        <MenuItem onClick={handleClose}>This is a dummy account.</MenuItem>
+        <ListItem sx={{ p: 2 }} divider>
+          This is a dummy account.
+        </ListItem>
+        <MenuItem
+          sx={{ pt: 2, pb: 1, px: 2 }}
+          onClick={() => {
+            logoutAction();
+            handleClose();
+          }}
+        >
+          <LogoutIcon /> Logout
+        </MenuItem>
       </Menu>
     </>
   );

@@ -2,13 +2,10 @@ import * as React from 'react';
 import { default as SidebarComponent } from '../../components/Sidebar/Sidebar';
 import { useLocation, useParams } from 'react-router-dom';
 import CurrentProjectSelect from '../Project/CurrentProjectSelect';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { sidebarMenuItems } from '../../constants/navigation';
-import { setBasicAuthData } from '../../store/slices/globalSlice';
-import { LOCAL_PASSWORD, LOCAL_USERNAME } from '../../constants/basicAuth';
 
 const Sidebar: React.FC = () => {
-  const dispatch = useAppDispatch();
   const { domainId } = useParams<{
     domainId: string;
   }>();
@@ -47,11 +44,6 @@ const Sidebar: React.FC = () => {
       projectSelect={<CurrentProjectSelect />}
       activeMenuItem={activeMenuItem}
       currentProjectId={currentProjectId || '-1'}
-      logoutAction={() => {
-        localStorage.removeItem(LOCAL_USERNAME);
-        localStorage.removeItem(LOCAL_PASSWORD);
-        dispatch(setBasicAuthData(false));
-      }}
     />
   );
 };
