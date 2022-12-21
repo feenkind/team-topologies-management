@@ -12,7 +12,7 @@ if (Team mit der Team ID existiert für das aktuelle Projekt?) then (nein)
   else (ja)
 endif;
 
-:GET-Anfrage an das Backend um die Informationen für das Team (inklusive Interaktionen und Abhängigkeiten) zu laden;
+:GET-Anfrage an das Backend um die Informationen für das Team\n(inklusive Interaktionen und Abhängigkeiten) zu laden;
 
 
 |#AntiqueWhite|Backend|
@@ -51,14 +51,14 @@ if (Anfrage valide?) then (nein)
   :Rückgabe einer Fehlermeldung;
 else (ja)
   :Löschen aller verknüpften Daten zu diesem Team;
-  :Update der Teambasisdaten und Anlegen neuer verknüpfter Daten zu diesem Team;
+  :Update der Teambasisdaten und\nAnlegen neuer verknüpfter Daten zu diesem Team;
 
   :Abfrage der letzten aktuellen Abhängigkeit dieses Teams;
   if (Abhängigkeit hat vor der Aktualisierung existiert?) then (nein)
-    :Anlegen der aktualisierten Abhängigkeit in der Historie mit dem Status ADDED;
+    :Anlegen der aktualisierten Abhängigkeit\nin der Historie mit dem Status ADDED;
   else (ja)
-    if (Abhängigkeit hat vor der Aktualisierung mit anderen Daten existiert?) then (ja)
-      :Anlegen der aktualisierten Abhängigkeit in der Historie mit dem Status CHANGED;
+    if (Abhängigkeit hat vor der Aktualisierung\nmit anderen Daten existiert?) then (ja)
+      :Anlegen der aktualisierten Abhängigkeit\nin der Historie mit dem Status CHANGED;
     else (nein)
     endif;
   endif;
@@ -73,10 +73,10 @@ else (ja)
 
   :Abfrage der letzten aktuellen Interaktionen dieses Teams;
   if (Interaktion hat vor der Aktualisierung existiert?) then (nein)
-    :Anlegen der aktualisierten Interaktion in der Historie mit dem Status ADDED;
+    :Anlegen der aktualisierten Interaktion\nin der Historie mit dem Status ADDED;
   else (ja)
-    if (Interaktion hat vor der Aktualisierung mit anderen Daten existiert?) then (ja)
-      :Anlegen der aktualisierten Interaktion in der Historie mit dem Status CHANGED;
+    if (Interaktion hat vor der Aktualisierung\nmit anderen Daten existiert?) then (ja)
+      :Anlegen der aktualisierten Interaktion\nin der Historie mit dem Status CHANGED;
     else (nein)
     endif;
   endif;
