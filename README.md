@@ -1,6 +1,6 @@
-# Team management with team topologies 
+# Team Management with Team Topologies 
 This app supports the management of teams 
-according to the team topologies philosophy.
+according to the Team Topologies philosophy.
 
 # Frontend application
 The frontend application is written in React uses the create-react-app 
