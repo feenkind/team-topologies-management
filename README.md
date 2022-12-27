@@ -1,10 +1,10 @@
-# Team management with team topologies
-Under development.  
-This app supports the management of teams according to the team type
-philosophy.
+# Team management with team topologies 
+This app supports the management of teams 
+according to the team topologies philosophy.
 
 # Frontend application
-The frontend application uses the create-react-app bootstrap as a base.
+The frontend application is written in React uses the create-react-app 
+bootstrap as a base.
 
 ## Development
 Install all node module with `npm i`.
@@ -16,12 +16,12 @@ Add the url to your local backend.
 
 
 # Backend application
-The frontend application uses NestJS.
+The backend application uses NestJS.
 
 ## Development
 Install all node module with `npm i`.
 
-Run the application in following modes:
+Navigate to the backend folder and run the application in following modes:
 ```bash
 # development
 $ npm run start
@@ -33,7 +33,8 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-For basic authentication and database, copy the `.env.example` and rename it 
+For basic authentication and the database connection, copy the `.env.example` 
+and rename it 
 to `.env`.
 Add all needed values.
 
@@ -58,6 +59,8 @@ For some test data, execute
 database with `npx prisma migrate reset`.
 
 ## Test
+Only basic tests are implemented for the backend so far. They can be run 
+with following commands:
 
 ```bash
 # unit tests
